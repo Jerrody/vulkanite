@@ -91,7 +91,7 @@ pub fn generate(gen: &Generator) -> Result<String> {
     let result = quote! {
         use super::{DeviceExtension, DeviceExtensionName, InstanceExtension, InstanceExtensionName, ApiVersion};
 
-        pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 3, #header_version);
+        pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 4, #header_version);
 
         #(#extensions)*
     }

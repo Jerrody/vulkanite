@@ -1,7 +1,7 @@
 use super::{
     ApiVersion, DeviceExtension, DeviceExtensionName, InstanceExtension, InstanceExtensionName,
 };
-pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 3, 304u32);
+pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 4, 304u32);
 pub const KHR_SURFACE: InstanceExtension = InstanceExtension {
     name: unsafe { InstanceExtensionName::new(c"VK_KHR_surface") },
     spec: 25u32,

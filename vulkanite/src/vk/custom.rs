@@ -94,6 +94,7 @@ pub const API_VERSION_1_0: ApiVersion = ApiVersion::new(0, 1, 0, 0);
 pub const API_VERSION_1_1: ApiVersion = ApiVersion::new(0, 1, 1, 0);
 pub const API_VERSION_1_2: ApiVersion = ApiVersion::new(0, 1, 2, 0);
 pub const API_VERSION_1_3: ApiVersion = ApiVersion::new(0, 1, 3, 0);
+pub const API_VERSION_1_4: ApiVersion = ApiVersion::new(0, 1, 4, 0);
 
 impl Default for ApiVersion {
     /// According to the doc, using an api version of 0 (default) is the same as using API_VERSION_1_0
