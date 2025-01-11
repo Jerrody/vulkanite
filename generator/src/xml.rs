@@ -814,7 +814,7 @@ pub struct VideoCodec {
     #[serde(rename = "videoprofiles")]
     pub profiles: Option<VideoProfiles>,
     #[serde(rename = "videocapabilities")]
-    pub capabilities: VideoCapabilities,
+    pub capabilities: Vec<VideoCapabilities>,
     #[serde(default, rename = "videoformat")]
     pub formats: Vec<VideoFormat>,
 }
@@ -829,9 +829,11 @@ pub struct VideoCapabilities {
 #[serde(rename_all = "snake_case")]
 pub struct VideoFormat {
     #[serde(rename = "@name")]
-    pub name: String,
+    pub name: Option<String>,
     #[serde(rename = "@usage")]
-    pub usage: String,
+    pub usage: Option<String>,
+    #[serde(rename = "@extend")]
+    pub extend: Option<String>,
     #[serde(rename = "videorequirecapabilities")]
     pub capabilities: Option<VideoRequireCapabilities>,
 }

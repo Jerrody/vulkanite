@@ -6029,6 +6029,753 @@ pub unsafe fn get_device_image_sparse_memory_requirements_khr<
     vk_vec.resize_with_len(vk_len as _);
     vk_vec
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStipple.html>"]
+#[doc(alias = "vkCmdSetLineStipple")]
+pub unsafe fn cmd_set_line_stipple(
+    command_buffer: &raw::CommandBuffer,
+    line_stipple_factor: u32,
+    line_stipple_pattern: u16,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_set_line_stipple
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        line_stipple_factor,
+        line_stipple_pattern,
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleKHR.html>"]
+#[doc(alias = "vkCmdSetLineStippleKHR")]
+pub unsafe fn cmd_set_line_stipple_khr(
+    command_buffer: &raw::CommandBuffer,
+    line_stipple_factor: u32,
+    line_stipple_pattern: u16,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_set_line_stipple_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        line_stipple_factor,
+        line_stipple_pattern,
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEXT.html>"]
+#[doc(alias = "vkCmdSetLineStippleEXT")]
+pub unsafe fn cmd_set_line_stipple_ext(
+    command_buffer: &raw::CommandBuffer,
+    line_stipple_factor: u32,
+    line_stipple_pattern: u16,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_set_line_stipple_ext
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        line_stipple_factor,
+        line_stipple_pattern,
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkMapMemory2.html>"]
+#[doc(alias = "vkMapMemory2")]
+pub unsafe fn map_memory2(
+    device: &raw::Device,
+    p_memory_map_info: &MemoryMapInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<VoidPtr> {
+    let vulkan_command = dispatcher
+        .map_memory2
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut pp_data = MaybeUninit::uninit();
+    let vk_status = vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_memory_map_info),
+        pp_data.as_mut_ptr(),
+    );
+    vk_status.map_success(|| pp_data.assume_init())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkMapMemory2KHR.html>"]
+#[doc(alias = "vkMapMemory2KHR")]
+pub unsafe fn map_memory2_khr(
+    device: &raw::Device,
+    p_memory_map_info: &MemoryMapInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<VoidPtr> {
+    let vulkan_command = dispatcher
+        .map_memory2_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut pp_data = MaybeUninit::uninit();
+    let vk_status = vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_memory_map_info),
+        pp_data.as_mut_ptr(),
+    );
+    vk_status.map_success(|| pp_data.assume_init())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2.html>"]
+#[doc(alias = "vkUnmapMemory2")]
+pub unsafe fn unmap_memory2(
+    device: &raw::Device,
+    p_memory_unmap_info: &MemoryUnmapInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .unmap_memory2
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_memory_unmap_info),
+    )
+    .map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2KHR.html>"]
+#[doc(alias = "vkUnmapMemory2KHR")]
+pub unsafe fn unmap_memory2_khr(
+    device: &raw::Device,
+    p_memory_unmap_info: &MemoryUnmapInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .unmap_memory2_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_memory_unmap_info),
+    )
+    .map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2.html>"]
+#[doc(alias = "vkCmdBindIndexBuffer2")]
+pub unsafe fn cmd_bind_index_buffer2(
+    command_buffer: &raw::CommandBuffer,
+    buffer: Option<&raw::Buffer>,
+    offset: DeviceSize,
+    size: DeviceSize,
+    index_type: IndexType,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_bind_index_buffer2
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        buffer.map(|v| unsafe { v.clone() }),
+        offset,
+        size,
+        index_type,
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2KHR.html>"]
+#[doc(alias = "vkCmdBindIndexBuffer2KHR")]
+pub unsafe fn cmd_bind_index_buffer2_khr(
+    command_buffer: &raw::CommandBuffer,
+    buffer: Option<&raw::Buffer>,
+    offset: DeviceSize,
+    size: DeviceSize,
+    index_type: IndexType,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_bind_index_buffer2_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        buffer.map(|v| unsafe { v.clone() }),
+        offset,
+        size,
+        index_type,
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularity.html>"]
+#[doc(alias = "vkGetRenderingAreaGranularity")]
+pub unsafe fn get_rendering_area_granularity(
+    device: &raw::Device,
+    p_rendering_area_info: &RenderingAreaInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Extent2D {
+    let vulkan_command = dispatcher
+        .get_rendering_area_granularity
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_granularity = MaybeUninit::uninit();
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_rendering_area_info),
+        p_granularity.as_mut_ptr(),
+    );
+    p_granularity.assume_init()
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularityKHR.html>"]
+#[doc(alias = "vkGetRenderingAreaGranularityKHR")]
+pub unsafe fn get_rendering_area_granularity_khr(
+    device: &raw::Device,
+    p_rendering_area_info: &RenderingAreaInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Extent2D {
+    let vulkan_command = dispatcher
+        .get_rendering_area_granularity_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_granularity = MaybeUninit::uninit();
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_rendering_area_info),
+        p_granularity.as_mut_ptr(),
+    );
+    p_granularity.assume_init()
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayout.html>"]
+#[doc(alias = "vkGetDeviceImageSubresourceLayout")]
+pub unsafe fn get_device_image_subresource_layout<
+    S: StructureChainOut<SubresourceLayout2<'static>>,
+>(
+    device: &raw::Device,
+    p_info: &DeviceImageSubresourceInfo,
+    dispatcher: &CommandsDispatcher,
+) -> S {
+    let vulkan_command = dispatcher
+        .get_device_image_subresource_layout
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_layout = MaybeUninit::uninit();
+    S::setup_uninit(&mut p_layout);
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_info),
+        S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
+    );
+    S::setup_cleanup(p_layout.as_mut_ptr());
+    p_layout.assume_init()
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayoutKHR.html>"]
+#[doc(alias = "vkGetDeviceImageSubresourceLayoutKHR")]
+pub unsafe fn get_device_image_subresource_layout_khr<
+    S: StructureChainOut<SubresourceLayout2<'static>>,
+>(
+    device: &raw::Device,
+    p_info: &DeviceImageSubresourceInfo,
+    dispatcher: &CommandsDispatcher,
+) -> S {
+    let vulkan_command = dispatcher
+        .get_device_image_subresource_layout_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_layout = MaybeUninit::uninit();
+    S::setup_uninit(&mut p_layout);
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_info),
+        S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
+    );
+    S::setup_cleanup(p_layout.as_mut_ptr());
+    p_layout.assume_init()
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2.html>"]
+#[doc(alias = "vkGetImageSubresourceLayout2")]
+pub unsafe fn get_image_subresource_layout2<S: StructureChainOut<SubresourceLayout2<'static>>>(
+    device: &raw::Device,
+    image: &raw::Image,
+    p_subresource: &ImageSubresource2,
+    dispatcher: &CommandsDispatcher,
+) -> S {
+    let vulkan_command = dispatcher
+        .get_image_subresource_layout2
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_layout = MaybeUninit::uninit();
+    S::setup_uninit(&mut p_layout);
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        Some(unsafe { image.clone() }),
+        ptr::from_ref(p_subresource),
+        S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
+    );
+    S::setup_cleanup(p_layout.as_mut_ptr());
+    p_layout.assume_init()
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html>"]
+#[doc(alias = "vkGetImageSubresourceLayout2KHR")]
+pub unsafe fn get_image_subresource_layout2_khr<
+    S: StructureChainOut<SubresourceLayout2<'static>>,
+>(
+    device: &raw::Device,
+    image: &raw::Image,
+    p_subresource: &ImageSubresource2,
+    dispatcher: &CommandsDispatcher,
+) -> S {
+    let vulkan_command = dispatcher
+        .get_image_subresource_layout2_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_layout = MaybeUninit::uninit();
+    S::setup_uninit(&mut p_layout);
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        Some(unsafe { image.clone() }),
+        ptr::from_ref(p_subresource),
+        S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
+    );
+    S::setup_cleanup(p_layout.as_mut_ptr());
+    p_layout.assume_init()
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>"]
+#[doc(alias = "vkGetImageSubresourceLayout2EXT")]
+pub unsafe fn get_image_subresource_layout2_ext<
+    S: StructureChainOut<SubresourceLayout2<'static>>,
+>(
+    device: &raw::Device,
+    image: &raw::Image,
+    p_subresource: &ImageSubresource2,
+    dispatcher: &CommandsDispatcher,
+) -> S {
+    let vulkan_command = dispatcher
+        .get_image_subresource_layout2_ext
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_layout = MaybeUninit::uninit();
+    S::setup_uninit(&mut p_layout);
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        Some(unsafe { image.clone() }),
+        ptr::from_ref(p_subresource),
+        S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
+    );
+    S::setup_cleanup(p_layout.as_mut_ptr());
+    p_layout.assume_init()
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet.html>"]
+#[doc(alias = "vkCmdPushDescriptorSet")]
+pub unsafe fn cmd_push_descriptor_set<'a>(
+    command_buffer: &raw::CommandBuffer,
+    pipeline_bind_point: PipelineBindPoint,
+    layout: &raw::PipelineLayout,
+    set: u32,
+    p_descriptor_writes: impl AsSlice<'a, WriteDescriptorSet<'a>>,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_descriptor_set
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        pipeline_bind_point,
+        Some(unsafe { layout.clone() }),
+        set,
+        p_descriptor_writes.as_slice().len() as _,
+        p_descriptor_writes.as_slice().as_ptr().cast(),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>"]
+#[doc(alias = "vkCmdPushDescriptorSetKHR")]
+pub unsafe fn cmd_push_descriptor_set_khr<'a>(
+    command_buffer: &raw::CommandBuffer,
+    pipeline_bind_point: PipelineBindPoint,
+    layout: &raw::PipelineLayout,
+    set: u32,
+    p_descriptor_writes: impl AsSlice<'a, WriteDescriptorSet<'a>>,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_descriptor_set_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        pipeline_bind_point,
+        Some(unsafe { layout.clone() }),
+        set,
+        p_descriptor_writes.as_slice().len() as _,
+        p_descriptor_writes.as_slice().as_ptr().cast(),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate.html>"]
+#[doc(alias = "vkCmdPushDescriptorSetWithTemplate")]
+pub unsafe fn cmd_push_descriptor_set_with_template(
+    command_buffer: &raw::CommandBuffer,
+    descriptor_update_template: &raw::DescriptorUpdateTemplate,
+    layout: &raw::PipelineLayout,
+    set: u32,
+    p_data: VoidPtr,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_descriptor_set_with_template
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        Some(unsafe { descriptor_update_template.clone() }),
+        Some(unsafe { layout.clone() }),
+        set,
+        p_data,
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
+#[doc(alias = "vkCmdPushDescriptorSetWithTemplateKHR")]
+pub unsafe fn cmd_push_descriptor_set_with_template_khr(
+    command_buffer: &raw::CommandBuffer,
+    descriptor_update_template: &raw::DescriptorUpdateTemplate,
+    layout: &raw::PipelineLayout,
+    set: u32,
+    p_data: VoidPtr,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_descriptor_set_with_template_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        Some(unsafe { descriptor_update_template.clone() }),
+        Some(unsafe { layout.clone() }),
+        set,
+        p_data,
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocations.html>"]
+#[doc(alias = "vkCmdSetRenderingAttachmentLocations")]
+pub unsafe fn cmd_set_rendering_attachment_locations(
+    command_buffer: &raw::CommandBuffer,
+    p_location_info: &RenderingAttachmentLocationInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_set_rendering_attachment_locations
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_location_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocationsKHR.html>"]
+#[doc(alias = "vkCmdSetRenderingAttachmentLocationsKHR")]
+pub unsafe fn cmd_set_rendering_attachment_locations_khr(
+    command_buffer: &raw::CommandBuffer,
+    p_location_info: &RenderingAttachmentLocationInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_set_rendering_attachment_locations_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_location_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndices.html>"]
+#[doc(alias = "vkCmdSetRenderingInputAttachmentIndices")]
+pub unsafe fn cmd_set_rendering_input_attachment_indices(
+    command_buffer: &raw::CommandBuffer,
+    p_input_attachment_index_info: &RenderingInputAttachmentIndexInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_set_rendering_input_attachment_indices
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_input_attachment_index_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndicesKHR.html>"]
+#[doc(alias = "vkCmdSetRenderingInputAttachmentIndicesKHR")]
+pub unsafe fn cmd_set_rendering_input_attachment_indices_khr(
+    command_buffer: &raw::CommandBuffer,
+    p_input_attachment_index_info: &RenderingInputAttachmentIndexInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_set_rendering_input_attachment_indices_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_input_attachment_index_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2.html>"]
+#[doc(alias = "vkCmdBindDescriptorSets2")]
+pub unsafe fn cmd_bind_descriptor_sets2(
+    command_buffer: &raw::CommandBuffer,
+    p_bind_descriptor_sets_info: &BindDescriptorSetsInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_bind_descriptor_sets2
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_bind_descriptor_sets_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html>"]
+#[doc(alias = "vkCmdBindDescriptorSets2KHR")]
+pub unsafe fn cmd_bind_descriptor_sets2_khr(
+    command_buffer: &raw::CommandBuffer,
+    p_bind_descriptor_sets_info: &BindDescriptorSetsInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_bind_descriptor_sets2_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_bind_descriptor_sets_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2.html>"]
+#[doc(alias = "vkCmdPushConstants2")]
+pub unsafe fn cmd_push_constants2(
+    command_buffer: &raw::CommandBuffer,
+    p_push_constants_info: &PushConstantsInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_constants2
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_push_constants_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2KHR.html>"]
+#[doc(alias = "vkCmdPushConstants2KHR")]
+pub unsafe fn cmd_push_constants2_khr(
+    command_buffer: &raw::CommandBuffer,
+    p_push_constants_info: &PushConstantsInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_constants2_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_push_constants_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2.html>"]
+#[doc(alias = "vkCmdPushDescriptorSet2")]
+pub unsafe fn cmd_push_descriptor_set2(
+    command_buffer: &raw::CommandBuffer,
+    p_push_descriptor_set_info: &PushDescriptorSetInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_descriptor_set2
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_push_descriptor_set_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2KHR.html>"]
+#[doc(alias = "vkCmdPushDescriptorSet2KHR")]
+pub unsafe fn cmd_push_descriptor_set2_khr(
+    command_buffer: &raw::CommandBuffer,
+    p_push_descriptor_set_info: &PushDescriptorSetInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_descriptor_set2_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_push_descriptor_set_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2.html>"]
+#[doc(alias = "vkCmdPushDescriptorSetWithTemplate2")]
+pub unsafe fn cmd_push_descriptor_set_with_template2(
+    command_buffer: &raw::CommandBuffer,
+    p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_descriptor_set_with_template2
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_push_descriptor_set_with_template_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html>"]
+#[doc(alias = "vkCmdPushDescriptorSetWithTemplate2KHR")]
+pub unsafe fn cmd_push_descriptor_set_with_template2_khr(
+    command_buffer: &raw::CommandBuffer,
+    p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfo,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_push_descriptor_set_with_template2_khr
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_push_descriptor_set_with_template_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImage.html>"]
+#[doc(alias = "vkCopyMemoryToImage")]
+pub unsafe fn copy_memory_to_image(
+    device: &raw::Device,
+    p_copy_memory_to_image_info: &CopyMemoryToImageInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .copy_memory_to_image
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_copy_memory_to_image_info),
+    )
+    .map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImageEXT.html>"]
+#[doc(alias = "vkCopyMemoryToImageEXT")]
+pub unsafe fn copy_memory_to_image_ext(
+    device: &raw::Device,
+    p_copy_memory_to_image_info: &CopyMemoryToImageInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .copy_memory_to_image_ext
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_copy_memory_to_image_info),
+    )
+    .map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemory.html>"]
+#[doc(alias = "vkCopyImageToMemory")]
+pub unsafe fn copy_image_to_memory(
+    device: &raw::Device,
+    p_copy_image_to_memory_info: &CopyImageToMemoryInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .copy_image_to_memory
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_copy_image_to_memory_info),
+    )
+    .map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemoryEXT.html>"]
+#[doc(alias = "vkCopyImageToMemoryEXT")]
+pub unsafe fn copy_image_to_memory_ext(
+    device: &raw::Device,
+    p_copy_image_to_memory_info: &CopyImageToMemoryInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .copy_image_to_memory_ext
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_copy_image_to_memory_info),
+    )
+    .map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImage.html>"]
+#[doc(alias = "vkCopyImageToImage")]
+pub unsafe fn copy_image_to_image(
+    device: &raw::Device,
+    p_copy_image_to_image_info: &CopyImageToImageInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .copy_image_to_image
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_copy_image_to_image_info),
+    )
+    .map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImageEXT.html>"]
+#[doc(alias = "vkCopyImageToImageEXT")]
+pub unsafe fn copy_image_to_image_ext(
+    device: &raw::Device,
+    p_copy_image_to_image_info: &CopyImageToImageInfo,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .copy_image_to_image_ext
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_copy_image_to_image_info),
+    )
+    .map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayout.html>"]
+#[doc(alias = "vkTransitionImageLayout")]
+pub unsafe fn transition_image_layout<'a>(
+    device: &raw::Device,
+    p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfo<'a>>,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .transition_image_layout
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        p_transitions.as_slice().len() as _,
+        p_transitions.as_slice().as_ptr().cast(),
+    )
+    .map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayoutEXT.html>"]
+#[doc(alias = "vkTransitionImageLayoutEXT")]
+pub unsafe fn transition_image_layout_ext<'a>(
+    device: &raw::Device,
+    p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfo<'a>>,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .transition_image_layout_ext
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        p_transitions.as_slice().len() as _,
+        p_transitions.as_slice().as_ptr().cast(),
+    )
+    .map_success(|| ())
+}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDestroySurfaceKHR.html>"]
 #[doc(alias = "vkDestroySurfaceKHR")]
 pub unsafe fn destroy_surface_khr(
@@ -7233,6 +7980,19 @@ pub unsafe fn get_image_view_handle_nvx(
         .expect("Vulkan command not loaded.");
     vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageViewHandle64NVX.html>"]
+#[doc(alias = "vkGetImageViewHandle64NVX")]
+pub unsafe fn get_image_view_handle64_nvx(
+    device: &raw::Device,
+    p_info: &ImageViewHandleInfoNVX,
+    dispatcher: &CommandsDispatcher,
+) -> u64 {
+    let vulkan_command = dispatcher
+        .get_image_view_handle64_nvx
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageViewAddressNVX.html>"]
 #[doc(alias = "vkGetImageViewAddressNVX")]
 pub unsafe fn get_image_view_address_nvx<
@@ -7536,51 +8296,6 @@ pub unsafe fn get_semaphore_fd_khr(
         p_fd.as_mut_ptr(),
     );
     vk_status.map_success(|| p_fd.assume_init())
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>"]
-#[doc(alias = "vkCmdPushDescriptorSetKHR")]
-pub unsafe fn cmd_push_descriptor_set_khr<'a>(
-    command_buffer: &raw::CommandBuffer,
-    pipeline_bind_point: PipelineBindPoint,
-    layout: &raw::PipelineLayout,
-    set: u32,
-    p_descriptor_writes: impl AsSlice<'a, WriteDescriptorSet<'a>>,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        pipeline_bind_point,
-        Some(unsafe { layout.clone() }),
-        set,
-        p_descriptor_writes.as_slice().len() as _,
-        p_descriptor_writes.as_slice().as_ptr().cast(),
-    )
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
-#[doc(alias = "vkCmdPushDescriptorSetWithTemplateKHR")]
-pub unsafe fn cmd_push_descriptor_set_with_template_khr(
-    command_buffer: &raw::CommandBuffer,
-    descriptor_update_template: &raw::DescriptorUpdateTemplate,
-    layout: &raw::PipelineLayout,
-    set: u32,
-    p_data: VoidPtr,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set_with_template_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { descriptor_update_template.clone() }),
-        Some(unsafe { layout.clone() }),
-        set,
-        p_data,
-    )
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginConditionalRenderingEXT.html>"]
 #[doc(alias = "vkCmdBeginConditionalRenderingEXT")]
@@ -8613,20 +9328,28 @@ pub unsafe fn get_execution_graph_pipeline_node_index_amdx(
 #[doc(alias = "vkCmdInitializeGraphScratchMemoryAMDX")]
 pub unsafe fn cmd_initialize_graph_scratch_memory_amdx(
     command_buffer: &raw::CommandBuffer,
+    execution_graph: &raw::Pipeline,
     scratch: DeviceAddress,
+    scratch_size: DeviceSize,
     dispatcher: &CommandsDispatcher,
 ) {
     let vulkan_command = dispatcher
         .cmd_initialize_graph_scratch_memory_amdx
         .get()
         .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), scratch)
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        Some(unsafe { execution_graph.clone() }),
+        scratch,
+        scratch_size,
+    )
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchGraphAMDX.html>"]
 #[doc(alias = "vkCmdDispatchGraphAMDX")]
 pub unsafe fn cmd_dispatch_graph_amdx(
     command_buffer: &raw::CommandBuffer,
     scratch: DeviceAddress,
+    scratch_size: DeviceSize,
     p_count_info: &DispatchGraphCountInfoAMDX,
     dispatcher: &CommandsDispatcher,
 ) {
@@ -8637,6 +9360,7 @@ pub unsafe fn cmd_dispatch_graph_amdx(
     vulkan_command(
         Some(unsafe { command_buffer.clone() }),
         scratch,
+        scratch_size,
         ptr::from_ref(p_count_info),
     )
 }
@@ -8645,6 +9369,7 @@ pub unsafe fn cmd_dispatch_graph_amdx(
 pub unsafe fn cmd_dispatch_graph_indirect_amdx(
     command_buffer: &raw::CommandBuffer,
     scratch: DeviceAddress,
+    scratch_size: DeviceSize,
     p_count_info: &DispatchGraphCountInfoAMDX,
     dispatcher: &CommandsDispatcher,
 ) {
@@ -8655,6 +9380,7 @@ pub unsafe fn cmd_dispatch_graph_indirect_amdx(
     vulkan_command(
         Some(unsafe { command_buffer.clone() }),
         scratch,
+        scratch_size,
         ptr::from_ref(p_count_info),
     )
 }
@@ -8663,6 +9389,7 @@ pub unsafe fn cmd_dispatch_graph_indirect_amdx(
 pub unsafe fn cmd_dispatch_graph_indirect_count_amdx(
     command_buffer: &raw::CommandBuffer,
     scratch: DeviceAddress,
+    scratch_size: DeviceSize,
     count_info: DeviceAddress,
     dispatcher: &CommandsDispatcher,
 ) {
@@ -8670,7 +9397,12 @@ pub unsafe fn cmd_dispatch_graph_indirect_count_amdx(
         .cmd_dispatch_graph_indirect_count_amdx
         .get()
         .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), scratch, count_info)
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        scratch,
+        scratch_size,
+        count_info,
+    )
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEXT.html>"]
 #[doc(alias = "vkCmdSetSampleLocationsEXT")]
@@ -9700,6 +10432,28 @@ pub unsafe fn cmd_write_buffer_marker_amd(
         marker,
     )
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarker2AMD.html>"]
+#[doc(alias = "vkCmdWriteBufferMarker2AMD")]
+pub unsafe fn cmd_write_buffer_marker2_amd(
+    command_buffer: &raw::CommandBuffer,
+    stage: PipelineStageFlags2,
+    dst_buffer: &raw::Buffer,
+    dst_offset: DeviceSize,
+    marker: u32,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_write_buffer_marker2_amd
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        stage,
+        Some(unsafe { dst_buffer.clone() }),
+        dst_offset,
+        marker,
+    )
+}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksNV.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksNV")]
 pub unsafe fn cmd_draw_mesh_tasks_nv(
@@ -9825,6 +10579,36 @@ pub unsafe fn get_queue_checkpoint_data_nv<R: DynamicArray<CheckpointDataNV<'sta
 ) -> R {
     let vulkan_command = dispatcher
         .get_queue_checkpoint_data_nv
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut vk_len = MaybeUninit::uninit();
+    let p_checkpoint_data_count = vk_len.as_mut_ptr();
+    let p_checkpoint_data = ptr::null_mut();
+    vulkan_command(
+        Some(unsafe { queue.clone() }),
+        p_checkpoint_data_count,
+        p_checkpoint_data,
+    );
+    let mut vk_len = vk_len.assume_init();
+    let mut vk_vec = R::create_with_capacity(vk_len as _);
+    let mut p_checkpoint_data_count = ptr::from_mut(&mut vk_len);
+    let mut p_checkpoint_data = vk_vec.get_content_mut_ptr();
+    vulkan_command(
+        Some(unsafe { queue.clone() }),
+        p_checkpoint_data_count,
+        p_checkpoint_data,
+    );
+    vk_vec.resize_with_len(vk_len as _);
+    vk_vec
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointData2NV.html>"]
+#[doc(alias = "vkGetQueueCheckpointData2NV")]
+pub unsafe fn get_queue_checkpoint_data2_nv<R: DynamicArray<CheckpointData2NV<'static>>>(
+    queue: &raw::Queue,
+    dispatcher: &CommandsDispatcher,
+) -> R {
+    let vulkan_command = dispatcher
+        .get_queue_checkpoint_data2_nv
         .get()
         .expect("Vulkan command not loaded.");
     let mut vk_len = MaybeUninit::uninit();
@@ -10118,38 +10902,6 @@ pub unsafe fn cmd_set_fragment_shading_rate_khr(
         Some(unsafe { command_buffer.clone() }),
         ptr::from_ref(p_fragment_size),
         combiner_ops,
-    )
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocationsKHR.html>"]
-#[doc(alias = "vkCmdSetRenderingAttachmentLocationsKHR")]
-pub unsafe fn cmd_set_rendering_attachment_locations_khr(
-    command_buffer: &raw::CommandBuffer,
-    p_location_info: &RenderingAttachmentLocationInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_set_rendering_attachment_locations_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_location_info),
-    )
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndicesKHR.html>"]
-#[doc(alias = "vkCmdSetRenderingInputAttachmentIndicesKHR")]
-pub unsafe fn cmd_set_rendering_input_attachment_indices_khr(
-    command_buffer: &raw::CommandBuffer,
-    p_input_attachment_index_info: &RenderingInputAttachmentIndexInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_set_rendering_input_attachment_indices_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_input_attachment_index_info),
     )
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkWaitForPresentKHR.html>"]
@@ -10602,111 +11354,6 @@ pub unsafe fn get_pipeline_executable_internal_representations_khr<
         vk_vec
     })
 }
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImageEXT.html>"]
-#[doc(alias = "vkCopyMemoryToImageEXT")]
-pub unsafe fn copy_memory_to_image_ext(
-    device: &raw::Device,
-    p_copy_memory_to_image_info: &CopyMemoryToImageInfoEXT,
-    dispatcher: &CommandsDispatcher,
-) -> Result<()> {
-    let vulkan_command = dispatcher
-        .copy_memory_to_image_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_copy_memory_to_image_info),
-    )
-    .map_success(|| ())
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemoryEXT.html>"]
-#[doc(alias = "vkCopyImageToMemoryEXT")]
-pub unsafe fn copy_image_to_memory_ext(
-    device: &raw::Device,
-    p_copy_image_to_memory_info: &CopyImageToMemoryInfoEXT,
-    dispatcher: &CommandsDispatcher,
-) -> Result<()> {
-    let vulkan_command = dispatcher
-        .copy_image_to_memory_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_copy_image_to_memory_info),
-    )
-    .map_success(|| ())
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImageEXT.html>"]
-#[doc(alias = "vkCopyImageToImageEXT")]
-pub unsafe fn copy_image_to_image_ext(
-    device: &raw::Device,
-    p_copy_image_to_image_info: &CopyImageToImageInfoEXT,
-    dispatcher: &CommandsDispatcher,
-) -> Result<()> {
-    let vulkan_command = dispatcher
-        .copy_image_to_image_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_copy_image_to_image_info),
-    )
-    .map_success(|| ())
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayoutEXT.html>"]
-#[doc(alias = "vkTransitionImageLayoutEXT")]
-pub unsafe fn transition_image_layout_ext<'a>(
-    device: &raw::Device,
-    p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfoEXT<'a>>,
-    dispatcher: &CommandsDispatcher,
-) -> Result<()> {
-    let vulkan_command = dispatcher
-        .transition_image_layout_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        p_transitions.as_slice().len() as _,
-        p_transitions.as_slice().as_ptr().cast(),
-    )
-    .map_success(|| ())
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkMapMemory2KHR.html>"]
-#[doc(alias = "vkMapMemory2KHR")]
-pub unsafe fn map_memory2_khr(
-    device: &raw::Device,
-    p_memory_map_info: &MemoryMapInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .map_memory2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    let mut pp_data = MaybeUninit::uninit();
-    let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_memory_map_info),
-        pp_data.as_mut_ptr(),
-    );
-    vk_status.map_success(|| pp_data.assume_init())
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2KHR.html>"]
-#[doc(alias = "vkUnmapMemory2KHR")]
-pub unsafe fn unmap_memory2_khr(
-    device: &raw::Device,
-    p_memory_unmap_info: &MemoryUnmapInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) -> Result<()> {
-    let vulkan_command = dispatcher
-        .unmap_memory2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_memory_unmap_info),
-    )
-    .map_success(|| ())
-}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkReleaseSwapchainImagesEXT.html>"]
 #[doc(alias = "vkReleaseSwapchainImagesEXT")]
 pub unsafe fn release_swapchain_images_ext(
@@ -11029,58 +11676,6 @@ pub unsafe fn export_metal_objects_ext<S: StructureChainOut<ExportMetalObjectsIn
     );
     S::setup_cleanup(p_metal_objects_info.as_mut_ptr());
     p_metal_objects_info.assume_init()
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarker2AMD.html>"]
-#[doc(alias = "vkCmdWriteBufferMarker2AMD")]
-pub unsafe fn cmd_write_buffer_marker2_amd(
-    command_buffer: &raw::CommandBuffer,
-    stage: PipelineStageFlags2,
-    dst_buffer: &raw::Buffer,
-    dst_offset: DeviceSize,
-    marker: u32,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_write_buffer_marker2_amd
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        stage,
-        Some(unsafe { dst_buffer.clone() }),
-        dst_offset,
-        marker,
-    )
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointData2NV.html>"]
-#[doc(alias = "vkGetQueueCheckpointData2NV")]
-pub unsafe fn get_queue_checkpoint_data2_nv<R: DynamicArray<CheckpointData2NV<'static>>>(
-    queue: &raw::Queue,
-    dispatcher: &CommandsDispatcher,
-) -> R {
-    let vulkan_command = dispatcher
-        .get_queue_checkpoint_data2_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    let mut vk_len = MaybeUninit::uninit();
-    let p_checkpoint_data_count = vk_len.as_mut_ptr();
-    let p_checkpoint_data = ptr::null_mut();
-    vulkan_command(
-        Some(unsafe { queue.clone() }),
-        p_checkpoint_data_count,
-        p_checkpoint_data,
-    );
-    let mut vk_len = vk_len.assume_init();
-    let mut vk_vec = R::create_with_capacity(vk_len as _);
-    let mut p_checkpoint_data_count = ptr::from_mut(&mut vk_len);
-    let mut p_checkpoint_data = vk_vec.get_content_mut_ptr();
-    vulkan_command(
-        Some(unsafe { queue.clone() }),
-        p_checkpoint_data_count,
-        p_checkpoint_data,
-    );
-    vk_vec.resize_with_len(vk_len as _);
-    vk_vec
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutSizeEXT.html>"]
 #[doc(alias = "vkGetDescriptorSetLayoutSizeEXT")]
@@ -13095,120 +13690,6 @@ pub unsafe fn cmd_optical_flow_execute_nv(
         ptr::from_ref(p_execute_info),
     )
 }
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2KHR.html>"]
-#[doc(alias = "vkCmdBindIndexBuffer2KHR")]
-pub unsafe fn cmd_bind_index_buffer2_khr(
-    command_buffer: &raw::CommandBuffer,
-    buffer: Option<&raw::Buffer>,
-    offset: DeviceSize,
-    size: DeviceSize,
-    index_type: IndexType,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_bind_index_buffer2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        buffer.map(|v| unsafe { v.clone() }),
-        offset,
-        size,
-        index_type,
-    )
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularityKHR.html>"]
-#[doc(alias = "vkGetRenderingAreaGranularityKHR")]
-pub unsafe fn get_rendering_area_granularity_khr(
-    device: &raw::Device,
-    p_rendering_area_info: &RenderingAreaInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) -> Extent2D {
-    let vulkan_command = dispatcher
-        .get_rendering_area_granularity_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    let mut p_granularity = MaybeUninit::uninit();
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_rendering_area_info),
-        p_granularity.as_mut_ptr(),
-    );
-    p_granularity.assume_init()
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayoutKHR.html>"]
-#[doc(alias = "vkGetDeviceImageSubresourceLayoutKHR")]
-pub unsafe fn get_device_image_subresource_layout_khr<
-    S: StructureChainOut<SubresourceLayout2KHR<'static>>,
->(
-    device: &raw::Device,
-    p_info: &DeviceImageSubresourceInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) -> S {
-    let vulkan_command = dispatcher
-        .get_device_image_subresource_layout_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    let mut p_layout = MaybeUninit::uninit();
-    S::setup_uninit(&mut p_layout);
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_info),
-        S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
-    );
-    S::setup_cleanup(p_layout.as_mut_ptr());
-    p_layout.assume_init()
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html>"]
-#[doc(alias = "vkGetImageSubresourceLayout2KHR")]
-pub unsafe fn get_image_subresource_layout2_khr<
-    S: StructureChainOut<SubresourceLayout2KHR<'static>>,
->(
-    device: &raw::Device,
-    image: &raw::Image,
-    p_subresource: &ImageSubresource2KHR,
-    dispatcher: &CommandsDispatcher,
-) -> S {
-    let vulkan_command = dispatcher
-        .get_image_subresource_layout2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    let mut p_layout = MaybeUninit::uninit();
-    S::setup_uninit(&mut p_layout);
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
-        ptr::from_ref(p_subresource),
-        S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
-    );
-    S::setup_cleanup(p_layout.as_mut_ptr());
-    p_layout.assume_init()
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>"]
-#[doc(alias = "vkGetImageSubresourceLayout2EXT")]
-pub unsafe fn get_image_subresource_layout2_ext<
-    S: StructureChainOut<SubresourceLayout2KHR<'static>>,
->(
-    device: &raw::Device,
-    image: &raw::Image,
-    p_subresource: &ImageSubresource2KHR,
-    dispatcher: &CommandsDispatcher,
-) -> S {
-    let vulkan_command = dispatcher
-        .get_image_subresource_layout2_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    let mut p_layout = MaybeUninit::uninit();
-    S::setup_uninit(&mut p_layout);
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
-        ptr::from_ref(p_subresource),
-        S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
-    );
-    S::setup_cleanup(p_layout.as_mut_ptr());
-    p_layout.assume_init()
-}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAntiLagUpdateAMD.html>"]
 #[doc(alias = "vkAntiLagUpdateAMD")]
 pub unsafe fn anti_lag_update_amd(
@@ -13657,42 +14138,6 @@ pub unsafe fn get_screen_buffer_properties_qnx<
         p_properties.assume_init()
     })
 }
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleKHR.html>"]
-#[doc(alias = "vkCmdSetLineStippleKHR")]
-pub unsafe fn cmd_set_line_stipple_khr(
-    command_buffer: &raw::CommandBuffer,
-    line_stipple_factor: u32,
-    line_stipple_pattern: u16,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_set_line_stipple_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        line_stipple_factor,
-        line_stipple_pattern,
-    )
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEXT.html>"]
-#[doc(alias = "vkCmdSetLineStippleEXT")]
-pub unsafe fn cmd_set_line_stipple_ext(
-    command_buffer: &raw::CommandBuffer,
-    line_stipple_factor: u32,
-    line_stipple_pattern: u16,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_set_line_stipple_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        line_stipple_factor,
-        line_stipple_pattern,
-    )
-}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCalibrateableTimeDomainsKHR.html>"]
 #[doc(alias = "vkGetPhysicalDeviceCalibrateableTimeDomainsKHR")]
 pub unsafe fn get_physical_device_calibrateable_time_domains_khr<R: DynamicArray<TimeDomainKHR>>(
@@ -13774,70 +14219,6 @@ pub unsafe fn get_physical_device_calibrateable_time_domains_ext<R: DynamicArray
         vk_vec.resize_with_len(vk_len as _);
         vk_vec
     })
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html>"]
-#[doc(alias = "vkCmdBindDescriptorSets2KHR")]
-pub unsafe fn cmd_bind_descriptor_sets2_khr(
-    command_buffer: &raw::CommandBuffer,
-    p_bind_descriptor_sets_info: &BindDescriptorSetsInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_bind_descriptor_sets2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_bind_descriptor_sets_info),
-    )
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2KHR.html>"]
-#[doc(alias = "vkCmdPushConstants2KHR")]
-pub unsafe fn cmd_push_constants2_khr(
-    command_buffer: &raw::CommandBuffer,
-    p_push_constants_info: &PushConstantsInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_push_constants2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_push_constants_info),
-    )
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2KHR.html>"]
-#[doc(alias = "vkCmdPushDescriptorSet2KHR")]
-pub unsafe fn cmd_push_descriptor_set2_khr(
-    command_buffer: &raw::CommandBuffer,
-    p_push_descriptor_set_info: &PushDescriptorSetInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_push_descriptor_set_info),
-    )
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html>"]
-#[doc(alias = "vkCmdPushDescriptorSetWithTemplate2KHR")]
-pub unsafe fn cmd_push_descriptor_set_with_template2_khr(
-    command_buffer: &raw::CommandBuffer,
-    p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfoKHR,
-    dispatcher: &CommandsDispatcher,
-) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set_with_template2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_push_descriptor_set_with_template_info),
-    )
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDescriptorBufferOffsets2EXT.html>"]
 #[doc(alias = "vkCmdSetDescriptorBufferOffsets2EXT")]
@@ -14045,4 +14426,47 @@ pub unsafe fn update_indirect_execution_set_shader_ext<'a>(
         p_execution_set_writes.as_slice().len() as _,
         p_execution_set_writes.as_slice().as_ptr().cast(),
     )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV.html>"]
+#[doc(alias = "vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV")]
+pub unsafe fn get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv<
+    R: DynamicArray<CooperativeMatrixFlexibleDimensionsPropertiesNV<'static>>,
+>(
+    physical_device: &raw::PhysicalDevice,
+    dispatcher: &CommandsDispatcher,
+) -> Result<R> {
+    let vulkan_command = dispatcher
+        .get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut vk_len = MaybeUninit::uninit();
+    let p_property_count = vk_len.as_mut_ptr();
+    let p_properties = ptr::null_mut();
+    vulkan_command(
+        Some(unsafe { physical_device.clone() }),
+        p_property_count,
+        p_properties,
+    )
+    .map_success(|| ())?;
+    let mut vk_len = vk_len.assume_init();
+    let mut vk_vec = R::create_with_capacity(vk_len as _);
+    let mut p_property_count = ptr::from_mut(&mut vk_len);
+    let mut p_properties = vk_vec.get_content_mut_ptr();
+    let vk_status = loop {
+        let status = vulkan_command(
+            Some(unsafe { physical_device.clone() }),
+            p_property_count,
+            p_properties,
+        );
+        if status != Status::Incomplete {
+            break status;
+        }
+        vk_vec.update_with_capacity(vk_len as _);
+        p_property_count = ptr::from_mut(&mut vk_len);
+        p_properties = vk_vec.get_content_mut_ptr();
+    };
+    vk_status.map_success(|| {
+        vk_vec.resize_with_len(vk_len as _);
+        vk_vec
+    })
 }

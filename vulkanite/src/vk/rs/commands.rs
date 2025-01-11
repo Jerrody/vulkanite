@@ -1521,6 +1521,20 @@ impl<D: Dispatcher, A: Allocator> PhysicalDevice<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV.html>"]
+    #[doc(alias = "vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV")]
+    pub fn get_cooperative_matrix_flexible_dimensions_properties_nv<
+        R: DynamicArray<CooperativeMatrixFlexibleDimensionsPropertiesNV<'static>>,
+    >(
+        &self,
+    ) -> Result<R> {
+        unsafe {
+            raw::get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv(
+                self,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
 }
 #[repr(C)]
 #[derive(Clone)]
@@ -3294,6 +3308,252 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkMapMemory2.html>"]
+    #[doc(alias = "vkMapMemory2")]
+    pub fn map_memory2(&self, p_memory_map_info: &MemoryMapInfo) -> Result<VoidPtr> {
+        unsafe { raw::map_memory2(self, p_memory_map_info, self.disp.get_command_dispatcher()) }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkMapMemory2KHR.html>"]
+    #[doc(alias = "vkMapMemory2KHR")]
+    pub fn map_memory2_khr(&self, p_memory_map_info: &MemoryMapInfo) -> Result<VoidPtr> {
+        unsafe { raw::map_memory2_khr(self, p_memory_map_info, self.disp.get_command_dispatcher()) }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2.html>"]
+    #[doc(alias = "vkUnmapMemory2")]
+    pub fn unmap_memory2(&self, p_memory_unmap_info: &MemoryUnmapInfo) -> Result<()> {
+        unsafe {
+            raw::unmap_memory2(
+                self,
+                p_memory_unmap_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2KHR.html>"]
+    #[doc(alias = "vkUnmapMemory2KHR")]
+    pub fn unmap_memory2_khr(&self, p_memory_unmap_info: &MemoryUnmapInfo) -> Result<()> {
+        unsafe {
+            raw::unmap_memory2_khr(
+                self,
+                p_memory_unmap_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularity.html>"]
+    #[doc(alias = "vkGetRenderingAreaGranularity")]
+    pub fn get_rendering_area_granularity(
+        &self,
+        p_rendering_area_info: &RenderingAreaInfo,
+    ) -> Extent2D {
+        unsafe {
+            raw::get_rendering_area_granularity(
+                self,
+                p_rendering_area_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularityKHR.html>"]
+    #[doc(alias = "vkGetRenderingAreaGranularityKHR")]
+    pub fn get_rendering_area_granularity_khr(
+        &self,
+        p_rendering_area_info: &RenderingAreaInfo,
+    ) -> Extent2D {
+        unsafe {
+            raw::get_rendering_area_granularity_khr(
+                self,
+                p_rendering_area_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayout.html>"]
+    #[doc(alias = "vkGetDeviceImageSubresourceLayout")]
+    pub fn get_device_image_subresource_layout<
+        S: StructureChainOut<SubresourceLayout2<'static>>,
+    >(
+        &self,
+        p_info: &DeviceImageSubresourceInfo,
+    ) -> S {
+        unsafe {
+            raw::get_device_image_subresource_layout(
+                self,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayoutKHR.html>"]
+    #[doc(alias = "vkGetDeviceImageSubresourceLayoutKHR")]
+    pub fn get_image_subresource_layout_khr<S: StructureChainOut<SubresourceLayout2<'static>>>(
+        &self,
+        p_info: &DeviceImageSubresourceInfo,
+    ) -> S {
+        unsafe {
+            raw::get_device_image_subresource_layout_khr(
+                self,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2.html>"]
+    #[doc(alias = "vkGetImageSubresourceLayout2")]
+    pub fn get_image_subresource_layout2<S: StructureChainOut<SubresourceLayout2<'static>>>(
+        &self,
+        image: &raw::Image,
+        p_subresource: &ImageSubresource2,
+    ) -> S {
+        unsafe {
+            raw::get_image_subresource_layout2(
+                self,
+                image,
+                p_subresource,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html>"]
+    #[doc(alias = "vkGetImageSubresourceLayout2KHR")]
+    pub fn get_image_subresource_layout2_khr<S: StructureChainOut<SubresourceLayout2<'static>>>(
+        &self,
+        image: &raw::Image,
+        p_subresource: &ImageSubresource2,
+    ) -> S {
+        unsafe {
+            raw::get_image_subresource_layout2_khr(
+                self,
+                image,
+                p_subresource,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>"]
+    #[doc(alias = "vkGetImageSubresourceLayout2EXT")]
+    pub fn get_image_subresource_layout2_ext<S: StructureChainOut<SubresourceLayout2<'static>>>(
+        &self,
+        image: &raw::Image,
+        p_subresource: &ImageSubresource2,
+    ) -> S {
+        unsafe {
+            raw::get_image_subresource_layout2_ext(
+                self,
+                image,
+                p_subresource,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImage.html>"]
+    #[doc(alias = "vkCopyMemoryToImage")]
+    pub fn copy_memory_to_image(
+        &self,
+        p_copy_memory_to_image_info: &CopyMemoryToImageInfo,
+    ) -> Result<()> {
+        unsafe {
+            raw::copy_memory_to_image(
+                self,
+                p_copy_memory_to_image_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImageEXT.html>"]
+    #[doc(alias = "vkCopyMemoryToImageEXT")]
+    pub fn copy_memory_to_image_ext(
+        &self,
+        p_copy_memory_to_image_info: &CopyMemoryToImageInfo,
+    ) -> Result<()> {
+        unsafe {
+            raw::copy_memory_to_image_ext(
+                self,
+                p_copy_memory_to_image_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemory.html>"]
+    #[doc(alias = "vkCopyImageToMemory")]
+    pub fn copy_image_to_memory(
+        &self,
+        p_copy_image_to_memory_info: &CopyImageToMemoryInfo,
+    ) -> Result<()> {
+        unsafe {
+            raw::copy_image_to_memory(
+                self,
+                p_copy_image_to_memory_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemoryEXT.html>"]
+    #[doc(alias = "vkCopyImageToMemoryEXT")]
+    pub fn copy_image_to_memory_ext(
+        &self,
+        p_copy_image_to_memory_info: &CopyImageToMemoryInfo,
+    ) -> Result<()> {
+        unsafe {
+            raw::copy_image_to_memory_ext(
+                self,
+                p_copy_image_to_memory_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImage.html>"]
+    #[doc(alias = "vkCopyImageToImage")]
+    pub fn copy_image_to_image(
+        &self,
+        p_copy_image_to_image_info: &CopyImageToImageInfo,
+    ) -> Result<()> {
+        unsafe {
+            raw::copy_image_to_image(
+                self,
+                p_copy_image_to_image_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImageEXT.html>"]
+    #[doc(alias = "vkCopyImageToImageEXT")]
+    pub fn copy_image_to_image_ext(
+        &self,
+        p_copy_image_to_image_info: &CopyImageToImageInfo,
+    ) -> Result<()> {
+        unsafe {
+            raw::copy_image_to_image_ext(
+                self,
+                p_copy_image_to_image_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayout.html>"]
+    #[doc(alias = "vkTransitionImageLayout")]
+    pub fn transition_image_layout<'a>(
+        &self,
+        p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfo<'a>>,
+    ) -> Result<()> {
+        unsafe {
+            raw::transition_image_layout(self, p_transitions, self.disp.get_command_dispatcher())
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayoutEXT.html>"]
+    #[doc(alias = "vkTransitionImageLayoutEXT")]
+    pub fn transition_image_layout_ext<'a>(
+        &self,
+        p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfo<'a>>,
+    ) -> Result<()> {
+        unsafe {
+            raw::transition_image_layout_ext(
+                self,
+                p_transitions,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateSwapchainKHR.html>"]
     #[doc(alias = "vkCreateSwapchainKHR")]
     pub fn create_swapchain_khr(
@@ -3505,6 +3765,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc(alias = "vkGetImageViewHandleNVX")]
     pub fn get_image_view_handle_nvx(&self, p_info: &ImageViewHandleInfoNVX) -> u32 {
         unsafe { raw::get_image_view_handle_nvx(self, p_info, self.disp.get_command_dispatcher()) }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageViewHandle64NVX.html>"]
+    #[doc(alias = "vkGetImageViewHandle64NVX")]
+    pub fn get_image_view_handle64_nvx(&self, p_info: &ImageViewHandleInfoNVX) -> u64 {
+        unsafe {
+            raw::get_image_view_handle64_nvx(self, p_info, self.disp.get_command_dispatcher())
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageViewAddressNVX.html>"]
     #[doc(alias = "vkGetImageViewAddressNVX")]
@@ -4691,78 +4958,6 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyMemoryToImageEXT.html>"]
-    #[doc(alias = "vkCopyMemoryToImageEXT")]
-    pub fn copy_memory_to_image_ext(
-        &self,
-        p_copy_memory_to_image_info: &CopyMemoryToImageInfoEXT,
-    ) -> Result<()> {
-        unsafe {
-            raw::copy_memory_to_image_ext(
-                self,
-                p_copy_memory_to_image_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToMemoryEXT.html>"]
-    #[doc(alias = "vkCopyImageToMemoryEXT")]
-    pub fn copy_image_to_memory_ext(
-        &self,
-        p_copy_image_to_memory_info: &CopyImageToMemoryInfoEXT,
-    ) -> Result<()> {
-        unsafe {
-            raw::copy_image_to_memory_ext(
-                self,
-                p_copy_image_to_memory_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCopyImageToImageEXT.html>"]
-    #[doc(alias = "vkCopyImageToImageEXT")]
-    pub fn copy_image_to_image_ext(
-        &self,
-        p_copy_image_to_image_info: &CopyImageToImageInfoEXT,
-    ) -> Result<()> {
-        unsafe {
-            raw::copy_image_to_image_ext(
-                self,
-                p_copy_image_to_image_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkTransitionImageLayoutEXT.html>"]
-    #[doc(alias = "vkTransitionImageLayoutEXT")]
-    pub fn transition_image_layout_ext<'a>(
-        &self,
-        p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfoEXT<'a>>,
-    ) -> Result<()> {
-        unsafe {
-            raw::transition_image_layout_ext(
-                self,
-                p_transitions,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkMapMemory2KHR.html>"]
-    #[doc(alias = "vkMapMemory2KHR")]
-    pub fn map_memory2_khr(&self, p_memory_map_info: &MemoryMapInfoKHR) -> Result<VoidPtr> {
-        unsafe { raw::map_memory2_khr(self, p_memory_map_info, self.disp.get_command_dispatcher()) }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2KHR.html>"]
-    #[doc(alias = "vkUnmapMemory2KHR")]
-    pub fn unmap_memory2_khr(&self, p_memory_unmap_info: &MemoryUnmapInfoKHR) -> Result<()> {
-        unsafe {
-            raw::unmap_memory2_khr(
-                self,
-                p_memory_unmap_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkReleaseSwapchainImagesEXT.html>"]
     #[doc(alias = "vkReleaseSwapchainImagesEXT")]
     pub fn release_swapchain_images_ext(
@@ -5510,72 +5705,6 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetRenderingAreaGranularityKHR.html>"]
-    #[doc(alias = "vkGetRenderingAreaGranularityKHR")]
-    pub fn get_rendering_area_granularity_khr(
-        &self,
-        p_rendering_area_info: &RenderingAreaInfoKHR,
-    ) -> Extent2D {
-        unsafe {
-            raw::get_rendering_area_granularity_khr(
-                self,
-                p_rendering_area_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceImageSubresourceLayoutKHR.html>"]
-    #[doc(alias = "vkGetDeviceImageSubresourceLayoutKHR")]
-    pub fn get_image_subresource_layout_khr<
-        S: StructureChainOut<SubresourceLayout2KHR<'static>>,
-    >(
-        &self,
-        p_info: &DeviceImageSubresourceInfoKHR,
-    ) -> S {
-        unsafe {
-            raw::get_device_image_subresource_layout_khr(
-                self,
-                p_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2KHR.html>"]
-    #[doc(alias = "vkGetImageSubresourceLayout2KHR")]
-    pub fn get_image_subresource_layout2_khr<
-        S: StructureChainOut<SubresourceLayout2KHR<'static>>,
-    >(
-        &self,
-        image: &raw::Image,
-        p_subresource: &ImageSubresource2KHR,
-    ) -> S {
-        unsafe {
-            raw::get_image_subresource_layout2_khr(
-                self,
-                image,
-                p_subresource,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageSubresourceLayout2EXT.html>"]
-    #[doc(alias = "vkGetImageSubresourceLayout2EXT")]
-    pub fn get_image_subresource_layout2_ext<
-        S: StructureChainOut<SubresourceLayout2KHR<'static>>,
-    >(
-        &self,
-        image: &raw::Image,
-        p_subresource: &ImageSubresource2KHR,
-    ) -> S {
-        unsafe {
-            raw::get_image_subresource_layout2_ext(
-                self,
-                image,
-                p_subresource,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAntiLagUpdateAMD.html>"]
     #[doc(alias = "vkAntiLagUpdateAMD")]
     pub fn anti_lag_update_amd(&self, p_data: &AntiLagDataAMD) {
@@ -6021,6 +6150,11 @@ impl<D: Dispatcher, A: Allocator> Queue<D, A> {
     pub fn get_checkpoint_data_nv<R: DynamicArray<CheckpointDataNV<'static>>>(&self) -> R {
         unsafe { raw::get_queue_checkpoint_data_nv(self, self.disp.get_command_dispatcher()) }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointData2NV.html>"]
+    #[doc(alias = "vkGetQueueCheckpointData2NV")]
+    pub fn get_checkpoint_data2_nv<R: DynamicArray<CheckpointData2NV<'static>>>(&self) -> R {
+        unsafe { raw::get_queue_checkpoint_data2_nv(self, self.disp.get_command_dispatcher()) }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueSetPerformanceConfigurationINTEL.html>"]
     #[doc(alias = "vkQueueSetPerformanceConfigurationINTEL")]
     pub fn set_performance_configuration_intel(
@@ -6034,11 +6168,6 @@ impl<D: Dispatcher, A: Allocator> Queue<D, A> {
                 self.disp.get_command_dispatcher(),
             )
         }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointData2NV.html>"]
-    #[doc(alias = "vkGetQueueCheckpointData2NV")]
-    pub fn get_checkpoint_data2_nv<R: DynamicArray<CheckpointData2NV<'static>>>(&self) -> R {
-        unsafe { raw::get_queue_checkpoint_data2_nv(self, self.disp.get_command_dispatcher()) }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueNotifyOutOfBandNV.html>"]
     #[doc(alias = "vkQueueNotifyOutOfBandNV")]
@@ -8095,6 +8224,312 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStipple.html>"]
+    #[doc(alias = "vkCmdSetLineStipple")]
+    pub fn set_line_stipple(&self, line_stipple_factor: u32, line_stipple_pattern: u16) {
+        unsafe {
+            raw::cmd_set_line_stipple(
+                self,
+                line_stipple_factor,
+                line_stipple_pattern,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleKHR.html>"]
+    #[doc(alias = "vkCmdSetLineStippleKHR")]
+    pub fn set_line_stipple_khr(&self, line_stipple_factor: u32, line_stipple_pattern: u16) {
+        unsafe {
+            raw::cmd_set_line_stipple_khr(
+                self,
+                line_stipple_factor,
+                line_stipple_pattern,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEXT.html>"]
+    #[doc(alias = "vkCmdSetLineStippleEXT")]
+    pub fn set_line_stipple_ext(&self, line_stipple_factor: u32, line_stipple_pattern: u16) {
+        unsafe {
+            raw::cmd_set_line_stipple_ext(
+                self,
+                line_stipple_factor,
+                line_stipple_pattern,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2.html>"]
+    #[doc(alias = "vkCmdBindIndexBuffer2")]
+    pub fn bind_index_buffer2(
+        &self,
+        buffer: Option<&raw::Buffer>,
+        offset: DeviceSize,
+        size: DeviceSize,
+        index_type: IndexType,
+    ) {
+        unsafe {
+            raw::cmd_bind_index_buffer2(
+                self,
+                buffer,
+                offset,
+                size,
+                index_type,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2KHR.html>"]
+    #[doc(alias = "vkCmdBindIndexBuffer2KHR")]
+    pub fn bind_index_buffer2_khr(
+        &self,
+        buffer: Option<&raw::Buffer>,
+        offset: DeviceSize,
+        size: DeviceSize,
+        index_type: IndexType,
+    ) {
+        unsafe {
+            raw::cmd_bind_index_buffer2_khr(
+                self,
+                buffer,
+                offset,
+                size,
+                index_type,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet.html>"]
+    #[doc(alias = "vkCmdPushDescriptorSet")]
+    pub fn push_descriptor_set<'a>(
+        &self,
+        pipeline_bind_point: PipelineBindPoint,
+        layout: &raw::PipelineLayout,
+        set: u32,
+        p_descriptor_writes: impl AsSlice<'a, WriteDescriptorSet<'a>>,
+    ) {
+        unsafe {
+            raw::cmd_push_descriptor_set(
+                self,
+                pipeline_bind_point,
+                layout,
+                set,
+                p_descriptor_writes,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>"]
+    #[doc(alias = "vkCmdPushDescriptorSetKHR")]
+    pub fn push_descriptor_set_khr<'a>(
+        &self,
+        pipeline_bind_point: PipelineBindPoint,
+        layout: &raw::PipelineLayout,
+        set: u32,
+        p_descriptor_writes: impl AsSlice<'a, WriteDescriptorSet<'a>>,
+    ) {
+        unsafe {
+            raw::cmd_push_descriptor_set_khr(
+                self,
+                pipeline_bind_point,
+                layout,
+                set,
+                p_descriptor_writes,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate.html>"]
+    #[doc(alias = "vkCmdPushDescriptorSetWithTemplate")]
+    pub fn push_descriptor_set_with_template(
+        &self,
+        descriptor_update_template: &raw::DescriptorUpdateTemplate,
+        layout: &raw::PipelineLayout,
+        set: u32,
+        p_data: VoidPtr,
+    ) {
+        unsafe {
+            raw::cmd_push_descriptor_set_with_template(
+                self,
+                descriptor_update_template,
+                layout,
+                set,
+                p_data,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
+    #[doc(alias = "vkCmdPushDescriptorSetWithTemplateKHR")]
+    pub fn push_descriptor_set_with_template_khr(
+        &self,
+        descriptor_update_template: &raw::DescriptorUpdateTemplate,
+        layout: &raw::PipelineLayout,
+        set: u32,
+        p_data: VoidPtr,
+    ) {
+        unsafe {
+            raw::cmd_push_descriptor_set_with_template_khr(
+                self,
+                descriptor_update_template,
+                layout,
+                set,
+                p_data,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocations.html>"]
+    #[doc(alias = "vkCmdSetRenderingAttachmentLocations")]
+    pub fn set_rendering_attachment_locations(
+        &self,
+        p_location_info: &RenderingAttachmentLocationInfo,
+    ) {
+        unsafe {
+            raw::cmd_set_rendering_attachment_locations(
+                self,
+                p_location_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocationsKHR.html>"]
+    #[doc(alias = "vkCmdSetRenderingAttachmentLocationsKHR")]
+    pub fn set_rendering_attachment_locations_khr(
+        &self,
+        p_location_info: &RenderingAttachmentLocationInfo,
+    ) {
+        unsafe {
+            raw::cmd_set_rendering_attachment_locations_khr(
+                self,
+                p_location_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndices.html>"]
+    #[doc(alias = "vkCmdSetRenderingInputAttachmentIndices")]
+    pub fn set_rendering_input_attachment_indices(
+        &self,
+        p_input_attachment_index_info: &RenderingInputAttachmentIndexInfo,
+    ) {
+        unsafe {
+            raw::cmd_set_rendering_input_attachment_indices(
+                self,
+                p_input_attachment_index_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndicesKHR.html>"]
+    #[doc(alias = "vkCmdSetRenderingInputAttachmentIndicesKHR")]
+    pub fn set_rendering_input_attachment_indices_khr(
+        &self,
+        p_input_attachment_index_info: &RenderingInputAttachmentIndexInfo,
+    ) {
+        unsafe {
+            raw::cmd_set_rendering_input_attachment_indices_khr(
+                self,
+                p_input_attachment_index_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2.html>"]
+    #[doc(alias = "vkCmdBindDescriptorSets2")]
+    pub fn bind_descriptor_sets2(&self, p_bind_descriptor_sets_info: &BindDescriptorSetsInfo) {
+        unsafe {
+            raw::cmd_bind_descriptor_sets2(
+                self,
+                p_bind_descriptor_sets_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html>"]
+    #[doc(alias = "vkCmdBindDescriptorSets2KHR")]
+    pub fn bind_descriptor_sets2_khr(&self, p_bind_descriptor_sets_info: &BindDescriptorSetsInfo) {
+        unsafe {
+            raw::cmd_bind_descriptor_sets2_khr(
+                self,
+                p_bind_descriptor_sets_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2.html>"]
+    #[doc(alias = "vkCmdPushConstants2")]
+    pub fn push_constants2(&self, p_push_constants_info: &PushConstantsInfo) {
+        unsafe {
+            raw::cmd_push_constants2(
+                self,
+                p_push_constants_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2KHR.html>"]
+    #[doc(alias = "vkCmdPushConstants2KHR")]
+    pub fn push_constants2_khr(&self, p_push_constants_info: &PushConstantsInfo) {
+        unsafe {
+            raw::cmd_push_constants2_khr(
+                self,
+                p_push_constants_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2.html>"]
+    #[doc(alias = "vkCmdPushDescriptorSet2")]
+    pub fn push_descriptor_set2(&self, p_push_descriptor_set_info: &PushDescriptorSetInfo) {
+        unsafe {
+            raw::cmd_push_descriptor_set2(
+                self,
+                p_push_descriptor_set_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2KHR.html>"]
+    #[doc(alias = "vkCmdPushDescriptorSet2KHR")]
+    pub fn push_descriptor_set2_khr(&self, p_push_descriptor_set_info: &PushDescriptorSetInfo) {
+        unsafe {
+            raw::cmd_push_descriptor_set2_khr(
+                self,
+                p_push_descriptor_set_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2.html>"]
+    #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2")]
+    pub fn push_descriptor_set_with_template2(
+        &self,
+        p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfo,
+    ) {
+        unsafe {
+            raw::cmd_push_descriptor_set_with_template2(
+                self,
+                p_push_descriptor_set_with_template_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html>"]
+    #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2KHR")]
+    pub fn push_descriptor_set_with_template2_khr(
+        &self,
+        p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfo,
+    ) {
+        unsafe {
+            raw::cmd_push_descriptor_set_with_template2_khr(
+                self,
+                p_push_descriptor_set_with_template_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerBeginEXT.html>"]
     #[doc(alias = "vkCmdDebugMarkerBeginEXT")]
     pub fn debug_marker_begin_ext(&self, p_marker_info: &DebugMarkerMarkerInfoEXT) {
@@ -8238,46 +8673,6 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             raw::cmd_cu_launch_kernel_nvx(self, p_launch_info, self.disp.get_command_dispatcher())
         }
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetKHR.html>"]
-    #[doc(alias = "vkCmdPushDescriptorSetKHR")]
-    pub fn push_descriptor_set_khr<'a>(
-        &self,
-        pipeline_bind_point: PipelineBindPoint,
-        layout: &raw::PipelineLayout,
-        set: u32,
-        p_descriptor_writes: impl AsSlice<'a, WriteDescriptorSet<'a>>,
-    ) {
-        unsafe {
-            raw::cmd_push_descriptor_set_khr(
-                self,
-                pipeline_bind_point,
-                layout,
-                set,
-                p_descriptor_writes,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
-    #[doc(alias = "vkCmdPushDescriptorSetWithTemplateKHR")]
-    pub fn push_descriptor_set_with_template_khr(
-        &self,
-        descriptor_update_template: &raw::DescriptorUpdateTemplate,
-        layout: &raw::PipelineLayout,
-        set: u32,
-        p_data: VoidPtr,
-    ) {
-        unsafe {
-            raw::cmd_push_descriptor_set_with_template_khr(
-                self,
-                descriptor_update_template,
-                layout,
-                set,
-                p_data,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginConditionalRenderingEXT.html>"]
     #[doc(alias = "vkCmdBeginConditionalRenderingEXT")]
     pub fn begin_conditional_rendering_ext(
@@ -8380,11 +8775,18 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdInitializeGraphScratchMemoryAMDX.html>"]
     #[doc(alias = "vkCmdInitializeGraphScratchMemoryAMDX")]
-    pub fn initialize_graph_scratch_memory_amdx(&self, scratch: DeviceAddress) {
+    pub fn initialize_graph_scratch_memory_amdx(
+        &self,
+        execution_graph: &raw::Pipeline,
+        scratch: DeviceAddress,
+        scratch_size: DeviceSize,
+    ) {
         unsafe {
             raw::cmd_initialize_graph_scratch_memory_amdx(
                 self,
+                execution_graph,
                 scratch,
+                scratch_size,
                 self.disp.get_command_dispatcher(),
             )
         }
@@ -8394,12 +8796,14 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     pub fn dispatch_graph_amdx(
         &self,
         scratch: DeviceAddress,
+        scratch_size: DeviceSize,
         p_count_info: &DispatchGraphCountInfoAMDX,
     ) {
         unsafe {
             raw::cmd_dispatch_graph_amdx(
                 self,
                 scratch,
+                scratch_size,
                 p_count_info,
                 self.disp.get_command_dispatcher(),
             )
@@ -8410,12 +8814,14 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     pub fn dispatch_graph_indirect_amdx(
         &self,
         scratch: DeviceAddress,
+        scratch_size: DeviceSize,
         p_count_info: &DispatchGraphCountInfoAMDX,
     ) {
         unsafe {
             raw::cmd_dispatch_graph_indirect_amdx(
                 self,
                 scratch,
+                scratch_size,
                 p_count_info,
                 self.disp.get_command_dispatcher(),
             )
@@ -8426,12 +8832,14 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     pub fn dispatch_graph_indirect_count_amdx(
         &self,
         scratch: DeviceAddress,
+        scratch_size: DeviceSize,
         count_info: DeviceAddress,
     ) {
         unsafe {
             raw::cmd_dispatch_graph_indirect_count_amdx(
                 self,
                 scratch,
+                scratch_size,
                 count_info,
                 self.disp.get_command_dispatcher(),
             )
@@ -8782,6 +9190,26 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarker2AMD.html>"]
+    #[doc(alias = "vkCmdWriteBufferMarker2AMD")]
+    pub fn write_buffer_marker2_amd(
+        &self,
+        stage: PipelineStageFlags2,
+        dst_buffer: &raw::Buffer,
+        dst_offset: DeviceSize,
+        marker: u32,
+    ) {
+        unsafe {
+            raw::cmd_write_buffer_marker2_amd(
+                self,
+                stage,
+                dst_buffer,
+                dst_offset,
+                marker,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksNV.html>"]
     #[doc(alias = "vkCmdDrawMeshTasksNV")]
     pub fn draw_mesh_tasks_nv(&self, task_count: u32, first_task: u32) {
@@ -8939,34 +9367,6 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingAttachmentLocationsKHR.html>"]
-    #[doc(alias = "vkCmdSetRenderingAttachmentLocationsKHR")]
-    pub fn set_rendering_attachment_locations_khr(
-        &self,
-        p_location_info: &RenderingAttachmentLocationInfoKHR,
-    ) {
-        unsafe {
-            raw::cmd_set_rendering_attachment_locations_khr(
-                self,
-                p_location_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRenderingInputAttachmentIndicesKHR.html>"]
-    #[doc(alias = "vkCmdSetRenderingInputAttachmentIndicesKHR")]
-    pub fn set_rendering_input_attachment_indices_khr(
-        &self,
-        p_input_attachment_index_info: &RenderingInputAttachmentIndexInfoKHR,
-    ) {
-        unsafe {
-            raw::cmd_set_rendering_input_attachment_indices_khr(
-                self,
-                p_input_attachment_index_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPreprocessGeneratedCommandsNV.html>"]
     #[doc(alias = "vkCmdPreprocessGeneratedCommandsNV")]
     pub fn preprocess_generated_commands_nv(
@@ -9031,26 +9431,6 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     pub fn cuda_launch_kernel_nv(&self, p_launch_info: &CudaLaunchInfoNV) {
         unsafe {
             raw::cmd_cuda_launch_kernel_nv(self, p_launch_info, self.disp.get_command_dispatcher())
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteBufferMarker2AMD.html>"]
-    #[doc(alias = "vkCmdWriteBufferMarker2AMD")]
-    pub fn write_buffer_marker2_amd(
-        &self,
-        stage: PipelineStageFlags2,
-        dst_buffer: &raw::Buffer,
-        dst_offset: DeviceSize,
-        marker: u32,
-    ) {
-        unsafe {
-            raw::cmd_write_buffer_marker2_amd(
-                self,
-                stage,
-                dst_buffer,
-                dst_offset,
-                marker,
-                self.disp.get_command_dispatcher(),
-            )
         }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorBuffersEXT.html>"]
@@ -9858,26 +10238,6 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2KHR.html>"]
-    #[doc(alias = "vkCmdBindIndexBuffer2KHR")]
-    pub fn bind_index_buffer2_khr(
-        &self,
-        buffer: Option<&raw::Buffer>,
-        offset: DeviceSize,
-        size: DeviceSize,
-        index_type: IndexType,
-    ) {
-        unsafe {
-            raw::cmd_bind_index_buffer2_khr(
-                self,
-                buffer,
-                offset,
-                size,
-                index_type,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindShadersEXT.html>"]
     #[doc(alias = "vkCmdBindShadersEXT")]
     pub fn bind_shaders_ext<'a, V3: Alias<raw::ShaderEXT> + 'a>(
@@ -9917,80 +10277,6 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             raw::cmd_set_attachment_feedback_loop_enable_ext(
                 self,
                 aspect_mask,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleKHR.html>"]
-    #[doc(alias = "vkCmdSetLineStippleKHR")]
-    pub fn set_line_stipple_khr(&self, line_stipple_factor: u32, line_stipple_pattern: u16) {
-        unsafe {
-            raw::cmd_set_line_stipple_khr(
-                self,
-                line_stipple_factor,
-                line_stipple_pattern,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEXT.html>"]
-    #[doc(alias = "vkCmdSetLineStippleEXT")]
-    pub fn set_line_stipple_ext(&self, line_stipple_factor: u32, line_stipple_pattern: u16) {
-        unsafe {
-            raw::cmd_set_line_stipple_ext(
-                self,
-                line_stipple_factor,
-                line_stipple_pattern,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets2KHR.html>"]
-    #[doc(alias = "vkCmdBindDescriptorSets2KHR")]
-    pub fn bind_descriptor_sets2_khr(
-        &self,
-        p_bind_descriptor_sets_info: &BindDescriptorSetsInfoKHR,
-    ) {
-        unsafe {
-            raw::cmd_bind_descriptor_sets2_khr(
-                self,
-                p_bind_descriptor_sets_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushConstants2KHR.html>"]
-    #[doc(alias = "vkCmdPushConstants2KHR")]
-    pub fn push_constants2_khr(&self, p_push_constants_info: &PushConstantsInfoKHR) {
-        unsafe {
-            raw::cmd_push_constants2_khr(
-                self,
-                p_push_constants_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSet2KHR.html>"]
-    #[doc(alias = "vkCmdPushDescriptorSet2KHR")]
-    pub fn push_descriptor_set2_khr(&self, p_push_descriptor_set_info: &PushDescriptorSetInfoKHR) {
-        unsafe {
-            raw::cmd_push_descriptor_set2_khr(
-                self,
-                p_push_descriptor_set_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html>"]
-    #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2KHR")]
-    pub fn push_descriptor_set_with_template2_khr(
-        &self,
-        p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfoKHR,
-    ) {
-        unsafe {
-            raw::cmd_push_descriptor_set_with_template2_khr(
-                self,
-                p_push_descriptor_set_with_template_info,
                 self.disp.get_command_dispatcher(),
             )
         }

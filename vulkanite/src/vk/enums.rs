@@ -28,6 +28,7 @@ pub enum Status {
     ErrorFragmentation = -1000161000,
     ErrorInvalidOpaqueCaptureAddress = -1000257000,
     PipelineCompileRequired = 1000297000,
+    ErrorNotPermitted = -1000174001,
     ErrorSurfaceLostKHR = -1000000000,
     ErrorNativeWindowInUseKHR = -1000000001,
     SuboptimalKHR = 1000001003,
@@ -36,7 +37,6 @@ pub enum Status {
     ErrorValidationFailedEXT = -1000011001,
     ErrorInvalidShaderNV = -1000012000,
     ErrorInvalidDrmFormatModifierPlaneLayoutEXT = -1000158000,
-    ErrorNotPermittedKHR = -1000174001,
     ErrorFullScreenExclusiveModeLostEXT = -1000255000,
     ThreadIdleKHR = 1000268000,
     ThreadDoneKHR = 1000268001,
@@ -52,7 +52,8 @@ impl Status {
     pub const ErrorOutOfPoolMemoryKHR: Self = Self::ErrorOutOfPoolMemory;
     pub const ErrorInvalidExternalHandleKHR: Self = Self::ErrorInvalidExternalHandle;
     pub const ErrorFragmentationEXT: Self = Self::ErrorFragmentation;
-    pub const ErrorNotPermittedEXT: Self = Self::ErrorNotPermittedKHR;
+    pub const ErrorNotPermittedEXT: Self = Self::ErrorNotPermitted;
+    pub const ErrorNotPermittedKHR: Self = Self::ErrorNotPermitted;
     pub const ErrorInvalidDeviceAddressEXT: Self = Self::ErrorInvalidOpaqueCaptureAddress;
     pub const ErrorInvalidOpaqueCaptureAddressKHR: Self = Self::ErrorInvalidOpaqueCaptureAddress;
     pub const PipelineCompileRequiredEXT: Self = Self::PipelineCompileRequired;
@@ -280,6 +281,56 @@ pub enum StructureType {
     PhysicalDeviceMaintenance4Properties = 1000413001,
     DeviceBufferMemoryRequirements = 1000413002,
     DeviceImageMemoryRequirements = 1000413003,
+    PhysicalDeviceVulkan14Features = 55,
+    PhysicalDeviceVulkan14Properties = 56,
+    DeviceQueueGlobalPriorityCreateInfo = 1000174000,
+    PhysicalDeviceGlobalPriorityQueryFeatures = 1000388000,
+    QueueFamilyGlobalPriorityProperties = 1000388001,
+    PhysicalDeviceShaderSubgroupRotateFeatures = 1000416000,
+    PhysicalDeviceShaderFloatControls2Features = 1000528000,
+    PhysicalDeviceShaderExpectAssumeFeatures = 1000544000,
+    PhysicalDeviceLineRasterizationFeatures = 1000259000,
+    PipelineRasterizationLineStateCreateInfo = 1000259001,
+    PhysicalDeviceLineRasterizationProperties = 1000259002,
+    PhysicalDeviceVertexAttributeDivisorProperties = 1000525000,
+    PipelineVertexInputDivisorStateCreateInfo = 1000190001,
+    PhysicalDeviceVertexAttributeDivisorFeatures = 1000190002,
+    PhysicalDeviceIndexTypeUint8Features = 1000265000,
+    MemoryMapInfo = 1000271000,
+    MemoryUnmapInfo = 1000271001,
+    PhysicalDeviceMaintenance5Features = 1000470000,
+    PhysicalDeviceMaintenance5Properties = 1000470001,
+    RenderingAreaInfo = 1000470003,
+    DeviceImageSubresourceInfo = 1000470004,
+    SubresourceLayout2 = 1000338002,
+    ImageSubresource2 = 1000338003,
+    PipelineCreateFlags2CreateInfo = 1000470005,
+    BufferUsageFlags2CreateInfo = 1000470006,
+    PhysicalDevicePushDescriptorProperties = 1000080000,
+    PhysicalDeviceDynamicRenderingLocalReadFeatures = 1000232000,
+    RenderingAttachmentLocationInfo = 1000232001,
+    RenderingInputAttachmentIndexInfo = 1000232002,
+    PhysicalDeviceMaintenance6Features = 1000545000,
+    PhysicalDeviceMaintenance6Properties = 1000545001,
+    BindMemoryStatus = 1000545002,
+    BindDescriptorSetsInfo = 1000545003,
+    PushConstantsInfo = 1000545004,
+    PushDescriptorSetInfo = 1000545005,
+    PushDescriptorSetWithTemplateInfo = 1000545006,
+    PhysicalDevicePipelineProtectedAccessFeatures = 1000466000,
+    PipelineRobustnessCreateInfo = 1000068000,
+    PhysicalDevicePipelineRobustnessFeatures = 1000068001,
+    PhysicalDevicePipelineRobustnessProperties = 1000068002,
+    PhysicalDeviceHostImageCopyFeatures = 1000270000,
+    PhysicalDeviceHostImageCopyProperties = 1000270001,
+    MemoryToImageCopy = 1000270002,
+    ImageToMemoryCopy = 1000270003,
+    CopyImageToMemoryInfo = 1000270004,
+    CopyMemoryToImageInfo = 1000270005,
+    HostImageLayoutTransitionInfo = 1000270006,
+    CopyImageToImageInfo = 1000270007,
+    SubresourceHostMemcpySize = 1000270008,
+    HostImageCopyDevicePerformanceQuery = 1000270009,
     SwapchainCreateInfoKHR = 1000001000,
     PresentInfoKHR = 1000001001,
     DeviceGroupPresentCapabilitiesKHR = 1000060007,
@@ -310,13 +361,10 @@ pub enum StructureType {
     CuModuleCreateInfoNVX = 1000029000,
     CuFunctionCreateInfoNVX = 1000029001,
     CuLaunchInfoNVX = 1000029002,
+    CuModuleTexturingModeCreateInfoNVX = 1000029004,
     ImageViewHandleInfoNVX = 1000030000,
     ImageViewAddressPropertiesNVX = 1000030001,
     TextureLodGatherFormatPropertiesAMD = 1000041000,
-    RenderingFragmentShadingRateAttachmentInfoKHR = 1000044006,
-    RenderingFragmentDensityMapAttachmentInfoEXT = 1000044007,
-    AttachmentSampleCountInfoAMD = 1000044008,
-    MultiviewPerViewAttributesInfoNVX = 1000044009,
     StreamDescriptorSurfaceCreateInfoGGP = 1000049000,
     PhysicalDeviceCornerSampledImageFeaturesNV = 1000050000,
     ExternalMemoryImageCreateInfoNV = 1000056000,
@@ -328,9 +376,6 @@ pub enum StructureType {
     ViSurfaceCreateInfoNN = 1000062000,
     ImageViewAstcDecodeModeEXT = 1000067000,
     PhysicalDeviceAstcDecodeFeaturesEXT = 1000067001,
-    PipelineRobustnessCreateInfoEXT = 1000068000,
-    PhysicalDevicePipelineRobustnessFeaturesEXT = 1000068001,
-    PhysicalDevicePipelineRobustnessPropertiesEXT = 1000068002,
     ImportMemoryWin32HandleInfoKHR = 1000073000,
     ExportMemoryWin32HandleInfoKHR = 1000073001,
     MemoryWin32HandlePropertiesKHR = 1000073002,
@@ -345,7 +390,6 @@ pub enum StructureType {
     SemaphoreGetWin32HandleInfoKHR = 1000078003,
     ImportSemaphoreFdInfoKHR = 1000079000,
     SemaphoreGetFdInfoKHR = 1000079001,
-    PhysicalDevicePushDescriptorPropertiesKHR = 1000080000,
     CommandBufferInheritanceConditionalRenderingInfoEXT = 1000081000,
     PhysicalDeviceConditionalRenderingFeaturesEXT = 1000081001,
     ConditionalRenderingBeginInfoEXT = 1000081002,
@@ -358,6 +402,7 @@ pub enum StructureType {
     SwapchainCounterCreateInfoEXT = 1000091003,
     PresentTimesInfoGOOGLE = 1000092000,
     PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX = 1000097000,
+    MultiviewPerViewAttributesInfoNVX = 1000044009,
     PipelineViewportSwizzleStateCreateInfoNV = 1000098000,
     PhysicalDeviceDiscardRectanglePropertiesEXT = 1000099000,
     PipelineDiscardRectangleStateCreateInfoEXT = 1000099001,
@@ -408,6 +453,7 @@ pub enum StructureType {
     ExecutionGraphPipelineScratchSizeAMDX = 1000134002,
     ExecutionGraphPipelineCreateInfoAMDX = 1000134003,
     PipelineShaderStageNodeCreateInfoAMDX = 1000134004,
+    AttachmentSampleCountInfoAMD = 1000044008,
     SampleLocationsInfoEXT = 1000143000,
     RenderPassSampleLocationsBeginInfoEXT = 1000143001,
     PipelineSampleLocationsStateCreateInfoEXT = 1000143002,
@@ -476,9 +522,6 @@ pub enum StructureType {
     PhysicalDeviceShaderClockFeaturesKHR = 1000181000,
     PipelineCompilerControlCreateInfoAMD = 1000183000,
     PhysicalDeviceShaderCorePropertiesAMD = 1000185000,
-    DeviceQueueGlobalPriorityCreateInfoKHR = 1000174000,
-    PhysicalDeviceGlobalPriorityQueryFeaturesKHR = 1000388000,
-    QueueFamilyGlobalPriorityPropertiesKHR = 1000388001,
     DeviceMemoryOverallocationCreateInfoAMD = 1000189000,
     PhysicalDeviceVertexAttributeDivisorPropertiesEXT = 1000190000,
     PresentFrameTokenGGP = 1000191000,
@@ -489,6 +532,8 @@ pub enum StructureType {
     PhysicalDeviceExclusiveScissorFeaturesNV = 1000205002,
     CheckpointDataNV = 1000206000,
     QueueFamilyCheckpointPropertiesNV = 1000206001,
+    QueueFamilyCheckpointProperties2NV = 1000314008,
+    CheckpointData2NV = 1000314009,
     PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL = 1000209000,
     QueryPoolPerformanceQueryCreateInfoINTEL = 1000210000,
     InitializePerformanceApiInfoINTEL = 1000210001,
@@ -504,16 +549,15 @@ pub enum StructureType {
     PhysicalDeviceFragmentDensityMapFeaturesEXT = 1000218000,
     PhysicalDeviceFragmentDensityMapPropertiesEXT = 1000218001,
     RenderPassFragmentDensityMapCreateInfoEXT = 1000218002,
+    RenderingFragmentDensityMapAttachmentInfoEXT = 1000044007,
     FragmentShadingRateAttachmentInfoKHR = 1000226000,
     PipelineFragmentShadingRateStateCreateInfoKHR = 1000226001,
     PhysicalDeviceFragmentShadingRatePropertiesKHR = 1000226002,
     PhysicalDeviceFragmentShadingRateFeaturesKHR = 1000226003,
     PhysicalDeviceFragmentShadingRateKHR = 1000226004,
+    RenderingFragmentShadingRateAttachmentInfoKHR = 1000044006,
     PhysicalDeviceShaderCoreProperties2AMD = 1000227000,
     PhysicalDeviceCoherentMemoryFeaturesAMD = 1000229000,
-    PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR = 1000232000,
-    RenderingAttachmentLocationInfoKHR = 1000232001,
-    RenderingInputAttachmentIndexInfoKHR = 1000232002,
     PhysicalDeviceShaderImageAtomicInt64FeaturesEXT = 1000234000,
     PhysicalDeviceShaderQuadControlFeaturesKHR = 1000235000,
     PhysicalDeviceMemoryBudgetPropertiesEXT = 1000237000,
@@ -548,18 +592,6 @@ pub enum StructureType {
     PipelineExecutableInfoKHR = 1000269003,
     PipelineExecutableStatisticKHR = 1000269004,
     PipelineExecutableInternalRepresentationKHR = 1000269005,
-    PhysicalDeviceHostImageCopyFeaturesEXT = 1000270000,
-    PhysicalDeviceHostImageCopyPropertiesEXT = 1000270001,
-    MemoryToImageCopyEXT = 1000270002,
-    ImageToMemoryCopyEXT = 1000270003,
-    CopyImageToMemoryInfoEXT = 1000270004,
-    CopyMemoryToImageInfoEXT = 1000270005,
-    HostImageLayoutTransitionInfoEXT = 1000270006,
-    CopyImageToImageInfoEXT = 1000270007,
-    SubresourceHostMemcpySizeEXT = 1000270008,
-    HostImageCopyDevicePerformanceQueryEXT = 1000270009,
-    MemoryMapInfoKHR = 1000271000,
-    MemoryUnmapInfoKHR = 1000271001,
     PhysicalDeviceMapMemoryPlacedFeaturesEXT = 1000272000,
     PhysicalDeviceMapMemoryPlacedPropertiesEXT = 1000272001,
     MemoryMapPlacedInfoEXT = 1000272002,
@@ -623,8 +655,6 @@ pub enum StructureType {
     ImportMetalIoSurfaceInfoEXT = 1000311009,
     ExportMetalSharedEventInfoEXT = 1000311010,
     ImportMetalSharedEventInfoEXT = 1000311011,
-    QueueFamilyCheckpointProperties2NV = 1000314008,
-    CheckpointData2NV = 1000314009,
     PhysicalDeviceDescriptorBufferPropertiesEXT = 1000316000,
     PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT = 1000316001,
     PhysicalDeviceDescriptorBufferFeaturesEXT = 1000316002,
@@ -739,7 +769,6 @@ pub enum StructureType {
     SamplerBorderColorComponentMappingCreateInfoEXT = 1000411001,
     PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT = 1000412000,
     PhysicalDeviceShaderCorePropertiesARM = 1000415000,
-    PhysicalDeviceShaderSubgroupRotateFeaturesKHR = 1000416000,
     DeviceQueueShaderCoreControlCreateInfoARM = 1000417000,
     PhysicalDeviceSchedulingControlsFeaturesARM = 1000417001,
     PhysicalDeviceSchedulingControlsPropertiesARM = 1000417002,
@@ -795,18 +824,9 @@ pub enum StructureType {
     OpticalFlowExecuteInfoNV = 1000464005,
     OpticalFlowSessionCreatePrivateDataInfoNV = 1000464010,
     PhysicalDeviceLegacyDitheringFeaturesEXT = 1000465000,
-    PhysicalDevicePipelineProtectedAccessFeaturesEXT = 1000466000,
     PhysicalDeviceExternalFormatResolveFeaturesANDROID = 1000468000,
     PhysicalDeviceExternalFormatResolvePropertiesANDROID = 1000468001,
     AndroidHardwareBufferFormatResolvePropertiesANDROID = 1000468002,
-    PhysicalDeviceMaintenance5FeaturesKHR = 1000470000,
-    PhysicalDeviceMaintenance5PropertiesKHR = 1000470001,
-    RenderingAreaInfoKHR = 1000470003,
-    DeviceImageSubresourceInfoKHR = 1000470004,
-    SubresourceLayout2KHR = 1000338002,
-    ImageSubresource2KHR = 1000338003,
-    PipelineCreateFlags2CreateInfoKHR = 1000470005,
-    BufferUsageFlags2CreateInfoKHR = 1000470006,
     PhysicalDeviceAntiLagFeaturesAMD = 1000476000,
     AntiLagDataAMD = 1000476001,
     AntiLagPresentationInfoAMD = 1000476002,
@@ -869,32 +889,18 @@ pub enum StructureType {
     SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM = 1000520001,
     PhysicalDeviceCubicClampFeaturesQCOM = 1000521000,
     PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT = 1000524000,
-    PhysicalDeviceVertexAttributeDivisorPropertiesKHR = 1000525000,
-    PipelineVertexInputDivisorStateCreateInfoKHR = 1000190001,
-    PhysicalDeviceVertexAttributeDivisorFeaturesKHR = 1000190002,
-    PhysicalDeviceShaderFloatControls2FeaturesKHR = 1000528000,
     ScreenBufferPropertiesQNX = 1000529000,
     ScreenBufferFormatPropertiesQNX = 1000529001,
     ImportScreenBufferInfoQNX = 1000529002,
     ExternalFormatQNX = 1000529003,
     PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX = 1000529004,
     PhysicalDeviceLayeredDriverPropertiesMSFT = 1000530000,
-    PhysicalDeviceIndexTypeUint8FeaturesKHR = 1000265000,
-    PhysicalDeviceLineRasterizationFeaturesKHR = 1000259000,
-    PipelineRasterizationLineStateCreateInfoKHR = 1000259001,
-    PhysicalDeviceLineRasterizationPropertiesKHR = 1000259002,
     CalibratedTimestampInfoKHR = 1000184000,
-    PhysicalDeviceShaderExpectAssumeFeaturesKHR = 1000544000,
-    PhysicalDeviceMaintenance6FeaturesKHR = 1000545000,
-    PhysicalDeviceMaintenance6PropertiesKHR = 1000545001,
-    BindMemoryStatusKHR = 1000545002,
-    BindDescriptorSetsInfoKHR = 1000545003,
-    PushConstantsInfoKHR = 1000545004,
-    PushDescriptorSetInfoKHR = 1000545005,
-    PushDescriptorSetWithTemplateInfoKHR = 1000545006,
     SetDescriptorBufferOffsetsInfoEXT = 1000545007,
     BindDescriptorBufferEmbeddedSamplersInfoEXT = 1000545008,
     PhysicalDeviceDescriptorPoolOverallocationFeaturesNV = 1000546000,
+    DisplaySurfaceStereoCreateInfoNV = 1000551000,
+    DisplayModeStereoPropertiesNV = 1000551001,
     PhysicalDeviceRawAccessChainsFeaturesNV = 1000555000,
     PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR = 1000558000,
     PhysicalDeviceCommandBufferInheritanceFeaturesNV = 1000559000,
@@ -925,6 +931,12 @@ pub enum StructureType {
     ImageAlignmentControlCreateInfoMESA = 1000575002,
     PhysicalDeviceDepthClampControlFeaturesEXT = 1000582000,
     PipelineViewportDepthClampControlCreateInfoEXT = 1000582001,
+    PhysicalDeviceHdrVividFeaturesHUAWEI = 1000590000,
+    HdrVividDynamicMetadataHUAWEI = 1000590001,
+    PhysicalDeviceCooperativeMatrix2FeaturesNV = 1000593000,
+    CooperativeMatrixFlexibleDimensionsPropertiesNV = 1000593001,
+    PhysicalDeviceCooperativeMatrix2PropertiesNV = 1000593002,
+    PhysicalDeviceVertexAttributeRobustnessFeaturesEXT = 1000608000,
 }
 #[allow(non_upper_case_globals)]
 impl StructureType {
@@ -940,7 +952,6 @@ impl StructureType {
         Self::PhysicalDeviceDynamicRenderingFeatures;
     pub const CommandBufferInheritanceRenderingInfoKHR: Self =
         Self::CommandBufferInheritanceRenderingInfo;
-    pub const AttachmentSampleCountInfoNV: Self = Self::AttachmentSampleCountInfoAMD;
     pub const RenderPassMultiviewCreateInfoKHR: Self = Self::RenderPassMultiviewCreateInfo;
     pub const PhysicalDeviceMultiviewFeaturesKHR: Self = Self::PhysicalDeviceMultiviewFeatures;
     pub const PhysicalDeviceMultiviewPropertiesKHR: Self = Self::PhysicalDeviceMultiviewProperties;
@@ -963,6 +974,11 @@ impl StructureType {
     pub const BindImageMemoryDeviceGroupInfoKHR: Self = Self::BindImageMemoryDeviceGroupInfo;
     pub const PhysicalDeviceTextureCompressionAstcHdrFeaturesEXT: Self =
         Self::PhysicalDeviceTextureCompressionAstcHdrFeatures;
+    pub const PipelineRobustnessCreateInfoEXT: Self = Self::PipelineRobustnessCreateInfo;
+    pub const PhysicalDevicePipelineRobustnessFeaturesEXT: Self =
+        Self::PhysicalDevicePipelineRobustnessFeatures;
+    pub const PhysicalDevicePipelineRobustnessPropertiesEXT: Self =
+        Self::PhysicalDevicePipelineRobustnessProperties;
     pub const PhysicalDeviceGroupPropertiesKHR: Self = Self::PhysicalDeviceGroupProperties;
     pub const DeviceGroupDeviceCreateInfoKHR: Self = Self::DeviceGroupDeviceCreateInfo;
     pub const PhysicalDeviceExternalImageFormatInfoKHR: Self =
@@ -978,6 +994,8 @@ impl StructureType {
         Self::PhysicalDeviceExternalSemaphoreInfo;
     pub const ExternalSemaphorePropertiesKHR: Self = Self::ExternalSemaphoreProperties;
     pub const ExportSemaphoreCreateInfoKHR: Self = Self::ExportSemaphoreCreateInfo;
+    pub const PhysicalDevicePushDescriptorPropertiesKHR: Self =
+        Self::PhysicalDevicePushDescriptorProperties;
     pub const PhysicalDeviceShaderFloat16Int8FeaturesKHR: Self =
         Self::PhysicalDeviceShaderFloat16Int8Features;
     pub const PhysicalDeviceFloat16Int8FeaturesKHR: Self =
@@ -1032,6 +1050,7 @@ impl StructureType {
     pub const MemoryRequirements2KHR: Self = Self::MemoryRequirements2;
     pub const SparseImageMemoryRequirements2KHR: Self = Self::SparseImageMemoryRequirements2;
     pub const ImageFormatListCreateInfoKHR: Self = Self::ImageFormatListCreateInfo;
+    pub const AttachmentSampleCountInfoNV: Self = Self::AttachmentSampleCountInfoAMD;
     pub const SamplerYcbcrConversionCreateInfoKHR: Self = Self::SamplerYcbcrConversionCreateInfo;
     pub const SamplerYcbcrConversionInfoKHR: Self = Self::SamplerYcbcrConversionInfo;
     pub const BindImagePlaneMemoryInfoKHR: Self = Self::BindImagePlaneMemoryInfo;
@@ -1056,17 +1075,23 @@ impl StructureType {
         Self::PhysicalDeviceMaintenance3Properties;
     pub const DescriptorSetLayoutSupportKHR: Self = Self::DescriptorSetLayoutSupport;
     pub const DeviceQueueGlobalPriorityCreateInfoEXT: Self =
-        Self::DeviceQueueGlobalPriorityCreateInfoKHR;
+        Self::DeviceQueueGlobalPriorityCreateInfo;
     pub const PhysicalDeviceShaderSubgroupExtendedTypesFeaturesKHR: Self =
         Self::PhysicalDeviceShaderSubgroupExtendedTypesFeatures;
     pub const PhysicalDevice8BitStorageFeaturesKHR: Self = Self::PhysicalDevice8BitStorageFeatures;
     pub const PhysicalDeviceShaderAtomicInt64FeaturesKHR: Self =
         Self::PhysicalDeviceShaderAtomicInt64Features;
     pub const CalibratedTimestampInfoEXT: Self = Self::CalibratedTimestampInfoKHR;
+    pub const DeviceQueueGlobalPriorityCreateInfoKHR: Self =
+        Self::DeviceQueueGlobalPriorityCreateInfo;
+    pub const PhysicalDeviceGlobalPriorityQueryFeaturesKHR: Self =
+        Self::PhysicalDeviceGlobalPriorityQueryFeatures;
+    pub const QueueFamilyGlobalPriorityPropertiesKHR: Self =
+        Self::QueueFamilyGlobalPriorityProperties;
     pub const PipelineVertexInputDivisorStateCreateInfoEXT: Self =
-        Self::PipelineVertexInputDivisorStateCreateInfoKHR;
+        Self::PipelineVertexInputDivisorStateCreateInfo;
     pub const PhysicalDeviceVertexAttributeDivisorFeaturesEXT: Self =
-        Self::PhysicalDeviceVertexAttributeDivisorFeaturesKHR;
+        Self::PhysicalDeviceVertexAttributeDivisorFeatures;
     pub const PipelineCreationFeedbackCreateInfoEXT: Self =
         Self::PipelineCreationFeedbackCreateInfo;
     pub const PhysicalDeviceDriverPropertiesKHR: Self = Self::PhysicalDeviceDriverProperties;
@@ -1101,6 +1126,10 @@ impl StructureType {
         Self::PipelineShaderStageRequiredSubgroupSizeCreateInfo;
     pub const PhysicalDeviceSubgroupSizeControlFeaturesEXT: Self =
         Self::PhysicalDeviceSubgroupSizeControlFeatures;
+    pub const PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR: Self =
+        Self::PhysicalDeviceDynamicRenderingLocalReadFeatures;
+    pub const RenderingAttachmentLocationInfoKHR: Self = Self::RenderingAttachmentLocationInfo;
+    pub const RenderingInputAttachmentIndexInfoKHR: Self = Self::RenderingInputAttachmentIndexInfo;
     pub const PhysicalDeviceSeparateDepthStencilLayoutsFeaturesKHR: Self =
         Self::PhysicalDeviceSeparateDepthStencilLayoutsFeatures;
     pub const AttachmentReferenceStencilLayoutKHR: Self = Self::AttachmentReferenceStencilLayout;
@@ -1123,15 +1152,30 @@ impl StructureType {
     pub const DeviceMemoryOpaqueCaptureAddressInfoKHR: Self =
         Self::DeviceMemoryOpaqueCaptureAddressInfo;
     pub const PhysicalDeviceLineRasterizationFeaturesEXT: Self =
-        Self::PhysicalDeviceLineRasterizationFeaturesKHR;
+        Self::PhysicalDeviceLineRasterizationFeatures;
     pub const PipelineRasterizationLineStateCreateInfoEXT: Self =
-        Self::PipelineRasterizationLineStateCreateInfoKHR;
+        Self::PipelineRasterizationLineStateCreateInfo;
     pub const PhysicalDeviceLineRasterizationPropertiesEXT: Self =
-        Self::PhysicalDeviceLineRasterizationPropertiesKHR;
+        Self::PhysicalDeviceLineRasterizationProperties;
     pub const PhysicalDeviceHostQueryResetFeaturesEXT: Self =
         Self::PhysicalDeviceHostQueryResetFeatures;
     pub const PhysicalDeviceIndexTypeUint8FeaturesEXT: Self =
-        Self::PhysicalDeviceIndexTypeUint8FeaturesKHR;
+        Self::PhysicalDeviceIndexTypeUint8Features;
+    pub const PhysicalDeviceHostImageCopyFeaturesEXT: Self =
+        Self::PhysicalDeviceHostImageCopyFeatures;
+    pub const PhysicalDeviceHostImageCopyPropertiesEXT: Self =
+        Self::PhysicalDeviceHostImageCopyProperties;
+    pub const MemoryToImageCopyEXT: Self = Self::MemoryToImageCopy;
+    pub const ImageToMemoryCopyEXT: Self = Self::ImageToMemoryCopy;
+    pub const CopyImageToMemoryInfoEXT: Self = Self::CopyImageToMemoryInfo;
+    pub const CopyMemoryToImageInfoEXT: Self = Self::CopyMemoryToImageInfo;
+    pub const HostImageLayoutTransitionInfoEXT: Self = Self::HostImageLayoutTransitionInfo;
+    pub const CopyImageToImageInfoEXT: Self = Self::CopyImageToImageInfo;
+    pub const SubresourceHostMemcpySizeEXT: Self = Self::SubresourceHostMemcpySize;
+    pub const HostImageCopyDevicePerformanceQueryEXT: Self =
+        Self::HostImageCopyDevicePerformanceQuery;
+    pub const MemoryMapInfoKHR: Self = Self::MemoryMapInfo;
+    pub const MemoryUnmapInfoKHR: Self = Self::MemoryUnmapInfo;
     pub const PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT: Self =
         Self::PhysicalDeviceShaderDemoteToHelperInvocationFeatures;
     pub const PhysicalDeviceShaderIntegerDotProductFeaturesKHR: Self =
@@ -1169,8 +1213,8 @@ impl StructureType {
     pub const ImageBlit2KHR: Self = Self::ImageBlit2;
     pub const BufferImageCopy2KHR: Self = Self::BufferImageCopy2;
     pub const ImageResolve2KHR: Self = Self::ImageResolve2;
-    pub const SubresourceLayout2EXT: Self = Self::SubresourceLayout2KHR;
-    pub const ImageSubresource2EXT: Self = Self::ImageSubresource2KHR;
+    pub const SubresourceLayout2EXT: Self = Self::SubresourceLayout2;
+    pub const ImageSubresource2EXT: Self = Self::ImageSubresource2;
     pub const PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM: Self =
         Self::PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT;
     pub const PhysicalDeviceMutableDescriptorTypeFeaturesVALVE: Self =
@@ -1179,17 +1223,58 @@ impl StructureType {
     pub const FormatProperties3KHR: Self = Self::FormatProperties3;
     pub const PipelineInfoEXT: Self = Self::PipelineInfoKHR;
     pub const PhysicalDeviceGlobalPriorityQueryFeaturesEXT: Self =
-        Self::PhysicalDeviceGlobalPriorityQueryFeaturesKHR;
+        Self::PhysicalDeviceGlobalPriorityQueryFeatures;
     pub const QueueFamilyGlobalPriorityPropertiesEXT: Self =
-        Self::QueueFamilyGlobalPriorityPropertiesKHR;
+        Self::QueueFamilyGlobalPriorityProperties;
     pub const PhysicalDeviceMaintenance4FeaturesKHR: Self =
         Self::PhysicalDeviceMaintenance4Features;
     pub const PhysicalDeviceMaintenance4PropertiesKHR: Self =
         Self::PhysicalDeviceMaintenance4Properties;
     pub const DeviceBufferMemoryRequirementsKHR: Self = Self::DeviceBufferMemoryRequirements;
     pub const DeviceImageMemoryRequirementsKHR: Self = Self::DeviceImageMemoryRequirements;
+    pub const PhysicalDeviceShaderSubgroupRotateFeaturesKHR: Self =
+        Self::PhysicalDeviceShaderSubgroupRotateFeatures;
+    pub const PhysicalDevicePipelineProtectedAccessFeaturesEXT: Self =
+        Self::PhysicalDevicePipelineProtectedAccessFeatures;
+    pub const PhysicalDeviceMaintenance5FeaturesKHR: Self =
+        Self::PhysicalDeviceMaintenance5Features;
+    pub const PhysicalDeviceMaintenance5PropertiesKHR: Self =
+        Self::PhysicalDeviceMaintenance5Properties;
+    pub const RenderingAreaInfoKHR: Self = Self::RenderingAreaInfo;
+    pub const DeviceImageSubresourceInfoKHR: Self = Self::DeviceImageSubresourceInfo;
+    pub const SubresourceLayout2KHR: Self = Self::SubresourceLayout2;
+    pub const ImageSubresource2KHR: Self = Self::ImageSubresource2;
+    pub const PipelineCreateFlags2CreateInfoKHR: Self = Self::PipelineCreateFlags2CreateInfo;
+    pub const BufferUsageFlags2CreateInfoKHR: Self = Self::BufferUsageFlags2CreateInfo;
     pub const ShaderRequiredSubgroupSizeCreateInfoEXT: Self =
         Self::PipelineShaderStageRequiredSubgroupSizeCreateInfo;
+    pub const PhysicalDeviceVertexAttributeDivisorPropertiesKHR: Self =
+        Self::PhysicalDeviceVertexAttributeDivisorProperties;
+    pub const PipelineVertexInputDivisorStateCreateInfoKHR: Self =
+        Self::PipelineVertexInputDivisorStateCreateInfo;
+    pub const PhysicalDeviceVertexAttributeDivisorFeaturesKHR: Self =
+        Self::PhysicalDeviceVertexAttributeDivisorFeatures;
+    pub const PhysicalDeviceShaderFloatControls2FeaturesKHR: Self =
+        Self::PhysicalDeviceShaderFloatControls2Features;
+    pub const PhysicalDeviceIndexTypeUint8FeaturesKHR: Self =
+        Self::PhysicalDeviceIndexTypeUint8Features;
+    pub const PhysicalDeviceLineRasterizationFeaturesKHR: Self =
+        Self::PhysicalDeviceLineRasterizationFeatures;
+    pub const PipelineRasterizationLineStateCreateInfoKHR: Self =
+        Self::PipelineRasterizationLineStateCreateInfo;
+    pub const PhysicalDeviceLineRasterizationPropertiesKHR: Self =
+        Self::PhysicalDeviceLineRasterizationProperties;
+    pub const PhysicalDeviceShaderExpectAssumeFeaturesKHR: Self =
+        Self::PhysicalDeviceShaderExpectAssumeFeatures;
+    pub const PhysicalDeviceMaintenance6FeaturesKHR: Self =
+        Self::PhysicalDeviceMaintenance6Features;
+    pub const PhysicalDeviceMaintenance6PropertiesKHR: Self =
+        Self::PhysicalDeviceMaintenance6Properties;
+    pub const BindMemoryStatusKHR: Self = Self::BindMemoryStatus;
+    pub const BindDescriptorSetsInfoKHR: Self = Self::BindDescriptorSetsInfo;
+    pub const PushConstantsInfoKHR: Self = Self::PushConstantsInfo;
+    pub const PushDescriptorSetInfoKHR: Self = Self::PushDescriptorSetInfo;
+    pub const PushDescriptorSetWithTemplateInfoKHR: Self = Self::PushDescriptorSetWithTemplateInfo;
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_ATTACHMENT_UNUSED.html>"]
 #[doc(alias = "VK_ATTACHMENT_UNUSED")]
@@ -1559,6 +1644,8 @@ pub enum Format {
     Astc10x10SfloatBlock = 1000066011,
     Astc12x10SfloatBlock = 1000066012,
     Astc12x12SfloatBlock = 1000066013,
+    A1B5G5R5UnormPack16 = 1000470000,
+    A8Unorm = 1000470001,
     Pvrtc12BppUnormBlockIMG = 1000054000,
     Pvrtc14BppUnormBlockIMG = 1000054001,
     Pvrtc22BppUnormBlockIMG = 1000054002,
@@ -1568,8 +1655,6 @@ pub enum Format {
     Pvrtc22BppSrgbBlockIMG = 1000054006,
     Pvrtc24BppSrgbBlockIMG = 1000054007,
     R16G16Sfixed5NV = 1000464000,
-    A1B5G5R5UnormPack16KHR = 1000470000,
-    A8UnormKHR = 1000470001,
 }
 #[allow(non_upper_case_globals)]
 impl Format {
@@ -1644,6 +1729,8 @@ impl Format {
     pub const A4R4G4B4UnormPack16EXT: Self = Self::A4R4G4B4UnormPack16;
     pub const A4B4G4R4UnormPack16EXT: Self = Self::A4B4G4R4UnormPack16;
     pub const R16G16S105NV: Self = Self::R16G16Sfixed5NV;
+    pub const A1B5G5R5UnormPack16KHR: Self = Self::A1B5G5R5UnormPack16;
+    pub const A8UnormKHR: Self = Self::A8Unorm;
 }
 bitflags! {
     #[derive(Default)]
@@ -1759,10 +1846,11 @@ bitflags! {
         const DepthStencilAttachment = 1u32 << 5;
         const TransientAttachment = 1u32 << 6;
         const InputAttachment = 1u32 << 7;
+        const HostTransfer = 1u32 << 22;
         const ShadingRateImageNV = Self::FragmentShadingRateAttachmentKHR.bits();
         const FragmentDensityMapEXT = 1u32 << 9;
         const FragmentShadingRateAttachmentKHR = 1u32 << 8;
-        const HostTransferEXT = 1u32 << 22;
+        const HostTransferEXT = Self::HostTransfer.bits();
         const AttachmentFeedbackLoopEXT = 1u32 << 19;
         const InvocationMaskHUAWEI = 1u32 << 18;
         const SampleWeightQCOM = 1u32 << 20;
@@ -2128,11 +2216,11 @@ pub enum ImageLayout {
     StencilReadOnlyOptimal = 1000241003,
     ReadOnlyOptimal = 1000314000,
     AttachmentOptimal = 1000314001,
+    RenderingLocalRead = 1000232000,
     PresentSrcKHR = 1000001002,
     SharedPresentKHR = 1000111000,
     FragmentDensityMapOptimalEXT = 1000218000,
     FragmentShadingRateAttachmentOptimalKHR = 1000164003,
-    RenderingLocalReadKHR = 1000232000,
     AttachmentFeedbackLoopOptimalEXT = 1000339000,
 }
 #[allow(non_upper_case_globals)]
@@ -2142,6 +2230,7 @@ impl ImageLayout {
     pub const DepthAttachmentStencilReadOnlyOptimalKHR: Self =
         Self::DepthAttachmentStencilReadOnlyOptimal;
     pub const ShadingRateOptimalNV: Self = Self::FragmentShadingRateAttachmentOptimalKHR;
+    pub const RenderingLocalReadKHR: Self = Self::RenderingLocalRead;
     pub const DepthAttachmentOptimalKHR: Self = Self::DepthAttachmentOptimal;
     pub const DepthReadOnlyOptimalKHR: Self = Self::DepthReadOnlyOptimal;
     pub const StencilAttachmentOptimalKHR: Self = Self::StencilAttachmentOptimal;
@@ -2338,6 +2427,7 @@ pub enum DynamicState {
     RasterizerDiscardEnable = 1000377001,
     DepthBiasEnable = 1000377002,
     PrimitiveRestartEnable = 1000377004,
+    LineStipple = 1000259000,
     ViewportWScalingNV = 1000087000,
     DiscardRectangleEXT = 1000099000,
     DiscardRectangleEnableEXT = 1000099001,
@@ -2385,12 +2475,11 @@ pub enum DynamicState {
     RepresentativeFragmentTestEnableNV = 1000455031,
     CoverageReductionModeNV = 1000455032,
     AttachmentFeedbackLoopEnableEXT = 1000524000,
-    LineStippleKHR = 1000259000,
     DepthClampRangeEXT = 1000582000,
 }
 #[allow(non_upper_case_globals)]
 impl DynamicState {
-    pub const LineStippleEXT: Self = Self::LineStippleKHR;
+    pub const LineStippleEXT: Self = Self::LineStipple;
     pub const CullModeEXT: Self = Self::CullMode;
     pub const FrontFaceEXT: Self = Self::FrontFace;
     pub const PrimitiveTopologyEXT: Self = Self::PrimitiveTopology;
@@ -2406,6 +2495,7 @@ impl DynamicState {
     pub const RasterizerDiscardEnableEXT: Self = Self::RasterizerDiscardEnable;
     pub const DepthBiasEnableEXT: Self = Self::DepthBiasEnable;
     pub const PrimitiveRestartEnableEXT: Self = Self::PrimitiveRestartEnable;
+    pub const LineStippleKHR: Self = Self::LineStipple;
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkFrontFace.html>"]
@@ -2451,10 +2541,8 @@ bitflags! {
         const DispatchBase = 1u32 << 4;
         const FailOnPipelineCompileRequired = 1u32 << 8;
         const EarlyReturnOnFailure = 1u32 << 9;
-        const RenderingFragmentShadingRateAttachmentKHR = 1u32 << 21;
-        const RasterizationStateCreateFragmentShadingRateAttachmentKHR = Self::RenderingFragmentShadingRateAttachmentKHR.bits();
-        const RenderingFragmentDensityMapAttachmentEXT = 1u32 << 22;
-        const RasterizationStateCreateFragmentDensityMapAttachmentEXT = Self::RenderingFragmentDensityMapAttachmentEXT.bits();
+        const NoProtectedAccess = 1u32 << 27;
+        const ProtectedAccessOnly = 1u32 << 30;
         const ViewIndexFromDeviceIndexKHR = Self::ViewIndexFromDeviceIndex.bits();
         const DispatchBaseKHR = Self::DispatchBase.bits();
         const RayTracingNoNullAnyHitShadersKHR = 1u32 << 14;
@@ -2465,6 +2553,10 @@ bitflags! {
         const RayTracingSkipAabbsKHR = 1u32 << 13;
         const RayTracingShaderGroupHandleCaptureReplayKHR = 1u32 << 19;
         const DeferCompileNV = 1u32 << 5;
+        const RenderingFragmentDensityMapAttachmentEXT = 1u32 << 22;
+        const RasterizationStateCreateFragmentDensityMapAttachmentEXT = Self::RenderingFragmentDensityMapAttachmentEXT.bits();
+        const RenderingFragmentShadingRateAttachmentKHR = 1u32 << 21;
+        const RasterizationStateCreateFragmentShadingRateAttachmentKHR = Self::RenderingFragmentShadingRateAttachmentKHR.bits();
         const CaptureStatisticsKHR = 1u32 << 6;
         const CaptureInternalRepresentationsKHR = 1u32 << 7;
         const IndirectBindableNV = 1u32 << 18;
@@ -2479,8 +2571,8 @@ bitflags! {
         const DepthStencilAttachmentFeedbackLoopEXT = 1u32 << 26;
         const RayTracingOpacityMicromapEXT = 1u32 << 24;
         const RayTracingDisplacementMicromapNV = 1u32 << 28;
-        const NoProtectedAccessEXT = 1u32 << 27;
-        const ProtectedAccessOnlyEXT = 1u32 << 30;
+        const NoProtectedAccessEXT = Self::NoProtectedAccess.bits();
+        const ProtectedAccessOnlyEXT = Self::ProtectedAccessOnly.bits();
     }
 }
 bitflags! {
@@ -2668,7 +2760,8 @@ bitflags! {
     #[doc(alias = "VkDescriptorSetLayoutCreateFlagBits")]
     pub struct DescriptorSetLayoutCreateFlags : u32 {
         const UpdateAfterBindPool = 1u32 << 1;
-        const PushDescriptorKHR = 1u32 << 0;
+        const PushDescriptor = 1u32 << 0;
+        const PushDescriptorKHR = Self::PushDescriptor.bits();
         const UpdateAfterBindPoolEXT = Self::UpdateAfterBindPool.bits();
         const DescriptorBufferEXT = 1u32 << 4;
         const EmbeddedImmutableSamplersEXT = 1u32 << 5;
@@ -2768,11 +2861,12 @@ pub enum AttachmentLoadOp {
     Load = 0,
     Clear = 1,
     DontCare = 2,
-    NoneKHR = 1000400000,
+    None = 1000400000,
 }
 #[allow(non_upper_case_globals)]
 impl AttachmentLoadOp {
-    pub const NoneEXT: Self = Self::NoneKHR;
+    pub const NoneEXT: Self = Self::None;
+    pub const NoneKHR: Self = Self::None;
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAttachmentStoreOp.html>"]
@@ -2929,13 +3023,14 @@ bitflags! {
 pub enum IndexType {
     Uint16 = 0,
     Uint32 = 1,
+    Uint8 = 1000265000,
     NoneKHR = 1000165000,
-    Uint8KHR = 1000265000,
 }
 #[allow(non_upper_case_globals)]
 impl IndexType {
     pub const NoneNV: Self = Self::NoneKHR;
-    pub const Uint8EXT: Self = Self::Uint8KHR;
+    pub const Uint8EXT: Self = Self::Uint8;
+    pub const Uint8KHR: Self = Self::Uint8;
 }
 bitflags! {
     #[derive(Default)]
@@ -2978,9 +3073,11 @@ bitflags! {
         const ShuffleRelative = 1u32 << 5;
         const Clustered = 1u32 << 6;
         const Quad = 1u32 << 7;
+        const Rotate = 1u32 << 9;
+        const RotateClustered = 1u32 << 10;
         const PartitionedNV = 1u32 << 8;
-        const RotateKHR = 1u32 << 9;
-        const RotateClusteredKHR = 1u32 << 10;
+        const RotateKHR = Self::Rotate.bits();
+        const RotateClusteredKHR = Self::RotateClustered.bits();
     }
 }
 bitflags! {
@@ -3126,10 +3223,11 @@ pub type ChromaLocationKHR = ChromaLocation;
 #[repr(u32)]
 pub enum DescriptorUpdateTemplateType {
     DescriptorSet = 0,
-    PushDescriptorsKHR = 1,
+    PushDescriptors = 1,
 }
 #[allow(non_upper_case_globals)]
 impl DescriptorUpdateTemplateType {
+    pub const PushDescriptorsKHR: Self = Self::PushDescriptors;
     pub const DescriptorSetKHR: Self = Self::DescriptorSet;
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorUpdateTemplateTypeKHR.html>"]
@@ -3333,7 +3431,7 @@ pub enum DriverId {
     MesaNvk = 24,
     ImaginationOpenSourceMESA = 25,
     MesaHoneykrisp = 26,
-    Reserved27 = 27,
+    VulkanScEmulationOnVulkan = 27,
 }
 #[allow(non_upper_case_globals)]
 impl DriverId {
@@ -3471,10 +3569,10 @@ bitflags! {
     #[doc(alias = "VkPipelineCreationFeedbackFlagBits")]
     pub struct PipelineCreationFeedbackFlags : u32 {
         const Valid = 1u32 << 0;
-        const ValidEXT = Self::Valid.bits();
         const ApplicationPipelineCacheHit = 1u32 << 1;
-        const ApplicationPipelineCacheHitEXT = Self::ApplicationPipelineCacheHit.bits();
         const BasePipelineAcceleration = 1u32 << 2;
+        const ValidEXT = Self::Valid.bits();
+        const ApplicationPipelineCacheHitEXT = Self::ApplicationPipelineCacheHit.bits();
         const BasePipelineAccelerationEXT = Self::BasePipelineAcceleration.bits();
     }
 }
@@ -3489,14 +3587,14 @@ bitflags! {
     #[doc(alias = "VkToolPurposeFlagBits")]
     pub struct ToolPurposeFlags : u32 {
         const Validation = 1u32 << 0;
-        const ValidationEXT = Self::Validation.bits();
         const Profiling = 1u32 << 1;
-        const ProfilingEXT = Self::Profiling.bits();
         const Tracing = 1u32 << 2;
-        const TracingEXT = Self::Tracing.bits();
         const AdditionalFeatures = 1u32 << 3;
-        const AdditionalFeaturesEXT = Self::AdditionalFeatures.bits();
         const ModifyingFeatures = 1u32 << 4;
+        const ValidationEXT = Self::Validation.bits();
+        const ProfilingEXT = Self::Profiling.bits();
+        const TracingEXT = Self::Tracing.bits();
+        const AdditionalFeaturesEXT = Self::AdditionalFeatures.bits();
         const ModifyingFeaturesEXT = Self::ModifyingFeatures.bits();
         const DebugReportingEXT = 1u32 << 5;
         const DebugMarkersEXT = 1u32 << 6;
@@ -3513,56 +3611,56 @@ bitflags! {
     #[doc(alias = "VkPipelineStageFlagBits2")]
     pub struct PipelineStageFlags2 : u64 {
         const None = 0;
-        const NoneKHR = Self::None.bits();
         const TopOfPipe = 1u64 << 0;
-        const TopOfPipeKHR = Self::TopOfPipe.bits();
         const DrawIndirect = 1u64 << 1;
-        const DrawIndirectKHR = Self::DrawIndirect.bits();
         const VertexInput = 1u64 << 2;
-        const VertexInputKHR = Self::VertexInput.bits();
         const VertexShader = 1u64 << 3;
-        const VertexShaderKHR = Self::VertexShader.bits();
         const TessellationControlShader = 1u64 << 4;
-        const TessellationControlShaderKHR = Self::TessellationControlShader.bits();
         const TessellationEvaluationShader = 1u64 << 5;
-        const TessellationEvaluationShaderKHR = Self::TessellationEvaluationShader.bits();
         const GeometryShader = 1u64 << 6;
-        const GeometryShaderKHR = Self::GeometryShader.bits();
         const FragmentShader = 1u64 << 7;
-        const FragmentShaderKHR = Self::FragmentShader.bits();
         const EarlyFragmentTests = 1u64 << 8;
-        const EarlyFragmentTestsKHR = Self::EarlyFragmentTests.bits();
         const LateFragmentTests = 1u64 << 9;
-        const LateFragmentTestsKHR = Self::LateFragmentTests.bits();
         const ColorAttachmentOutput = 1u64 << 10;
-        const ColorAttachmentOutputKHR = Self::ColorAttachmentOutput.bits();
         const ComputeShader = 1u64 << 11;
-        const ComputeShaderKHR = Self::ComputeShader.bits();
         const AllTransfer = 1u64 << 12;
-        const AllTransferKHR = Self::AllTransfer.bits();
-        const Transfer = Self::AllTransferKHR.bits();
-        const TransferKHR = Self::AllTransfer.bits();
+        const Transfer = Self::AllTransfer.bits();
         const BottomOfPipe = 1u64 << 13;
-        const BottomOfPipeKHR = Self::BottomOfPipe.bits();
         const Host = 1u64 << 14;
-        const HostKHR = Self::Host.bits();
         const AllGraphics = 1u64 << 15;
-        const AllGraphicsKHR = Self::AllGraphics.bits();
         const AllCommands = 1u64 << 16;
-        const AllCommandsKHR = Self::AllCommands.bits();
         const Copy = 1u64 << 32;
-        const CopyKHR = Self::Copy.bits();
         const Resolve = 1u64 << 33;
-        const ResolveKHR = Self::Resolve.bits();
         const Blit = 1u64 << 34;
-        const BlitKHR = Self::Blit.bits();
         const Clear = 1u64 << 35;
-        const ClearKHR = Self::Clear.bits();
         const IndexInput = 1u64 << 36;
-        const IndexInputKHR = Self::IndexInput.bits();
         const VertexAttributeInput = 1u64 << 37;
-        const VertexAttributeInputKHR = Self::VertexAttributeInput.bits();
         const PreRasterizationShaders = 1u64 << 38;
+        const NoneKHR = Self::None.bits();
+        const TopOfPipeKHR = Self::TopOfPipe.bits();
+        const DrawIndirectKHR = Self::DrawIndirect.bits();
+        const VertexInputKHR = Self::VertexInput.bits();
+        const VertexShaderKHR = Self::VertexShader.bits();
+        const TessellationControlShaderKHR = Self::TessellationControlShader.bits();
+        const TessellationEvaluationShaderKHR = Self::TessellationEvaluationShader.bits();
+        const GeometryShaderKHR = Self::GeometryShader.bits();
+        const FragmentShaderKHR = Self::FragmentShader.bits();
+        const EarlyFragmentTestsKHR = Self::EarlyFragmentTests.bits();
+        const LateFragmentTestsKHR = Self::LateFragmentTests.bits();
+        const ColorAttachmentOutputKHR = Self::ColorAttachmentOutput.bits();
+        const ComputeShaderKHR = Self::ComputeShader.bits();
+        const AllTransferKHR = Self::AllTransfer.bits();
+        const TransferKHR = Self::AllTransfer.bits();
+        const BottomOfPipeKHR = Self::BottomOfPipe.bits();
+        const HostKHR = Self::Host.bits();
+        const AllGraphicsKHR = Self::AllGraphics.bits();
+        const AllCommandsKHR = Self::AllCommands.bits();
+        const CopyKHR = Self::Copy.bits();
+        const ResolveKHR = Self::Resolve.bits();
+        const BlitKHR = Self::Blit.bits();
+        const ClearKHR = Self::Clear.bits();
+        const IndexInputKHR = Self::IndexInput.bits();
+        const VertexAttributeInputKHR = Self::VertexAttributeInput.bits();
         const PreRasterizationShadersKHR = Self::PreRasterizationShaders.bits();
         const TransformFeedbackEXT = 1u64 << 24;
         const ConditionalRenderingEXT = 1u64 << 18;
@@ -3599,46 +3697,46 @@ bitflags! {
     #[doc(alias = "VkAccessFlagBits2")]
     pub struct AccessFlags2 : u64 {
         const None = 0;
-        const NoneKHR = Self::None.bits();
         const IndirectCommandRead = 1u64 << 0;
-        const IndirectCommandReadKHR = Self::IndirectCommandRead.bits();
         const IndexRead = 1u64 << 1;
-        const IndexReadKHR = Self::IndexRead.bits();
         const VertexAttributeRead = 1u64 << 2;
-        const VertexAttributeReadKHR = Self::VertexAttributeRead.bits();
         const UniformRead = 1u64 << 3;
-        const UniformReadKHR = Self::UniformRead.bits();
         const InputAttachmentRead = 1u64 << 4;
-        const InputAttachmentReadKHR = Self::InputAttachmentRead.bits();
         const ShaderRead = 1u64 << 5;
-        const ShaderReadKHR = Self::ShaderRead.bits();
         const ShaderWrite = 1u64 << 6;
-        const ShaderWriteKHR = Self::ShaderWrite.bits();
         const ColorAttachmentRead = 1u64 << 7;
-        const ColorAttachmentReadKHR = Self::ColorAttachmentRead.bits();
         const ColorAttachmentWrite = 1u64 << 8;
-        const ColorAttachmentWriteKHR = Self::ColorAttachmentWrite.bits();
         const DepthStencilAttachmentRead = 1u64 << 9;
-        const DepthStencilAttachmentReadKHR = Self::DepthStencilAttachmentRead.bits();
         const DepthStencilAttachmentWrite = 1u64 << 10;
-        const DepthStencilAttachmentWriteKHR = Self::DepthStencilAttachmentWrite.bits();
         const TransferRead = 1u64 << 11;
-        const TransferReadKHR = Self::TransferRead.bits();
         const TransferWrite = 1u64 << 12;
-        const TransferWriteKHR = Self::TransferWrite.bits();
         const HostRead = 1u64 << 13;
-        const HostReadKHR = Self::HostRead.bits();
         const HostWrite = 1u64 << 14;
-        const HostWriteKHR = Self::HostWrite.bits();
         const MemoryRead = 1u64 << 15;
-        const MemoryReadKHR = Self::MemoryRead.bits();
         const MemoryWrite = 1u64 << 16;
-        const MemoryWriteKHR = Self::MemoryWrite.bits();
         const ShaderSampledRead = 1u64 << 32;
-        const ShaderSampledReadKHR = Self::ShaderSampledRead.bits();
         const ShaderStorageRead = 1u64 << 33;
-        const ShaderStorageReadKHR = Self::ShaderStorageRead.bits();
         const ShaderStorageWrite = 1u64 << 34;
+        const NoneKHR = Self::None.bits();
+        const IndirectCommandReadKHR = Self::IndirectCommandRead.bits();
+        const IndexReadKHR = Self::IndexRead.bits();
+        const VertexAttributeReadKHR = Self::VertexAttributeRead.bits();
+        const UniformReadKHR = Self::UniformRead.bits();
+        const InputAttachmentReadKHR = Self::InputAttachmentRead.bits();
+        const ShaderReadKHR = Self::ShaderRead.bits();
+        const ShaderWriteKHR = Self::ShaderWrite.bits();
+        const ColorAttachmentReadKHR = Self::ColorAttachmentRead.bits();
+        const ColorAttachmentWriteKHR = Self::ColorAttachmentWrite.bits();
+        const DepthStencilAttachmentReadKHR = Self::DepthStencilAttachmentRead.bits();
+        const DepthStencilAttachmentWriteKHR = Self::DepthStencilAttachmentWrite.bits();
+        const TransferReadKHR = Self::TransferRead.bits();
+        const TransferWriteKHR = Self::TransferWrite.bits();
+        const HostReadKHR = Self::HostRead.bits();
+        const HostWriteKHR = Self::HostWrite.bits();
+        const MemoryReadKHR = Self::MemoryRead.bits();
+        const MemoryWriteKHR = Self::MemoryWrite.bits();
+        const ShaderSampledReadKHR = Self::ShaderSampledRead.bits();
+        const ShaderStorageReadKHR = Self::ShaderStorageRead.bits();
         const ShaderStorageWriteKHR = Self::ShaderStorageWrite.bits();
         const TransformFeedbackWriteEXT = 1u64 << 25;
         const TransformFeedbackCounterReadEXT = 1u64 << 26;
@@ -3690,10 +3788,10 @@ bitflags! {
     #[doc(alias = "VkRenderingFlagBits")]
     pub struct RenderingFlags : u32 {
         const ContentsSecondaryCommandBuffers = 1u32 << 0;
-        const ContentsSecondaryCommandBuffersKHR = Self::ContentsSecondaryCommandBuffers.bits();
         const Suspending = 1u32 << 1;
-        const SuspendingKHR = Self::Suspending.bits();
         const Resuming = 1u32 << 2;
+        const ContentsSecondaryCommandBuffersKHR = Self::ContentsSecondaryCommandBuffers.bits();
+        const SuspendingKHR = Self::Suspending.bits();
         const ResumingKHR = Self::Resuming.bits();
         const ContentsInlineEXT = Self::ContentsInlineKHR.bits();
         const EnableLegacyDitheringEXT = 1u32 << 3;
@@ -3711,63 +3809,64 @@ bitflags! {
     #[doc(alias = "VkFormatFeatureFlagBits2")]
     pub struct FormatFeatureFlags2 : u64 {
         const SampledImage = 1u64 << 0;
-        const SampledImageKHR = Self::SampledImage.bits();
         const StorageImage = 1u64 << 1;
-        const StorageImageKHR = Self::StorageImage.bits();
         const StorageImageAtomic = 1u64 << 2;
-        const StorageImageAtomicKHR = Self::StorageImageAtomic.bits();
         const UniformTexelBuffer = 1u64 << 3;
-        const UniformTexelBufferKHR = Self::UniformTexelBuffer.bits();
         const StorageTexelBuffer = 1u64 << 4;
-        const StorageTexelBufferKHR = Self::StorageTexelBuffer.bits();
         const StorageTexelBufferAtomic = 1u64 << 5;
-        const StorageTexelBufferAtomicKHR = Self::StorageTexelBufferAtomic.bits();
         const VertexBuffer = 1u64 << 6;
-        const VertexBufferKHR = Self::VertexBuffer.bits();
         const ColorAttachment = 1u64 << 7;
-        const ColorAttachmentKHR = Self::ColorAttachment.bits();
         const ColorAttachmentBlend = 1u64 << 8;
-        const ColorAttachmentBlendKHR = Self::ColorAttachmentBlend.bits();
         const DepthStencilAttachment = 1u64 << 9;
-        const DepthStencilAttachmentKHR = Self::DepthStencilAttachment.bits();
         const BlitSrc = 1u64 << 10;
-        const BlitSrcKHR = Self::BlitSrc.bits();
         const BlitDst = 1u64 << 11;
-        const BlitDstKHR = Self::BlitDst.bits();
         const SampledImageFilterLinear = 1u64 << 12;
-        const SampledImageFilterLinearKHR = Self::SampledImageFilterLinear.bits();
-        const SampledImageFilterCubic = 1u64 << 13;
-        const SampledImageFilterCubicEXT = Self::SampledImageFilterCubic.bits();
         const TransferSrc = 1u64 << 14;
-        const TransferSrcKHR = Self::TransferSrc.bits();
         const TransferDst = 1u64 << 15;
-        const TransferDstKHR = Self::TransferDst.bits();
         const SampledImageFilterMinmax = 1u64 << 16;
-        const SampledImageFilterMinmaxKHR = Self::SampledImageFilterMinmax.bits();
         const MidpointChromaSamples = 1u64 << 17;
-        const MidpointChromaSamplesKHR = Self::MidpointChromaSamples.bits();
         const SampledImageYcbcrConversionLinearFilter = 1u64 << 18;
-        const SampledImageYcbcrConversionLinearFilterKHR = Self::SampledImageYcbcrConversionLinearFilter.bits();
         const SampledImageYcbcrConversionSeparateReconstructionFilter = 1u64 << 19;
-        const SampledImageYcbcrConversionSeparateReconstructionFilterKHR = Self::SampledImageYcbcrConversionSeparateReconstructionFilter.bits();
         const SampledImageYcbcrConversionChromaReconstructionExplicit = 1u64 << 20;
-        const SampledImageYcbcrConversionChromaReconstructionExplicitKHR = Self::SampledImageYcbcrConversionChromaReconstructionExplicit.bits();
         const SampledImageYcbcrConversionChromaReconstructionExplicitForceable = 1u64 << 21;
-        const SampledImageYcbcrConversionChromaReconstructionExplicitForceableKHR = Self::SampledImageYcbcrConversionChromaReconstructionExplicitForceable.bits();
         const Disjoint = 1u64 << 22;
-        const DisjointKHR = Self::Disjoint.bits();
         const CositedChromaSamples = 1u64 << 23;
-        const CositedChromaSamplesKHR = Self::CositedChromaSamples.bits();
         const StorageReadWithoutFormat = 1u64 << 31;
-        const StorageReadWithoutFormatKHR = Self::StorageReadWithoutFormat.bits();
         const StorageWriteWithoutFormat = 1u64 << 32;
-        const StorageWriteWithoutFormatKHR = Self::StorageWriteWithoutFormat.bits();
         const SampledImageDepthComparison = 1u64 << 33;
-        const SampledImageDepthComparisonKHR = Self::SampledImageDepthComparison.bits();
+        const SampledImageFilterCubic = 1u64 << 13;
+        const HostImageTransfer = 1u64 << 46;
         const AccelerationStructureVertexBufferKHR = 1u64 << 29;
         const FragmentDensityMapEXT = 1u64 << 24;
         const FragmentShadingRateAttachmentKHR = 1u64 << 30;
-        const HostImageTransferEXT = 1u64 << 46;
+        const HostImageTransferEXT = Self::HostImageTransfer.bits();
+        const SampledImageKHR = Self::SampledImage.bits();
+        const StorageImageKHR = Self::StorageImage.bits();
+        const StorageImageAtomicKHR = Self::StorageImageAtomic.bits();
+        const UniformTexelBufferKHR = Self::UniformTexelBuffer.bits();
+        const StorageTexelBufferKHR = Self::StorageTexelBuffer.bits();
+        const StorageTexelBufferAtomicKHR = Self::StorageTexelBufferAtomic.bits();
+        const VertexBufferKHR = Self::VertexBuffer.bits();
+        const ColorAttachmentKHR = Self::ColorAttachment.bits();
+        const ColorAttachmentBlendKHR = Self::ColorAttachmentBlend.bits();
+        const DepthStencilAttachmentKHR = Self::DepthStencilAttachment.bits();
+        const BlitSrcKHR = Self::BlitSrc.bits();
+        const BlitDstKHR = Self::BlitDst.bits();
+        const SampledImageFilterLinearKHR = Self::SampledImageFilterLinear.bits();
+        const TransferSrcKHR = Self::TransferSrc.bits();
+        const TransferDstKHR = Self::TransferDst.bits();
+        const MidpointChromaSamplesKHR = Self::MidpointChromaSamples.bits();
+        const SampledImageYcbcrConversionLinearFilterKHR = Self::SampledImageYcbcrConversionLinearFilter.bits();
+        const SampledImageYcbcrConversionSeparateReconstructionFilterKHR = Self::SampledImageYcbcrConversionSeparateReconstructionFilter.bits();
+        const SampledImageYcbcrConversionChromaReconstructionExplicitKHR = Self::SampledImageYcbcrConversionChromaReconstructionExplicit.bits();
+        const SampledImageYcbcrConversionChromaReconstructionExplicitForceableKHR = Self::SampledImageYcbcrConversionChromaReconstructionExplicitForceable.bits();
+        const DisjointKHR = Self::Disjoint.bits();
+        const CositedChromaSamplesKHR = Self::CositedChromaSamples.bits();
+        const StorageReadWithoutFormatKHR = Self::StorageReadWithoutFormat.bits();
+        const StorageWriteWithoutFormatKHR = Self::StorageWriteWithoutFormat.bits();
+        const SampledImageDepthComparisonKHR = Self::SampledImageDepthComparison.bits();
+        const SampledImageFilterMinmaxKHR = Self::SampledImageFilterMinmax.bits();
+        const SampledImageFilterCubicEXT = Self::SampledImageFilterCubic.bits();
         const LinearColorAttachmentNV = 1u64 << 38;
         const WeightImageQCOM = 1u64 << 34;
         const WeightSampledImageQCOM = 1u64 << 35;
@@ -3781,6 +3880,236 @@ bitflags! {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkFormatFeatureFlagBits2KHR.html>"]
 #[doc(alias = "VkFormatFeatureFlagBits2KHR")]
 pub type FormatFeatureFlags2KHR = FormatFeatureFlags2;
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_MAX_GLOBAL_PRIORITY_SIZE.html>"]
+#[doc(alias = "VK_MAX_GLOBAL_PRIORITY_SIZE")]
+pub const MAX_GLOBAL_PRIORITY_SIZE: u32 = 16;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueGlobalPriority.html>"]
+#[doc(alias = "VkQueueGlobalPriority")]
+#[repr(u32)]
+pub enum QueueGlobalPriority {
+    Low = 128,
+    Medium = 256,
+    High = 512,
+    Realtime = 1024,
+}
+#[allow(non_upper_case_globals)]
+impl QueueGlobalPriority {
+    pub const LowEXT: Self = Self::Low;
+    pub const MediumEXT: Self = Self::Medium;
+    pub const HighEXT: Self = Self::High;
+    pub const RealtimeEXT: Self = Self::Realtime;
+    pub const LowKHR: Self = Self::Low;
+    pub const MediumKHR: Self = Self::Medium;
+    pub const HighKHR: Self = Self::High;
+    pub const RealtimeKHR: Self = Self::Realtime;
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueGlobalPriorityKHR.html>"]
+#[doc(alias = "VkQueueGlobalPriorityKHR")]
+pub type QueueGlobalPriorityKHR = QueueGlobalPriority;
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueGlobalPriorityEXT.html>"]
+#[doc(alias = "VkQueueGlobalPriorityEXT")]
+pub type QueueGlobalPriorityEXT = QueueGlobalPriority;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLineRasterizationMode.html>"]
+#[doc(alias = "VkLineRasterizationMode")]
+#[repr(u32)]
+pub enum LineRasterizationMode {
+    Default = 0,
+    Rectangular = 1,
+    Bresenham = 2,
+    RectangularSmooth = 3,
+}
+#[allow(non_upper_case_globals)]
+impl LineRasterizationMode {
+    pub const DefaultEXT: Self = Self::Default;
+    pub const RectangularEXT: Self = Self::Rectangular;
+    pub const BresenhamEXT: Self = Self::Bresenham;
+    pub const RectangularSmoothEXT: Self = Self::RectangularSmooth;
+    pub const DefaultKHR: Self = Self::Default;
+    pub const RectangularKHR: Self = Self::Rectangular;
+    pub const BresenhamKHR: Self = Self::Bresenham;
+    pub const RectangularSmoothKHR: Self = Self::RectangularSmooth;
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLineRasterizationModeKHR.html>"]
+#[doc(alias = "VkLineRasterizationModeKHR")]
+pub type LineRasterizationModeKHR = LineRasterizationMode;
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLineRasterizationModeEXT.html>"]
+#[doc(alias = "VkLineRasterizationModeEXT")]
+pub type LineRasterizationModeEXT = LineRasterizationMode;
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagBits.html>"]
+    #[doc(alias = "VkMemoryUnmapFlagBits")]
+    pub struct MemoryUnmapFlags : u32 {
+        const ReserveEXT = 1u32 << 0;
+    }
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagBitsKHR.html>"]
+#[doc(alias = "VkMemoryUnmapFlagBitsKHR")]
+pub type MemoryUnmapFlagsKHR = MemoryUnmapFlags;
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateFlagBits2.html>"]
+    #[doc(alias = "VkPipelineCreateFlagBits2")]
+    pub struct PipelineCreateFlags2 : u64 {
+        const DisableOptimization = 1u64 << 0;
+        const AllowDerivatives = 1u64 << 1;
+        const Derivative = 1u64 << 2;
+        const ViewIndexFromDeviceIndex = 1u64 << 3;
+        const DispatchBase = 1u64 << 4;
+        const FailOnPipelineCompileRequired = 1u64 << 8;
+        const EarlyReturnOnFailure = 1u64 << 9;
+        const NoProtectedAccess = 1u64 << 27;
+        const ProtectedAccessOnly = 1u64 << 30;
+        const ExecutionGraphAMDX = 1u64 << 32;
+        const EnableLegacyDitheringEXT = 1u64 << 34;
+        const DisableOptimizationKHR = Self::DisableOptimization.bits();
+        const AllowDerivativesKHR = Self::AllowDerivatives.bits();
+        const DerivativeKHR = Self::Derivative.bits();
+        const ViewIndexFromDeviceIndexKHR = Self::ViewIndexFromDeviceIndex.bits();
+        const DispatchBaseKHR = Self::DispatchBase.bits();
+        const DeferCompileNV = 1u64 << 5;
+        const CaptureStatisticsKHR = 1u64 << 6;
+        const CaptureInternalRepresentationsKHR = 1u64 << 7;
+        const FailOnPipelineCompileRequiredKHR = Self::FailOnPipelineCompileRequired.bits();
+        const EarlyReturnOnFailureKHR = Self::EarlyReturnOnFailure.bits();
+        const LinkTimeOptimizationEXT = 1u64 << 10;
+        const RetainLinkTimeOptimizationInfoEXT = 1u64 << 23;
+        const LibraryKHR = 1u64 << 11;
+        const RayTracingSkipTrianglesKHR = 1u64 << 12;
+        const RayTracingSkipAabbsKHR = 1u64 << 13;
+        const RayTracingNoNullAnyHitShadersKHR = 1u64 << 14;
+        const RayTracingNoNullClosestHitShadersKHR = 1u64 << 15;
+        const RayTracingNoNullMissShadersKHR = 1u64 << 16;
+        const RayTracingNoNullIntersectionShadersKHR = 1u64 << 17;
+        const RayTracingShaderGroupHandleCaptureReplayKHR = 1u64 << 19;
+        const IndirectBindableNV = 1u64 << 18;
+        const RayTracingAllowMotionNV = 1u64 << 20;
+        const RenderingFragmentShadingRateAttachmentKHR = 1u64 << 21;
+        const RenderingFragmentDensityMapAttachmentEXT = 1u64 << 22;
+        const RayTracingOpacityMicromapEXT = 1u64 << 24;
+        const ColorAttachmentFeedbackLoopEXT = 1u64 << 25;
+        const DepthStencilAttachmentFeedbackLoopEXT = 1u64 << 26;
+        const NoProtectedAccessEXT = Self::NoProtectedAccess.bits();
+        const ProtectedAccessOnlyEXT = Self::ProtectedAccessOnly.bits();
+        const RayTracingDisplacementMicromapNV = 1u64 << 28;
+        const DescriptorBufferEXT = 1u64 << 29;
+        const CaptureDataKHR = 1u64 << 31;
+        const IndirectBindableEXT = 1u64 << 38;
+    }
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateFlagBits2KHR.html>"]
+#[doc(alias = "VkPipelineCreateFlagBits2KHR")]
+pub type PipelineCreateFlags2KHR = PipelineCreateFlags2;
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferUsageFlagBits2.html>"]
+    #[doc(alias = "VkBufferUsageFlagBits2")]
+    pub struct BufferUsageFlags2 : u64 {
+        const TransferSrc = 1u64 << 0;
+        const TransferDst = 1u64 << 1;
+        const UniformTexelBuffer = 1u64 << 2;
+        const StorageTexelBuffer = 1u64 << 3;
+        const UniformBuffer = 1u64 << 4;
+        const StorageBuffer = 1u64 << 5;
+        const IndexBuffer = 1u64 << 6;
+        const VertexBuffer = 1u64 << 7;
+        const IndirectBuffer = 1u64 << 8;
+        const ShaderDeviceAddress = 1u64 << 17;
+        const ExecutionGraphScratchAMDX = 1u64 << 25;
+        const TransferSrcKHR = Self::TransferSrc.bits();
+        const TransferDstKHR = Self::TransferDst.bits();
+        const UniformTexelBufferKHR = Self::UniformTexelBuffer.bits();
+        const StorageTexelBufferKHR = Self::StorageTexelBuffer.bits();
+        const UniformBufferKHR = Self::UniformBuffer.bits();
+        const StorageBufferKHR = Self::StorageBuffer.bits();
+        const IndexBufferKHR = Self::IndexBuffer.bits();
+        const VertexBufferKHR = Self::VertexBuffer.bits();
+        const IndirectBufferKHR = Self::IndirectBuffer.bits();
+        const ConditionalRenderingEXT = 1u64 << 9;
+        const ShaderBindingTableKHR = 1u64 << 10;
+        const RayTracingNV = Self::ShaderBindingTableKHR.bits();
+        const TransformFeedbackBufferEXT = 1u64 << 11;
+        const TransformFeedbackCounterBufferEXT = 1u64 << 12;
+        const VideoDecodeSrcKHR = 1u64 << 13;
+        const VideoDecodeDstKHR = 1u64 << 14;
+        const VideoEncodeDstKHR = 1u64 << 15;
+        const VideoEncodeSrcKHR = 1u64 << 16;
+        const ShaderDeviceAddressKHR = Self::ShaderDeviceAddress.bits();
+        const AccelerationStructureBuildInputReadOnlyKHR = 1u64 << 19;
+        const AccelerationStructureStorageKHR = 1u64 << 20;
+        const SamplerDescriptorBufferEXT = 1u64 << 21;
+        const ResourceDescriptorBufferEXT = 1u64 << 22;
+        const PushDescriptorsDescriptorBufferEXT = 1u64 << 26;
+        const MicromapBuildInputReadOnlyEXT = 1u64 << 23;
+        const MicromapStorageEXT = 1u64 << 24;
+        const PreprocessBufferEXT = 1u64 << 31;
+    }
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferUsageFlagBits2KHR.html>"]
+#[doc(alias = "VkBufferUsageFlagBits2KHR")]
+pub type BufferUsageFlags2KHR = BufferUsageFlags2;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessBufferBehavior.html>"]
+#[doc(alias = "VkPipelineRobustnessBufferBehavior")]
+#[repr(u32)]
+pub enum PipelineRobustnessBufferBehavior {
+    DeviceDefault = 0,
+    Disabled = 1,
+    RobustBufferAccess = 2,
+    RobustBufferAccess2 = 3,
+}
+#[allow(non_upper_case_globals)]
+impl PipelineRobustnessBufferBehavior {
+    pub const DeviceDefaultEXT: Self = Self::DeviceDefault;
+    pub const DisabledEXT: Self = Self::Disabled;
+    pub const RobustBufferAccessEXT: Self = Self::RobustBufferAccess;
+    pub const RobustBufferAccess2EXT: Self = Self::RobustBufferAccess2;
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessBufferBehaviorEXT.html>"]
+#[doc(alias = "VkPipelineRobustnessBufferBehaviorEXT")]
+pub type PipelineRobustnessBufferBehaviorEXT = PipelineRobustnessBufferBehavior;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessImageBehavior.html>"]
+#[doc(alias = "VkPipelineRobustnessImageBehavior")]
+#[repr(u32)]
+pub enum PipelineRobustnessImageBehavior {
+    DeviceDefault = 0,
+    Disabled = 1,
+    RobustImageAccess = 2,
+    RobustImageAccess2 = 3,
+}
+#[allow(non_upper_case_globals)]
+impl PipelineRobustnessImageBehavior {
+    pub const DeviceDefaultEXT: Self = Self::DeviceDefault;
+    pub const DisabledEXT: Self = Self::Disabled;
+    pub const RobustImageAccessEXT: Self = Self::RobustImageAccess;
+    pub const RobustImageAccess2EXT: Self = Self::RobustImageAccess2;
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessImageBehaviorEXT.html>"]
+#[doc(alias = "VkPipelineRobustnessImageBehaviorEXT")]
+pub type PipelineRobustnessImageBehaviorEXT = PipelineRobustnessImageBehavior;
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkHostImageCopyFlagBits.html>"]
+    #[doc(alias = "VkHostImageCopyFlagBits")]
+    pub struct HostImageCopyFlags : u32 {
+        const Memcpy = 1u32 << 0;
+        const MemcpyEXT = Self::Memcpy.bits();
+    }
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkHostImageCopyFlagBitsEXT.html>"]
+#[doc(alias = "VkHostImageCopyFlagBitsEXT")]
+pub type HostImageCopyFlagsEXT = HostImageCopyFlags;
 bitflags! {
     #[derive(Default)]
     #[repr(transparent)]
@@ -4009,35 +4338,6 @@ pub enum ValidationCheckEXT {
     All = 0,
     Shaders = 1,
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessBufferBehaviorEXT.html>"]
-#[doc(alias = "VkPipelineRobustnessBufferBehaviorEXT")]
-#[repr(u32)]
-pub enum PipelineRobustnessBufferBehaviorEXT {
-    DeviceDefault = 0,
-    Disabled = 1,
-    RobustBufferAccess = 2,
-    RobustBufferAccess2 = 3,
-}
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineRobustnessImageBehaviorEXT.html>"]
-#[doc(alias = "VkPipelineRobustnessImageBehaviorEXT")]
-#[repr(u32)]
-pub enum PipelineRobustnessImageBehaviorEXT {
-    DeviceDefault = 0,
-    Disabled = 1,
-    RobustImageAccess = 2,
-    RobustImageAccess2 = 3,
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_MAX_DEVICE_GROUP_SIZE_KHR.html>"]
-#[doc(alias = "VK_MAX_DEVICE_GROUP_SIZE_KHR")]
-pub const MAX_DEVICE_GROUP_SIZE_KHR: u32 = MAX_DEVICE_GROUP_SIZE;
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_LUID_SIZE_KHR.html>"]
-#[doc(alias = "VK_LUID_SIZE_KHR")]
-pub const LUID_SIZE_KHR: u32 = LUID_SIZE;
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_QUEUE_FAMILY_EXTERNAL_KHR.html>"]
-#[doc(alias = "VK_QUEUE_FAMILY_EXTERNAL_KHR")]
-pub const QUEUE_FAMILY_EXTERNAL_KHR: u32 = QUEUE_FAMILY_EXTERNAL;
 bitflags! {
     #[derive(Default)]
     #[repr(transparent)]
@@ -4449,9 +4749,6 @@ pub enum CoarseSampleOrderTypeNV {
     PixelMajor = 2,
     SampleMajor = 3,
 }
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_SHADER_UNUSED_NV.html>"]
-#[doc(alias = "VK_SHADER_UNUSED_NV")]
-pub const SHADER_UNUSED_NV: u32 = SHADER_UNUSED_KHR;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureMemoryRequirementsTypeNV.html>"]
 #[doc(alias = "VkAccelerationStructureMemoryRequirementsTypeNV")]
@@ -4470,29 +4767,6 @@ bitflags! {
     pub struct PipelineCompilerControlFlagsAMD : u32 {
     }
 }
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_MAX_GLOBAL_PRIORITY_SIZE_KHR.html>"]
-#[doc(alias = "VK_MAX_GLOBAL_PRIORITY_SIZE_KHR")]
-pub const MAX_GLOBAL_PRIORITY_SIZE_KHR: u32 = 16;
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueGlobalPriorityKHR.html>"]
-#[doc(alias = "VkQueueGlobalPriorityKHR")]
-#[repr(u32)]
-pub enum QueueGlobalPriorityKHR {
-    Low = 128,
-    Medium = 256,
-    High = 512,
-    Realtime = 1024,
-}
-#[allow(non_upper_case_globals)]
-impl QueueGlobalPriorityKHR {
-    pub const LowEXT: Self = Self::Low;
-    pub const MediumEXT: Self = Self::Medium;
-    pub const HighEXT: Self = Self::High;
-    pub const RealtimeEXT: Self = Self::Realtime;
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkQueueGlobalPriorityEXT.html>"]
-#[doc(alias = "VkQueueGlobalPriorityEXT")]
-pub type QueueGlobalPriorityEXT = QueueGlobalPriorityKHR;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryOverallocationBehaviorAMD.html>"]
 #[doc(alias = "VkMemoryOverallocationBehaviorAMD")]
@@ -4502,12 +4776,6 @@ pub enum MemoryOverallocationBehaviorAMD {
     Allowed = 1,
     Disallowed = 2,
 }
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_MAX_DRIVER_NAME_SIZE_KHR.html>"]
-#[doc(alias = "VK_MAX_DRIVER_NAME_SIZE_KHR")]
-pub const MAX_DRIVER_NAME_SIZE_KHR: u32 = MAX_DRIVER_NAME_SIZE;
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_MAX_DRIVER_INFO_SIZE_KHR.html>"]
-#[doc(alias = "VK_MAX_DRIVER_INFO_SIZE_KHR")]
-pub const MAX_DRIVER_INFO_SIZE_KHR: u32 = MAX_DRIVER_INFO_SIZE;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPerformanceConfigurationTypeINTEL.html>"]
 #[doc(alias = "VkPerformanceConfigurationTypeINTEL")]
@@ -4629,26 +4897,6 @@ pub enum PipelineExecutableStatisticFormatKHR {
     Int64 = 1,
     Uint64 = 2,
     Float64 = 3,
-}
-bitflags! {
-    #[derive(Default)]
-    #[repr(transparent)]
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkHostImageCopyFlagBitsEXT.html>"]
-    #[doc(alias = "VkHostImageCopyFlagBitsEXT")]
-    pub struct HostImageCopyFlagsEXT : u32 {
-        const Memcpy = 1u32 << 0;
-    }
-}
-bitflags! {
-    #[derive(Default)]
-    #[repr(transparent)]
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryUnmapFlagBitsKHR.html>"]
-    #[doc(alias = "VkMemoryUnmapFlagBitsKHR")]
-    pub struct MemoryUnmapFlagsKHR : u32 {
-        const ReserveEXT = 1u32 << 0;
-    }
 }
 bitflags! {
     #[derive(Default)]
@@ -4939,9 +5187,6 @@ bitflags! {
         const FrameEnd = 1u32 << 0;
     }
 }
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_MAX_GLOBAL_PRIORITY_SIZE_EXT.html>"]
-#[doc(alias = "VK_MAX_GLOBAL_PRIORITY_SIZE_EXT")]
-pub const MAX_GLOBAL_PRIORITY_SIZE_EXT: u32 = MAX_GLOBAL_PRIORITY_SIZE_KHR;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMicromapTypeEXT.html>"]
 #[doc(alias = "VkMicromapTypeEXT")]
@@ -5172,86 +5417,6 @@ bitflags! {
         const DisableTemporalHints = 1u32 << 0;
     }
 }
-bitflags! {
-    #[derive(Default)]
-    #[repr(transparent)]
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineCreateFlagBits2KHR.html>"]
-    #[doc(alias = "VkPipelineCreateFlagBits2KHR")]
-    pub struct PipelineCreateFlags2KHR : u64 {
-        const DisableOptimization = 1u64 << 0;
-        const AllowDerivatives = 1u64 << 1;
-        const Derivative = 1u64 << 2;
-        const EnableLegacyDitheringEXT = 1u64 << 34;
-        const ViewIndexFromDeviceIndex = 1u64 << 3;
-        const DispatchBase = 1u64 << 4;
-        const DeferCompileNV = 1u64 << 5;
-        const CaptureStatistics = 1u64 << 6;
-        const CaptureInternalRepresentations = 1u64 << 7;
-        const FailOnPipelineCompileRequired = 1u64 << 8;
-        const EarlyReturnOnFailure = 1u64 << 9;
-        const LinkTimeOptimizationEXT = 1u64 << 10;
-        const RetainLinkTimeOptimizationInfoEXT = 1u64 << 23;
-        const Library = 1u64 << 11;
-        const RayTracingSkipTriangles = 1u64 << 12;
-        const RayTracingSkipAabbs = 1u64 << 13;
-        const RayTracingNoNullAnyHitShaders = 1u64 << 14;
-        const RayTracingNoNullClosestHitShaders = 1u64 << 15;
-        const RayTracingNoNullMissShaders = 1u64 << 16;
-        const RayTracingNoNullIntersectionShaders = 1u64 << 17;
-        const RayTracingShaderGroupHandleCaptureReplay = 1u64 << 19;
-        const IndirectBindableNV = 1u64 << 18;
-        const RayTracingAllowMotionNV = 1u64 << 20;
-        const RenderingFragmentShadingRateAttachment = 1u64 << 21;
-        const RenderingFragmentDensityMapAttachmentEXT = 1u64 << 22;
-        const RayTracingOpacityMicromapEXT = 1u64 << 24;
-        const ColorAttachmentFeedbackLoopEXT = 1u64 << 25;
-        const DepthStencilAttachmentFeedbackLoopEXT = 1u64 << 26;
-        const NoProtectedAccessEXT = 1u64 << 27;
-        const ProtectedAccessOnlyEXT = 1u64 << 30;
-        const RayTracingDisplacementMicromapNV = 1u64 << 28;
-        const DescriptorBufferEXT = 1u64 << 29;
-        const CaptureData = 1u64 << 31;
-        const IndirectBindableEXT = 1u64 << 38;
-    }
-}
-bitflags! {
-    #[derive(Default)]
-    #[repr(transparent)]
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBufferUsageFlagBits2KHR.html>"]
-    #[doc(alias = "VkBufferUsageFlagBits2KHR")]
-    pub struct BufferUsageFlags2KHR : u64 {
-        const TransferSrc = 1u64 << 0;
-        const TransferDst = 1u64 << 1;
-        const UniformTexelBuffer = 1u64 << 2;
-        const StorageTexelBuffer = 1u64 << 3;
-        const UniformBuffer = 1u64 << 4;
-        const StorageBuffer = 1u64 << 5;
-        const IndexBuffer = 1u64 << 6;
-        const VertexBuffer = 1u64 << 7;
-        const IndirectBuffer = 1u64 << 8;
-        const ExecutionGraphScratchAMDX = 1u64 << 25;
-        const ConditionalRenderingEXT = 1u64 << 9;
-        const ShaderBindingTable = 1u64 << 10;
-        const RayTracingNV = Self::ShaderBindingTable.bits();
-        const TransformFeedbackBufferEXT = 1u64 << 11;
-        const TransformFeedbackCounterBufferEXT = 1u64 << 12;
-        const VideoDecodeSrc = 1u64 << 13;
-        const VideoDecodeDst = 1u64 << 14;
-        const VideoEncodeDst = 1u64 << 15;
-        const VideoEncodeSrc = 1u64 << 16;
-        const ShaderDeviceAddress = 1u64 << 17;
-        const AccelerationStructureBuildInputReadOnly = 1u64 << 19;
-        const AccelerationStructureStorage = 1u64 << 20;
-        const SamplerDescriptorBufferEXT = 1u64 << 21;
-        const ResourceDescriptorBufferEXT = 1u64 << 22;
-        const PushDescriptorsDescriptorBufferEXT = 1u64 << 26;
-        const MicromapBuildInputReadOnlyEXT = 1u64 << 23;
-        const MicromapStorageEXT = 1u64 << 24;
-        const PreprocessBufferEXT = 1u64 << 31;
-    }
-}
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAntiLagModeAMD.html>"]
 #[doc(alias = "VkAntiLagModeAMD")]
@@ -5426,26 +5591,6 @@ pub enum LayeredDriverUnderlyingApiMSFT {
     D3D12 = 1,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLineRasterizationModeKHR.html>"]
-#[doc(alias = "VkLineRasterizationModeKHR")]
-#[repr(u32)]
-pub enum LineRasterizationModeKHR {
-    Default = 0,
-    Rectangular = 1,
-    Bresenham = 2,
-    RectangularSmooth = 3,
-}
-#[allow(non_upper_case_globals)]
-impl LineRasterizationModeKHR {
-    pub const DefaultEXT: Self = Self::Default;
-    pub const RectangularEXT: Self = Self::Rectangular;
-    pub const BresenhamEXT: Self = Self::Bresenham;
-    pub const RectangularSmoothEXT: Self = Self::RectangularSmooth;
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLineRasterizationModeEXT.html>"]
-#[doc(alias = "VkLineRasterizationModeEXT")]
-pub type LineRasterizationModeEXT = LineRasterizationModeKHR;
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkTimeDomainKHR.html>"]
 #[doc(alias = "VkTimeDomainKHR")]
 #[repr(u32)]
@@ -5465,6 +5610,16 @@ impl TimeDomainKHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkTimeDomainEXT.html>"]
 #[doc(alias = "VkTimeDomainEXT")]
 pub type TimeDomainEXT = TimeDomainKHR;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDisplaySurfaceStereoTypeNV.html>"]
+#[doc(alias = "VkDisplaySurfaceStereoTypeNV")]
+#[repr(u32)]
+pub enum DisplaySurfaceStereoTypeNV {
+    None = 0,
+    OnboardDin = 1,
+    Hdmi3D = 2,
+    InbandDisplayport = 3,
+}
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceLayeredApiKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceLayeredApiKHR")]

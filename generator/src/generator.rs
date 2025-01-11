@@ -46,7 +46,7 @@ pub struct Generator<'a> {
 }
 
 impl<'a> Generator<'a> {
-    pub fn new(_api: Api, registry: &'a xml::Registry) -> Result<Generator> {
+    pub fn new(_api: Api, registry: &'a xml::Registry) -> Result<Self> {
         if registry
             .enums
             .get(0)

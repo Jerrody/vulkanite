@@ -292,8 +292,11 @@ where
     // remove the handle name from the function name
     let mut new_name = name.to_string();
     // vkGetDeviceImageMemoryRequirements and vkGetImageMemoryRequirements would resolve to the same name without the last check
-    // this is also the case for vkGetDeviceSparseImageMemoryRequirements and vkGetDeviceBufferMemoryRequirements
-    if !cmd_parsed.handle.is_empty() && !new_name.ends_with("memory_requirements") {
+    // this is also the case for vkGetDeviceSparseImageMemoryRequirements, vkGetDeviceBufferMemoryRequirements and vkGetDeviceImageSubresourceLayout
+    if !cmd_parsed.handle.is_empty()
+        && !new_name.ends_with("memory_requirements")
+        && !new_name.ends_with("image_subresource_layout")
+    {
         // remove the Vk prefix
         let snake_case_handle = camel_case_to_snake_case(&cmd_parsed.handle["Vk".len()..]);
         new_name = new_name.replace(&snake_case_handle, "");

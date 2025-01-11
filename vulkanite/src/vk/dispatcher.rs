@@ -1958,6 +1958,260 @@ pub struct CommandsDispatcher {
             ),
         >,
     >,
+    pub cmd_set_line_stipple:
+        Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, u32, u16)>>,
+    pub cmd_set_line_stipple_khr:
+        Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, u32, u16)>>,
+    pub cmd_set_line_stipple_ext:
+        Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, u32, u16)>>,
+    pub map_memory2: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                *const MemoryMapInfo,
+                *const *const c_void,
+            ) -> Status,
+        >,
+    >,
+    pub map_memory2_khr: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                *const MemoryMapInfo,
+                *const *const c_void,
+            ) -> Status,
+        >,
+    >,
+    pub unmap_memory2:
+        Cell<Option<unsafe extern "system" fn(Option<Device>, *const MemoryUnmapInfo) -> Status>>,
+    pub unmap_memory2_khr:
+        Cell<Option<unsafe extern "system" fn(Option<Device>, *const MemoryUnmapInfo) -> Status>>,
+    pub cmd_bind_index_buffer2: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                Option<Buffer>,
+                DeviceSize,
+                DeviceSize,
+                IndexType,
+            ),
+        >,
+    >,
+    pub cmd_bind_index_buffer2_khr: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                Option<Buffer>,
+                DeviceSize,
+                DeviceSize,
+                IndexType,
+            ),
+        >,
+    >,
+    pub get_rendering_area_granularity: Cell<
+        Option<
+            unsafe extern "system" fn(Option<Device>, *const RenderingAreaInfo, *const Extent2D),
+        >,
+    >,
+    pub get_rendering_area_granularity_khr: Cell<
+        Option<
+            unsafe extern "system" fn(Option<Device>, *const RenderingAreaInfo, *const Extent2D),
+        >,
+    >,
+    pub get_device_image_subresource_layout: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                *const DeviceImageSubresourceInfo,
+                *const SubresourceLayout2,
+            ),
+        >,
+    >,
+    pub get_device_image_subresource_layout_khr: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                *const DeviceImageSubresourceInfo,
+                *const SubresourceLayout2,
+            ),
+        >,
+    >,
+    pub get_image_subresource_layout2: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                Option<Image>,
+                *const ImageSubresource2,
+                *const SubresourceLayout2,
+            ),
+        >,
+    >,
+    pub get_image_subresource_layout2_khr: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                Option<Image>,
+                *const ImageSubresource2,
+                *const SubresourceLayout2,
+            ),
+        >,
+    >,
+    pub get_image_subresource_layout2_ext: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                Option<Image>,
+                *const ImageSubresource2,
+                *const SubresourceLayout2,
+            ),
+        >,
+    >,
+    pub cmd_push_descriptor_set: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                PipelineBindPoint,
+                Option<PipelineLayout>,
+                u32,
+                u32,
+                *const WriteDescriptorSet,
+            ),
+        >,
+    >,
+    pub cmd_push_descriptor_set_khr: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                PipelineBindPoint,
+                Option<PipelineLayout>,
+                u32,
+                u32,
+                *const WriteDescriptorSet,
+            ),
+        >,
+    >,
+    pub cmd_push_descriptor_set_with_template: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                Option<DescriptorUpdateTemplate>,
+                Option<PipelineLayout>,
+                u32,
+                VoidPtr,
+            ),
+        >,
+    >,
+    pub cmd_push_descriptor_set_with_template_khr: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                Option<DescriptorUpdateTemplate>,
+                Option<PipelineLayout>,
+                u32,
+                VoidPtr,
+            ),
+        >,
+    >,
+    pub cmd_set_rendering_attachment_locations: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                *const RenderingAttachmentLocationInfo,
+            ),
+        >,
+    >,
+    pub cmd_set_rendering_attachment_locations_khr: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                *const RenderingAttachmentLocationInfo,
+            ),
+        >,
+    >,
+    pub cmd_set_rendering_input_attachment_indices: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                *const RenderingInputAttachmentIndexInfo,
+            ),
+        >,
+    >,
+    pub cmd_set_rendering_input_attachment_indices_khr: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                *const RenderingInputAttachmentIndexInfo,
+            ),
+        >,
+    >,
+    pub cmd_bind_descriptor_sets2: Cell<
+        Option<unsafe extern "system" fn(Option<CommandBuffer>, *const BindDescriptorSetsInfo)>,
+    >,
+    pub cmd_bind_descriptor_sets2_khr: Cell<
+        Option<unsafe extern "system" fn(Option<CommandBuffer>, *const BindDescriptorSetsInfo)>,
+    >,
+    pub cmd_push_constants2:
+        Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, *const PushConstantsInfo)>>,
+    pub cmd_push_constants2_khr:
+        Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, *const PushConstantsInfo)>>,
+    pub cmd_push_descriptor_set2: Cell<
+        Option<unsafe extern "system" fn(Option<CommandBuffer>, *const PushDescriptorSetInfo)>,
+    >,
+    pub cmd_push_descriptor_set2_khr: Cell<
+        Option<unsafe extern "system" fn(Option<CommandBuffer>, *const PushDescriptorSetInfo)>,
+    >,
+    pub cmd_push_descriptor_set_with_template2: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                *const PushDescriptorSetWithTemplateInfo,
+            ),
+        >,
+    >,
+    pub cmd_push_descriptor_set_with_template2_khr: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                *const PushDescriptorSetWithTemplateInfo,
+            ),
+        >,
+    >,
+    pub copy_memory_to_image: Cell<
+        Option<unsafe extern "system" fn(Option<Device>, *const CopyMemoryToImageInfo) -> Status>,
+    >,
+    pub copy_memory_to_image_ext: Cell<
+        Option<unsafe extern "system" fn(Option<Device>, *const CopyMemoryToImageInfo) -> Status>,
+    >,
+    pub copy_image_to_memory: Cell<
+        Option<unsafe extern "system" fn(Option<Device>, *const CopyImageToMemoryInfo) -> Status>,
+    >,
+    pub copy_image_to_memory_ext: Cell<
+        Option<unsafe extern "system" fn(Option<Device>, *const CopyImageToMemoryInfo) -> Status>,
+    >,
+    pub copy_image_to_image: Cell<
+        Option<unsafe extern "system" fn(Option<Device>, *const CopyImageToImageInfo) -> Status>,
+    >,
+    pub copy_image_to_image_ext: Cell<
+        Option<unsafe extern "system" fn(Option<Device>, *const CopyImageToImageInfo) -> Status>,
+    >,
+    pub transition_image_layout: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                u32,
+                *const HostImageLayoutTransitionInfo,
+            ) -> Status,
+        >,
+    >,
+    pub transition_image_layout_ext: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                u32,
+                *const HostImageLayoutTransitionInfo,
+            ) -> Status,
+        >,
+    >,
     pub destroy_surface_khr: Cell<
         Option<
             unsafe extern "system" fn(
@@ -2396,6 +2650,9 @@ pub struct CommandsDispatcher {
     pub get_image_view_handle_nvx: Cell<
         Option<unsafe extern "system" fn(Option<Device>, *const ImageViewHandleInfoNVX) -> u32>,
     >,
+    pub get_image_view_handle64_nvx: Cell<
+        Option<unsafe extern "system" fn(Option<Device>, *const ImageViewHandleInfoNVX) -> u64>,
+    >,
     pub get_image_view_address_nvx: Cell<
         Option<
             unsafe extern "system" fn(
@@ -2528,29 +2785,6 @@ pub struct CommandsDispatcher {
                 *const SemaphoreGetFdInfoKHR,
                 *const c_int,
             ) -> Status,
-        >,
-    >,
-    pub cmd_push_descriptor_set_khr: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<CommandBuffer>,
-                PipelineBindPoint,
-                Option<PipelineLayout>,
-                u32,
-                u32,
-                *const WriteDescriptorSet,
-            ),
-        >,
-    >,
-    pub cmd_push_descriptor_set_with_template_khr: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<CommandBuffer>,
-                Option<DescriptorUpdateTemplate>,
-                Option<PipelineLayout>,
-                u32,
-                VoidPtr,
-            ),
         >,
     >,
     pub cmd_begin_conditional_rendering_ext: Cell<
@@ -2906,13 +3140,22 @@ pub struct CommandsDispatcher {
             ) -> Status,
         >,
     >,
-    pub cmd_initialize_graph_scratch_memory_amdx:
-        Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, DeviceAddress)>>,
+    pub cmd_initialize_graph_scratch_memory_amdx: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                Option<Pipeline>,
+                DeviceAddress,
+                DeviceSize,
+            ),
+        >,
+    >,
     pub cmd_dispatch_graph_amdx: Cell<
         Option<
             unsafe extern "system" fn(
                 Option<CommandBuffer>,
                 DeviceAddress,
+                DeviceSize,
                 *const DispatchGraphCountInfoAMDX,
             ),
         >,
@@ -2922,12 +3165,20 @@ pub struct CommandsDispatcher {
             unsafe extern "system" fn(
                 Option<CommandBuffer>,
                 DeviceAddress,
+                DeviceSize,
                 *const DispatchGraphCountInfoAMDX,
             ),
         >,
     >,
     pub cmd_dispatch_graph_indirect_count_amdx: Cell<
-        Option<unsafe extern "system" fn(Option<CommandBuffer>, DeviceAddress, DeviceAddress)>,
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                DeviceAddress,
+                DeviceSize,
+                DeviceAddress,
+            ),
+        >,
     >,
     pub cmd_set_sample_locations_ext: Cell<
         Option<unsafe extern "system" fn(Option<CommandBuffer>, *const SampleLocationsInfoEXT)>,
@@ -3390,6 +3641,17 @@ pub struct CommandsDispatcher {
             ),
         >,
     >,
+    pub cmd_write_buffer_marker2_amd: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                PipelineStageFlags2,
+                Option<Buffer>,
+                DeviceSize,
+                u32,
+            ),
+        >,
+    >,
     pub cmd_draw_mesh_tasks_nv:
         Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, u32, u32)>>,
     pub cmd_draw_mesh_tasks_indirect_nv: Cell<
@@ -3418,6 +3680,9 @@ pub struct CommandsDispatcher {
         Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, VoidPtr)>>,
     pub get_queue_checkpoint_data_nv:
         Cell<Option<unsafe extern "system" fn(Option<Queue>, *const u32, *const CheckpointDataNV)>>,
+    pub get_queue_checkpoint_data2_nv: Cell<
+        Option<unsafe extern "system" fn(Option<Queue>, *const u32, *const CheckpointData2NV)>,
+    >,
     pub initialize_performance_api_intel: Cell<
         Option<
             unsafe extern "system" fn(
@@ -3522,22 +3787,6 @@ pub struct CommandsDispatcher {
                 Option<CommandBuffer>,
                 *const Extent2D,
                 [FragmentShadingRateCombinerOpKHR; 2u16 as _],
-            ),
-        >,
-    >,
-    pub cmd_set_rendering_attachment_locations_khr: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<CommandBuffer>,
-                *const RenderingAttachmentLocationInfoKHR,
-            ),
-        >,
-    >,
-    pub cmd_set_rendering_input_attachment_indices_khr: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<CommandBuffer>,
-                *const RenderingInputAttachmentIndexInfoKHR,
             ),
         >,
     >,
@@ -3651,40 +3900,6 @@ pub struct CommandsDispatcher {
                 *const PipelineExecutableInternalRepresentationKHR,
             ) -> Status,
         >,
-    >,
-    pub copy_memory_to_image_ext: Cell<
-        Option<
-            unsafe extern "system" fn(Option<Device>, *const CopyMemoryToImageInfoEXT) -> Status,
-        >,
-    >,
-    pub copy_image_to_memory_ext: Cell<
-        Option<
-            unsafe extern "system" fn(Option<Device>, *const CopyImageToMemoryInfoEXT) -> Status,
-        >,
-    >,
-    pub copy_image_to_image_ext: Cell<
-        Option<unsafe extern "system" fn(Option<Device>, *const CopyImageToImageInfoEXT) -> Status>,
-    >,
-    pub transition_image_layout_ext: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<Device>,
-                u32,
-                *const HostImageLayoutTransitionInfoEXT,
-            ) -> Status,
-        >,
-    >,
-    pub map_memory2_khr: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<Device>,
-                *const MemoryMapInfoKHR,
-                *const *const c_void,
-            ) -> Status,
-        >,
-    >,
-    pub unmap_memory2_khr: Cell<
-        Option<unsafe extern "system" fn(Option<Device>, *const MemoryUnmapInfoKHR) -> Status>,
     >,
     pub release_swapchain_images_ext: Cell<
         Option<
@@ -3813,20 +4028,6 @@ pub struct CommandsDispatcher {
         Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, *const CudaLaunchInfoNV)>>,
     pub export_metal_objects_ext:
         Cell<Option<unsafe extern "system" fn(Option<Device>, *const ExportMetalObjectsInfoEXT)>>,
-    pub cmd_write_buffer_marker2_amd: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<CommandBuffer>,
-                PipelineStageFlags2,
-                Option<Buffer>,
-                DeviceSize,
-                u32,
-            ),
-        >,
-    >,
-    pub get_queue_checkpoint_data2_nv: Cell<
-        Option<unsafe extern "system" fn(Option<Queue>, *const u32, *const CheckpointData2NV)>,
-    >,
     pub get_descriptor_set_layout_size_ext: Cell<
         Option<
             unsafe extern "system" fn(
@@ -4490,51 +4691,6 @@ pub struct CommandsDispatcher {
             ),
         >,
     >,
-    pub cmd_bind_index_buffer2_khr: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<CommandBuffer>,
-                Option<Buffer>,
-                DeviceSize,
-                DeviceSize,
-                IndexType,
-            ),
-        >,
-    >,
-    pub get_rendering_area_granularity_khr: Cell<
-        Option<
-            unsafe extern "system" fn(Option<Device>, *const RenderingAreaInfoKHR, *const Extent2D),
-        >,
-    >,
-    pub get_device_image_subresource_layout_khr: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<Device>,
-                *const DeviceImageSubresourceInfoKHR,
-                *const SubresourceLayout2KHR,
-            ),
-        >,
-    >,
-    pub get_image_subresource_layout2_khr: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<Device>,
-                Option<Image>,
-                *const ImageSubresource2KHR,
-                *const SubresourceLayout2KHR,
-            ),
-        >,
-    >,
-    pub get_image_subresource_layout2_ext: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<Device>,
-                Option<Image>,
-                *const ImageSubresource2KHR,
-                *const SubresourceLayout2KHR,
-            ),
-        >,
-    >,
     pub anti_lag_update_amd:
         Cell<Option<unsafe extern "system" fn(Option<Device>, *const AntiLagDataAMD)>>,
     pub create_shaders_ext: Cell<
@@ -4711,10 +4867,6 @@ pub struct CommandsDispatcher {
             ) -> Status,
         >,
     >,
-    pub cmd_set_line_stipple_khr:
-        Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, u32, u16)>>,
-    pub cmd_set_line_stipple_ext:
-        Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, u32, u16)>>,
     pub get_physical_device_calibrateable_time_domains_khr: Cell<
         Option<
             unsafe extern "system" fn(
@@ -4753,22 +4905,6 @@ pub struct CommandsDispatcher {
                 *const u64,
                 *const u64,
             ) -> Status,
-        >,
-    >,
-    pub cmd_bind_descriptor_sets2_khr: Cell<
-        Option<unsafe extern "system" fn(Option<CommandBuffer>, *const BindDescriptorSetsInfoKHR)>,
-    >,
-    pub cmd_push_constants2_khr:
-        Cell<Option<unsafe extern "system" fn(Option<CommandBuffer>, *const PushConstantsInfoKHR)>>,
-    pub cmd_push_descriptor_set2_khr: Cell<
-        Option<unsafe extern "system" fn(Option<CommandBuffer>, *const PushDescriptorSetInfoKHR)>,
-    >,
-    pub cmd_push_descriptor_set_with_template2_khr: Cell<
-        Option<
-            unsafe extern "system" fn(
-                Option<CommandBuffer>,
-                *const PushDescriptorSetWithTemplateInfoKHR,
-            ),
         >,
     >,
     pub cmd_set_descriptor_buffer_offsets2_ext: Cell<
@@ -4870,6 +5006,15 @@ pub struct CommandsDispatcher {
                 u32,
                 *const WriteIndirectExecutionSetShaderEXT,
             ),
+        >,
+    >,
+    pub get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<PhysicalDevice>,
+                *const u32,
+                *const CooperativeMatrixFlexibleDimensionsPropertiesNV,
+            ) -> Status,
         >,
     >,
 }
@@ -6746,6 +6891,304 @@ impl CommandsDispatcher {
                 .get()
                 .or(self.get_device_image_sparse_memory_requirements_khr.get()),
         );
+        self.cmd_set_line_stipple
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdSetLineStipple".as_ptr(),
+            )));
+        self.cmd_set_line_stipple_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdSetLineStippleKHR".as_ptr(),
+            )));
+        self.cmd_set_line_stipple.set(
+            self.cmd_set_line_stipple
+                .get()
+                .or(self.cmd_set_line_stipple_khr.get()),
+        );
+        self.cmd_set_line_stipple_ext
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdSetLineStippleEXT".as_ptr(),
+            )));
+        self.cmd_set_line_stipple.set(
+            self.cmd_set_line_stipple
+                .get()
+                .or(self.cmd_set_line_stipple_ext.get()),
+        );
+        self.map_memory2.set(mem::transmute(get_instance_proc_addr(
+            get_instance(),
+            c"vkMapMemory2".as_ptr(),
+        )));
+        self.map_memory2_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkMapMemory2KHR".as_ptr(),
+            )));
+        self.map_memory2
+            .set(self.map_memory2.get().or(self.map_memory2_khr.get()));
+        self.unmap_memory2
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkUnmapMemory2".as_ptr(),
+            )));
+        self.unmap_memory2_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkUnmapMemory2KHR".as_ptr(),
+            )));
+        self.unmap_memory2
+            .set(self.unmap_memory2.get().or(self.unmap_memory2_khr.get()));
+        self.cmd_bind_index_buffer2
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdBindIndexBuffer2".as_ptr(),
+            )));
+        self.cmd_bind_index_buffer2_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdBindIndexBuffer2KHR".as_ptr(),
+            )));
+        self.cmd_bind_index_buffer2.set(
+            self.cmd_bind_index_buffer2
+                .get()
+                .or(self.cmd_bind_index_buffer2_khr.get()),
+        );
+        self.get_rendering_area_granularity
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetRenderingAreaGranularity".as_ptr(),
+            )));
+        self.get_rendering_area_granularity_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetRenderingAreaGranularityKHR".as_ptr(),
+            )));
+        self.get_rendering_area_granularity.set(
+            self.get_rendering_area_granularity
+                .get()
+                .or(self.get_rendering_area_granularity_khr.get()),
+        );
+        self.get_device_image_subresource_layout
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetDeviceImageSubresourceLayout".as_ptr(),
+            )));
+        self.get_device_image_subresource_layout_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetDeviceImageSubresourceLayoutKHR".as_ptr(),
+            )));
+        self.get_device_image_subresource_layout.set(
+            self.get_device_image_subresource_layout
+                .get()
+                .or(self.get_device_image_subresource_layout_khr.get()),
+        );
+        self.get_image_subresource_layout2
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetImageSubresourceLayout2".as_ptr(),
+            )));
+        self.get_image_subresource_layout2_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetImageSubresourceLayout2KHR".as_ptr(),
+            )));
+        self.get_image_subresource_layout2.set(
+            self.get_image_subresource_layout2
+                .get()
+                .or(self.get_image_subresource_layout2_khr.get()),
+        );
+        self.get_image_subresource_layout2_ext
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetImageSubresourceLayout2EXT".as_ptr(),
+            )));
+        self.get_image_subresource_layout2.set(
+            self.get_image_subresource_layout2
+                .get()
+                .or(self.get_image_subresource_layout2_ext.get()),
+        );
+        self.cmd_push_descriptor_set
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushDescriptorSet".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushDescriptorSetKHR".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set.set(
+            self.cmd_push_descriptor_set
+                .get()
+                .or(self.cmd_push_descriptor_set_khr.get()),
+        );
+        self.cmd_push_descriptor_set_with_template
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushDescriptorSetWithTemplate".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_with_template_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushDescriptorSetWithTemplateKHR".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_with_template.set(
+            self.cmd_push_descriptor_set_with_template
+                .get()
+                .or(self.cmd_push_descriptor_set_with_template_khr.get()),
+        );
+        self.cmd_set_rendering_attachment_locations
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdSetRenderingAttachmentLocations".as_ptr(),
+            )));
+        self.cmd_set_rendering_attachment_locations_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdSetRenderingAttachmentLocationsKHR".as_ptr(),
+            )));
+        self.cmd_set_rendering_attachment_locations.set(
+            self.cmd_set_rendering_attachment_locations
+                .get()
+                .or(self.cmd_set_rendering_attachment_locations_khr.get()),
+        );
+        self.cmd_set_rendering_input_attachment_indices
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdSetRenderingInputAttachmentIndices".as_ptr(),
+            )));
+        self.cmd_set_rendering_input_attachment_indices_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdSetRenderingInputAttachmentIndicesKHR".as_ptr(),
+            )));
+        self.cmd_set_rendering_input_attachment_indices.set(
+            self.cmd_set_rendering_input_attachment_indices
+                .get()
+                .or(self.cmd_set_rendering_input_attachment_indices_khr.get()),
+        );
+        self.cmd_bind_descriptor_sets2
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdBindDescriptorSets2".as_ptr(),
+            )));
+        self.cmd_bind_descriptor_sets2_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdBindDescriptorSets2KHR".as_ptr(),
+            )));
+        self.cmd_bind_descriptor_sets2.set(
+            self.cmd_bind_descriptor_sets2
+                .get()
+                .or(self.cmd_bind_descriptor_sets2_khr.get()),
+        );
+        self.cmd_push_constants2
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushConstants2".as_ptr(),
+            )));
+        self.cmd_push_constants2_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushConstants2KHR".as_ptr(),
+            )));
+        self.cmd_push_constants2.set(
+            self.cmd_push_constants2
+                .get()
+                .or(self.cmd_push_constants2_khr.get()),
+        );
+        self.cmd_push_descriptor_set2
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushDescriptorSet2".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set2_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushDescriptorSet2KHR".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set2.set(
+            self.cmd_push_descriptor_set2
+                .get()
+                .or(self.cmd_push_descriptor_set2_khr.get()),
+        );
+        self.cmd_push_descriptor_set_with_template2
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushDescriptorSetWithTemplate2".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_with_template2_khr
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdPushDescriptorSetWithTemplate2KHR".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_with_template2.set(
+            self.cmd_push_descriptor_set_with_template2
+                .get()
+                .or(self.cmd_push_descriptor_set_with_template2_khr.get()),
+        );
+        self.copy_memory_to_image
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCopyMemoryToImage".as_ptr(),
+            )));
+        self.copy_memory_to_image_ext
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCopyMemoryToImageEXT".as_ptr(),
+            )));
+        self.copy_memory_to_image.set(
+            self.copy_memory_to_image
+                .get()
+                .or(self.copy_memory_to_image_ext.get()),
+        );
+        self.copy_image_to_memory
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCopyImageToMemory".as_ptr(),
+            )));
+        self.copy_image_to_memory_ext
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCopyImageToMemoryEXT".as_ptr(),
+            )));
+        self.copy_image_to_memory.set(
+            self.copy_image_to_memory
+                .get()
+                .or(self.copy_image_to_memory_ext.get()),
+        );
+        self.copy_image_to_image
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCopyImageToImage".as_ptr(),
+            )));
+        self.copy_image_to_image_ext
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCopyImageToImageEXT".as_ptr(),
+            )));
+        self.copy_image_to_image.set(
+            self.copy_image_to_image
+                .get()
+                .or(self.copy_image_to_image_ext.get()),
+        );
+        self.transition_image_layout
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkTransitionImageLayout".as_ptr(),
+            )));
+        self.transition_image_layout_ext
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkTransitionImageLayoutEXT".as_ptr(),
+            )));
+        self.transition_image_layout.set(
+            self.transition_image_layout
+                .get()
+                .or(self.transition_image_layout_ext.get()),
+        );
         self.destroy_surface_khr
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
@@ -7001,6 +7444,11 @@ impl CommandsDispatcher {
                 get_instance(),
                 c"vkGetImageViewHandleNVX".as_ptr(),
             )));
+        self.get_image_view_handle64_nvx
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetImageViewHandle64NVX".as_ptr(),
+            )));
         self.get_image_view_address_nvx
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
@@ -7070,16 +7518,6 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
                 c"vkGetSemaphoreFdKHR".as_ptr(),
-            )));
-        self.cmd_push_descriptor_set_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdPushDescriptorSetKHR".as_ptr(),
-            )));
-        self.cmd_push_descriptor_set_with_template_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdPushDescriptorSetWithTemplateKHR".as_ptr(),
             )));
         self.cmd_begin_conditional_rendering_ext
             .set(mem::transmute(get_instance_proc_addr(
@@ -7591,6 +8029,11 @@ impl CommandsDispatcher {
                 get_instance(),
                 c"vkCmdWriteBufferMarkerAMD".as_ptr(),
             )));
+        self.cmd_write_buffer_marker2_amd
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdWriteBufferMarker2AMD".as_ptr(),
+            )));
         self.cmd_draw_mesh_tasks_nv
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
@@ -7625,6 +8068,11 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
                 c"vkGetQueueCheckpointDataNV".as_ptr(),
+            )));
+        self.get_queue_checkpoint_data2_nv
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetQueueCheckpointData2NV".as_ptr(),
             )));
         self.initialize_performance_api_intel
             .set(mem::transmute(get_instance_proc_addr(
@@ -7695,16 +8143,6 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
                 c"vkCmdSetFragmentShadingRateKHR".as_ptr(),
-            )));
-        self.cmd_set_rendering_attachment_locations_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdSetRenderingAttachmentLocationsKHR".as_ptr(),
-            )));
-        self.cmd_set_rendering_input_attachment_indices_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdSetRenderingInputAttachmentIndicesKHR".as_ptr(),
             )));
         self.wait_for_present_khr
             .set(mem::transmute(get_instance_proc_addr(
@@ -7785,36 +8223,6 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
                 c"vkGetPipelineExecutableInternalRepresentationsKHR".as_ptr(),
-            )));
-        self.copy_memory_to_image_ext
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCopyMemoryToImageEXT".as_ptr(),
-            )));
-        self.copy_image_to_memory_ext
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCopyImageToMemoryEXT".as_ptr(),
-            )));
-        self.copy_image_to_image_ext
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCopyImageToImageEXT".as_ptr(),
-            )));
-        self.transition_image_layout_ext
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkTransitionImageLayoutEXT".as_ptr(),
-            )));
-        self.map_memory2_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkMapMemory2KHR".as_ptr(),
-            )));
-        self.unmap_memory2_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkUnmapMemory2KHR".as_ptr(),
             )));
         self.release_swapchain_images_ext
             .set(mem::transmute(get_instance_proc_addr(
@@ -7900,16 +8308,6 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
                 c"vkExportMetalObjectsEXT".as_ptr(),
-            )));
-        self.cmd_write_buffer_marker2_amd
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdWriteBufferMarker2AMD".as_ptr(),
-            )));
-        self.get_queue_checkpoint_data2_nv
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkGetQueueCheckpointData2NV".as_ptr(),
             )));
         self.get_descriptor_set_layout_size_ext
             .set(mem::transmute(get_instance_proc_addr(
@@ -8446,36 +8844,6 @@ impl CommandsDispatcher {
                 get_instance(),
                 c"vkCmdOpticalFlowExecuteNV".as_ptr(),
             )));
-        self.cmd_bind_index_buffer2_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdBindIndexBuffer2KHR".as_ptr(),
-            )));
-        self.get_rendering_area_granularity_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkGetRenderingAreaGranularityKHR".as_ptr(),
-            )));
-        self.get_device_image_subresource_layout_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkGetDeviceImageSubresourceLayoutKHR".as_ptr(),
-            )));
-        self.get_image_subresource_layout2_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkGetImageSubresourceLayout2KHR".as_ptr(),
-            )));
-        self.get_image_subresource_layout2_ext
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkGetImageSubresourceLayout2EXT".as_ptr(),
-            )));
-        self.get_image_subresource_layout2_khr.set(
-            self.get_image_subresource_layout2_khr
-                .get()
-                .or(self.get_image_subresource_layout2_ext.get()),
-        );
         self.anti_lag_update_amd
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
@@ -8581,21 +8949,6 @@ impl CommandsDispatcher {
                 get_instance(),
                 c"vkGetScreenBufferPropertiesQNX".as_ptr(),
             )));
-        self.cmd_set_line_stipple_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdSetLineStippleKHR".as_ptr(),
-            )));
-        self.cmd_set_line_stipple_ext
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdSetLineStippleEXT".as_ptr(),
-            )));
-        self.cmd_set_line_stipple_khr.set(
-            self.cmd_set_line_stipple_khr
-                .get()
-                .or(self.cmd_set_line_stipple_ext.get()),
-        );
         self.get_physical_device_calibrateable_time_domains_khr
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
@@ -8628,26 +8981,6 @@ impl CommandsDispatcher {
                 .get()
                 .or(self.get_calibrated_timestamps_ext.get()),
         );
-        self.cmd_bind_descriptor_sets2_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdBindDescriptorSets2KHR".as_ptr(),
-            )));
-        self.cmd_push_constants2_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdPushConstants2KHR".as_ptr(),
-            )));
-        self.cmd_push_descriptor_set2_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdPushDescriptorSet2KHR".as_ptr(),
-            )));
-        self.cmd_push_descriptor_set_with_template2_khr
-            .set(mem::transmute(get_instance_proc_addr(
-                get_instance(),
-                c"vkCmdPushDescriptorSetWithTemplate2KHR".as_ptr(),
-            )));
         self.cmd_set_descriptor_buffer_offsets2_ext
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
@@ -8702,6 +9035,11 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
                 c"vkUpdateIndirectExecutionSetShaderEXT".as_ptr(),
+            )));
+        self.get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV".as_ptr(),
             )));
     }
     pub unsafe fn load_device(&self, device: &Device) {
@@ -10279,6 +10617,303 @@ impl CommandsDispatcher {
                 .get()
                 .or(self.get_device_image_sparse_memory_requirements_khr.get()),
         );
+        self.cmd_set_line_stipple
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdSetLineStipple".as_ptr(),
+            )));
+        self.cmd_set_line_stipple_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdSetLineStippleKHR".as_ptr(),
+            )));
+        self.cmd_set_line_stipple.set(
+            self.cmd_set_line_stipple
+                .get()
+                .or(self.cmd_set_line_stipple_khr.get()),
+        );
+        self.cmd_set_line_stipple_ext
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdSetLineStippleEXT".as_ptr(),
+            )));
+        self.cmd_set_line_stipple.set(
+            self.cmd_set_line_stipple
+                .get()
+                .or(self.cmd_set_line_stipple_ext.get()),
+        );
+        self.map_memory2.set(mem::transmute(get_device_proc_addr(
+            get_device(),
+            c"vkMapMemory2".as_ptr(),
+        )));
+        self.map_memory2_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkMapMemory2KHR".as_ptr(),
+            )));
+        self.map_memory2
+            .set(self.map_memory2.get().or(self.map_memory2_khr.get()));
+        self.unmap_memory2.set(mem::transmute(get_device_proc_addr(
+            get_device(),
+            c"vkUnmapMemory2".as_ptr(),
+        )));
+        self.unmap_memory2_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkUnmapMemory2KHR".as_ptr(),
+            )));
+        self.unmap_memory2
+            .set(self.unmap_memory2.get().or(self.unmap_memory2_khr.get()));
+        self.cmd_bind_index_buffer2
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdBindIndexBuffer2".as_ptr(),
+            )));
+        self.cmd_bind_index_buffer2_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdBindIndexBuffer2KHR".as_ptr(),
+            )));
+        self.cmd_bind_index_buffer2.set(
+            self.cmd_bind_index_buffer2
+                .get()
+                .or(self.cmd_bind_index_buffer2_khr.get()),
+        );
+        self.get_rendering_area_granularity
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetRenderingAreaGranularity".as_ptr(),
+            )));
+        self.get_rendering_area_granularity_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetRenderingAreaGranularityKHR".as_ptr(),
+            )));
+        self.get_rendering_area_granularity.set(
+            self.get_rendering_area_granularity
+                .get()
+                .or(self.get_rendering_area_granularity_khr.get()),
+        );
+        self.get_device_image_subresource_layout
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetDeviceImageSubresourceLayout".as_ptr(),
+            )));
+        self.get_device_image_subresource_layout_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetDeviceImageSubresourceLayoutKHR".as_ptr(),
+            )));
+        self.get_device_image_subresource_layout.set(
+            self.get_device_image_subresource_layout
+                .get()
+                .or(self.get_device_image_subresource_layout_khr.get()),
+        );
+        self.get_image_subresource_layout2
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetImageSubresourceLayout2".as_ptr(),
+            )));
+        self.get_image_subresource_layout2_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetImageSubresourceLayout2KHR".as_ptr(),
+            )));
+        self.get_image_subresource_layout2.set(
+            self.get_image_subresource_layout2
+                .get()
+                .or(self.get_image_subresource_layout2_khr.get()),
+        );
+        self.get_image_subresource_layout2_ext
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetImageSubresourceLayout2EXT".as_ptr(),
+            )));
+        self.get_image_subresource_layout2.set(
+            self.get_image_subresource_layout2
+                .get()
+                .or(self.get_image_subresource_layout2_ext.get()),
+        );
+        self.cmd_push_descriptor_set
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushDescriptorSet".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushDescriptorSetKHR".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set.set(
+            self.cmd_push_descriptor_set
+                .get()
+                .or(self.cmd_push_descriptor_set_khr.get()),
+        );
+        self.cmd_push_descriptor_set_with_template
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushDescriptorSetWithTemplate".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_with_template_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushDescriptorSetWithTemplateKHR".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_with_template.set(
+            self.cmd_push_descriptor_set_with_template
+                .get()
+                .or(self.cmd_push_descriptor_set_with_template_khr.get()),
+        );
+        self.cmd_set_rendering_attachment_locations
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdSetRenderingAttachmentLocations".as_ptr(),
+            )));
+        self.cmd_set_rendering_attachment_locations_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdSetRenderingAttachmentLocationsKHR".as_ptr(),
+            )));
+        self.cmd_set_rendering_attachment_locations.set(
+            self.cmd_set_rendering_attachment_locations
+                .get()
+                .or(self.cmd_set_rendering_attachment_locations_khr.get()),
+        );
+        self.cmd_set_rendering_input_attachment_indices
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdSetRenderingInputAttachmentIndices".as_ptr(),
+            )));
+        self.cmd_set_rendering_input_attachment_indices_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdSetRenderingInputAttachmentIndicesKHR".as_ptr(),
+            )));
+        self.cmd_set_rendering_input_attachment_indices.set(
+            self.cmd_set_rendering_input_attachment_indices
+                .get()
+                .or(self.cmd_set_rendering_input_attachment_indices_khr.get()),
+        );
+        self.cmd_bind_descriptor_sets2
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdBindDescriptorSets2".as_ptr(),
+            )));
+        self.cmd_bind_descriptor_sets2_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdBindDescriptorSets2KHR".as_ptr(),
+            )));
+        self.cmd_bind_descriptor_sets2.set(
+            self.cmd_bind_descriptor_sets2
+                .get()
+                .or(self.cmd_bind_descriptor_sets2_khr.get()),
+        );
+        self.cmd_push_constants2
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushConstants2".as_ptr(),
+            )));
+        self.cmd_push_constants2_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushConstants2KHR".as_ptr(),
+            )));
+        self.cmd_push_constants2.set(
+            self.cmd_push_constants2
+                .get()
+                .or(self.cmd_push_constants2_khr.get()),
+        );
+        self.cmd_push_descriptor_set2
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushDescriptorSet2".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set2_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushDescriptorSet2KHR".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set2.set(
+            self.cmd_push_descriptor_set2
+                .get()
+                .or(self.cmd_push_descriptor_set2_khr.get()),
+        );
+        self.cmd_push_descriptor_set_with_template2
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushDescriptorSetWithTemplate2".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_with_template2_khr
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdPushDescriptorSetWithTemplate2KHR".as_ptr(),
+            )));
+        self.cmd_push_descriptor_set_with_template2.set(
+            self.cmd_push_descriptor_set_with_template2
+                .get()
+                .or(self.cmd_push_descriptor_set_with_template2_khr.get()),
+        );
+        self.copy_memory_to_image
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCopyMemoryToImage".as_ptr(),
+            )));
+        self.copy_memory_to_image_ext
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCopyMemoryToImageEXT".as_ptr(),
+            )));
+        self.copy_memory_to_image.set(
+            self.copy_memory_to_image
+                .get()
+                .or(self.copy_memory_to_image_ext.get()),
+        );
+        self.copy_image_to_memory
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCopyImageToMemory".as_ptr(),
+            )));
+        self.copy_image_to_memory_ext
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCopyImageToMemoryEXT".as_ptr(),
+            )));
+        self.copy_image_to_memory.set(
+            self.copy_image_to_memory
+                .get()
+                .or(self.copy_image_to_memory_ext.get()),
+        );
+        self.copy_image_to_image
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCopyImageToImage".as_ptr(),
+            )));
+        self.copy_image_to_image_ext
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCopyImageToImageEXT".as_ptr(),
+            )));
+        self.copy_image_to_image.set(
+            self.copy_image_to_image
+                .get()
+                .or(self.copy_image_to_image_ext.get()),
+        );
+        self.transition_image_layout
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkTransitionImageLayout".as_ptr(),
+            )));
+        self.transition_image_layout_ext
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkTransitionImageLayoutEXT".as_ptr(),
+            )));
+        self.transition_image_layout.set(
+            self.transition_image_layout
+                .get()
+                .or(self.transition_image_layout_ext.get()),
+        );
         self.create_swapchain_khr
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
@@ -10409,6 +11044,11 @@ impl CommandsDispatcher {
                 get_device(),
                 c"vkGetImageViewHandleNVX".as_ptr(),
             )));
+        self.get_image_view_handle64_nvx
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetImageViewHandle64NVX".as_ptr(),
+            )));
         self.get_image_view_address_nvx
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
@@ -10463,16 +11103,6 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
                 c"vkGetSemaphoreFdKHR".as_ptr(),
-            )));
-        self.cmd_push_descriptor_set_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdPushDescriptorSetKHR".as_ptr(),
-            )));
-        self.cmd_push_descriptor_set_with_template_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdPushDescriptorSetWithTemplateKHR".as_ptr(),
             )));
         self.cmd_begin_conditional_rendering_ext
             .set(mem::transmute(get_device_proc_addr(
@@ -10894,6 +11524,11 @@ impl CommandsDispatcher {
                 get_device(),
                 c"vkCmdWriteBufferMarkerAMD".as_ptr(),
             )));
+        self.cmd_write_buffer_marker2_amd
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdWriteBufferMarker2AMD".as_ptr(),
+            )));
         self.cmd_draw_mesh_tasks_nv
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
@@ -10928,6 +11563,11 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
                 c"vkGetQueueCheckpointDataNV".as_ptr(),
+            )));
+        self.get_queue_checkpoint_data2_nv
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetQueueCheckpointData2NV".as_ptr(),
             )));
         self.initialize_performance_api_intel
             .set(mem::transmute(get_device_proc_addr(
@@ -10983,16 +11623,6 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
                 c"vkCmdSetFragmentShadingRateKHR".as_ptr(),
-            )));
-        self.cmd_set_rendering_attachment_locations_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdSetRenderingAttachmentLocationsKHR".as_ptr(),
-            )));
-        self.cmd_set_rendering_input_attachment_indices_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdSetRenderingInputAttachmentIndicesKHR".as_ptr(),
             )));
         self.wait_for_present_khr
             .set(mem::transmute(get_device_proc_addr(
@@ -11053,36 +11683,6 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
                 c"vkGetPipelineExecutableInternalRepresentationsKHR".as_ptr(),
-            )));
-        self.copy_memory_to_image_ext
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCopyMemoryToImageEXT".as_ptr(),
-            )));
-        self.copy_image_to_memory_ext
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCopyImageToMemoryEXT".as_ptr(),
-            )));
-        self.copy_image_to_image_ext
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCopyImageToImageEXT".as_ptr(),
-            )));
-        self.transition_image_layout_ext
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkTransitionImageLayoutEXT".as_ptr(),
-            )));
-        self.map_memory2_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkMapMemory2KHR".as_ptr(),
-            )));
-        self.unmap_memory2_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkUnmapMemory2KHR".as_ptr(),
             )));
         self.release_swapchain_images_ext
             .set(mem::transmute(get_device_proc_addr(
@@ -11158,16 +11758,6 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
                 c"vkExportMetalObjectsEXT".as_ptr(),
-            )));
-        self.cmd_write_buffer_marker2_amd
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdWriteBufferMarker2AMD".as_ptr(),
-            )));
-        self.get_queue_checkpoint_data2_nv
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkGetQueueCheckpointData2NV".as_ptr(),
             )));
         self.get_descriptor_set_layout_size_ext
             .set(mem::transmute(get_device_proc_addr(
@@ -11669,36 +12259,6 @@ impl CommandsDispatcher {
                 get_device(),
                 c"vkCmdOpticalFlowExecuteNV".as_ptr(),
             )));
-        self.cmd_bind_index_buffer2_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdBindIndexBuffer2KHR".as_ptr(),
-            )));
-        self.get_rendering_area_granularity_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkGetRenderingAreaGranularityKHR".as_ptr(),
-            )));
-        self.get_device_image_subresource_layout_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkGetDeviceImageSubresourceLayoutKHR".as_ptr(),
-            )));
-        self.get_image_subresource_layout2_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkGetImageSubresourceLayout2KHR".as_ptr(),
-            )));
-        self.get_image_subresource_layout2_ext
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkGetImageSubresourceLayout2EXT".as_ptr(),
-            )));
-        self.get_image_subresource_layout2_khr.set(
-            self.get_image_subresource_layout2_khr
-                .get()
-                .or(self.get_image_subresource_layout2_ext.get()),
-        );
         self.anti_lag_update_amd
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
@@ -11799,21 +12359,6 @@ impl CommandsDispatcher {
                 get_device(),
                 c"vkGetScreenBufferPropertiesQNX".as_ptr(),
             )));
-        self.cmd_set_line_stipple_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdSetLineStippleKHR".as_ptr(),
-            )));
-        self.cmd_set_line_stipple_ext
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdSetLineStippleEXT".as_ptr(),
-            )));
-        self.cmd_set_line_stipple_khr.set(
-            self.cmd_set_line_stipple_khr
-                .get()
-                .or(self.cmd_set_line_stipple_ext.get()),
-        );
         self.get_calibrated_timestamps_khr
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
@@ -11829,26 +12374,6 @@ impl CommandsDispatcher {
                 .get()
                 .or(self.get_calibrated_timestamps_ext.get()),
         );
-        self.cmd_bind_descriptor_sets2_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdBindDescriptorSets2KHR".as_ptr(),
-            )));
-        self.cmd_push_constants2_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdPushConstants2KHR".as_ptr(),
-            )));
-        self.cmd_push_descriptor_set2_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdPushDescriptorSet2KHR".as_ptr(),
-            )));
-        self.cmd_push_descriptor_set_with_template2_khr
-            .set(mem::transmute(get_device_proc_addr(
-                get_device(),
-                c"vkCmdPushDescriptorSetWithTemplate2KHR".as_ptr(),
-            )));
         self.cmd_set_descriptor_buffer_offsets2_ext
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),

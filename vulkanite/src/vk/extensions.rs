@@ -1,7 +1,7 @@
 use super::{
     ApiVersion, DeviceExtension, DeviceExtensionName, InstanceExtension, InstanceExtensionName,
 };
-pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 3, 297u32);
+pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 3, 304u32);
 pub const KHR_SURFACE: InstanceExtension = InstanceExtension {
     name: unsafe { InstanceExtensionName::new(c"VK_KHR_surface") },
     spec: 25u32,
@@ -88,11 +88,11 @@ pub const EXT_TRANSFORM_FEEDBACK: DeviceExtension = DeviceExtension {
 };
 pub const NVX_BINARY_IMPORT: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NVX_binary_import") },
-    spec: 1u32,
+    spec: 2u32,
 };
 pub const NVX_IMAGE_VIEW_HANDLE: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NVX_image_view_handle") },
-    spec: 2u32,
+    spec: 3u32,
 };
 pub const AMD_DRAW_INDIRECT_COUNT: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_AMD_draw_indirect_count") },
@@ -426,7 +426,7 @@ pub const AMD_GPU_SHADER_INT16: DeviceExtension = DeviceExtension {
 };
 pub const AMDX_SHADER_ENQUEUE: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_AMDX_shader_enqueue") },
-    spec: 1u32,
+    spec: 2u32,
 };
 pub const AMD_MIXED_ATTACHMENT_SAMPLES: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_AMD_mixed_attachment_samples") },
@@ -1456,6 +1456,10 @@ pub const NV_DESCRIPTOR_POOL_OVERALLOCATION: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_descriptor_pool_overallocation") },
     spec: 1u32,
 };
+pub const NV_DISPLAY_STEREO: InstanceExtension = InstanceExtension {
+    name: unsafe { InstanceExtensionName::new(c"VK_NV_display_stereo") },
+    spec: 1u32,
+};
 pub const NV_RAW_ACCESS_CHAINS: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_raw_access_chains") },
     spec: 1u32,
@@ -1494,5 +1498,17 @@ pub const MESA_IMAGE_ALIGNMENT_CONTROL: DeviceExtension = DeviceExtension {
 };
 pub const EXT_DEPTH_CLAMP_CONTROL: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_EXT_depth_clamp_control") },
+    spec: 1u32,
+};
+pub const HUAWEI_HDR_VIVID: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_HUAWEI_hdr_vivid") },
+    spec: 1u32,
+};
+pub const NV_COOPERATIVE_MATRIX2: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_NV_cooperative_matrix2") },
+    spec: 1u32,
+};
+pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_EXT_vertex_attribute_robustness") },
     spec: 1u32,
 };
