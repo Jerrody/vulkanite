@@ -1,6 +1,6 @@
 use std::{collections::HashSet, error::Error, ffi::CStr, ops::Deref};
 
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, bail, Result};
 use raw_window_handle::{HasDisplayHandle, HasWindowHandle, RawDisplayHandle};
 use smallvec::{smallvec, SmallVec};
 use vulkanite::{
@@ -16,12 +16,16 @@ use winit::{
 
 #[derive(Default)]
 struct Application {
-    window: Option<Window>,
     vulkan_app: Option<VulkanApplication>,
 }
 
 impl ApplicationHandler for Application {
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
+        assert!(
+            self.vulkan_app.is_none(),
+            "This example app does not expect the Window to be re-created"
+        );
+
         let window_attributes = Window::default_attributes()
             .with_title("Vulkan")
             .with_inner_size(LogicalSize::new(800, 600));
@@ -29,17 +33,12 @@ impl ApplicationHandler for Application {
 
         if self.vulkan_app.is_none() {
             // First time the window is created, initialize all the Vulkan parts
-            self.vulkan_app = Some(VulkanApplication::init(&window).unwrap())
+            self.vulkan_app = Some(VulkanApplication::init(window).unwrap())
         }
-        self.window = Some(window);
     }
 
     fn new_events(&mut self, _event_loop: &ActiveEventLoop, _cause: winit::event::StartCause) {
-        if self.window.is_none() {
-            return;
-        }
-
-        if let Some(vulkan_app) = self.vulkan_app.as_mut() {
+        if let Some(vulkan_app) = &mut self.vulkan_app {
             vulkan_app.render_frame().unwrap();
         }
     }
@@ -50,13 +49,16 @@ impl ApplicationHandler for Application {
         _window_id: WindowId,
         event: WindowEvent,
     ) {
-        if self.window.is_none() {
+        let Some(vulkan_app) = &mut self.vulkan_app else {
             return;
-        }
+        };
 
         match event {
             WindowEvent::CloseRequested => event_loop.exit(),
-            //WindowEvent::RedrawRequested => {}
+            WindowEvent::ScaleFactorChanged { .. } | WindowEvent::Resized(_) => {
+                // forces the swapchain to be recreated
+                vulkan_app.swapchain_objects.take();
+            }
             _ => (),
         }
     }
@@ -74,8 +76,10 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 
 struct VulkanApplication {
+    window: Window,
     instance: vk::rs::Instance,
     debug_messenger: Option<vk::rs::DebugUtilsMessengerEXT>,
+    physical_device: vk::rs::PhysicalDevice,
     device: vk::rs::Device,
     queue: vk::rs::Queue,
     command_pool: vk::rs::CommandPool,
@@ -85,7 +89,8 @@ struct VulkanApplication {
     image_available: SmallVec<[vk::rs::Semaphore; 3]>,
     render_finished: SmallVec<[vk::rs::Semaphore; 3]>,
     surface: vk::rs::SurfaceKHR,
-    swapchain_objects: SwapchainObjects,
+    swapchain_objects: Option<SwapchainObjects>,
+    swapchain_len: usize,
     render_pass: vk::rs::RenderPass,
     shader_modules: [vk::rs::ShaderModule; 2],
     pipeline_layout: vk::rs::PipelineLayout,
@@ -105,7 +110,7 @@ extern "system" fn debug_callback(
 }
 
 impl VulkanApplication {
-    pub fn init(window: &Window) -> Result<Self> {
+    pub fn init(window: Window) -> Result<Self> {
         let display_handle = window.display_handle()?.as_raw();
         let window_handle = window.window_handle()?.as_raw();
 
@@ -115,26 +120,31 @@ impl VulkanApplication {
         let surface = window::rs::create_surface(&instance, &display_handle, &window_handle)?;
         let (physical_device, device, queue, command_pool) =
             Self::create_device(&instance, &surface)?;
-        let mut swapchain_objects =
-            SwapchainObjects::create(&physical_device, &device, &surface, window.inner_size())?;
+
+        let mut swapchain_objects = SwapchainObjects::create(
+            &physical_device,
+            &device,
+            &surface,
+            window.inner_size(),
+            None,
+        )?;
+        let swapchain_len = swapchain_objects.swapchain_images.len();
 
         let render_pass = Self::create_render_pass(&device, swapchain_objects.format)?;
         let (shader_modules, pipeline_layout, pipeline) =
             Self::create_graphics_pipelines(&device, &render_pass)?;
 
         swapchain_objects.create_framebuffers(&device, &render_pass)?;
-        let cmd_buffers = Self::create_command_buffers(
-            &device,
-            &command_pool,
-            swapchain_objects.swapchain_images.len(),
-        )?;
+        let cmd_buffers = Self::create_command_buffers(&device, &command_pool, swapchain_len)?;
         let (fences, [image_available, render_finished]) =
-            Self::create_sync_objects(&device, swapchain_objects.swapchain_images.len())?;
+            Self::create_sync_objects(&device, swapchain_len)?;
 
         Ok(Self {
+            window,
             instance,
             debug_messenger,
             device,
+            physical_device,
             queue,
             command_pool,
             cmd_buffers,
@@ -143,7 +153,8 @@ impl VulkanApplication {
             image_available,
             render_finished,
             surface,
-            swapchain_objects,
+            swapchain_objects: Some(swapchain_objects),
+            swapchain_len,
             render_pass,
             shader_modules,
             pipeline_layout,
@@ -188,7 +199,7 @@ impl VulkanApplication {
                 .message_severity(
                     flagbits!(vk::DebugUtilsMessageSeverityFlagsEXT::{Info | Warning | Error}),
                 )
-                .message_type(vk::DebugUtilsMessageTypeFlagsEXT::all())
+                .message_type(flagbits!(vk::DebugUtilsMessageTypeFlagsEXT::{General | Validation}))
                 .pfn_user_callback(Some(debug_callback));
             Some(instance.create_debug_utils_messenger_ext(&debug_info)?)
         } else {
@@ -473,6 +484,7 @@ impl VulkanApplication {
     fn record_command_buffer(
         &self,
         cmd_buffer: &vk::rs::CommandBuffer,
+        swapchain_objects: &SwapchainObjects,
         image_idx: usize,
     ) -> Result<()> {
         cmd_buffer.reset(Default::default())?;
@@ -487,11 +499,11 @@ impl VulkanApplication {
             },
         };
 
-        let extent = self.swapchain_objects.extent;
+        let extent = swapchain_objects.extent;
         cmd_buffer.begin_render_pass(
             &vk::RenderPassBeginInfo::default()
                 .render_pass(&self.render_pass)
-                .framebuffer(&self.swapchain_objects.framebuffers[image_idx])
+                .framebuffer(&swapchain_objects.framebuffers[image_idx])
                 .render_area(vk::Rect2D {
                     offset: vk::Offset2D::default(),
                     extent,
@@ -529,27 +541,50 @@ impl VulkanApplication {
 
     fn render_frame(&mut self) -> Result<()> {
         let curr_index = self.next_index;
-        self.next_index = (self.next_index + 1) % self.swapchain_objects.swapchain_images.len();
+        self.next_index = (self.next_index + 1) % self.swapchain_len;
 
         let fence = &self.fences[curr_index];
         let image_available = &self.image_available[curr_index];
 
         self.device.wait_for_fences(fence, true, u64::MAX)?;
 
-        self.device.reset_fences(fence)?;
-        let (status, image_idx) = self.device.acquire_next_image_khr(
-            &self.swapchain_objects.swapchain,
-            u64::MAX,
-            Some(image_available),
-            None,
-        )?;
-        let image_idx = image_idx as usize;
-        assert!(status == vk::Status::Success || status == vk::Status::SuboptimalKHR);
+        let make_swapchain = || {
+            SwapchainObjects::create(
+                &self.physical_device,
+                &self.device,
+                &self.surface,
+                self.window.inner_size(),
+                Some(&self.render_pass),
+            )
+            .expect("Failed to re-create swapchain")
+        };
 
+        self.device.reset_fences(fence)?;
+
+        let image_idx = loop {
+            let swapchain_objects = self.swapchain_objects.get_or_insert_with(make_swapchain);
+            match self.device.acquire_next_image_khr(
+                &swapchain_objects.swapchain,
+                u64::MAX,
+                Some(image_available),
+                None,
+            ) {
+                Ok((_, image_idx)) => break image_idx as usize,
+                Err(vk::Status::ErrorOutOfDateKHR) => {
+                    self.swapchain_objects.take();
+                }
+                Err(err) => bail!(err),
+            }
+        };
+
+        let swapchain_objects = self
+            .swapchain_objects
+            .as_ref()
+            .expect("We got an image index, the swapchain must exist");
         let render_finished = &self.render_finished[curr_index];
 
-        let cmd_buffer = &self.cmd_buffers[image_idx];
-        self.record_command_buffer(cmd_buffer, image_idx)?;
+        let cmd_buffer = &self.cmd_buffers[curr_index];
+        self.record_command_buffer(cmd_buffer, swapchain_objects, image_idx)?;
 
         self.queue.submit(
             &[vk::SubmitInfo::default()
@@ -562,15 +597,22 @@ impl VulkanApplication {
             Some(fence),
         )?;
 
-        self.queue.present_khr(
-            &vk::PresentInfoKHR::default()
-                .wait_semaphores(render_finished)
-                .swapchain(
-                    &self.swapchain_objects.swapchain,
-                    &[image_idx as u32],
-                    None::<()>,
-                ),
-        )?;
+        self.queue
+            .present_khr(
+                &vk::PresentInfoKHR::default()
+                    .wait_semaphores(render_finished)
+                    .swapchain(
+                        &swapchain_objects.swapchain,
+                        &[image_idx as u32],
+                        None::<()>,
+                    ),
+            )
+            .inspect_err(|err| {
+                if matches!(err, vk::Status::ErrorOutOfDateKHR) {
+                    self.swapchain_objects.take();
+                }
+            })?;
+
         Ok(())
     }
 }
@@ -579,7 +621,7 @@ impl Drop for VulkanApplication {
     fn drop(&mut self) {
         self.device.wait_idle().unwrap();
 
-        self.swapchain_objects.destroy(&self.device);
+        self.swapchain_objects.take();
 
         unsafe {
             self.device.destroy_pipeline(Some(&self.pipeline));
@@ -616,6 +658,7 @@ impl Drop for VulkanApplication {
 }
 
 pub struct SwapchainObjects {
+    device: vk::rs::Device,
     swapchain: vk::rs::SwapchainKHR,
     swapchain_images: SmallVec<[vk::rs::Image; 3]>,
     swapchain_views: SmallVec<[vk::rs::ImageView; 3]>,
@@ -630,6 +673,7 @@ impl SwapchainObjects {
         device: &vk::rs::Device,
         surface: &vk::rs::SurfaceKHR,
         window_size: PhysicalSize<u32>,
+        render_pass: Option<&vk::rs::RenderPass>,
     ) -> Result<Self> {
         let capabilities = physical_device.get_surface_capabilities_khr(surface)?;
 
@@ -646,17 +690,15 @@ impl SwapchainObjects {
             })
             .ok_or_else(|| anyhow!("No swapchain format is available"))?;
 
-        let present_mode = physical_device
+        // Only use FIFO for the time being
+        // The Vulkan spec guarantees that if the swapchain extension is supported
+        // then the FIFO present mode is too
+        if !physical_device
             .get_surface_present_modes_khr::<Vec<_>>(Some(surface))?
-            .into_iter()
-            .max_by_key(|mode| match mode {
-                vk::PresentModeKHR::Mailbox => 3,
-                vk::PresentModeKHR::FifoRelaxed => 2,
-                vk::PresentModeKHR::Fifo => 1,
-                vk::PresentModeKHR::Immediate => 0,
-                _ => -1,
-            })
-            .ok_or_else(|| anyhow!("No swapchain present mode is available"))?;
+            .contains(&vk::PresentModeKHR::Fifo)
+        {
+            bail!("FIFO present mode is missing");
+        }
 
         let extent = if capabilities.current_extent.width != u32::MAX {
             capabilities.current_extent
@@ -687,7 +729,7 @@ impl SwapchainObjects {
             .image_sharing_mode(vk::SharingMode::Exclusive)
             .pre_transform(capabilities.current_transform)
             .composite_alpha(vk::CompositeAlphaFlagsKHR::Opaque)
-            .present_mode(present_mode)
+            .present_mode(vk::PresentModeKHR::Fifo)
             .clipped(true);
 
         let swapchain = device.create_swapchain_khr(&swapchain_info)?;
@@ -711,14 +753,21 @@ impl SwapchainObjects {
             })
             .collect::<vk::Result<_>>()?;
 
-        Ok(SwapchainObjects {
+        let mut objects = Self {
+            device: *device,
             swapchain,
             swapchain_images,
             swapchain_views,
             framebuffers: smallvec![],
             format: format.format,
             extent,
-        })
+        };
+
+        if let Some(render_pass) = render_pass {
+            objects.create_framebuffers(device, render_pass)?;
+        }
+
+        Ok(objects)
     }
 
     fn create_framebuffers(
@@ -742,16 +791,21 @@ impl SwapchainObjects {
             .collect::<vk::Result<_>>()?;
         Ok(())
     }
+}
 
-    fn destroy(&mut self, device: &vk::rs::Device) {
+impl Drop for SwapchainObjects {
+    fn drop(&mut self) {
+        self.device.wait_idle().unwrap();
+
         unsafe {
             for framebuffer in &self.framebuffers {
-                device.destroy_framebuffer(Some(framebuffer));
+                self.device.destroy_framebuffer(Some(framebuffer));
             }
             for view in &self.swapchain_views {
-                device.destroy_image_view(Some(view));
+                self.device.destroy_image_view(Some(view));
             }
-            device.destroy_swapchain_khr(Some(&self.swapchain));
+            self.device.destroy_swapchain_khr(Some(&self.swapchain));
         }
+        // SwapchainObjects is not the owner of device, do not destroy it
     }
 }
