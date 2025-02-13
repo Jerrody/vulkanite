@@ -1487,6 +1487,20 @@ impl<D: Dispatcher, A: Allocator> PhysicalDevice<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeVectorPropertiesNV.html>"]
+    #[doc(alias = "vkGetPhysicalDeviceCooperativeVectorPropertiesNV")]
+    pub fn get_cooperative_vector_properties_nv<
+        R: DynamicArray<CooperativeVectorPropertiesNV<'static>>,
+    >(
+        &self,
+    ) -> Result<R> {
+        unsafe {
+            raw::get_physical_device_cooperative_vector_properties_nv(
+                self,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR.html>"]
     #[doc(alias = "vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR")]
     pub fn get_cooperative_matrix_properties_khr<
@@ -5853,6 +5867,20 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkConvertCooperativeVectorMatrixNV.html>"]
+    #[doc(alias = "vkConvertCooperativeVectorMatrixNV")]
+    pub fn convert_cooperative_vector_matrix_nv(
+        &self,
+        p_info: &ConvertCooperativeVectorMatrixInfoNV,
+    ) -> Result<()> {
+        unsafe {
+            raw::convert_cooperative_vector_matrix_nv(
+                self,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetLatencySleepModeNV.html>"]
     #[doc(alias = "vkSetLatencySleepModeNV")]
     pub fn set_latency_sleep_mode_nv(
@@ -5919,6 +5947,38 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     ) -> Result<S> {
         unsafe {
             raw::get_screen_buffer_properties_qnx(self, buffer, self.disp.get_command_dispatcher())
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetClusterAccelerationStructureBuildSizesNV.html>"]
+    #[doc(alias = "vkGetClusterAccelerationStructureBuildSizesNV")]
+    pub fn get_cluster_acceleration_structure_build_sizes_nv<
+        S: StructureChainOut<AccelerationStructureBuildSizesInfoKHR<'static>>,
+    >(
+        &self,
+        p_info: &ClusterAccelerationStructureInputInfoNV,
+    ) -> S {
+        unsafe {
+            raw::get_cluster_acceleration_structure_build_sizes_nv(
+                self,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPartitionedAccelerationStructuresBuildSizesNV.html>"]
+    #[doc(alias = "vkGetPartitionedAccelerationStructuresBuildSizesNV")]
+    pub fn get_partitioned_acceleration_structures_build_sizes_nv<
+        S: StructureChainOut<AccelerationStructureBuildSizesInfoKHR<'static>>,
+    >(
+        &self,
+        p_info: &PartitionedAccelerationStructureInstancesInputNV,
+    ) -> S {
+        unsafe {
+            raw::get_partitioned_acceleration_structures_build_sizes_nv(
+                self,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
         }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetGeneratedCommandsMemoryRequirementsEXT.html>"]
@@ -6027,6 +6087,38 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
                 self,
                 indirect_execution_set,
                 p_execution_set_writes,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandleEXT.html>"]
+    #[doc(alias = "vkGetMemoryMetalHandleEXT")]
+    pub fn get_memory_metal_handle_ext(
+        &self,
+        p_get_metal_handle_info: &MemoryGetMetalHandleInfoEXT,
+    ) -> Result<VoidPtr> {
+        unsafe {
+            raw::get_memory_metal_handle_ext(
+                self,
+                p_get_metal_handle_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandlePropertiesEXT.html>"]
+    #[doc(alias = "vkGetMemoryMetalHandlePropertiesEXT")]
+    pub fn get_memory_metal_handle_properties_ext<
+        S: StructureChainOut<MemoryMetalHandlePropertiesEXT<'static>>,
+    >(
+        &self,
+        handle_type: ExternalMemoryHandleTypeFlags,
+        p_handle: VoidPtr,
+    ) -> Result<S> {
+        unsafe {
+            raw::get_memory_metal_handle_properties_ext(
+                self,
+                handle_type,
+                p_handle,
                 self.disp.get_command_dispatcher(),
             )
         }
@@ -10270,6 +10362,20 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdConvertCooperativeVectorMatrixNV.html>"]
+    #[doc(alias = "vkCmdConvertCooperativeVectorMatrixNV")]
+    pub fn convert_cooperative_vector_matrix_nv<'a>(
+        &self,
+        p_infos: impl AsSlice<'a, ConvertCooperativeVectorMatrixInfoNV<'a>>,
+    ) {
+        unsafe {
+            raw::cmd_convert_cooperative_vector_matrix_nv(
+                self,
+                p_infos,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetAttachmentFeedbackLoopEnableEXT.html>"]
     #[doc(alias = "vkCmdSetAttachmentFeedbackLoopEnableEXT")]
     pub fn set_attachment_feedback_loop_enable_ext(&self, aspect_mask: ImageAspectFlags) {
@@ -10305,6 +10411,34 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             raw::cmd_bind_descriptor_buffer_embedded_samplers2_ext(
                 self,
                 p_bind_descriptor_buffer_embedded_samplers_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBuildClusterAccelerationStructureIndirectNV.html>"]
+    #[doc(alias = "vkCmdBuildClusterAccelerationStructureIndirectNV")]
+    pub fn build_cluster_acceleration_structure_indirect_nv(
+        &self,
+        p_command_infos: &ClusterAccelerationStructureCommandsInfoNV,
+    ) {
+        unsafe {
+            raw::cmd_build_cluster_acceleration_structure_indirect_nv(
+                self,
+                p_command_infos,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBuildPartitionedAccelerationStructuresNV.html>"]
+    #[doc(alias = "vkCmdBuildPartitionedAccelerationStructuresNV")]
+    pub fn build_partitioned_acceleration_structures_nv(
+        &self,
+        p_build_info: &BuildPartitionedAccelerationStructureInfoNV,
+    ) {
+        unsafe {
+            raw::cmd_build_partitioned_acceleration_structures_nv(
+                self,
+                p_build_info,
                 self.disp.get_command_dispatcher(),
             )
         }

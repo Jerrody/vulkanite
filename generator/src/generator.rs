@@ -1548,7 +1548,7 @@ impl<'a> Generator<'a> {
             // remove whitespace at the end of a line
             bitflag = bitflag.replace(" \n", "\n");
             // remove the indentation for the bitflags! closing bracket
-            bitflag.replace_range((bitflag.len() - 6)..(bitflag.len() - 2), "");
+            bitflag.replace_range((bitflag.len() - 5)..(bitflag.len() - 1), "");
 
             let _ = std::mem::replace(line, Cow::Owned(bitflag));
         }

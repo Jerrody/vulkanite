@@ -4809,6 +4809,32 @@ pub struct CommandsDispatcher {
             ) -> Status,
         >,
     >,
+    pub get_physical_device_cooperative_vector_properties_nv: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<PhysicalDevice>,
+                *const u32,
+                *const CooperativeVectorPropertiesNV,
+            ) -> Status,
+        >,
+    >,
+    pub convert_cooperative_vector_matrix_nv: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                *const ConvertCooperativeVectorMatrixInfoNV,
+            ) -> Status,
+        >,
+    >,
+    pub cmd_convert_cooperative_vector_matrix_nv: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                u32,
+                *const ConvertCooperativeVectorMatrixInfoNV,
+            ),
+        >,
+    >,
     pub set_latency_sleep_mode_nv: Cell<
         Option<
             unsafe extern "system" fn(
@@ -4923,6 +4949,40 @@ pub struct CommandsDispatcher {
             ),
         >,
     >,
+    pub get_cluster_acceleration_structure_build_sizes_nv: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                *const ClusterAccelerationStructureInputInfoNV,
+                *const AccelerationStructureBuildSizesInfoKHR,
+            ),
+        >,
+    >,
+    pub cmd_build_cluster_acceleration_structure_indirect_nv: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                *const ClusterAccelerationStructureCommandsInfoNV,
+            ),
+        >,
+    >,
+    pub get_partitioned_acceleration_structures_build_sizes_nv: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                *const PartitionedAccelerationStructureInstancesInputNV,
+                *const AccelerationStructureBuildSizesInfoKHR,
+            ),
+        >,
+    >,
+    pub cmd_build_partitioned_acceleration_structures_nv: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<CommandBuffer>,
+                *const BuildPartitionedAccelerationStructureInfoNV,
+            ),
+        >,
+    >,
     pub get_generated_commands_memory_requirements_ext: Cell<
         Option<
             unsafe extern "system" fn(
@@ -5014,6 +5074,25 @@ pub struct CommandsDispatcher {
                 Option<PhysicalDevice>,
                 *const u32,
                 *const CooperativeMatrixFlexibleDimensionsPropertiesNV,
+            ) -> Status,
+        >,
+    >,
+    pub get_memory_metal_handle_ext: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                *const MemoryGetMetalHandleInfoEXT,
+                *const *const c_void,
+            ) -> Status,
+        >,
+    >,
+    pub get_memory_metal_handle_properties_ext: Cell<
+        Option<
+            unsafe extern "system" fn(
+                Option<Device>,
+                ExternalMemoryHandleTypeFlags,
+                VoidPtr,
+                *const MemoryMetalHandlePropertiesEXT,
             ) -> Status,
         >,
     >,
@@ -8909,6 +8988,21 @@ impl CommandsDispatcher {
                 get_instance(),
                 c"vkGetDynamicRenderingTilePropertiesQCOM".as_ptr(),
             )));
+        self.get_physical_device_cooperative_vector_properties_nv
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetPhysicalDeviceCooperativeVectorPropertiesNV".as_ptr(),
+            )));
+        self.convert_cooperative_vector_matrix_nv
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkConvertCooperativeVectorMatrixNV".as_ptr(),
+            )));
+        self.cmd_convert_cooperative_vector_matrix_nv
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdConvertCooperativeVectorMatrixNV".as_ptr(),
+            )));
         self.set_latency_sleep_mode_nv
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
@@ -8991,6 +9085,26 @@ impl CommandsDispatcher {
                 get_instance(),
                 c"vkCmdBindDescriptorBufferEmbeddedSamplers2EXT".as_ptr(),
             )));
+        self.get_cluster_acceleration_structure_build_sizes_nv
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetClusterAccelerationStructureBuildSizesNV".as_ptr(),
+            )));
+        self.cmd_build_cluster_acceleration_structure_indirect_nv
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdBuildClusterAccelerationStructureIndirectNV".as_ptr(),
+            )));
+        self.get_partitioned_acceleration_structures_build_sizes_nv
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetPartitionedAccelerationStructuresBuildSizesNV".as_ptr(),
+            )));
+        self.cmd_build_partitioned_acceleration_structures_nv
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkCmdBuildPartitionedAccelerationStructuresNV".as_ptr(),
+            )));
         self.get_generated_commands_memory_requirements_ext
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
@@ -9040,6 +9154,16 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_instance_proc_addr(
                 get_instance(),
                 c"vkGetPhysicalDeviceCooperativeMatrixFlexibleDimensionsPropertiesNV".as_ptr(),
+            )));
+        self.get_memory_metal_handle_ext
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetMemoryMetalHandleEXT".as_ptr(),
+            )));
+        self.get_memory_metal_handle_properties_ext
+            .set(mem::transmute(get_instance_proc_addr(
+                get_instance(),
+                c"vkGetMemoryMetalHandlePropertiesEXT".as_ptr(),
             )));
     }
     pub unsafe fn load_device(&self, device: &Device) {
@@ -12324,6 +12448,16 @@ impl CommandsDispatcher {
                 get_device(),
                 c"vkGetDynamicRenderingTilePropertiesQCOM".as_ptr(),
             )));
+        self.convert_cooperative_vector_matrix_nv
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkConvertCooperativeVectorMatrixNV".as_ptr(),
+            )));
+        self.cmd_convert_cooperative_vector_matrix_nv
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdConvertCooperativeVectorMatrixNV".as_ptr(),
+            )));
         self.set_latency_sleep_mode_nv
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
@@ -12384,6 +12518,26 @@ impl CommandsDispatcher {
                 get_device(),
                 c"vkCmdBindDescriptorBufferEmbeddedSamplers2EXT".as_ptr(),
             )));
+        self.get_cluster_acceleration_structure_build_sizes_nv
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetClusterAccelerationStructureBuildSizesNV".as_ptr(),
+            )));
+        self.cmd_build_cluster_acceleration_structure_indirect_nv
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdBuildClusterAccelerationStructureIndirectNV".as_ptr(),
+            )));
+        self.get_partitioned_acceleration_structures_build_sizes_nv
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetPartitionedAccelerationStructuresBuildSizesNV".as_ptr(),
+            )));
+        self.cmd_build_partitioned_acceleration_structures_nv
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkCmdBuildPartitionedAccelerationStructuresNV".as_ptr(),
+            )));
         self.get_generated_commands_memory_requirements_ext
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
@@ -12428,6 +12582,16 @@ impl CommandsDispatcher {
             .set(mem::transmute(get_device_proc_addr(
                 get_device(),
                 c"vkUpdateIndirectExecutionSetShaderEXT".as_ptr(),
+            )));
+        self.get_memory_metal_handle_ext
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetMemoryMetalHandleEXT".as_ptr(),
+            )));
+        self.get_memory_metal_handle_properties_ext
+            .set(mem::transmute(get_device_proc_addr(
+                get_device(),
+                c"vkGetMemoryMetalHandlePropertiesEXT".as_ptr(),
             )));
     }
 }

@@ -13964,6 +13964,79 @@ pub unsafe fn get_dynamic_rendering_tile_properties_qcom<
         p_properties.assume_init()
     })
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeVectorPropertiesNV.html>"]
+#[doc(alias = "vkGetPhysicalDeviceCooperativeVectorPropertiesNV")]
+pub unsafe fn get_physical_device_cooperative_vector_properties_nv<
+    R: DynamicArray<CooperativeVectorPropertiesNV<'static>>,
+>(
+    physical_device: &raw::PhysicalDevice,
+    dispatcher: &CommandsDispatcher,
+) -> Result<R> {
+    let vulkan_command = dispatcher
+        .get_physical_device_cooperative_vector_properties_nv
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut vk_len = MaybeUninit::uninit();
+    let p_property_count = vk_len.as_mut_ptr();
+    let p_properties = ptr::null_mut();
+    vulkan_command(
+        Some(unsafe { physical_device.clone() }),
+        p_property_count,
+        p_properties,
+    )
+    .map_success(|| ())?;
+    let mut vk_len = vk_len.assume_init();
+    let mut vk_vec = R::create_with_capacity(vk_len as _);
+    let mut p_property_count = ptr::from_mut(&mut vk_len);
+    let mut p_properties = vk_vec.get_content_mut_ptr();
+    let vk_status = loop {
+        let status = vulkan_command(
+            Some(unsafe { physical_device.clone() }),
+            p_property_count,
+            p_properties,
+        );
+        if status != Status::Incomplete {
+            break status;
+        }
+        vk_vec.update_with_capacity(vk_len as _);
+        p_property_count = ptr::from_mut(&mut vk_len);
+        p_properties = vk_vec.get_content_mut_ptr();
+    };
+    vk_status.map_success(|| {
+        vk_vec.resize_with_len(vk_len as _);
+        vk_vec
+    })
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkConvertCooperativeVectorMatrixNV.html>"]
+#[doc(alias = "vkConvertCooperativeVectorMatrixNV")]
+pub unsafe fn convert_cooperative_vector_matrix_nv(
+    device: &raw::Device,
+    p_info: &ConvertCooperativeVectorMatrixInfoNV,
+    dispatcher: &CommandsDispatcher,
+) -> Result<()> {
+    let vulkan_command = dispatcher
+        .convert_cooperative_vector_matrix_nv
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info)).map_success(|| ())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdConvertCooperativeVectorMatrixNV.html>"]
+#[doc(alias = "vkCmdConvertCooperativeVectorMatrixNV")]
+pub unsafe fn cmd_convert_cooperative_vector_matrix_nv<'a>(
+    command_buffer: &raw::CommandBuffer,
+    p_infos: impl AsSlice<'a, ConvertCooperativeVectorMatrixInfoNV<'a>>,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_convert_cooperative_vector_matrix_nv
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        p_infos.as_slice().len() as _,
+        p_infos.as_slice().as_ptr().cast(),
+    )
+}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetLatencySleepModeNV.html>"]
 #[doc(alias = "vkSetLatencySleepModeNV")]
 pub unsafe fn set_latency_sleep_mode_nv(
@@ -14252,6 +14325,84 @@ pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers2_ext(
         ptr::from_ref(p_bind_descriptor_buffer_embedded_samplers_info),
     )
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetClusterAccelerationStructureBuildSizesNV.html>"]
+#[doc(alias = "vkGetClusterAccelerationStructureBuildSizesNV")]
+pub unsafe fn get_cluster_acceleration_structure_build_sizes_nv<
+    S: StructureChainOut<AccelerationStructureBuildSizesInfoKHR<'static>>,
+>(
+    device: &raw::Device,
+    p_info: &ClusterAccelerationStructureInputInfoNV,
+    dispatcher: &CommandsDispatcher,
+) -> S {
+    let vulkan_command = dispatcher
+        .get_cluster_acceleration_structure_build_sizes_nv
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_size_info = MaybeUninit::uninit();
+    S::setup_uninit(&mut p_size_info);
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_info),
+        S::get_uninit_head_ptr(p_size_info.as_mut_ptr()),
+    );
+    S::setup_cleanup(p_size_info.as_mut_ptr());
+    p_size_info.assume_init()
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBuildClusterAccelerationStructureIndirectNV.html>"]
+#[doc(alias = "vkCmdBuildClusterAccelerationStructureIndirectNV")]
+pub unsafe fn cmd_build_cluster_acceleration_structure_indirect_nv(
+    command_buffer: &raw::CommandBuffer,
+    p_command_infos: &ClusterAccelerationStructureCommandsInfoNV,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_build_cluster_acceleration_structure_indirect_nv
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_command_infos),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPartitionedAccelerationStructuresBuildSizesNV.html>"]
+#[doc(alias = "vkGetPartitionedAccelerationStructuresBuildSizesNV")]
+pub unsafe fn get_partitioned_acceleration_structures_build_sizes_nv<
+    S: StructureChainOut<AccelerationStructureBuildSizesInfoKHR<'static>>,
+>(
+    device: &raw::Device,
+    p_info: &PartitionedAccelerationStructureInstancesInputNV,
+    dispatcher: &CommandsDispatcher,
+) -> S {
+    let vulkan_command = dispatcher
+        .get_partitioned_acceleration_structures_build_sizes_nv
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_size_info = MaybeUninit::uninit();
+    S::setup_uninit(&mut p_size_info);
+    vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_info),
+        S::get_uninit_head_ptr(p_size_info.as_mut_ptr()),
+    );
+    S::setup_cleanup(p_size_info.as_mut_ptr());
+    p_size_info.assume_init()
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBuildPartitionedAccelerationStructuresNV.html>"]
+#[doc(alias = "vkCmdBuildPartitionedAccelerationStructuresNV")]
+pub unsafe fn cmd_build_partitioned_acceleration_structures_nv(
+    command_buffer: &raw::CommandBuffer,
+    p_build_info: &BuildPartitionedAccelerationStructureInfoNV,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher
+        .cmd_build_partitioned_acceleration_structures_nv
+        .get()
+        .expect("Vulkan command not loaded.");
+    vulkan_command(
+        Some(unsafe { command_buffer.clone() }),
+        ptr::from_ref(p_build_info),
+    )
+}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetGeneratedCommandsMemoryRequirementsEXT.html>"]
 #[doc(alias = "vkGetGeneratedCommandsMemoryRequirementsEXT")]
 pub unsafe fn get_generated_commands_memory_requirements_ext<
@@ -14468,5 +14619,51 @@ pub unsafe fn get_physical_device_cooperative_matrix_flexible_dimensions_propert
     vk_status.map_success(|| {
         vk_vec.resize_with_len(vk_len as _);
         vk_vec
+    })
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandleEXT.html>"]
+#[doc(alias = "vkGetMemoryMetalHandleEXT")]
+pub unsafe fn get_memory_metal_handle_ext(
+    device: &raw::Device,
+    p_get_metal_handle_info: &MemoryGetMetalHandleInfoEXT,
+    dispatcher: &CommandsDispatcher,
+) -> Result<VoidPtr> {
+    let vulkan_command = dispatcher
+        .get_memory_metal_handle_ext
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_handle = MaybeUninit::uninit();
+    let vk_status = vulkan_command(
+        Some(unsafe { device.clone() }),
+        ptr::from_ref(p_get_metal_handle_info),
+        p_handle.as_mut_ptr(),
+    );
+    vk_status.map_success(|| p_handle.assume_init())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryMetalHandlePropertiesEXT.html>"]
+#[doc(alias = "vkGetMemoryMetalHandlePropertiesEXT")]
+pub unsafe fn get_memory_metal_handle_properties_ext<
+    S: StructureChainOut<MemoryMetalHandlePropertiesEXT<'static>>,
+>(
+    device: &raw::Device,
+    handle_type: ExternalMemoryHandleTypeFlags,
+    p_handle: VoidPtr,
+    dispatcher: &CommandsDispatcher,
+) -> Result<S> {
+    let vulkan_command = dispatcher
+        .get_memory_metal_handle_properties_ext
+        .get()
+        .expect("Vulkan command not loaded.");
+    let mut p_memory_metal_handle_properties = MaybeUninit::uninit();
+    S::setup_uninit(&mut p_memory_metal_handle_properties);
+    let vk_status = vulkan_command(
+        Some(unsafe { device.clone() }),
+        handle_type,
+        p_handle,
+        S::get_uninit_head_ptr(p_memory_metal_handle_properties.as_mut_ptr()),
+    );
+    vk_status.map_success(|| {
+        S::setup_cleanup(p_memory_metal_handle_properties.as_mut_ptr());
+        p_memory_metal_handle_properties.assume_init()
     })
 }

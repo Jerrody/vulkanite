@@ -50389,51 +50389,6 @@ impl<'a> DescriptorSetLayoutHostMappingInfoVALVE<'a> {
     }
 }
 #[repr(C)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDepthClampZeroOneFeaturesEXT.html>"]
-#[doc(alias = "VkPhysicalDeviceDepthClampZeroOneFeaturesEXT")]
-pub struct PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub depth_clamp_zero_one: Bool32,
-    phantom: PhantomData<&'a ()>,
-}
-unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {}
-unsafe impl<'a> ExtendableStructure for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::PhysicalDeviceDepthClampZeroOneFeaturesEXT;
-}
-unsafe impl<'a> Send for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {}
-unsafe impl<'a> Sync for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {}
-unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
-    for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a>
-{
-}
-unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
-    for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a>
-{
-}
-impl<'a> Default for PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: Cell::new(ptr::null()),
-            depth_clamp_zero_one: Default::default(),
-            phantom: PhantomData,
-        }
-    }
-}
-impl<'a> PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> {
-    #[inline]
-    pub fn depth_clamp_zero_one(mut self, value: impl Into<Bool32>) -> Self {
-        self.depth_clamp_zero_one = value.into();
-        self
-    }
-    #[inline]
-    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
-        unsafe { self.push_next_unchecked(ext) };
-        self
-    }
-}
-#[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT")]
 pub struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
@@ -51383,6 +51338,266 @@ impl BindPipelineIndirectCommandNV {
     #[inline]
     pub fn pipeline_address(mut self, value: DeviceAddress) -> Self {
         self.pipeline_address = value;
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV.html>"]
+#[doc(alias = "VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV")]
+pub struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub spheres: Bool32,
+    pub linear_swept_spheres: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV;
+}
+unsafe impl<'a> Send for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            spheres: Default::default(),
+            linear_swept_spheres: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
+    #[inline]
+    pub fn spheres(mut self, value: impl Into<Bool32>) -> Self {
+        self.spheres = value.into();
+        self
+    }
+    #[inline]
+    pub fn linear_swept_spheres(mut self, value: impl Into<Bool32>) -> Self {
+        self.linear_swept_spheres = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureGeometryLinearSweptSpheresDataNV.html>"]
+#[doc(alias = "VkAccelerationStructureGeometryLinearSweptSpheresDataNV")]
+pub struct AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub vertex_format: Format,
+    pub vertex_data: DeviceOrHostAddressConstKHR,
+    pub vertex_stride: DeviceSize,
+    pub radius_format: Format,
+    pub radius_data: DeviceOrHostAddressConstKHR,
+    pub radius_stride: DeviceSize,
+    pub index_type: IndexType,
+    pub index_data: DeviceOrHostAddressConstKHR,
+    pub index_stride: DeviceSize,
+    pub indexing_mode: RayTracingLssIndexingModeNV,
+    pub end_caps_mode: RayTracingLssPrimitiveEndCapsModeNV,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::AccelerationStructureGeometryLinearSweptSpheresDataNV;
+}
+unsafe impl<'a> Send for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {}
+unsafe impl<'a> Sync for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {}
+impl<'a> Default for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            vertex_format: Format::Undefined,
+            vertex_data: Default::default(),
+            vertex_stride: Default::default(),
+            radius_format: Format::Undefined,
+            radius_data: Default::default(),
+            radius_stride: Default::default(),
+            index_type: IndexType::Uint16,
+            index_data: Default::default(),
+            index_stride: Default::default(),
+            indexing_mode: RayTracingLssIndexingModeNV::List,
+            end_caps_mode: RayTracingLssPrimitiveEndCapsModeNV::None,
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
+    #[inline]
+    pub fn vertex_format(mut self, value: Format) -> Self {
+        self.vertex_format = value;
+        self
+    }
+    #[inline]
+    pub fn vertex_data(mut self, value: DeviceOrHostAddressConstKHR) -> Self {
+        self.vertex_data = value;
+        self
+    }
+    #[inline]
+    pub fn vertex_stride(mut self, value: DeviceSize) -> Self {
+        self.vertex_stride = value;
+        self
+    }
+    #[inline]
+    pub fn radius_format(mut self, value: Format) -> Self {
+        self.radius_format = value;
+        self
+    }
+    #[inline]
+    pub fn radius_data(mut self, value: DeviceOrHostAddressConstKHR) -> Self {
+        self.radius_data = value;
+        self
+    }
+    #[inline]
+    pub fn radius_stride(mut self, value: DeviceSize) -> Self {
+        self.radius_stride = value;
+        self
+    }
+    #[inline]
+    pub fn index_type(mut self, value: IndexType) -> Self {
+        self.index_type = value;
+        self
+    }
+    #[inline]
+    pub fn index_data(mut self, value: DeviceOrHostAddressConstKHR) -> Self {
+        self.index_data = value;
+        self
+    }
+    #[inline]
+    pub fn index_stride(mut self, value: DeviceSize) -> Self {
+        self.index_stride = value;
+        self
+    }
+    #[inline]
+    pub fn indexing_mode(mut self, value: RayTracingLssIndexingModeNV) -> Self {
+        self.indexing_mode = value;
+        self
+    }
+    #[inline]
+    pub fn end_caps_mode(mut self, value: RayTracingLssPrimitiveEndCapsModeNV) -> Self {
+        self.end_caps_mode = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccelerationStructureGeometrySpheresDataNV.html>"]
+#[doc(alias = "VkAccelerationStructureGeometrySpheresDataNV")]
+pub struct AccelerationStructureGeometrySpheresDataNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub vertex_format: Format,
+    pub vertex_data: DeviceOrHostAddressConstKHR,
+    pub vertex_stride: DeviceSize,
+    pub radius_format: Format,
+    pub radius_data: DeviceOrHostAddressConstKHR,
+    pub radius_stride: DeviceSize,
+    pub index_type: IndexType,
+    pub index_data: DeviceOrHostAddressConstKHR,
+    pub index_stride: DeviceSize,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for AccelerationStructureGeometrySpheresDataNV<'a> {}
+unsafe impl<'a> ExtendableStructure for AccelerationStructureGeometrySpheresDataNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::AccelerationStructureGeometrySpheresDataNV;
+}
+unsafe impl<'a> Send for AccelerationStructureGeometrySpheresDataNV<'a> {}
+unsafe impl<'a> Sync for AccelerationStructureGeometrySpheresDataNV<'a> {}
+impl<'a> Default for AccelerationStructureGeometrySpheresDataNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            vertex_format: Format::Undefined,
+            vertex_data: Default::default(),
+            vertex_stride: Default::default(),
+            radius_format: Format::Undefined,
+            radius_data: Default::default(),
+            radius_stride: Default::default(),
+            index_type: IndexType::Uint16,
+            index_data: Default::default(),
+            index_stride: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> AccelerationStructureGeometrySpheresDataNV<'a> {
+    #[inline]
+    pub fn vertex_format(mut self, value: Format) -> Self {
+        self.vertex_format = value;
+        self
+    }
+    #[inline]
+    pub fn vertex_data(mut self, value: DeviceOrHostAddressConstKHR) -> Self {
+        self.vertex_data = value;
+        self
+    }
+    #[inline]
+    pub fn vertex_stride(mut self, value: DeviceSize) -> Self {
+        self.vertex_stride = value;
+        self
+    }
+    #[inline]
+    pub fn radius_format(mut self, value: Format) -> Self {
+        self.radius_format = value;
+        self
+    }
+    #[inline]
+    pub fn radius_data(mut self, value: DeviceOrHostAddressConstKHR) -> Self {
+        self.radius_data = value;
+        self
+    }
+    #[inline]
+    pub fn radius_stride(mut self, value: DeviceSize) -> Self {
+        self.radius_stride = value;
+        self
+    }
+    #[inline]
+    pub fn index_type(mut self, value: IndexType) -> Self {
+        self.index_type = value;
+        self
+    }
+    #[inline]
+    pub fn index_data(mut self, value: DeviceOrHostAddressConstKHR) -> Self {
+        self.index_data = value;
+        self
+    }
+    #[inline]
+    pub fn index_stride(mut self, value: DeviceSize) -> Self {
+        self.index_stride = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
         self
     }
 }
@@ -54882,6 +55097,313 @@ impl<'a> PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
     }
 }
 #[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCooperativeVectorPropertiesNV.html>"]
+#[doc(alias = "VkPhysicalDeviceCooperativeVectorPropertiesNV")]
+pub struct PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub cooperative_vector_supported_stages: ShaderStageFlags,
+    pub cooperative_vector_training_float16_accumulation: Bool32,
+    pub cooperative_vector_training_float32_accumulation: Bool32,
+    pub max_cooperative_vector_components: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDeviceCooperativeVectorPropertiesNV;
+}
+unsafe impl<'a> Send for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceProperties2<'b>>
+    for PhysicalDeviceCooperativeVectorPropertiesNV<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            cooperative_vector_supported_stages: Default::default(),
+            cooperative_vector_training_float16_accumulation: Default::default(),
+            cooperative_vector_training_float32_accumulation: Default::default(),
+            max_cooperative_vector_components: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
+    #[inline]
+    pub fn cooperative_vector_supported_stages(mut self, value: ShaderStageFlags) -> Self {
+        self.cooperative_vector_supported_stages = value;
+        self
+    }
+    #[inline]
+    pub fn cooperative_vector_training_float16_accumulation(
+        mut self,
+        value: impl Into<Bool32>,
+    ) -> Self {
+        self.cooperative_vector_training_float16_accumulation = value.into();
+        self
+    }
+    #[inline]
+    pub fn cooperative_vector_training_float32_accumulation(
+        mut self,
+        value: impl Into<Bool32>,
+    ) -> Self {
+        self.cooperative_vector_training_float32_accumulation = value.into();
+        self
+    }
+    #[inline]
+    pub fn max_cooperative_vector_components(mut self, value: u32) -> Self {
+        self.max_cooperative_vector_components = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceCooperativeVectorFeaturesNV.html>"]
+#[doc(alias = "VkPhysicalDeviceCooperativeVectorFeaturesNV")]
+pub struct PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub cooperative_vector: Bool32,
+    pub cooperative_vector_training: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PhysicalDeviceCooperativeVectorFeaturesNV;
+}
+unsafe impl<'a> Send for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDeviceCooperativeVectorFeaturesNV<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDeviceCooperativeVectorFeaturesNV<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            cooperative_vector: Default::default(),
+            cooperative_vector_training: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
+    #[inline]
+    pub fn cooperative_vector(mut self, value: impl Into<Bool32>) -> Self {
+        self.cooperative_vector = value.into();
+        self
+    }
+    #[inline]
+    pub fn cooperative_vector_training(mut self, value: impl Into<Bool32>) -> Self {
+        self.cooperative_vector_training = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCooperativeVectorPropertiesNV.html>"]
+#[doc(alias = "VkCooperativeVectorPropertiesNV")]
+pub struct CooperativeVectorPropertiesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub input_type: ComponentTypeKHR,
+    pub input_interpretation: ComponentTypeKHR,
+    pub matrix_interpretation: ComponentTypeKHR,
+    pub bias_interpretation: ComponentTypeKHR,
+    pub result_type: ComponentTypeKHR,
+    pub transpose: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for CooperativeVectorPropertiesNV<'a> {}
+unsafe impl<'a> ExtendableStructure for CooperativeVectorPropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::CooperativeVectorPropertiesNV;
+}
+unsafe impl<'a> Send for CooperativeVectorPropertiesNV<'a> {}
+unsafe impl<'a> Sync for CooperativeVectorPropertiesNV<'a> {}
+impl<'a> Default for CooperativeVectorPropertiesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            input_type: ComponentTypeKHR::Float16,
+            input_interpretation: ComponentTypeKHR::Float16,
+            matrix_interpretation: ComponentTypeKHR::Float16,
+            bias_interpretation: ComponentTypeKHR::Float16,
+            result_type: ComponentTypeKHR::Float16,
+            transpose: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> CooperativeVectorPropertiesNV<'a> {
+    #[inline]
+    pub fn input_type(mut self, value: ComponentTypeKHR) -> Self {
+        self.input_type = value;
+        self
+    }
+    #[inline]
+    pub fn input_interpretation(mut self, value: ComponentTypeKHR) -> Self {
+        self.input_interpretation = value;
+        self
+    }
+    #[inline]
+    pub fn matrix_interpretation(mut self, value: ComponentTypeKHR) -> Self {
+        self.matrix_interpretation = value;
+        self
+    }
+    #[inline]
+    pub fn bias_interpretation(mut self, value: ComponentTypeKHR) -> Self {
+        self.bias_interpretation = value;
+        self
+    }
+    #[inline]
+    pub fn result_type(mut self, value: ComponentTypeKHR) -> Self {
+        self.result_type = value;
+        self
+    }
+    #[inline]
+    pub fn transpose(mut self, value: impl Into<Bool32>) -> Self {
+        self.transpose = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkConvertCooperativeVectorMatrixInfoNV.html>"]
+#[doc(alias = "VkConvertCooperativeVectorMatrixInfoNV")]
+pub struct ConvertCooperativeVectorMatrixInfoNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub src_size: usize,
+    pub src_data: DeviceOrHostAddressConstKHR,
+    pub p_dst_size: *const usize,
+    pub dst_data: DeviceOrHostAddressKHR,
+    pub src_component_type: ComponentTypeKHR,
+    pub dst_component_type: ComponentTypeKHR,
+    pub num_rows: u32,
+    pub num_columns: u32,
+    pub src_layout: CooperativeVectorMatrixLayoutNV,
+    pub src_stride: usize,
+    pub dst_layout: CooperativeVectorMatrixLayoutNV,
+    pub dst_stride: usize,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for ConvertCooperativeVectorMatrixInfoNV<'a> {}
+unsafe impl<'a> ExtendableStructure for ConvertCooperativeVectorMatrixInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::ConvertCooperativeVectorMatrixInfoNV;
+}
+unsafe impl<'a> Send for ConvertCooperativeVectorMatrixInfoNV<'a> {}
+unsafe impl<'a> Sync for ConvertCooperativeVectorMatrixInfoNV<'a> {}
+impl<'a> Default for ConvertCooperativeVectorMatrixInfoNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            src_size: Default::default(),
+            src_data: Default::default(),
+            p_dst_size: ptr::null(),
+            dst_data: Default::default(),
+            src_component_type: ComponentTypeKHR::Float16,
+            dst_component_type: ComponentTypeKHR::Float16,
+            num_rows: Default::default(),
+            num_columns: Default::default(),
+            src_layout: CooperativeVectorMatrixLayoutNV::RowMajor,
+            src_stride: Default::default(),
+            dst_layout: CooperativeVectorMatrixLayoutNV::RowMajor,
+            dst_stride: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ConvertCooperativeVectorMatrixInfoNV<'a> {
+    #[inline]
+    pub fn src_size(mut self, value: usize) -> Self {
+        self.src_size = value;
+        self
+    }
+    #[inline]
+    pub fn src_data(mut self, value: DeviceOrHostAddressConstKHR) -> Self {
+        self.src_data = value;
+        self
+    }
+    #[inline]
+    pub fn dst_size(mut self, value: Option<&'a usize>) -> Self {
+        self.p_dst_size = value.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null());
+        self
+    }
+    #[inline]
+    pub fn dst_data(mut self, value: DeviceOrHostAddressKHR) -> Self {
+        self.dst_data = value;
+        self
+    }
+    #[inline]
+    pub fn src_component_type(mut self, value: ComponentTypeKHR) -> Self {
+        self.src_component_type = value;
+        self
+    }
+    #[inline]
+    pub fn dst_component_type(mut self, value: ComponentTypeKHR) -> Self {
+        self.dst_component_type = value;
+        self
+    }
+    #[inline]
+    pub fn num_rows(mut self, value: u32) -> Self {
+        self.num_rows = value;
+        self
+    }
+    #[inline]
+    pub fn num_columns(mut self, value: u32) -> Self {
+        self.num_columns = value;
+        self
+    }
+    #[inline]
+    pub fn src_layout(mut self, value: CooperativeVectorMatrixLayoutNV) -> Self {
+        self.src_layout = value;
+        self
+    }
+    #[inline]
+    pub fn src_stride(mut self, value: usize) -> Self {
+        self.src_stride = value;
+        self
+    }
+    #[inline]
+    pub fn dst_layout(mut self, value: CooperativeVectorMatrixLayoutNV) -> Self {
+        self.dst_layout = value;
+        self
+    }
+    #[inline]
+    pub fn dst_stride(mut self, value: usize) -> Self {
+        self.dst_stride = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV")]
 pub struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
@@ -58141,6 +58663,1552 @@ impl<'a> PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
     }
 }
 #[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceClusterAccelerationStructureFeaturesNV.html>"]
+#[doc(alias = "VkPhysicalDeviceClusterAccelerationStructureFeaturesNV")]
+pub struct PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub cluster_acceleration_structure: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDeviceClusterAccelerationStructureFeaturesNV;
+}
+unsafe impl<'a> Send for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            cluster_acceleration_structure: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
+    #[inline]
+    pub fn cluster_acceleration_structure(mut self, value: impl Into<Bool32>) -> Self {
+        self.cluster_acceleration_structure = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceClusterAccelerationStructurePropertiesNV.html>"]
+#[doc(alias = "VkPhysicalDeviceClusterAccelerationStructurePropertiesNV")]
+pub struct PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub max_vertices_per_cluster: u32,
+    pub max_triangles_per_cluster: u32,
+    pub cluster_scratch_byte_alignment: u32,
+    pub cluster_byte_alignment: u32,
+    pub cluster_template_byte_alignment: u32,
+    pub cluster_bottom_level_byte_alignment: u32,
+    pub cluster_template_bounds_byte_alignment: u32,
+    pub max_cluster_geometry_index: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDeviceClusterAccelerationStructurePropertiesNV;
+}
+unsafe impl<'a> Send for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceProperties2<'b>>
+    for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            max_vertices_per_cluster: Default::default(),
+            max_triangles_per_cluster: Default::default(),
+            cluster_scratch_byte_alignment: Default::default(),
+            cluster_byte_alignment: Default::default(),
+            cluster_template_byte_alignment: Default::default(),
+            cluster_bottom_level_byte_alignment: Default::default(),
+            cluster_template_bounds_byte_alignment: Default::default(),
+            max_cluster_geometry_index: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
+    #[inline]
+    pub fn max_vertices_per_cluster(mut self, value: u32) -> Self {
+        self.max_vertices_per_cluster = value;
+        self
+    }
+    #[inline]
+    pub fn max_triangles_per_cluster(mut self, value: u32) -> Self {
+        self.max_triangles_per_cluster = value;
+        self
+    }
+    #[inline]
+    pub fn cluster_scratch_byte_alignment(mut self, value: u32) -> Self {
+        self.cluster_scratch_byte_alignment = value;
+        self
+    }
+    #[inline]
+    pub fn cluster_byte_alignment(mut self, value: u32) -> Self {
+        self.cluster_byte_alignment = value;
+        self
+    }
+    #[inline]
+    pub fn cluster_template_byte_alignment(mut self, value: u32) -> Self {
+        self.cluster_template_byte_alignment = value;
+        self
+    }
+    #[inline]
+    pub fn cluster_bottom_level_byte_alignment(mut self, value: u32) -> Self {
+        self.cluster_bottom_level_byte_alignment = value;
+        self
+    }
+    #[inline]
+    pub fn cluster_template_bounds_byte_alignment(mut self, value: u32) -> Self {
+        self.cluster_template_bounds_byte_alignment = value;
+        self
+    }
+    #[inline]
+    pub fn max_cluster_geometry_index(mut self, value: u32) -> Self {
+        self.max_cluster_geometry_index = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureClustersBottomLevelInputNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureClustersBottomLevelInputNV")]
+pub struct ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub max_total_cluster_count: u32,
+    pub max_cluster_count_per_acceleration_structure: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for ClusterAccelerationStructureClustersBottomLevelInputNV<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure for ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ClusterAccelerationStructureClustersBottomLevelInputNV;
+}
+unsafe impl<'a> Send for ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {}
+unsafe impl<'a> Sync for ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {}
+impl<'a> Default for ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            max_total_cluster_count: Default::default(),
+            max_cluster_count_per_acceleration_structure: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
+    #[inline]
+    pub fn max_total_cluster_count(mut self, value: u32) -> Self {
+        self.max_total_cluster_count = value;
+        self
+    }
+    #[inline]
+    pub fn max_cluster_count_per_acceleration_structure(mut self, value: u32) -> Self {
+        self.max_cluster_count_per_acceleration_structure = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureTriangleClusterInputNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureTriangleClusterInputNV")]
+pub struct ClusterAccelerationStructureTriangleClusterInputNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub vertex_format: Format,
+    pub max_geometry_index_value: u32,
+    pub max_cluster_unique_geometry_count: u32,
+    pub max_cluster_triangle_count: u32,
+    pub max_cluster_vertex_count: u32,
+    pub max_total_triangle_count: u32,
+    pub max_total_vertex_count: u32,
+    pub min_position_truncate_bit_count: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for ClusterAccelerationStructureTriangleClusterInputNV<'a> {}
+unsafe impl<'a> ExtendableStructure for ClusterAccelerationStructureTriangleClusterInputNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ClusterAccelerationStructureTriangleClusterInputNV;
+}
+unsafe impl<'a> Send for ClusterAccelerationStructureTriangleClusterInputNV<'a> {}
+unsafe impl<'a> Sync for ClusterAccelerationStructureTriangleClusterInputNV<'a> {}
+impl<'a> Default for ClusterAccelerationStructureTriangleClusterInputNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            vertex_format: Format::Undefined,
+            max_geometry_index_value: Default::default(),
+            max_cluster_unique_geometry_count: Default::default(),
+            max_cluster_triangle_count: Default::default(),
+            max_cluster_vertex_count: Default::default(),
+            max_total_triangle_count: Default::default(),
+            max_total_vertex_count: Default::default(),
+            min_position_truncate_bit_count: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ClusterAccelerationStructureTriangleClusterInputNV<'a> {
+    #[inline]
+    pub fn vertex_format(mut self, value: Format) -> Self {
+        self.vertex_format = value;
+        self
+    }
+    #[inline]
+    pub fn max_geometry_index_value(mut self, value: u32) -> Self {
+        self.max_geometry_index_value = value;
+        self
+    }
+    #[inline]
+    pub fn max_cluster_unique_geometry_count(mut self, value: u32) -> Self {
+        self.max_cluster_unique_geometry_count = value;
+        self
+    }
+    #[inline]
+    pub fn max_cluster_triangle_count(mut self, value: u32) -> Self {
+        self.max_cluster_triangle_count = value;
+        self
+    }
+    #[inline]
+    pub fn max_cluster_vertex_count(mut self, value: u32) -> Self {
+        self.max_cluster_vertex_count = value;
+        self
+    }
+    #[inline]
+    pub fn max_total_triangle_count(mut self, value: u32) -> Self {
+        self.max_total_triangle_count = value;
+        self
+    }
+    #[inline]
+    pub fn max_total_vertex_count(mut self, value: u32) -> Self {
+        self.max_total_vertex_count = value;
+        self
+    }
+    #[inline]
+    pub fn min_position_truncate_bit_count(mut self, value: u32) -> Self {
+        self.min_position_truncate_bit_count = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureMoveObjectsInputNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureMoveObjectsInputNV")]
+pub struct ClusterAccelerationStructureMoveObjectsInputNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub ty: ClusterAccelerationStructureTypeNV,
+    pub no_move_overlap: Bool32,
+    pub max_moved_bytes: DeviceSize,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for ClusterAccelerationStructureMoveObjectsInputNV<'a> {}
+unsafe impl<'a> ExtendableStructure for ClusterAccelerationStructureMoveObjectsInputNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::ClusterAccelerationStructureMoveObjectsInputNV;
+}
+unsafe impl<'a> Send for ClusterAccelerationStructureMoveObjectsInputNV<'a> {}
+unsafe impl<'a> Sync for ClusterAccelerationStructureMoveObjectsInputNV<'a> {}
+impl<'a> Default for ClusterAccelerationStructureMoveObjectsInputNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            ty: ClusterAccelerationStructureTypeNV::ClustersBottomLevel,
+            no_move_overlap: Default::default(),
+            max_moved_bytes: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ClusterAccelerationStructureMoveObjectsInputNV<'a> {
+    #[inline]
+    pub fn ty(mut self, value: ClusterAccelerationStructureTypeNV) -> Self {
+        self.ty = value;
+        self
+    }
+    #[inline]
+    pub fn no_move_overlap(mut self, value: impl Into<Bool32>) -> Self {
+        self.no_move_overlap = value.into();
+        self
+    }
+    #[inline]
+    pub fn max_moved_bytes(mut self, value: DeviceSize) -> Self {
+        self.max_moved_bytes = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureOpInputNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureOpInputNV")]
+pub union ClusterAccelerationStructureOpInputNV<'a> {
+    pub p_clusters_bottom_level:
+        ManuallyDrop<*const ClusterAccelerationStructureClustersBottomLevelInputNV<'a>>,
+    pub p_triangle_clusters:
+        ManuallyDrop<*const ClusterAccelerationStructureTriangleClusterInputNV<'a>>,
+    pub p_move_objects: ManuallyDrop<*const ClusterAccelerationStructureMoveObjectsInputNV<'a>>,
+}
+impl<'a> Default for ClusterAccelerationStructureOpInputNV<'a> {
+    fn default() -> Self {
+        Self {
+            p_clusters_bottom_level: ManuallyDrop::new(ptr::null()),
+        }
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureInputInfoNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureInputInfoNV")]
+pub struct ClusterAccelerationStructureInputInfoNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub max_acceleration_structure_count: u32,
+    pub flags: BuildAccelerationStructureFlagsKHR,
+    pub op_type: ClusterAccelerationStructureOpTypeNV,
+    pub op_mode: ClusterAccelerationStructureOpModeNV,
+    pub op_input: ClusterAccelerationStructureOpInputNV<'a>,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for ClusterAccelerationStructureInputInfoNV<'a> {}
+unsafe impl<'a> ExtendableStructure for ClusterAccelerationStructureInputInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::ClusterAccelerationStructureInputInfoNV;
+}
+unsafe impl<'a> Send for ClusterAccelerationStructureInputInfoNV<'a> {}
+unsafe impl<'a> Sync for ClusterAccelerationStructureInputInfoNV<'a> {}
+impl<'a> Default for ClusterAccelerationStructureInputInfoNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            max_acceleration_structure_count: Default::default(),
+            flags: Default::default(),
+            op_type: ClusterAccelerationStructureOpTypeNV::MoveObjects,
+            op_mode: ClusterAccelerationStructureOpModeNV::ImplicitDestinations,
+            op_input: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ClusterAccelerationStructureInputInfoNV<'a> {
+    #[inline]
+    pub fn max_acceleration_structure_count(mut self, value: u32) -> Self {
+        self.max_acceleration_structure_count = value;
+        self
+    }
+    #[inline]
+    pub fn flags(mut self, value: BuildAccelerationStructureFlagsKHR) -> Self {
+        self.flags = value;
+        self
+    }
+    #[inline]
+    pub fn op_type(mut self, value: ClusterAccelerationStructureOpTypeNV) -> Self {
+        self.op_type = value;
+        self
+    }
+    #[inline]
+    pub fn op_mode(mut self, value: ClusterAccelerationStructureOpModeNV) -> Self {
+        self.op_mode = value;
+        self
+    }
+    #[inline]
+    pub fn op_input(mut self, value: ClusterAccelerationStructureOpInputNV<'a>) -> Self {
+        self.op_input = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureCommandsInfoNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureCommandsInfoNV")]
+pub struct ClusterAccelerationStructureCommandsInfoNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub input: ClusterAccelerationStructureInputInfoNV<'a>,
+    pub dst_implicit_data: DeviceAddress,
+    pub scratch_data: DeviceAddress,
+    pub dst_addresses_array: StridedDeviceAddressRegionKHR,
+    pub dst_sizes_array: StridedDeviceAddressRegionKHR,
+    pub src_infos_array: StridedDeviceAddressRegionKHR,
+    pub src_infos_count: DeviceAddress,
+    pub address_resolution_flags: ClusterAccelerationStructureAddressResolutionFlagsNV,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for ClusterAccelerationStructureCommandsInfoNV<'a> {}
+unsafe impl<'a> ExtendableStructure for ClusterAccelerationStructureCommandsInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::ClusterAccelerationStructureCommandsInfoNV;
+}
+unsafe impl<'a> Send for ClusterAccelerationStructureCommandsInfoNV<'a> {}
+unsafe impl<'a> Sync for ClusterAccelerationStructureCommandsInfoNV<'a> {}
+impl<'a> Default for ClusterAccelerationStructureCommandsInfoNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            input: Default::default(),
+            dst_implicit_data: Default::default(),
+            scratch_data: Default::default(),
+            dst_addresses_array: Default::default(),
+            dst_sizes_array: Default::default(),
+            src_infos_array: Default::default(),
+            src_infos_count: Default::default(),
+            address_resolution_flags: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ClusterAccelerationStructureCommandsInfoNV<'a> {
+    #[inline]
+    pub fn input(mut self, value: ClusterAccelerationStructureInputInfoNV<'a>) -> Self {
+        self.input = value;
+        self
+    }
+    #[inline]
+    pub fn dst_implicit_data(mut self, value: DeviceAddress) -> Self {
+        self.dst_implicit_data = value;
+        self
+    }
+    #[inline]
+    pub fn scratch_data(mut self, value: DeviceAddress) -> Self {
+        self.scratch_data = value;
+        self
+    }
+    #[inline]
+    pub fn dst_addresses_array(mut self, value: StridedDeviceAddressRegionKHR) -> Self {
+        self.dst_addresses_array = value;
+        self
+    }
+    #[inline]
+    pub fn dst_sizes_array(mut self, value: StridedDeviceAddressRegionKHR) -> Self {
+        self.dst_sizes_array = value;
+        self
+    }
+    #[inline]
+    pub fn src_infos_array(mut self, value: StridedDeviceAddressRegionKHR) -> Self {
+        self.src_infos_array = value;
+        self
+    }
+    #[inline]
+    pub fn src_infos_count(mut self, value: DeviceAddress) -> Self {
+        self.src_infos_count = value;
+        self
+    }
+    #[inline]
+    pub fn address_resolution_flags(
+        mut self,
+        value: ClusterAccelerationStructureAddressResolutionFlagsNV,
+    ) -> Self {
+        self.address_resolution_flags = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkStridedDeviceAddressNV.html>"]
+#[doc(alias = "VkStridedDeviceAddressNV")]
+pub struct StridedDeviceAddressNV {
+    pub start_address: DeviceAddress,
+    pub stride_in_bytes: DeviceSize,
+}
+unsafe impl Send for StridedDeviceAddressNV {}
+unsafe impl Sync for StridedDeviceAddressNV {}
+impl Default for StridedDeviceAddressNV {
+    fn default() -> Self {
+        Self {
+            start_address: Default::default(),
+            stride_in_bytes: Default::default(),
+        }
+    }
+}
+impl StridedDeviceAddressNV {
+    #[inline]
+    pub fn start_address(mut self, value: DeviceAddress) -> Self {
+        self.start_address = value;
+        self
+    }
+    #[inline]
+    pub fn stride_in_bytes(mut self, value: DeviceSize) -> Self {
+        self.stride_in_bytes = value;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV")]
+pub struct ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
+    pub geometry_index: [u8; 3u8 as _],
+    pub reserved: [u8; 0u8 as _],
+    pub geometry_flags: [u8; 0u8 as _],
+}
+unsafe impl Send for ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {}
+unsafe impl Sync for ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {}
+impl Default for ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
+    fn default() -> Self {
+        Self {
+            geometry_index: Default::default(),
+            reserved: Default::default(),
+            geometry_flags: Default::default(),
+        }
+    }
+}
+impl ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV {
+    #[inline]
+    pub fn geometry_index(mut self, value: u32) -> Self {
+        self.geometry_index = (value as u32).to_ne_bytes()[..3usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn reserved(mut self, value: u32) -> Self {
+        self.reserved = (value as u32).to_ne_bytes()[..0usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn geometry_flags(mut self, value: u32) -> Self {
+        self.geometry_flags = (value as u32).to_ne_bytes()[..0usize].try_into().unwrap();
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureMoveObjectsInfoNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureMoveObjectsInfoNV")]
+pub struct ClusterAccelerationStructureMoveObjectsInfoNV {
+    pub src_acceleration_structure: DeviceAddress,
+}
+unsafe impl Send for ClusterAccelerationStructureMoveObjectsInfoNV {}
+unsafe impl Sync for ClusterAccelerationStructureMoveObjectsInfoNV {}
+impl Default for ClusterAccelerationStructureMoveObjectsInfoNV {
+    fn default() -> Self {
+        Self {
+            src_acceleration_structure: Default::default(),
+        }
+    }
+}
+impl ClusterAccelerationStructureMoveObjectsInfoNV {
+    #[inline]
+    pub fn src_acceleration_structure(mut self, value: DeviceAddress) -> Self {
+        self.src_acceleration_structure = value;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureBuildClustersBottomLevelInfoNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureBuildClustersBottomLevelInfoNV")]
+pub struct ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
+    pub cluster_references_count: u32,
+    pub cluster_references_stride: u32,
+    pub cluster_references: DeviceAddress,
+}
+unsafe impl Send for ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {}
+unsafe impl Sync for ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {}
+impl Default for ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
+    fn default() -> Self {
+        Self {
+            cluster_references_count: Default::default(),
+            cluster_references_stride: Default::default(),
+            cluster_references: Default::default(),
+        }
+    }
+}
+impl ClusterAccelerationStructureBuildClustersBottomLevelInfoNV {
+    #[inline]
+    pub fn cluster_references_count(mut self, value: u32) -> Self {
+        self.cluster_references_count = value;
+        self
+    }
+    #[inline]
+    pub fn cluster_references_stride(mut self, value: u32) -> Self {
+        self.cluster_references_stride = value;
+        self
+    }
+    #[inline]
+    pub fn cluster_references(mut self, value: DeviceAddress) -> Self {
+        self.cluster_references = value;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureBuildTriangleClusterInfoNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureBuildTriangleClusterInfoNV")]
+pub struct ClusterAccelerationStructureBuildTriangleClusterInfoNV {
+    pub cluster_id: u32,
+    pub cluster_flags: ClusterAccelerationStructureClusterFlagsNV,
+    pub triangle_count: [u8; 1u8 as _],
+    pub vertex_count: [u8; 1u8 as _],
+    pub position_truncate_bit_count: [u8; 0u8 as _],
+    pub index_type: [u8; 0u8 as _],
+    pub opacity_micromap_index_type: [u8; 0u8 as _],
+    pub base_geometry_index_and_geometry_flags:
+        ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+    pub index_buffer_stride: u16,
+    pub vertex_buffer_stride: u16,
+    pub geometry_index_and_flags_buffer_stride: u16,
+    pub opacity_micromap_index_buffer_stride: u16,
+    pub index_buffer: DeviceAddress,
+    pub vertex_buffer: DeviceAddress,
+    pub geometry_index_and_flags_buffer: DeviceAddress,
+    pub opacity_micromap_array: DeviceAddress,
+    pub opacity_micromap_index_buffer: DeviceAddress,
+}
+unsafe impl Send for ClusterAccelerationStructureBuildTriangleClusterInfoNV {}
+unsafe impl Sync for ClusterAccelerationStructureBuildTriangleClusterInfoNV {}
+impl Default for ClusterAccelerationStructureBuildTriangleClusterInfoNV {
+    fn default() -> Self {
+        Self {
+            cluster_id: Default::default(),
+            cluster_flags: Default::default(),
+            triangle_count: Default::default(),
+            vertex_count: Default::default(),
+            position_truncate_bit_count: Default::default(),
+            index_type: Default::default(),
+            opacity_micromap_index_type: Default::default(),
+            base_geometry_index_and_geometry_flags: Default::default(),
+            index_buffer_stride: Default::default(),
+            vertex_buffer_stride: Default::default(),
+            geometry_index_and_flags_buffer_stride: Default::default(),
+            opacity_micromap_index_buffer_stride: Default::default(),
+            index_buffer: Default::default(),
+            vertex_buffer: Default::default(),
+            geometry_index_and_flags_buffer: Default::default(),
+            opacity_micromap_array: Default::default(),
+            opacity_micromap_index_buffer: Default::default(),
+        }
+    }
+}
+impl ClusterAccelerationStructureBuildTriangleClusterInfoNV {
+    #[inline]
+    pub fn cluster_id(mut self, value: u32) -> Self {
+        self.cluster_id = value;
+        self
+    }
+    #[inline]
+    pub fn cluster_flags(mut self, value: ClusterAccelerationStructureClusterFlagsNV) -> Self {
+        self.cluster_flags = value;
+        self
+    }
+    #[inline]
+    pub fn triangle_count(mut self, value: u32) -> Self {
+        self.triangle_count = (value as u32).to_ne_bytes()[..1usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn vertex_count(mut self, value: u32) -> Self {
+        self.vertex_count = (value as u32).to_ne_bytes()[..1usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn position_truncate_bit_count(mut self, value: u32) -> Self {
+        self.position_truncate_bit_count =
+            (value as u32).to_ne_bytes()[..0usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn index_type(mut self, value: u32) -> Self {
+        self.index_type = (value as u32).to_ne_bytes()[..0usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn opacity_micromap_index_type(mut self, value: u32) -> Self {
+        self.opacity_micromap_index_type =
+            (value as u32).to_ne_bytes()[..0usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn base_geometry_index_and_geometry_flags(
+        mut self,
+        value: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+    ) -> Self {
+        self.base_geometry_index_and_geometry_flags = value;
+        self
+    }
+    #[inline]
+    pub fn index_buffer_stride(mut self, value: u16) -> Self {
+        self.index_buffer_stride = value;
+        self
+    }
+    #[inline]
+    pub fn vertex_buffer_stride(mut self, value: u16) -> Self {
+        self.vertex_buffer_stride = value;
+        self
+    }
+    #[inline]
+    pub fn geometry_index_and_flags_buffer_stride(mut self, value: u16) -> Self {
+        self.geometry_index_and_flags_buffer_stride = value;
+        self
+    }
+    #[inline]
+    pub fn opacity_micromap_index_buffer_stride(mut self, value: u16) -> Self {
+        self.opacity_micromap_index_buffer_stride = value;
+        self
+    }
+    #[inline]
+    pub fn index_buffer(mut self, value: DeviceAddress) -> Self {
+        self.index_buffer = value;
+        self
+    }
+    #[inline]
+    pub fn vertex_buffer(mut self, value: DeviceAddress) -> Self {
+        self.vertex_buffer = value;
+        self
+    }
+    #[inline]
+    pub fn geometry_index_and_flags_buffer(mut self, value: DeviceAddress) -> Self {
+        self.geometry_index_and_flags_buffer = value;
+        self
+    }
+    #[inline]
+    pub fn opacity_micromap_array(mut self, value: DeviceAddress) -> Self {
+        self.opacity_micromap_array = value;
+        self
+    }
+    #[inline]
+    pub fn opacity_micromap_index_buffer(mut self, value: DeviceAddress) -> Self {
+        self.opacity_micromap_index_buffer = value;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV")]
+pub struct ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
+    pub cluster_id: u32,
+    pub cluster_flags: ClusterAccelerationStructureClusterFlagsNV,
+    pub triangle_count: [u8; 1u8 as _],
+    pub vertex_count: [u8; 1u8 as _],
+    pub position_truncate_bit_count: [u8; 0u8 as _],
+    pub index_type: [u8; 0u8 as _],
+    pub opacity_micromap_index_type: [u8; 0u8 as _],
+    pub base_geometry_index_and_geometry_flags:
+        ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+    pub index_buffer_stride: u16,
+    pub vertex_buffer_stride: u16,
+    pub geometry_index_and_flags_buffer_stride: u16,
+    pub opacity_micromap_index_buffer_stride: u16,
+    pub index_buffer: DeviceAddress,
+    pub vertex_buffer: DeviceAddress,
+    pub geometry_index_and_flags_buffer: DeviceAddress,
+    pub opacity_micromap_array: DeviceAddress,
+    pub opacity_micromap_index_buffer: DeviceAddress,
+    pub instantiation_bounding_box_limit: DeviceAddress,
+}
+unsafe impl Send for ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {}
+unsafe impl Sync for ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {}
+impl Default for ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
+    fn default() -> Self {
+        Self {
+            cluster_id: Default::default(),
+            cluster_flags: Default::default(),
+            triangle_count: Default::default(),
+            vertex_count: Default::default(),
+            position_truncate_bit_count: Default::default(),
+            index_type: Default::default(),
+            opacity_micromap_index_type: Default::default(),
+            base_geometry_index_and_geometry_flags: Default::default(),
+            index_buffer_stride: Default::default(),
+            vertex_buffer_stride: Default::default(),
+            geometry_index_and_flags_buffer_stride: Default::default(),
+            opacity_micromap_index_buffer_stride: Default::default(),
+            index_buffer: Default::default(),
+            vertex_buffer: Default::default(),
+            geometry_index_and_flags_buffer: Default::default(),
+            opacity_micromap_array: Default::default(),
+            opacity_micromap_index_buffer: Default::default(),
+            instantiation_bounding_box_limit: Default::default(),
+        }
+    }
+}
+impl ClusterAccelerationStructureBuildTriangleClusterTemplateInfoNV {
+    #[inline]
+    pub fn cluster_id(mut self, value: u32) -> Self {
+        self.cluster_id = value;
+        self
+    }
+    #[inline]
+    pub fn cluster_flags(mut self, value: ClusterAccelerationStructureClusterFlagsNV) -> Self {
+        self.cluster_flags = value;
+        self
+    }
+    #[inline]
+    pub fn triangle_count(mut self, value: u32) -> Self {
+        self.triangle_count = (value as u32).to_ne_bytes()[..1usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn vertex_count(mut self, value: u32) -> Self {
+        self.vertex_count = (value as u32).to_ne_bytes()[..1usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn position_truncate_bit_count(mut self, value: u32) -> Self {
+        self.position_truncate_bit_count =
+            (value as u32).to_ne_bytes()[..0usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn index_type(mut self, value: u32) -> Self {
+        self.index_type = (value as u32).to_ne_bytes()[..0usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn opacity_micromap_index_type(mut self, value: u32) -> Self {
+        self.opacity_micromap_index_type =
+            (value as u32).to_ne_bytes()[..0usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn base_geometry_index_and_geometry_flags(
+        mut self,
+        value: ClusterAccelerationStructureGeometryIndexAndGeometryFlagsNV,
+    ) -> Self {
+        self.base_geometry_index_and_geometry_flags = value;
+        self
+    }
+    #[inline]
+    pub fn index_buffer_stride(mut self, value: u16) -> Self {
+        self.index_buffer_stride = value;
+        self
+    }
+    #[inline]
+    pub fn vertex_buffer_stride(mut self, value: u16) -> Self {
+        self.vertex_buffer_stride = value;
+        self
+    }
+    #[inline]
+    pub fn geometry_index_and_flags_buffer_stride(mut self, value: u16) -> Self {
+        self.geometry_index_and_flags_buffer_stride = value;
+        self
+    }
+    #[inline]
+    pub fn opacity_micromap_index_buffer_stride(mut self, value: u16) -> Self {
+        self.opacity_micromap_index_buffer_stride = value;
+        self
+    }
+    #[inline]
+    pub fn index_buffer(mut self, value: DeviceAddress) -> Self {
+        self.index_buffer = value;
+        self
+    }
+    #[inline]
+    pub fn vertex_buffer(mut self, value: DeviceAddress) -> Self {
+        self.vertex_buffer = value;
+        self
+    }
+    #[inline]
+    pub fn geometry_index_and_flags_buffer(mut self, value: DeviceAddress) -> Self {
+        self.geometry_index_and_flags_buffer = value;
+        self
+    }
+    #[inline]
+    pub fn opacity_micromap_array(mut self, value: DeviceAddress) -> Self {
+        self.opacity_micromap_array = value;
+        self
+    }
+    #[inline]
+    pub fn opacity_micromap_index_buffer(mut self, value: DeviceAddress) -> Self {
+        self.opacity_micromap_index_buffer = value;
+        self
+    }
+    #[inline]
+    pub fn instantiation_bounding_box_limit(mut self, value: DeviceAddress) -> Self {
+        self.instantiation_bounding_box_limit = value;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureInstantiateClusterInfoNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureInstantiateClusterInfoNV")]
+pub struct ClusterAccelerationStructureInstantiateClusterInfoNV {
+    pub cluster_id_offset: u32,
+    pub geometry_index_offset: [u8; 3u8 as _],
+    pub reserved: [u8; 1u8 as _],
+    pub cluster_template_address: DeviceAddress,
+    pub vertex_buffer: StridedDeviceAddressNV,
+}
+unsafe impl Send for ClusterAccelerationStructureInstantiateClusterInfoNV {}
+unsafe impl Sync for ClusterAccelerationStructureInstantiateClusterInfoNV {}
+impl Default for ClusterAccelerationStructureInstantiateClusterInfoNV {
+    fn default() -> Self {
+        Self {
+            cluster_id_offset: Default::default(),
+            geometry_index_offset: Default::default(),
+            reserved: Default::default(),
+            cluster_template_address: Default::default(),
+            vertex_buffer: Default::default(),
+        }
+    }
+}
+impl ClusterAccelerationStructureInstantiateClusterInfoNV {
+    #[inline]
+    pub fn cluster_id_offset(mut self, value: u32) -> Self {
+        self.cluster_id_offset = value;
+        self
+    }
+    #[inline]
+    pub fn geometry_index_offset(mut self, value: u32) -> Self {
+        self.geometry_index_offset = (value as u32).to_ne_bytes()[..3usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn reserved(mut self, value: u32) -> Self {
+        self.reserved = (value as u32).to_ne_bytes()[..1usize].try_into().unwrap();
+        self
+    }
+    #[inline]
+    pub fn cluster_template_address(mut self, value: DeviceAddress) -> Self {
+        self.cluster_template_address = value;
+        self
+    }
+    #[inline]
+    pub fn vertex_buffer(mut self, value: StridedDeviceAddressNV) -> Self {
+        self.vertex_buffer = value;
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV.html>"]
+#[doc(alias = "VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV")]
+pub struct RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub allow_cluster_acceleration_structure: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure
+    for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::RayTracingPipelineClusterAccelerationStructureCreateInfoNV;
+}
+unsafe impl<'a> Send for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {}
+unsafe impl<'a> Sync for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<RayTracingPipelineCreateInfoKHR<'b>>
+    for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a>
+{
+}
+impl<'a> Default for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            allow_cluster_acceleration_structure: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
+    #[inline]
+    pub fn allow_cluster_acceleration_structure(mut self, value: impl Into<Bool32>) -> Self {
+        self.allow_cluster_acceleration_structure = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePartitionedAccelerationStructureFeaturesNV.html>"]
+#[doc(alias = "VkPhysicalDevicePartitionedAccelerationStructureFeaturesNV")]
+pub struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub partitioned_acceleration_structure: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure
+    for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDevicePartitionedAccelerationStructureFeaturesNV;
+}
+unsafe impl<'a> Send for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {}
+unsafe impl<'a> Sync for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a>
+{
+}
+impl<'a> Default for PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            partitioned_acceleration_structure: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {
+    #[inline]
+    pub fn partitioned_acceleration_structure(mut self, value: impl Into<Bool32>) -> Self {
+        self.partitioned_acceleration_structure = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePartitionedAccelerationStructurePropertiesNV.html>"]
+#[doc(alias = "VkPhysicalDevicePartitionedAccelerationStructurePropertiesNV")]
+pub struct PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub max_partition_count: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure
+    for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a>
+{
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDevicePartitionedAccelerationStructurePropertiesNV;
+}
+unsafe impl<'a> Send for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {}
+unsafe impl<'a> Sync for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceProperties2<'b>>
+    for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a>
+{
+}
+impl<'a> Default for PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            max_partition_count: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
+    #[inline]
+    pub fn max_partition_count(mut self, value: u32) -> Self {
+        self.max_partition_count = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureFlagsNV.html>"]
+#[doc(alias = "VkPartitionedAccelerationStructureFlagsNV")]
+pub struct PartitionedAccelerationStructureFlagsNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub enable_partition_translation: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PartitionedAccelerationStructureFlagsNV<'a> {}
+unsafe impl<'a> ExtendableStructure for PartitionedAccelerationStructureFlagsNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PartitionedAccelerationStructureFlagsNV;
+}
+unsafe impl<'a> Send for PartitionedAccelerationStructureFlagsNV<'a> {}
+unsafe impl<'a> Sync for PartitionedAccelerationStructureFlagsNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PartitionedAccelerationStructureInstancesInputNV<'b>>
+    for PartitionedAccelerationStructureFlagsNV<'a>
+{
+}
+impl<'a> Default for PartitionedAccelerationStructureFlagsNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            enable_partition_translation: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PartitionedAccelerationStructureFlagsNV<'a> {
+    #[inline]
+    pub fn enable_partition_translation(mut self, value: impl Into<Bool32>) -> Self {
+        self.enable_partition_translation = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBuildPartitionedAccelerationStructureIndirectCommandNV.html>"]
+#[doc(alias = "VkBuildPartitionedAccelerationStructureIndirectCommandNV")]
+pub struct BuildPartitionedAccelerationStructureIndirectCommandNV {
+    pub op_type: PartitionedAccelerationStructureOpTypeNV,
+    pub arg_count: u32,
+    pub arg_data: StridedDeviceAddressNV,
+}
+unsafe impl Send for BuildPartitionedAccelerationStructureIndirectCommandNV {}
+unsafe impl Sync for BuildPartitionedAccelerationStructureIndirectCommandNV {}
+impl Default for BuildPartitionedAccelerationStructureIndirectCommandNV {
+    fn default() -> Self {
+        Self {
+            op_type: PartitionedAccelerationStructureOpTypeNV::WriteInstance,
+            arg_count: Default::default(),
+            arg_data: Default::default(),
+        }
+    }
+}
+impl BuildPartitionedAccelerationStructureIndirectCommandNV {
+    #[inline]
+    pub fn op_type(mut self, value: PartitionedAccelerationStructureOpTypeNV) -> Self {
+        self.op_type = value;
+        self
+    }
+    #[inline]
+    pub fn arg_count(mut self, value: u32) -> Self {
+        self.arg_count = value;
+        self
+    }
+    #[inline]
+    pub fn arg_data(mut self, value: StridedDeviceAddressNV) -> Self {
+        self.arg_data = value;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureWriteInstanceDataNV.html>"]
+#[doc(alias = "VkPartitionedAccelerationStructureWriteInstanceDataNV")]
+pub struct PartitionedAccelerationStructureWriteInstanceDataNV {
+    pub transform: TransformMatrixKHR,
+    pub explicit_aabb: [f32; 6u16 as _],
+    pub instance_id: u32,
+    pub instance_mask: u32,
+    pub instance_contribution_to_hit_group_index: u32,
+    pub instance_flags: PartitionedAccelerationStructureInstanceFlagsNV,
+    pub instance_index: u32,
+    pub partition_index: u32,
+    pub acceleration_structure: DeviceAddress,
+}
+unsafe impl Send for PartitionedAccelerationStructureWriteInstanceDataNV {}
+unsafe impl Sync for PartitionedAccelerationStructureWriteInstanceDataNV {}
+impl Default for PartitionedAccelerationStructureWriteInstanceDataNV {
+    fn default() -> Self {
+        Self {
+            transform: Default::default(),
+            explicit_aabb: array::from_fn(|_| Default::default()),
+            instance_id: Default::default(),
+            instance_mask: Default::default(),
+            instance_contribution_to_hit_group_index: Default::default(),
+            instance_flags: Default::default(),
+            instance_index: Default::default(),
+            partition_index: Default::default(),
+            acceleration_structure: Default::default(),
+        }
+    }
+}
+impl PartitionedAccelerationStructureWriteInstanceDataNV {
+    #[inline]
+    pub fn transform(mut self, value: TransformMatrixKHR) -> Self {
+        self.transform = value;
+        self
+    }
+    #[inline]
+    pub fn explicit_aabb(mut self, value: [f32; 6u16 as _]) -> Self {
+        self.explicit_aabb = value;
+        self
+    }
+    #[inline]
+    pub fn instance_id(mut self, value: u32) -> Self {
+        self.instance_id = value;
+        self
+    }
+    #[inline]
+    pub fn instance_mask(mut self, value: u32) -> Self {
+        self.instance_mask = value;
+        self
+    }
+    #[inline]
+    pub fn instance_contribution_to_hit_group_index(mut self, value: u32) -> Self {
+        self.instance_contribution_to_hit_group_index = value;
+        self
+    }
+    #[inline]
+    pub fn instance_flags(
+        mut self,
+        value: PartitionedAccelerationStructureInstanceFlagsNV,
+    ) -> Self {
+        self.instance_flags = value;
+        self
+    }
+    #[inline]
+    pub fn instance_index(mut self, value: u32) -> Self {
+        self.instance_index = value;
+        self
+    }
+    #[inline]
+    pub fn partition_index(mut self, value: u32) -> Self {
+        self.partition_index = value;
+        self
+    }
+    #[inline]
+    pub fn acceleration_structure(mut self, value: DeviceAddress) -> Self {
+        self.acceleration_structure = value;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureUpdateInstanceDataNV.html>"]
+#[doc(alias = "VkPartitionedAccelerationStructureUpdateInstanceDataNV")]
+pub struct PartitionedAccelerationStructureUpdateInstanceDataNV {
+    pub instance_index: u32,
+    pub instance_contribution_to_hit_group_index: u32,
+    pub acceleration_structure: DeviceAddress,
+}
+unsafe impl Send for PartitionedAccelerationStructureUpdateInstanceDataNV {}
+unsafe impl Sync for PartitionedAccelerationStructureUpdateInstanceDataNV {}
+impl Default for PartitionedAccelerationStructureUpdateInstanceDataNV {
+    fn default() -> Self {
+        Self {
+            instance_index: Default::default(),
+            instance_contribution_to_hit_group_index: Default::default(),
+            acceleration_structure: Default::default(),
+        }
+    }
+}
+impl PartitionedAccelerationStructureUpdateInstanceDataNV {
+    #[inline]
+    pub fn instance_index(mut self, value: u32) -> Self {
+        self.instance_index = value;
+        self
+    }
+    #[inline]
+    pub fn instance_contribution_to_hit_group_index(mut self, value: u32) -> Self {
+        self.instance_contribution_to_hit_group_index = value;
+        self
+    }
+    #[inline]
+    pub fn acceleration_structure(mut self, value: DeviceAddress) -> Self {
+        self.acceleration_structure = value;
+        self
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureWritePartitionTranslationDataNV.html>"]
+#[doc(alias = "VkPartitionedAccelerationStructureWritePartitionTranslationDataNV")]
+pub struct PartitionedAccelerationStructureWritePartitionTranslationDataNV {
+    pub partition_index: u32,
+    pub partition_translation: [f32; 3u16 as _],
+}
+unsafe impl Send for PartitionedAccelerationStructureWritePartitionTranslationDataNV {}
+unsafe impl Sync for PartitionedAccelerationStructureWritePartitionTranslationDataNV {}
+impl Default for PartitionedAccelerationStructureWritePartitionTranslationDataNV {
+    fn default() -> Self {
+        Self {
+            partition_index: Default::default(),
+            partition_translation: array::from_fn(|_| Default::default()),
+        }
+    }
+}
+impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
+    #[inline]
+    pub fn partition_index(mut self, value: u32) -> Self {
+        self.partition_index = value;
+        self
+    }
+    #[inline]
+    pub fn partition_translation(mut self, value: [f32; 3u16 as _]) -> Self {
+        self.partition_translation = value;
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkWriteDescriptorSetPartitionedAccelerationStructureNV.html>"]
+#[doc(alias = "VkWriteDescriptorSetPartitionedAccelerationStructureNV")]
+pub struct WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub acceleration_structure_count: u32,
+    pub(crate) p_acceleration_structures: *const DeviceAddress,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for WriteDescriptorSetPartitionedAccelerationStructureNV<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure for WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::WriteDescriptorSetPartitionedAccelerationStructureNV;
+}
+unsafe impl<'a> Send for WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {}
+unsafe impl<'a> Sync for WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<WriteDescriptorSet<'b>>
+    for WriteDescriptorSetPartitionedAccelerationStructureNV<'a>
+{
+}
+impl<'a> Default for WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            acceleration_structure_count: Default::default(),
+            p_acceleration_structures: ptr::null(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
+    #[inline]
+    pub fn acceleration_structure_count(mut self, value: u32) -> Self {
+        self.acceleration_structure_count = value;
+        self
+    }
+    #[inline]
+    pub fn acceleration_structures(
+        mut self,
+        p_acceleration_structures: impl AsSlice<'a, DeviceAddress>,
+    ) -> Self {
+        self.p_acceleration_structures = p_acceleration_structures.as_slice().as_ptr().cast();
+        self.acceleration_structure_count = p_acceleration_structures.as_slice().len() as _;
+        self
+    }
+    #[inline]
+    pub fn get_acceleration_structures(&self) -> &'a [DeviceAddress] {
+        (!self.p_acceleration_structures.is_null())
+            .then(|| unsafe {
+                slice::from_raw_parts(
+                    self.p_acceleration_structures.cast(),
+                    self.acceleration_structure_count as _,
+                )
+            })
+            .unwrap_or(&[])
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureInstancesInputNV.html>"]
+#[doc(alias = "VkPartitionedAccelerationStructureInstancesInputNV")]
+pub struct PartitionedAccelerationStructureInstancesInputNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub flags: BuildAccelerationStructureFlagsKHR,
+    pub instance_count: u32,
+    pub max_instance_per_partition_count: u32,
+    pub partition_count: u32,
+    pub max_instance_in_global_partition_count: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PartitionedAccelerationStructureInstancesInputNV<'a> {}
+unsafe impl<'a> ExtendableStructure for PartitionedAccelerationStructureInstancesInputNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PartitionedAccelerationStructureInstancesInputNV;
+}
+unsafe impl<'a> Send for PartitionedAccelerationStructureInstancesInputNV<'a> {}
+unsafe impl<'a> Sync for PartitionedAccelerationStructureInstancesInputNV<'a> {}
+impl<'a> Default for PartitionedAccelerationStructureInstancesInputNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            flags: Default::default(),
+            instance_count: Default::default(),
+            max_instance_per_partition_count: Default::default(),
+            partition_count: Default::default(),
+            max_instance_in_global_partition_count: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PartitionedAccelerationStructureInstancesInputNV<'a> {
+    #[inline]
+    pub fn flags(mut self, value: BuildAccelerationStructureFlagsKHR) -> Self {
+        self.flags = value;
+        self
+    }
+    #[inline]
+    pub fn instance_count(mut self, value: u32) -> Self {
+        self.instance_count = value;
+        self
+    }
+    #[inline]
+    pub fn max_instance_per_partition_count(mut self, value: u32) -> Self {
+        self.max_instance_per_partition_count = value;
+        self
+    }
+    #[inline]
+    pub fn partition_count(mut self, value: u32) -> Self {
+        self.partition_count = value;
+        self
+    }
+    #[inline]
+    pub fn max_instance_in_global_partition_count(mut self, value: u32) -> Self {
+        self.max_instance_in_global_partition_count = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBuildPartitionedAccelerationStructureInfoNV.html>"]
+#[doc(alias = "VkBuildPartitionedAccelerationStructureInfoNV")]
+pub struct BuildPartitionedAccelerationStructureInfoNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub input: PartitionedAccelerationStructureInstancesInputNV<'a>,
+    pub src_acceleration_structure_data: DeviceAddress,
+    pub dst_acceleration_structure_data: DeviceAddress,
+    pub scratch_data: DeviceAddress,
+    pub src_infos: DeviceAddress,
+    pub src_infos_count: DeviceAddress,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for BuildPartitionedAccelerationStructureInfoNV<'a> {}
+unsafe impl<'a> ExtendableStructure for BuildPartitionedAccelerationStructureInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::BuildPartitionedAccelerationStructureInfoNV;
+}
+unsafe impl<'a> Send for BuildPartitionedAccelerationStructureInfoNV<'a> {}
+unsafe impl<'a> Sync for BuildPartitionedAccelerationStructureInfoNV<'a> {}
+impl<'a> Default for BuildPartitionedAccelerationStructureInfoNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            input: Default::default(),
+            src_acceleration_structure_data: Default::default(),
+            dst_acceleration_structure_data: Default::default(),
+            scratch_data: Default::default(),
+            src_infos: Default::default(),
+            src_infos_count: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> BuildPartitionedAccelerationStructureInfoNV<'a> {
+    #[inline]
+    pub fn input(mut self, value: PartitionedAccelerationStructureInstancesInputNV<'a>) -> Self {
+        self.input = value;
+        self
+    }
+    #[inline]
+    pub fn src_acceleration_structure_data(mut self, value: DeviceAddress) -> Self {
+        self.src_acceleration_structure_data = value;
+        self
+    }
+    #[inline]
+    pub fn dst_acceleration_structure_data(mut self, value: DeviceAddress) -> Self {
+        self.dst_acceleration_structure_data = value;
+        self
+    }
+    #[inline]
+    pub fn scratch_data(mut self, value: DeviceAddress) -> Self {
+        self.scratch_data = value;
+        self
+    }
+    #[inline]
+    pub fn src_infos(mut self, value: DeviceAddress) -> Self {
+        self.src_infos = value;
+        self
+    }
+    #[inline]
+    pub fn src_infos_count(mut self, value: DeviceAddress) -> Self {
+        self.src_infos_count = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDeviceGeneratedCommandsFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDeviceGeneratedCommandsFeaturesEXT")]
 pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
@@ -59293,6 +61361,104 @@ impl<'a> WriteIndirectExecutionSetShaderEXT<'a> {
     }
 }
 #[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceMaintenance8FeaturesKHR.html>"]
+#[doc(alias = "VkPhysicalDeviceMaintenance8FeaturesKHR")]
+pub struct PhysicalDeviceMaintenance8FeaturesKHR<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub maintenance8: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance8FeaturesKHR<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceMaintenance8FeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PhysicalDeviceMaintenance8FeaturesKHR;
+}
+unsafe impl<'a> Send for PhysicalDeviceMaintenance8FeaturesKHR<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceMaintenance8FeaturesKHR<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDeviceMaintenance8FeaturesKHR<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDeviceMaintenance8FeaturesKHR<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceMaintenance8FeaturesKHR<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            maintenance8: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceMaintenance8FeaturesKHR<'a> {
+    #[inline]
+    pub fn maintenance8(mut self, value: impl Into<Bool32>) -> Self {
+        self.maintenance8 = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryBarrierAccessFlags3KHR.html>"]
+#[doc(alias = "VkMemoryBarrierAccessFlags3KHR")]
+pub struct MemoryBarrierAccessFlags3KHR<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub src_access_mask3: AccessFlags3KHR,
+    pub dst_access_mask3: AccessFlags3KHR,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for MemoryBarrierAccessFlags3KHR<'a> {}
+unsafe impl<'a> ExtendableStructure for MemoryBarrierAccessFlags3KHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MemoryBarrierAccessFlags3KHR;
+}
+unsafe impl<'a> Send for MemoryBarrierAccessFlags3KHR<'a> {}
+unsafe impl<'a> Sync for MemoryBarrierAccessFlags3KHR<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<MemoryBarrier2<'b>> for MemoryBarrierAccessFlags3KHR<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<BufferMemoryBarrier2<'b>>
+    for MemoryBarrierAccessFlags3KHR<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<ImageMemoryBarrier2<'b>>
+    for MemoryBarrierAccessFlags3KHR<'a>
+{
+}
+impl<'a> Default for MemoryBarrierAccessFlags3KHR<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            src_access_mask3: Default::default(),
+            dst_access_mask3: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> MemoryBarrierAccessFlags3KHR<'a> {
+    #[inline]
+    pub fn src_access_mask3(mut self, value: AccessFlags3KHR) -> Self {
+        self.src_access_mask3 = value;
+        self
+    }
+    #[inline]
+    pub fn dst_access_mask3(mut self, value: AccessFlags3KHR) -> Self {
+        self.dst_access_mask3 = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceImageAlignmentControlFeaturesMESA.html>"]
 #[doc(alias = "VkPhysicalDeviceImageAlignmentControlFeaturesMESA")]
 pub struct PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
@@ -59886,6 +62052,228 @@ impl<'a> PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
         self
     }
 }
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDevicePipelineOpacityMicromapFeaturesARM.html>"]
+#[doc(alias = "VkPhysicalDevicePipelineOpacityMicromapFeaturesARM")]
+pub struct PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub pipeline_opacity_micromap: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDevicePipelineOpacityMicromapFeaturesARM;
+}
+unsafe impl<'a> Send for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {}
+unsafe impl<'a> Sync for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a>
+{
+}
+impl<'a> Default for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            pipeline_opacity_micromap: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
+    #[inline]
+    pub fn pipeline_opacity_micromap(mut self, value: impl Into<Bool32>) -> Self {
+        self.pipeline_opacity_micromap = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkImportMemoryMetalHandleInfoEXT.html>"]
+#[doc(alias = "VkImportMemoryMetalHandleInfoEXT")]
+pub struct ImportMemoryMetalHandleInfoEXT<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub handle_type: ExternalMemoryHandleTypeFlags,
+    pub handle: VoidPtr,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for ImportMemoryMetalHandleInfoEXT<'a> {}
+unsafe impl<'a> ExtendableStructure for ImportMemoryMetalHandleInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::ImportMemoryMetalHandleInfoEXT;
+}
+unsafe impl<'a> Send for ImportMemoryMetalHandleInfoEXT<'a> {}
+unsafe impl<'a> Sync for ImportMemoryMetalHandleInfoEXT<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<MemoryAllocateInfo<'b>>
+    for ImportMemoryMetalHandleInfoEXT<'a>
+{
+}
+impl<'a> Default for ImportMemoryMetalHandleInfoEXT<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            handle_type: Default::default(),
+            handle: ptr::null(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ImportMemoryMetalHandleInfoEXT<'a> {
+    #[inline]
+    pub fn handle_type(mut self, value: ExternalMemoryHandleTypeFlags) -> Self {
+        self.handle_type = value;
+        self
+    }
+    #[inline]
+    pub fn handle(mut self, value: VoidPtr) -> Self {
+        self.handle = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryMetalHandlePropertiesEXT.html>"]
+#[doc(alias = "VkMemoryMetalHandlePropertiesEXT")]
+pub struct MemoryMetalHandlePropertiesEXT<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub memory_type_bits: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for MemoryMetalHandlePropertiesEXT<'a> {}
+unsafe impl<'a> ExtendableStructure for MemoryMetalHandlePropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MemoryMetalHandlePropertiesEXT;
+}
+unsafe impl<'a> Send for MemoryMetalHandlePropertiesEXT<'a> {}
+unsafe impl<'a> Sync for MemoryMetalHandlePropertiesEXT<'a> {}
+impl<'a> Default for MemoryMetalHandlePropertiesEXT<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            memory_type_bits: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> MemoryMetalHandlePropertiesEXT<'a> {
+    #[inline]
+    pub fn memory_type_bits(mut self, value: u32) -> Self {
+        self.memory_type_bits = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkMemoryGetMetalHandleInfoEXT.html>"]
+#[doc(alias = "VkMemoryGetMetalHandleInfoEXT")]
+pub struct MemoryGetMetalHandleInfoEXT<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub memory: Option<DeviceMemory>,
+    pub handle_type: ExternalMemoryHandleTypeFlags,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for MemoryGetMetalHandleInfoEXT<'a> {}
+unsafe impl<'a> ExtendableStructure for MemoryGetMetalHandleInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::MemoryGetMetalHandleInfoEXT;
+}
+unsafe impl<'a> Send for MemoryGetMetalHandleInfoEXT<'a> {}
+unsafe impl<'a> Sync for MemoryGetMetalHandleInfoEXT<'a> {}
+impl<'a> Default for MemoryGetMetalHandleInfoEXT<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            memory: Default::default(),
+            handle_type: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> MemoryGetMetalHandleInfoEXT<'a> {
+    #[inline]
+    pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
+        self.memory = Some(unsafe { value.clone() });
+        self
+    }
+    #[inline]
+    pub fn handle_type(mut self, value: ExternalMemoryHandleTypeFlags) -> Self {
+        self.handle_type = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceDepthClampZeroOneFeaturesKHR.html>"]
+#[doc(alias = "VkPhysicalDeviceDepthClampZeroOneFeaturesKHR")]
+pub struct PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub depth_clamp_zero_one: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PhysicalDeviceDepthClampZeroOneFeaturesKHR;
+}
+unsafe impl<'a> Send for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            depth_clamp_zero_one: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
+    #[inline]
+    pub fn depth_clamp_zero_one(mut self, value: impl Into<Bool32>) -> Self {
+        self.depth_clamp_zero_one = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+pub type PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> =
+    PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a>;
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT")]

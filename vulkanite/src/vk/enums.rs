@@ -777,7 +777,6 @@ pub enum StructureType {
     PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE = 1000420000,
     DescriptorSetBindingReferenceVALVE = 1000420001,
     DescriptorSetLayoutHostMappingInfoVALVE = 1000420002,
-    PhysicalDeviceDepthClampZeroOneFeaturesEXT = 1000421000,
     PhysicalDeviceNonSeamlessCubeMapFeaturesEXT = 1000422000,
     PhysicalDeviceRenderPassStripedFeaturesARM = 1000424000,
     PhysicalDeviceRenderPassStripedPropertiesARM = 1000424001,
@@ -794,6 +793,9 @@ pub enum StructureType {
     PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV = 1000428000,
     ComputePipelineIndirectBufferInfoNV = 1000428001,
     PipelineIndirectDeviceAddressInfoNV = 1000428002,
+    PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV = 1000429008,
+    AccelerationStructureGeometryLinearSweptSpheresDataNV = 1000429009,
+    AccelerationStructureGeometrySpheresDataNV = 1000429010,
     PhysicalDeviceLinearColorAttachmentFeaturesNV = 1000430000,
     PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR = 1000434000,
     PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT = 1000437000,
@@ -851,6 +853,10 @@ pub enum StructureType {
     PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM = 1000488000,
     PhysicalDeviceRayTracingInvocationReorderFeaturesNV = 1000490000,
     PhysicalDeviceRayTracingInvocationReorderPropertiesNV = 1000490001,
+    PhysicalDeviceCooperativeVectorFeaturesNV = 1000491000,
+    PhysicalDeviceCooperativeVectorPropertiesNV = 1000491001,
+    CooperativeVectorPropertiesNV = 1000491002,
+    ConvertCooperativeVectorMatrixInfoNV = 1000491004,
     PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV = 1000492000,
     PhysicalDeviceExtendedSparseAddressSpacePropertiesNV = 1000492001,
     PhysicalDeviceMutableDescriptorTypeFeaturesEXT = 1000351000,
@@ -912,6 +918,20 @@ pub enum StructureType {
     PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV = 1000563000,
     PhysicalDeviceShaderReplicatedCompositesFeaturesEXT = 1000564000,
     PhysicalDeviceRayTracingValidationFeaturesNV = 1000568000,
+    PhysicalDeviceClusterAccelerationStructureFeaturesNV = 1000569000,
+    PhysicalDeviceClusterAccelerationStructurePropertiesNV = 1000569001,
+    ClusterAccelerationStructureClustersBottomLevelInputNV = 1000569002,
+    ClusterAccelerationStructureTriangleClusterInputNV = 1000569003,
+    ClusterAccelerationStructureMoveObjectsInputNV = 1000569004,
+    ClusterAccelerationStructureInputInfoNV = 1000569005,
+    ClusterAccelerationStructureCommandsInfoNV = 1000569006,
+    RayTracingPipelineClusterAccelerationStructureCreateInfoNV = 1000569007,
+    PhysicalDevicePartitionedAccelerationStructureFeaturesNV = 1000570000,
+    PhysicalDevicePartitionedAccelerationStructurePropertiesNV = 1000570001,
+    WriteDescriptorSetPartitionedAccelerationStructureNV = 1000570002,
+    PartitionedAccelerationStructureInstancesInputNV = 1000570003,
+    BuildPartitionedAccelerationStructureInfoNV = 1000570004,
+    PartitionedAccelerationStructureFlagsNV = 1000570005,
     PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT = 1000572000,
     PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT = 1000572001,
     GeneratedCommandsMemoryRequirementsInfoEXT = 1000572002,
@@ -926,6 +946,8 @@ pub enum StructureType {
     IndirectExecutionSetShaderLayoutInfoEXT = 1000572012,
     GeneratedCommandsPipelineInfoEXT = 1000572013,
     GeneratedCommandsShaderInfoEXT = 1000572014,
+    PhysicalDeviceMaintenance8FeaturesKHR = 1000574000,
+    MemoryBarrierAccessFlags3KHR = 1000574002,
     PhysicalDeviceImageAlignmentControlFeaturesMESA = 1000575000,
     PhysicalDeviceImageAlignmentControlPropertiesMESA = 1000575001,
     ImageAlignmentControlCreateInfoMESA = 1000575002,
@@ -936,6 +958,11 @@ pub enum StructureType {
     PhysicalDeviceCooperativeMatrix2FeaturesNV = 1000593000,
     CooperativeMatrixFlexibleDimensionsPropertiesNV = 1000593001,
     PhysicalDeviceCooperativeMatrix2PropertiesNV = 1000593002,
+    PhysicalDevicePipelineOpacityMicromapFeaturesARM = 1000596000,
+    ImportMemoryMetalHandleInfoEXT = 1000602000,
+    MemoryMetalHandlePropertiesEXT = 1000602001,
+    MemoryGetMetalHandleInfoEXT = 1000602002,
+    PhysicalDeviceDepthClampZeroOneFeaturesKHR = 1000421000,
     PhysicalDeviceVertexAttributeRobustnessFeaturesEXT = 1000608000,
 }
 #[allow(non_upper_case_globals)]
@@ -1234,6 +1261,8 @@ impl StructureType {
     pub const DeviceImageMemoryRequirementsKHR: Self = Self::DeviceImageMemoryRequirements;
     pub const PhysicalDeviceShaderSubgroupRotateFeaturesKHR: Self =
         Self::PhysicalDeviceShaderSubgroupRotateFeatures;
+    pub const PhysicalDeviceDepthClampZeroOneFeaturesEXT: Self =
+        Self::PhysicalDeviceDepthClampZeroOneFeaturesKHR;
     pub const PhysicalDevicePipelineProtectedAccessFeaturesEXT: Self =
         Self::PhysicalDevicePipelineProtectedAccessFeatures;
     pub const PhysicalDeviceMaintenance5FeaturesKHR: Self =
@@ -2793,6 +2822,7 @@ pub enum DescriptorType {
     SampleWeightImageQCOM = 1000440000,
     BlockMatchImageQCOM = 1000440001,
     MutableEXT = 1000351000,
+    PartitionedAccelerationStructureNV = 1000570000,
 }
 #[allow(non_upper_case_globals)]
 impl DescriptorType {
@@ -2896,6 +2926,7 @@ bitflags! {
         const ViewLocalKHR = Self::ViewLocal.bits();
         const DeviceGroupKHR = Self::DeviceGroup.bits();
         const FeedbackLoopEXT = 1u32 << 3;
+        const QueueFamilyOwnershipTransferUseAllStagesKHR = 1u32 << 5;
     }
 }
 bitflags! {
@@ -3264,6 +3295,9 @@ bitflags! {
         const ZirconVmoFUCHSIA = 1u32 << 11;
         const RdmaAddressNV = 1u32 << 12;
         const ScreenBufferQNX = 1u32 << 14;
+        const MtlbufferEXT = 1u32 << 16;
+        const MtltextureEXT = 1u32 << 17;
+        const MtlheapEXT = 1u32 << 18;
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkExternalMemoryHandleTypeFlagBitsKHR.html>"]
@@ -3684,6 +3718,7 @@ bitflags! {
         const MicromapBuildEXT = 1u64 << 30;
         const ClusterCullingShaderHUAWEI = 1u64 << 41;
         const OpticalFlowNV = 1u64 << 29;
+        const ConvertCooperativeVectorMatrixNV = 1u64 << 44;
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPipelineStageFlagBits2KHR.html>"]
@@ -3867,6 +3902,7 @@ bitflags! {
         const SampledImageDepthComparisonKHR = Self::SampledImageDepthComparison.bits();
         const SampledImageFilterMinmaxKHR = Self::SampledImageFilterMinmax.bits();
         const SampledImageFilterCubicEXT = Self::SampledImageFilterCubic.bits();
+        const AccelerationStructureRadiusBufferNV = 1u64 << 51;
         const LinearColorAttachmentNV = 1u64 << 38;
         const WeightImageQCOM = 1u64 << 34;
         const WeightSampledImageQCOM = 1u64 << 35;
@@ -3967,6 +4003,8 @@ bitflags! {
         const NoProtectedAccess = 1u64 << 27;
         const ProtectedAccessOnly = 1u64 << 30;
         const ExecutionGraphAMDX = 1u64 << 32;
+        const RayTracingSkipBuiltInPrimitivesKHR = Self::RayTracingSkipTrianglesKHR.bits();
+        const RayTracingAllowSpheresAndLinearSweptSpheresNV = 1u64 << 33;
         const EnableLegacyDitheringEXT = 1u64 << 34;
         const DisableOptimizationKHR = Self::DisableOptimization.bits();
         const AllowDerivativesKHR = Self::AllowDerivatives.bits();
@@ -3999,6 +4037,7 @@ bitflags! {
         const ProtectedAccessOnlyEXT = Self::ProtectedAccessOnly.bits();
         const RayTracingDisplacementMicromapNV = 1u64 << 28;
         const DescriptorBufferEXT = 1u64 << 29;
+        const DisallowOpacityMicromapARM = 1u64 << 37;
         const CaptureDataKHR = 1u64 << 31;
         const IndirectBindableEXT = 1u64 << 38;
     }
@@ -4636,6 +4675,8 @@ pub enum GeometryTypeKHR {
     Triangles = 0,
     Aabbs = 1,
     Instances = 2,
+    SpheresNV = 1000429004,
+    LinearSweptSpheresNV = 1000429005,
 }
 #[allow(non_upper_case_globals)]
 impl GeometryTypeKHR {
@@ -4990,6 +5031,7 @@ bitflags! {
     pub struct PipelineCacheCreateFlags : u32 {
         const ExternallySynchronized = 1u32 << 0;
         const ExternallySynchronizedEXT = Self::ExternallySynchronized.bits();
+        const InternallySynchronizedMergeKHR = 1u32 << 3;
     }
 }
 bitflags! {
@@ -5251,6 +5293,7 @@ pub enum OpacityMicromapSpecialIndexEXT {
     FullyOpaque = -2,
     FullyUnknownTransparent = -3,
     FullyUnknownOpaque = -4,
+    ClusterGeometryDisableOpacityMicromapNV = -5,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDisplacementMicromapFormatNV.html>"]
@@ -5283,6 +5326,22 @@ bitflags! {
     pub struct MemoryDecompressionMethodFlagsNV : u64 {
         const Gdeflate10 = 1u64 << 0;
     }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRayTracingLssIndexingModeNV.html>"]
+#[doc(alias = "VkRayTracingLssIndexingModeNV")]
+#[repr(u32)]
+pub enum RayTracingLssIndexingModeNV {
+    List = 0,
+    Successive = 1,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkRayTracingLssPrimitiveEndCapsModeNV.html>"]
+#[doc(alias = "VkRayTracingLssPrimitiveEndCapsModeNV")]
+#[repr(u32)]
+pub enum RayTracingLssPrimitiveEndCapsModeNV {
+    None = 0,
+    Chained = 1,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSubpassMergeStatusEXT.html>"]
@@ -5471,6 +5530,54 @@ pub enum RayTracingInvocationReorderModeNV {
     Reorder = 1,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkCooperativeVectorMatrixLayoutNV.html>"]
+#[doc(alias = "VkCooperativeVectorMatrixLayoutNV")]
+#[repr(u32)]
+pub enum CooperativeVectorMatrixLayoutNV {
+    RowMajor = 0,
+    ColumnMajor = 1,
+    InferencingOptimal = 2,
+    TrainingOptimal = 3,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkComponentTypeKHR.html>"]
+#[doc(alias = "VkComponentTypeKHR")]
+#[repr(u32)]
+pub enum ComponentTypeKHR {
+    Float16 = 0,
+    Float32 = 1,
+    Float64 = 2,
+    Sint8 = 3,
+    Sint16 = 4,
+    Sint32 = 5,
+    Sint64 = 6,
+    Uint8 = 7,
+    Uint16 = 8,
+    Uint32 = 9,
+    Uint64 = 10,
+    Sint8PackedNV = 1000491000,
+    Uint8PackedNV = 1000491001,
+    FloatE4M3NV = 1000491002,
+    FloatE5M2NV = 1000491003,
+}
+#[allow(non_upper_case_globals)]
+impl ComponentTypeKHR {
+    pub const Float16NV: Self = Self::Float16;
+    pub const Float32NV: Self = Self::Float32;
+    pub const Float64NV: Self = Self::Float64;
+    pub const Sint8NV: Self = Self::Sint8;
+    pub const Sint16NV: Self = Self::Sint16;
+    pub const Sint32NV: Self = Self::Sint32;
+    pub const Sint64NV: Self = Self::Sint64;
+    pub const Uint8NV: Self = Self::Uint8;
+    pub const Uint16NV: Self = Self::Uint16;
+    pub const Uint32NV: Self = Self::Uint32;
+    pub const Uint64NV: Self = Self::Uint64;
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkComponentTypeNV.html>"]
+#[doc(alias = "VkComponentTypeNV")]
+pub type ComponentTypeNV = ComponentTypeKHR;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkLayerSettingTypeEXT.html>"]
 #[doc(alias = "VkLayerSettingTypeEXT")]
 #[repr(u32)]
@@ -5530,40 +5637,6 @@ impl ScopeKHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkScopeNV.html>"]
 #[doc(alias = "VkScopeNV")]
 pub type ScopeNV = ScopeKHR;
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkComponentTypeKHR.html>"]
-#[doc(alias = "VkComponentTypeKHR")]
-#[repr(u32)]
-pub enum ComponentTypeKHR {
-    Float16 = 0,
-    Float32 = 1,
-    Float64 = 2,
-    Sint8 = 3,
-    Sint16 = 4,
-    Sint32 = 5,
-    Sint64 = 6,
-    Uint8 = 7,
-    Uint16 = 8,
-    Uint32 = 9,
-    Uint64 = 10,
-}
-#[allow(non_upper_case_globals)]
-impl ComponentTypeKHR {
-    pub const Float16NV: Self = Self::Float16;
-    pub const Float32NV: Self = Self::Float32;
-    pub const Float64NV: Self = Self::Float64;
-    pub const Sint8NV: Self = Self::Sint8;
-    pub const Sint16NV: Self = Self::Sint16;
-    pub const Sint32NV: Self = Self::Sint32;
-    pub const Sint64NV: Self = Self::Sint64;
-    pub const Uint8NV: Self = Self::Uint8;
-    pub const Uint16NV: Self = Self::Uint16;
-    pub const Uint32NV: Self = Self::Uint32;
-    pub const Uint64NV: Self = Self::Uint64;
-}
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkComponentTypeNV.html>"]
-#[doc(alias = "VkComponentTypeNV")]
-pub type ComponentTypeNV = ComponentTypeKHR;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkBlockMatchWindowCompareModeQCOM.html>"]
 #[doc(alias = "VkBlockMatchWindowCompareModeQCOM")]
@@ -5631,6 +5704,110 @@ pub enum PhysicalDeviceLayeredApiKHR {
     Opengl = 3,
     Opengles = 4,
 }
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureClusterFlagBitsNV.html>"]
+    #[doc(alias = "VkClusterAccelerationStructureClusterFlagBitsNV")]
+    pub struct ClusterAccelerationStructureClusterFlagsNV : u32 {
+        const AllowDisableOpacityMicromaps = 1u32 << 0;
+    }
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureGeometryFlagBitsNV.html>"]
+    #[doc(alias = "VkClusterAccelerationStructureGeometryFlagBitsNV")]
+    pub struct ClusterAccelerationStructureGeometryFlagsNV : u32 {
+        const CullDisable = 1u32 << 0;
+        const NoDuplicateAnyhitInvocation = 1u32 << 1;
+        const Opaque = 1u32 << 2;
+    }
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureAddressResolutionFlagBitsNV.html>"]
+    #[doc(alias = "VkClusterAccelerationStructureAddressResolutionFlagBitsNV")]
+    pub struct ClusterAccelerationStructureAddressResolutionFlagsNV : u32 {
+        const IndirectedDstImplicitData = 1u32 << 0;
+        const IndirectedScratchData = 1u32 << 1;
+        const IndirectedDstAddressArray = 1u32 << 2;
+        const IndirectedDstSizesArray = 1u32 << 3;
+        const IndirectedSrcInfosArray = 1u32 << 4;
+        const IndirectedSrcInfosCount = 1u32 << 5;
+    }
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureIndexFormatFlagBitsNV.html>"]
+    #[doc(alias = "VkClusterAccelerationStructureIndexFormatFlagBitsNV")]
+    pub struct ClusterAccelerationStructureIndexFormatFlagsNV : u32 {
+        const Format8 = 1u32 << 0;
+        const Format16 = 1u32 << 1;
+        const Format32 = 1u32 << 2;
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureTypeNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureTypeNV")]
+#[repr(u32)]
+pub enum ClusterAccelerationStructureTypeNV {
+    ClustersBottomLevel = 0,
+    TriangleCluster = 1,
+    TriangleClusterTemplate = 2,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureOpTypeNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureOpTypeNV")]
+#[repr(u32)]
+pub enum ClusterAccelerationStructureOpTypeNV {
+    MoveObjects = 0,
+    BuildClustersBottomLevel = 1,
+    BuildTriangleCluster = 2,
+    BuildTriangleClusterTemplate = 3,
+    InstantiateTriangleCluster = 4,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkClusterAccelerationStructureOpModeNV.html>"]
+#[doc(alias = "VkClusterAccelerationStructureOpModeNV")]
+#[repr(u32)]
+pub enum ClusterAccelerationStructureOpModeNV {
+    ImplicitDestinations = 0,
+    ExplicitDestinations = 1,
+    ComputeSizes = 2,
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VK_PARTITIONED_ACCELERATION_STRUCTURE_PARTITION_INDEX_GLOBAL_NV.html>"]
+#[doc(alias = "VK_PARTITIONED_ACCELERATION_STRUCTURE_PARTITION_INDEX_GLOBAL_NV")]
+pub const PARTITIONED_ACCELERATION_STRUCTURE_PARTITION_INDEX_GLOBAL_NV: u32 = !0u32;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureOpTypeNV.html>"]
+#[doc(alias = "VkPartitionedAccelerationStructureOpTypeNV")]
+#[repr(u32)]
+pub enum PartitionedAccelerationStructureOpTypeNV {
+    WriteInstance = 0,
+    UpdateInstance = 1,
+    WritePartitionTranslation = 2,
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkPartitionedAccelerationStructureInstanceFlagBitsNV.html>"]
+    #[doc(alias = "VkPartitionedAccelerationStructureInstanceFlagBitsNV")]
+    pub struct PartitionedAccelerationStructureInstanceFlagsNV : u32 {
+        const FlagTriangleFacingCullDisable = 1u32 << 0;
+        const FlagTriangleFlipFacing = 1u32 << 1;
+        const FlagForceOpaque = 1u32 << 2;
+        const FlagForceNoOpaque = 1u32 << 3;
+        const FlagEnableExplicitBoundingBox = 1u32 << 4;
+    }
+}
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsTokenTypeEXT.html>"]
 #[doc(alias = "VkIndirectCommandsTokenTypeEXT")]
@@ -5680,6 +5857,16 @@ bitflags! {
     pub struct IndirectCommandsInputModeFlagsEXT : u32 {
         const VulkanIndexBuffer = 1u32 << 0;
         const DxgiIndexBuffer = 1u32 << 1;
+    }
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkAccessFlagBits3KHR.html>"]
+    #[doc(alias = "VkAccessFlagBits3KHR")]
+    pub struct AccessFlags3KHR : u64 {
+        const None = 0;
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
