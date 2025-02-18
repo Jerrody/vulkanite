@@ -1596,9 +1596,7 @@ fn parse_value(value: &str, ty: CType) -> TokenStream {
 }
 
 fn get_doc_url(item_name: &str) -> String {
-    format!(
-        "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/{item_name}.html>"
-    )
+    format!("<https://www.khronos.org/registry/vulkan/specs/latest/man/html/{item_name}.html>")
 }
 
 fn make_doc_link(item_name: &str) -> TokenStream {
