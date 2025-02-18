@@ -253,7 +253,7 @@ pub struct BufferMemoryBarrier<'a> {
     pub dst_access_mask: AccessFlags,
     pub src_queue_family_index: u32,
     pub dst_queue_family_index: u32,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -303,7 +303,7 @@ impl<'a> BufferMemoryBarrier<'a> {
     }
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -466,7 +466,7 @@ pub struct ImageMemoryBarrier<'a> {
     pub new_layout: ImageLayout,
     pub src_queue_family_index: u32,
     pub dst_queue_family_index: u32,
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     pub subresource_range: ImageSubresourceRange,
     phantom: PhantomData<&'a ()>,
 }
@@ -526,7 +526,7 @@ impl<'a> ImageMemoryBarrier<'a> {
     }
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -2761,7 +2761,7 @@ impl<'a> SubmitInfo<'a> {
 pub struct MappedMemoryRange<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -2787,7 +2787,7 @@ impl<'a> Default for MappedMemoryRange<'a> {
 impl<'a> MappedMemoryRange<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -3072,7 +3072,7 @@ impl ImageSubresource {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSparseBufferMemoryBindInfo.html>"]
 #[doc(alias = "VkSparseBufferMemoryBindInfo")]
 pub struct SparseBufferMemoryBindInfo<'a> {
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub(crate) bind_count: u32,
     pub(crate) p_binds: *const SparseMemoryBind<'a>,
     phantom: PhantomData<&'a ()>,
@@ -3092,7 +3092,7 @@ impl<'a> Default for SparseBufferMemoryBindInfo<'a> {
 impl<'a> SparseBufferMemoryBindInfo<'a> {
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -3152,7 +3152,7 @@ pub struct SparseImageMemoryBind<'a> {
     pub subresource: ImageSubresource,
     pub offset: Offset3D,
     pub extent: Extent3D,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
     phantom: PhantomData<&'a ()>,
@@ -3190,7 +3190,7 @@ impl<'a> SparseImageMemoryBind<'a> {
     }
     #[inline]
     pub fn memory(mut self, value: Option<&'a raw::DeviceMemory>) -> Self {
-        self.memory = value.map(|v| unsafe { v.clone() });
+        self.memory = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -3208,7 +3208,7 @@ impl<'a> SparseImageMemoryBind<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSparseImageMemoryBindInfo.html>"]
 #[doc(alias = "VkSparseImageMemoryBindInfo")]
 pub struct SparseImageMemoryBindInfo<'a> {
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     pub(crate) bind_count: u32,
     pub(crate) p_binds: *const SparseImageMemoryBind<'a>,
     phantom: PhantomData<&'a ()>,
@@ -3228,7 +3228,7 @@ impl<'a> Default for SparseImageMemoryBindInfo<'a> {
 impl<'a> SparseImageMemoryBindInfo<'a> {
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -3299,7 +3299,7 @@ impl SparseImageMemoryRequirements {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkSparseImageOpaqueMemoryBindInfo.html>"]
 #[doc(alias = "VkSparseImageOpaqueMemoryBindInfo")]
 pub struct SparseImageOpaqueMemoryBindInfo<'a> {
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     pub(crate) bind_count: u32,
     pub(crate) p_binds: *const SparseMemoryBind<'a>,
     phantom: PhantomData<&'a ()>,
@@ -3319,7 +3319,7 @@ impl<'a> Default for SparseImageOpaqueMemoryBindInfo<'a> {
 impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -3341,7 +3341,7 @@ impl<'a> SparseImageOpaqueMemoryBindInfo<'a> {
 pub struct SparseMemoryBind<'a> {
     pub resource_offset: DeviceSize,
     pub size: DeviceSize,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
     phantom: PhantomData<&'a ()>,
@@ -3373,7 +3373,7 @@ impl<'a> SparseMemoryBind<'a> {
     }
     #[inline]
     pub fn memory(mut self, value: Option<&'a raw::DeviceMemory>) -> Self {
-        self.memory = value.map(|v| unsafe { v.clone() });
+        self.memory = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -3647,7 +3647,7 @@ pub struct BufferViewCreateInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: u32,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub format: Format,
     pub offset: DeviceSize,
     pub range: DeviceSize,
@@ -3681,7 +3681,7 @@ impl<'a> BufferViewCreateInfo<'a> {
     }
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -3991,7 +3991,7 @@ pub struct ImageViewCreateInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: ImageViewCreateFlags,
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     pub view_type: ImageViewType,
     pub format: Format,
     pub components: ComponentMapping,
@@ -4027,7 +4027,7 @@ impl<'a> ImageViewCreateInfo<'a> {
     }
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -4173,8 +4173,8 @@ pub struct ComputePipelineCreateInfo<'a> {
     pub(crate) p_next: Cell<*const Header>,
     pub flags: PipelineCreateFlags,
     pub stage: PipelineShaderStageCreateInfo<'a>,
-    pub layout: Option<PipelineLayout>,
-    pub base_pipeline_handle: Option<Pipeline>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
+    pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
     phantom: PhantomData<&'a ()>,
 }
@@ -4211,12 +4211,12 @@ impl<'a> ComputePipelineCreateInfo<'a> {
     }
     #[inline]
     pub fn layout(mut self, value: &'a raw::PipelineLayout) -> Self {
-        self.layout = Some(unsafe { value.clone() });
+        self.layout = Some(value.borrow());
         self
     }
     #[inline]
     pub fn base_pipeline_handle(mut self, value: Option<&'a raw::Pipeline>) -> Self {
-        self.base_pipeline_handle = value.map(|v| unsafe { v.clone() });
+        self.base_pipeline_handle = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -4248,10 +4248,10 @@ pub struct GraphicsPipelineCreateInfo<'a> {
     pub p_depth_stencil_state: *const PipelineDepthStencilStateCreateInfo<'a>,
     pub p_color_blend_state: *const PipelineColorBlendStateCreateInfo<'a>,
     pub p_dynamic_state: *const PipelineDynamicStateCreateInfo<'a>,
-    pub layout: Option<PipelineLayout>,
-    pub render_pass: Option<RenderPass>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
+    pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
     pub subpass: u32,
-    pub base_pipeline_handle: Option<Pipeline>,
+    pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
     phantom: PhantomData<&'a ()>,
 }
@@ -4369,12 +4369,12 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
     }
     #[inline]
     pub fn layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.layout = value.map(|v| unsafe { v.clone() });
+        self.layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn render_pass(mut self, value: Option<&'a raw::RenderPass>) -> Self {
-        self.render_pass = value.map(|v| unsafe { v.clone() });
+        self.render_pass = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -4384,7 +4384,7 @@ impl<'a> GraphicsPipelineCreateInfo<'a> {
     }
     #[inline]
     pub fn base_pipeline_handle(mut self, value: Option<&'a raw::Pipeline>) -> Self {
-        self.base_pipeline_handle = value.map(|v| unsafe { v.clone() });
+        self.base_pipeline_handle = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -4969,7 +4969,7 @@ pub struct PipelineShaderStageCreateInfo<'a> {
     pub(crate) p_next: Cell<*const Header>,
     pub flags: PipelineShaderStageCreateFlags,
     pub stage: ShaderStageFlags,
-    pub module: Option<ShaderModule>,
+    pub module: Option<BorrowedHandle<'a, ShaderModule>>,
     pub p_name: *const c_char,
     pub p_specialization_info: *const SpecializationInfo<'a>,
     phantom: PhantomData<&'a ()>,
@@ -5007,7 +5007,7 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
     }
     #[inline]
     pub fn module(mut self, value: Option<&'a raw::ShaderModule>) -> Self {
-        self.module = value.map(|v| unsafe { v.clone() });
+        self.module = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -5832,10 +5832,10 @@ impl<'a> SamplerCreateInfo<'a> {
 pub struct CopyDescriptorSet<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src_set: Option<DescriptorSet>,
+    pub src_set: Option<BorrowedHandle<'a, DescriptorSet>>,
     pub src_binding: u32,
     pub src_array_element: u32,
-    pub dst_set: Option<DescriptorSet>,
+    pub dst_set: Option<BorrowedHandle<'a, DescriptorSet>>,
     pub dst_binding: u32,
     pub dst_array_element: u32,
     pub descriptor_count: u32,
@@ -5866,7 +5866,7 @@ impl<'a> Default for CopyDescriptorSet<'a> {
 impl<'a> CopyDescriptorSet<'a> {
     #[inline]
     pub fn src_set(mut self, value: &'a raw::DescriptorSet) -> Self {
-        self.src_set = Some(unsafe { value.clone() });
+        self.src_set = Some(value.borrow());
         self
     }
     #[inline]
@@ -5881,7 +5881,7 @@ impl<'a> CopyDescriptorSet<'a> {
     }
     #[inline]
     pub fn dst_set(mut self, value: &'a raw::DescriptorSet) -> Self {
-        self.dst_set = Some(unsafe { value.clone() });
+        self.dst_set = Some(value.borrow());
         self
     }
     #[inline]
@@ -5909,7 +5909,7 @@ impl<'a> CopyDescriptorSet<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorBufferInfo.html>"]
 #[doc(alias = "VkDescriptorBufferInfo")]
 pub struct DescriptorBufferInfo<'a> {
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub range: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -5929,7 +5929,7 @@ impl<'a> Default for DescriptorBufferInfo<'a> {
 impl<'a> DescriptorBufferInfo<'a> {
     #[inline]
     pub fn buffer(mut self, value: Option<&'a raw::Buffer>) -> Self {
-        self.buffer = value.map(|v| unsafe { v.clone() });
+        self.buffer = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -5947,8 +5947,8 @@ impl<'a> DescriptorBufferInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDescriptorImageInfo.html>"]
 #[doc(alias = "VkDescriptorImageInfo")]
 pub struct DescriptorImageInfo<'a> {
-    pub sampler: Option<Sampler>,
-    pub image_view: Option<ImageView>,
+    pub sampler: Option<BorrowedHandle<'a, Sampler>>,
+    pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
     phantom: PhantomData<&'a ()>,
 }
@@ -5967,12 +5967,12 @@ impl<'a> Default for DescriptorImageInfo<'a> {
 impl<'a> DescriptorImageInfo<'a> {
     #[inline]
     pub fn sampler(mut self, value: Option<&'a raw::Sampler>) -> Self {
-        self.sampler = value.map(|v| unsafe { v.clone() });
+        self.sampler = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn image_view(mut self, value: Option<&'a raw::ImageView>) -> Self {
-        self.image_view = value.map(|v| unsafe { v.clone() });
+        self.image_view = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -6079,7 +6079,7 @@ impl DescriptorPoolSize {
 pub struct DescriptorSetAllocateInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub descriptor_pool: Option<DescriptorPool>,
+    pub descriptor_pool: Option<BorrowedHandle<'a, DescriptorPool>>,
     pub(crate) descriptor_set_count: u32,
     pub(crate) p_set_layouts: *const DescriptorSetLayout,
     phantom: PhantomData<&'a ()>,
@@ -6105,7 +6105,7 @@ impl<'a> Default for DescriptorSetAllocateInfo<'a> {
 impl<'a> DescriptorSetAllocateInfo<'a> {
     #[inline]
     pub fn descriptor_pool(mut self, value: &'a raw::DescriptorPool) -> Self {
-        self.descriptor_pool = Some(unsafe { value.clone() });
+        self.descriptor_pool = Some(value.borrow());
         self
     }
     #[inline]
@@ -6259,7 +6259,7 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
 pub struct WriteDescriptorSet<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub dst_set: Option<DescriptorSet>,
+    pub dst_set: Option<BorrowedHandle<'a, DescriptorSet>>,
     pub dst_binding: u32,
     pub dst_array_element: u32,
     pub descriptor_count: u32,
@@ -6295,7 +6295,7 @@ impl<'a> Default for WriteDescriptorSet<'a> {
 impl<'a> WriteDescriptorSet<'a> {
     #[inline]
     pub fn dst_set(mut self, value: Option<&'a raw::DescriptorSet>) -> Self {
-        self.dst_set = value.map(|v| unsafe { v.clone() });
+        self.dst_set = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -6483,7 +6483,7 @@ pub struct FramebufferCreateInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: FramebufferCreateFlags,
-    pub render_pass: Option<RenderPass>,
+    pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
     pub attachment_count: u32,
     pub(crate) p_attachments: *const ImageView,
     pub width: u32,
@@ -6521,7 +6521,7 @@ impl<'a> FramebufferCreateInfo<'a> {
     }
     #[inline]
     pub fn render_pass(mut self, value: &'a raw::RenderPass) -> Self {
-        self.render_pass = Some(unsafe { value.clone() });
+        self.render_pass = Some(value.borrow());
         self
     }
     #[inline]
@@ -6897,7 +6897,7 @@ impl<'a> CommandPoolCreateInfo<'a> {
 pub struct CommandBufferAllocateInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub command_pool: Option<CommandPool>,
+    pub command_pool: Option<BorrowedHandle<'a, CommandPool>>,
     pub level: CommandBufferLevel,
     pub command_buffer_count: u32,
     phantom: PhantomData<&'a ()>,
@@ -6923,7 +6923,7 @@ impl<'a> Default for CommandBufferAllocateInfo<'a> {
 impl<'a> CommandBufferAllocateInfo<'a> {
     #[inline]
     pub fn command_pool(mut self, value: &'a raw::CommandPool) -> Self {
-        self.command_pool = Some(unsafe { value.clone() });
+        self.command_pool = Some(value.borrow());
         self
     }
     #[inline]
@@ -6992,9 +6992,9 @@ impl<'a> CommandBufferBeginInfo<'a> {
 pub struct CommandBufferInheritanceInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub render_pass: Option<RenderPass>,
+    pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
     pub subpass: u32,
-    pub framebuffer: Option<Framebuffer>,
+    pub framebuffer: Option<BorrowedHandle<'a, Framebuffer>>,
     pub occlusion_query_enable: Bool32,
     pub query_flags: QueryControlFlags,
     pub pipeline_statistics: QueryPipelineStatisticFlags,
@@ -7024,7 +7024,7 @@ impl<'a> Default for CommandBufferInheritanceInfo<'a> {
 impl<'a> CommandBufferInheritanceInfo<'a> {
     #[inline]
     pub fn render_pass(mut self, value: Option<&'a raw::RenderPass>) -> Self {
-        self.render_pass = value.map(|v| unsafe { v.clone() });
+        self.render_pass = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -7034,7 +7034,7 @@ impl<'a> CommandBufferInheritanceInfo<'a> {
     }
     #[inline]
     pub fn framebuffer(mut self, value: Option<&'a raw::Framebuffer>) -> Self {
-        self.framebuffer = value.map(|v| unsafe { v.clone() });
+        self.framebuffer = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -7484,8 +7484,8 @@ impl ImageSubresourceLayers {
 pub struct RenderPassBeginInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub render_pass: Option<RenderPass>,
-    pub framebuffer: Option<Framebuffer>,
+    pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
+    pub framebuffer: Option<BorrowedHandle<'a, Framebuffer>>,
     pub render_area: Rect2D,
     pub clear_value_count: u32,
     pub(crate) p_clear_values: *const ClearValue,
@@ -7514,12 +7514,12 @@ impl<'a> Default for RenderPassBeginInfo<'a> {
 impl<'a> RenderPassBeginInfo<'a> {
     #[inline]
     pub fn render_pass(mut self, value: &'a raw::RenderPass) -> Self {
-        self.render_pass = Some(unsafe { value.clone() });
+        self.render_pass = Some(value.borrow());
         self
     }
     #[inline]
     pub fn framebuffer(mut self, value: &'a raw::Framebuffer) -> Self {
-        self.framebuffer = Some(unsafe { value.clone() });
+        self.framebuffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -7620,8 +7620,8 @@ impl<'a> PhysicalDeviceSubgroupProperties<'a> {
 pub struct BindBufferMemoryInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub buffer: Option<Buffer>,
-    pub memory: Option<DeviceMemory>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -7646,12 +7646,12 @@ impl<'a> Default for BindBufferMemoryInfo<'a> {
 impl<'a> BindBufferMemoryInfo<'a> {
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -7672,8 +7672,8 @@ pub type BindBufferMemoryInfoKHR<'a> = BindBufferMemoryInfo<'a>;
 pub struct BindImageMemoryInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image: Option<Image>,
-    pub memory: Option<DeviceMemory>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -7698,12 +7698,12 @@ impl<'a> Default for BindImageMemoryInfo<'a> {
 impl<'a> BindImageMemoryInfo<'a> {
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
     pub fn memory(mut self, value: Option<&'a raw::DeviceMemory>) -> Self {
-        self.memory = value.map(|v| unsafe { v.clone() });
+        self.memory = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -7840,8 +7840,8 @@ pub type MemoryDedicatedRequirementsKHR<'a> = MemoryDedicatedRequirements<'a>;
 pub struct MemoryDedicatedAllocateInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image: Option<Image>,
-    pub buffer: Option<Buffer>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for MemoryDedicatedAllocateInfo<'a> {}
@@ -7865,12 +7865,12 @@ impl<'a> Default for MemoryDedicatedAllocateInfo<'a> {
 impl<'a> MemoryDedicatedAllocateInfo<'a> {
     #[inline]
     pub fn image(mut self, value: Option<&'a raw::Image>) -> Self {
-        self.image = value.map(|v| unsafe { v.clone() });
+        self.image = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn buffer(mut self, value: Option<&'a raw::Buffer>) -> Self {
-        self.buffer = value.map(|v| unsafe { v.clone() });
+        self.buffer = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -8425,7 +8425,7 @@ pub type DeviceGroupDeviceCreateInfoKHR<'a> = DeviceGroupDeviceCreateInfo<'a>;
 pub struct BufferMemoryRequirementsInfo2<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for BufferMemoryRequirementsInfo2<'a> {}
@@ -8447,7 +8447,7 @@ impl<'a> Default for BufferMemoryRequirementsInfo2<'a> {
 impl<'a> BufferMemoryRequirementsInfo2<'a> {
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -8463,7 +8463,7 @@ pub type BufferMemoryRequirementsInfo2KHR<'a> = BufferMemoryRequirementsInfo2<'a
 pub struct ImageMemoryRequirementsInfo2<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ImageMemoryRequirementsInfo2<'a> {}
@@ -8485,7 +8485,7 @@ impl<'a> Default for ImageMemoryRequirementsInfo2<'a> {
 impl<'a> ImageMemoryRequirementsInfo2<'a> {
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -8501,7 +8501,7 @@ pub type ImageMemoryRequirementsInfo2KHR<'a> = ImageMemoryRequirementsInfo2<'a>;
 pub struct ImageSparseMemoryRequirementsInfo2<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ImageSparseMemoryRequirementsInfo2<'a> {}
@@ -8523,7 +8523,7 @@ impl<'a> Default for ImageSparseMemoryRequirementsInfo2<'a> {
 impl<'a> ImageSparseMemoryRequirementsInfo2<'a> {
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -9755,7 +9755,7 @@ pub type SamplerYcbcrConversionCreateInfoKHR<'a> = SamplerYcbcrConversionCreateI
 pub struct SamplerYcbcrConversionInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub conversion: Option<SamplerYcbcrConversion>,
+    pub conversion: Option<BorrowedHandle<'a, SamplerYcbcrConversion>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for SamplerYcbcrConversionInfo<'a> {}
@@ -9779,7 +9779,7 @@ impl<'a> Default for SamplerYcbcrConversionInfo<'a> {
 impl<'a> SamplerYcbcrConversionInfo<'a> {
     #[inline]
     pub fn conversion(mut self, value: &'a raw::SamplerYcbcrConversion) -> Self {
-        self.conversion = Some(unsafe { value.clone() });
+        self.conversion = Some(value.borrow());
         self
     }
     #[inline]
@@ -10031,9 +10031,9 @@ pub struct DescriptorUpdateTemplateCreateInfo<'a> {
     pub(crate) descriptor_update_entry_count: u32,
     pub(crate) p_descriptor_update_entries: *const DescriptorUpdateTemplateEntry,
     pub template_type: DescriptorUpdateTemplateType,
-    pub descriptor_set_layout: Option<DescriptorSetLayout>,
+    pub descriptor_set_layout: Option<BorrowedHandle<'a, DescriptorSetLayout>>,
     pub pipeline_bind_point: PipelineBindPoint,
-    pub pipeline_layout: Option<PipelineLayout>,
+    pub pipeline_layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -10073,7 +10073,7 @@ impl<'a> DescriptorUpdateTemplateCreateInfo<'a> {
     }
     #[inline]
     pub fn descriptor_set_layout(mut self, value: Option<&'a raw::DescriptorSetLayout>) -> Self {
-        self.descriptor_set_layout = value.map(|v| unsafe { v.clone() });
+        self.descriptor_set_layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -10083,7 +10083,7 @@ impl<'a> DescriptorUpdateTemplateCreateInfo<'a> {
     }
     #[inline]
     pub fn pipeline_layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.pipeline_layout = value.map(|v| unsafe { v.clone() });
+        self.pipeline_layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -14926,7 +14926,7 @@ pub type SemaphoreWaitInfoKHR<'a> = SemaphoreWaitInfo<'a>;
 pub struct SemaphoreSignalInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub semaphore: Option<Semaphore>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub value: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -14950,7 +14950,7 @@ impl<'a> Default for SemaphoreSignalInfo<'a> {
 impl<'a> SemaphoreSignalInfo<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
-        self.semaphore = Some(unsafe { value.clone() });
+        self.semaphore = Some(value.borrow());
         self
     }
     #[inline]
@@ -15032,7 +15032,7 @@ pub type PhysicalDeviceBufferDeviceAddressFeaturesKHR<'a> =
 pub struct BufferDeviceAddressInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for BufferDeviceAddressInfo<'a> {}
@@ -15054,7 +15054,7 @@ impl<'a> Default for BufferDeviceAddressInfo<'a> {
 impl<'a> BufferDeviceAddressInfo<'a> {
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -15155,7 +15155,7 @@ pub type MemoryOpaqueCaptureAddressAllocateInfoKHR<'a> = MemoryOpaqueCaptureAddr
 pub struct DeviceMemoryOpaqueCaptureAddressInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DeviceMemoryOpaqueCaptureAddressInfo<'a> {}
@@ -15177,7 +15177,7 @@ impl<'a> Default for DeviceMemoryOpaqueCaptureAddressInfo<'a> {
 impl<'a> DeviceMemoryOpaqueCaptureAddressInfo<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -16275,7 +16275,7 @@ pub struct BufferMemoryBarrier2<'a> {
     pub dst_access_mask: AccessFlags2,
     pub src_queue_family_index: u32,
     pub dst_queue_family_index: u32,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -16337,7 +16337,7 @@ impl<'a> BufferMemoryBarrier2<'a> {
     }
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -16371,7 +16371,7 @@ pub struct ImageMemoryBarrier2<'a> {
     pub new_layout: ImageLayout,
     pub src_queue_family_index: u32,
     pub dst_queue_family_index: u32,
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     pub subresource_range: ImageSubresourceRange,
     phantom: PhantomData<&'a ()>,
 }
@@ -16443,7 +16443,7 @@ impl<'a> ImageMemoryBarrier2<'a> {
     }
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -16684,7 +16684,7 @@ pub type SubmitInfo2KHR<'a> = SubmitInfo2<'a>;
 pub struct SemaphoreSubmitInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub semaphore: Option<Semaphore>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub value: u64,
     pub stage_mask: PipelineStageFlags2,
     pub device_index: u32,
@@ -16712,7 +16712,7 @@ impl<'a> Default for SemaphoreSubmitInfo<'a> {
 impl<'a> SemaphoreSubmitInfo<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
-        self.semaphore = Some(unsafe { value.clone() });
+        self.semaphore = Some(value.borrow());
         self
     }
     #[inline]
@@ -16743,7 +16743,7 @@ pub type SemaphoreSubmitInfoKHR<'a> = SemaphoreSubmitInfo<'a>;
 pub struct CommandBufferSubmitInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub command_buffer: Option<CommandBuffer>,
+    pub command_buffer: Option<BorrowedHandle<'a, CommandBuffer>>,
     pub device_mask: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -16767,7 +16767,7 @@ impl<'a> Default for CommandBufferSubmitInfo<'a> {
 impl<'a> CommandBufferSubmitInfo<'a> {
     #[inline]
     pub fn command_buffer(mut self, value: &'a raw::CommandBuffer) -> Self {
-        self.command_buffer = Some(unsafe { value.clone() });
+        self.command_buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -16931,8 +16931,8 @@ pub type PhysicalDeviceImageRobustnessFeaturesEXT<'a> = PhysicalDeviceImageRobus
 pub struct CopyBufferInfo2<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src_buffer: Option<Buffer>,
-    pub dst_buffer: Option<Buffer>,
+    pub src_buffer: Option<BorrowedHandle<'a, Buffer>>,
+    pub dst_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub(crate) region_count: u32,
     pub(crate) p_regions: *const BufferCopy2<'a>,
     phantom: PhantomData<&'a ()>,
@@ -16959,12 +16959,12 @@ impl<'a> Default for CopyBufferInfo2<'a> {
 impl<'a> CopyBufferInfo2<'a> {
     #[inline]
     pub fn src_buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.src_buffer = Some(unsafe { value.clone() });
+        self.src_buffer = Some(value.borrow());
         self
     }
     #[inline]
     pub fn dst_buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.dst_buffer = Some(unsafe { value.clone() });
+        self.dst_buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -16994,9 +16994,9 @@ pub type CopyBufferInfo2KHR<'a> = CopyBufferInfo2<'a>;
 pub struct CopyImageInfo2<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src_image: Option<Image>,
+    pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
-    pub dst_image: Option<Image>,
+    pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
     pub(crate) region_count: u32,
     pub(crate) p_regions: *const ImageCopy2<'a>,
@@ -17026,7 +17026,7 @@ impl<'a> Default for CopyImageInfo2<'a> {
 impl<'a> CopyImageInfo2<'a> {
     #[inline]
     pub fn src_image(mut self, value: &'a raw::Image) -> Self {
-        self.src_image = Some(unsafe { value.clone() });
+        self.src_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -17036,7 +17036,7 @@ impl<'a> CopyImageInfo2<'a> {
     }
     #[inline]
     pub fn dst_image(mut self, value: &'a raw::Image) -> Self {
-        self.dst_image = Some(unsafe { value.clone() });
+        self.dst_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -17071,8 +17071,8 @@ pub type CopyImageInfo2KHR<'a> = CopyImageInfo2<'a>;
 pub struct CopyBufferToImageInfo2<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src_buffer: Option<Buffer>,
-    pub dst_image: Option<Image>,
+    pub src_buffer: Option<BorrowedHandle<'a, Buffer>>,
+    pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
     pub(crate) region_count: u32,
     pub(crate) p_regions: *const BufferImageCopy2<'a>,
@@ -17101,12 +17101,12 @@ impl<'a> Default for CopyBufferToImageInfo2<'a> {
 impl<'a> CopyBufferToImageInfo2<'a> {
     #[inline]
     pub fn src_buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.src_buffer = Some(unsafe { value.clone() });
+        self.src_buffer = Some(value.borrow());
         self
     }
     #[inline]
     pub fn dst_image(mut self, value: &'a raw::Image) -> Self {
-        self.dst_image = Some(unsafe { value.clone() });
+        self.dst_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -17141,9 +17141,9 @@ pub type CopyBufferToImageInfo2KHR<'a> = CopyBufferToImageInfo2<'a>;
 pub struct CopyImageToBufferInfo2<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src_image: Option<Image>,
+    pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
-    pub dst_buffer: Option<Buffer>,
+    pub dst_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub(crate) region_count: u32,
     pub(crate) p_regions: *const BufferImageCopy2<'a>,
     phantom: PhantomData<&'a ()>,
@@ -17171,7 +17171,7 @@ impl<'a> Default for CopyImageToBufferInfo2<'a> {
 impl<'a> CopyImageToBufferInfo2<'a> {
     #[inline]
     pub fn src_image(mut self, value: &'a raw::Image) -> Self {
-        self.src_image = Some(unsafe { value.clone() });
+        self.src_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -17181,7 +17181,7 @@ impl<'a> CopyImageToBufferInfo2<'a> {
     }
     #[inline]
     pub fn dst_buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.dst_buffer = Some(unsafe { value.clone() });
+        self.dst_buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -17211,9 +17211,9 @@ pub type CopyImageToBufferInfo2KHR<'a> = CopyImageToBufferInfo2<'a>;
 pub struct BlitImageInfo2<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src_image: Option<Image>,
+    pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
-    pub dst_image: Option<Image>,
+    pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
     pub(crate) region_count: u32,
     pub(crate) p_regions: *const ImageBlit2<'a>,
@@ -17245,7 +17245,7 @@ impl<'a> Default for BlitImageInfo2<'a> {
 impl<'a> BlitImageInfo2<'a> {
     #[inline]
     pub fn src_image(mut self, value: &'a raw::Image) -> Self {
-        self.src_image = Some(unsafe { value.clone() });
+        self.src_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -17255,7 +17255,7 @@ impl<'a> BlitImageInfo2<'a> {
     }
     #[inline]
     pub fn dst_image(mut self, value: &'a raw::Image) -> Self {
-        self.dst_image = Some(unsafe { value.clone() });
+        self.dst_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -17295,9 +17295,9 @@ pub type BlitImageInfo2KHR<'a> = BlitImageInfo2<'a>;
 pub struct ResolveImageInfo2<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src_image: Option<Image>,
+    pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
-    pub dst_image: Option<Image>,
+    pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
     pub(crate) region_count: u32,
     pub(crate) p_regions: *const ImageResolve2<'a>,
@@ -17327,7 +17327,7 @@ impl<'a> Default for ResolveImageInfo2<'a> {
 impl<'a> ResolveImageInfo2<'a> {
     #[inline]
     pub fn src_image(mut self, value: &'a raw::Image) -> Self {
-        self.src_image = Some(unsafe { value.clone() });
+        self.src_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -17337,7 +17337,7 @@ impl<'a> ResolveImageInfo2<'a> {
     }
     #[inline]
     pub fn dst_image(mut self, value: &'a raw::Image) -> Self {
-        self.dst_image = Some(unsafe { value.clone() });
+        self.dst_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -18232,10 +18232,10 @@ pub type RenderingInfoKHR<'a> = RenderingInfo<'a>;
 pub struct RenderingAttachmentInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image_view: Option<ImageView>,
+    pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
     pub resolve_mode: ResolveModeFlags,
-    pub resolve_image_view: Option<ImageView>,
+    pub resolve_image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub resolve_image_layout: ImageLayout,
     pub load_op: AttachmentLoadOp,
     pub store_op: AttachmentStoreOp,
@@ -18268,7 +18268,7 @@ impl<'a> Default for RenderingAttachmentInfo<'a> {
 impl<'a> RenderingAttachmentInfo<'a> {
     #[inline]
     pub fn image_view(mut self, value: Option<&'a raw::ImageView>) -> Self {
-        self.image_view = value.map(|v| unsafe { v.clone() });
+        self.image_view = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -18283,7 +18283,7 @@ impl<'a> RenderingAttachmentInfo<'a> {
     }
     #[inline]
     pub fn resolve_image_view(mut self, value: Option<&'a raw::ImageView>) -> Self {
-        self.resolve_image_view = value.map(|v| unsafe { v.clone() });
+        self.resolve_image_view = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -20353,7 +20353,7 @@ pub struct MemoryMapInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: MemoryMapFlags,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -20385,7 +20385,7 @@ impl<'a> MemoryMapInfo<'a> {
     }
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -20412,7 +20412,7 @@ pub struct MemoryUnmapInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: MemoryUnmapFlags,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for MemoryUnmapInfo<'a> {}
@@ -20440,7 +20440,7 @@ impl<'a> MemoryUnmapInfo<'a> {
     }
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -21283,7 +21283,7 @@ pub struct BindDescriptorSetsInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub stage_flags: ShaderStageFlags,
-    pub layout: Option<PipelineLayout>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub first_set: u32,
     pub(crate) descriptor_set_count: u32,
     pub(crate) p_descriptor_sets: *const DescriptorSet,
@@ -21321,7 +21321,7 @@ impl<'a> BindDescriptorSetsInfo<'a> {
     }
     #[inline]
     pub fn layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.layout = value.map(|v| unsafe { v.clone() });
+        self.layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -21384,7 +21384,7 @@ pub type BindDescriptorSetsInfoKHR<'a> = BindDescriptorSetsInfo<'a>;
 pub struct PushConstantsInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub layout: Option<PipelineLayout>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub stage_flags: ShaderStageFlags,
     pub offset: u32,
     pub(crate) size: u32,
@@ -21414,7 +21414,7 @@ impl<'a> Default for PushConstantsInfo<'a> {
 impl<'a> PushConstantsInfo<'a> {
     #[inline]
     pub fn layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.layout = value.map(|v| unsafe { v.clone() });
+        self.layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -21455,7 +21455,7 @@ pub struct PushDescriptorSetInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub stage_flags: ShaderStageFlags,
-    pub layout: Option<PipelineLayout>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
     pub(crate) descriptor_write_count: u32,
     pub(crate) p_descriptor_writes: *const WriteDescriptorSet<'a>,
@@ -21489,7 +21489,7 @@ impl<'a> PushDescriptorSetInfo<'a> {
     }
     #[inline]
     pub fn layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.layout = value.map(|v| unsafe { v.clone() });
+        self.layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -21530,8 +21530,8 @@ pub type PushDescriptorSetInfoKHR<'a> = PushDescriptorSetInfo<'a>;
 pub struct PushDescriptorSetWithTemplateInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub descriptor_update_template: Option<DescriptorUpdateTemplate>,
-    pub layout: Option<PipelineLayout>,
+    pub descriptor_update_template: Option<BorrowedHandle<'a, DescriptorUpdateTemplate>>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
     pub p_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -21558,12 +21558,12 @@ impl<'a> Default for PushDescriptorSetWithTemplateInfo<'a> {
 impl<'a> PushDescriptorSetWithTemplateInfo<'a> {
     #[inline]
     pub fn descriptor_update_template(mut self, value: &'a raw::DescriptorUpdateTemplate) -> Self {
-        self.descriptor_update_template = Some(unsafe { value.clone() });
+        self.descriptor_update_template = Some(value.borrow());
         self
     }
     #[inline]
     pub fn layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.layout = value.map(|v| unsafe { v.clone() });
+        self.layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -22126,7 +22126,7 @@ pub struct CopyMemoryToImageInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: HostImageCopyFlags,
-    pub dst_image: Option<Image>,
+    pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
     pub(crate) region_count: u32,
     pub(crate) p_regions: *const MemoryToImageCopy<'a>,
@@ -22160,7 +22160,7 @@ impl<'a> CopyMemoryToImageInfo<'a> {
     }
     #[inline]
     pub fn dst_image(mut self, value: &'a raw::Image) -> Self {
-        self.dst_image = Some(unsafe { value.clone() });
+        self.dst_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -22196,7 +22196,7 @@ pub struct CopyImageToMemoryInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: HostImageCopyFlags,
-    pub src_image: Option<Image>,
+    pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
     pub(crate) region_count: u32,
     pub(crate) p_regions: *const ImageToMemoryCopy<'a>,
@@ -22230,7 +22230,7 @@ impl<'a> CopyImageToMemoryInfo<'a> {
     }
     #[inline]
     pub fn src_image(mut self, value: &'a raw::Image) -> Self {
-        self.src_image = Some(unsafe { value.clone() });
+        self.src_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -22266,9 +22266,9 @@ pub struct CopyImageToImageInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: HostImageCopyFlags,
-    pub src_image: Option<Image>,
+    pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
-    pub dst_image: Option<Image>,
+    pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
     pub(crate) region_count: u32,
     pub(crate) p_regions: *const ImageCopy2<'a>,
@@ -22304,7 +22304,7 @@ impl<'a> CopyImageToImageInfo<'a> {
     }
     #[inline]
     pub fn src_image(mut self, value: &'a raw::Image) -> Self {
-        self.src_image = Some(unsafe { value.clone() });
+        self.src_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -22314,7 +22314,7 @@ impl<'a> CopyImageToImageInfo<'a> {
     }
     #[inline]
     pub fn dst_image(mut self, value: &'a raw::Image) -> Self {
-        self.dst_image = Some(unsafe { value.clone() });
+        self.dst_image = Some(value.borrow());
         self
     }
     #[inline]
@@ -22349,7 +22349,7 @@ pub type CopyImageToImageInfoEXT<'a> = CopyImageToImageInfo<'a>;
 pub struct HostImageLayoutTransitionInfo<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     pub old_layout: ImageLayout,
     pub new_layout: ImageLayout,
     pub subresource_range: ImageSubresourceRange,
@@ -22377,7 +22377,7 @@ impl<'a> Default for HostImageLayoutTransitionInfo<'a> {
 impl<'a> HostImageLayoutTransitionInfo<'a> {
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -22613,7 +22613,7 @@ pub struct SwapchainCreateInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: SwapchainCreateFlagsKHR,
-    pub surface: Option<SurfaceKHR>,
+    pub surface: Option<BorrowedHandle<'a, SurfaceKHR>>,
     pub min_image_count: u32,
     pub image_format: Format,
     pub image_color_space: ColorSpaceKHR,
@@ -22627,7 +22627,7 @@ pub struct SwapchainCreateInfoKHR<'a> {
     pub composite_alpha: CompositeAlphaFlagsKHR,
     pub present_mode: PresentModeKHR,
     pub clipped: Bool32,
-    pub old_swapchain: Option<SwapchainKHR>,
+    pub old_swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for SwapchainCreateInfoKHR<'a> {}
@@ -22669,7 +22669,7 @@ impl<'a> SwapchainCreateInfoKHR<'a> {
     }
     #[inline]
     pub fn surface(mut self, value: &'a raw::SurfaceKHR) -> Self {
-        self.surface = Some(unsafe { value.clone() });
+        self.surface = Some(value.borrow());
         self
     }
     #[inline]
@@ -22734,7 +22734,7 @@ impl<'a> SwapchainCreateInfoKHR<'a> {
     }
     #[inline]
     pub fn old_swapchain(mut self, value: Option<&'a raw::SwapchainKHR>) -> Self {
-        self.old_swapchain = value.map(|v| unsafe { v.clone() });
+        self.old_swapchain = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -22867,7 +22867,7 @@ impl<'a> PresentInfoKHR<'a> {
 pub struct ImageSwapchainCreateInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub swapchain: Option<SwapchainKHR>,
+    pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ImageSwapchainCreateInfoKHR<'a> {}
@@ -22890,7 +22890,7 @@ impl<'a> Default for ImageSwapchainCreateInfoKHR<'a> {
 impl<'a> ImageSwapchainCreateInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, value: Option<&'a raw::SwapchainKHR>) -> Self {
-        self.swapchain = value.map(|v| unsafe { v.clone() });
+        self.swapchain = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -22905,7 +22905,7 @@ impl<'a> ImageSwapchainCreateInfoKHR<'a> {
 pub struct BindImageMemorySwapchainInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub swapchain: Option<SwapchainKHR>,
+    pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     pub image_index: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -22933,7 +22933,7 @@ impl<'a> Default for BindImageMemorySwapchainInfoKHR<'a> {
 impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, value: &'a raw::SwapchainKHR) -> Self {
-        self.swapchain = Some(unsafe { value.clone() });
+        self.swapchain = Some(value.borrow());
         self
     }
     #[inline]
@@ -22953,10 +22953,10 @@ impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
 pub struct AcquireNextImageInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub swapchain: Option<SwapchainKHR>,
+    pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     pub timeout: u64,
-    pub semaphore: Option<Semaphore>,
-    pub fence: Option<Fence>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
+    pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub device_mask: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -22983,7 +22983,7 @@ impl<'a> Default for AcquireNextImageInfoKHR<'a> {
 impl<'a> AcquireNextImageInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, value: &'a raw::SwapchainKHR) -> Self {
-        self.swapchain = Some(unsafe { value.clone() });
+        self.swapchain = Some(value.borrow());
         self
     }
     #[inline]
@@ -22993,12 +22993,12 @@ impl<'a> AcquireNextImageInfoKHR<'a> {
     }
     #[inline]
     pub fn semaphore(mut self, value: Option<&'a raw::Semaphore>) -> Self {
-        self.semaphore = value.map(|v| unsafe { v.clone() });
+        self.semaphore = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn fence(mut self, value: Option<&'a raw::Fence>) -> Self {
-        self.fence = value.map(|v| unsafe { v.clone() });
+        self.fence = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -23231,7 +23231,7 @@ impl DisplayModeParametersKHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDisplayModePropertiesKHR.html>"]
 #[doc(alias = "VkDisplayModePropertiesKHR")]
 pub struct DisplayModePropertiesKHR<'a> {
-    pub display_mode: Option<DisplayModeKHR>,
+    pub display_mode: Option<BorrowedHandle<'a, DisplayModeKHR>>,
     pub parameters: DisplayModeParametersKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -23249,7 +23249,7 @@ impl<'a> Default for DisplayModePropertiesKHR<'a> {
 impl<'a> DisplayModePropertiesKHR<'a> {
     #[inline]
     pub fn display_mode(mut self, value: &'a raw::DisplayModeKHR) -> Self {
-        self.display_mode = Some(unsafe { value.clone() });
+        self.display_mode = Some(value.borrow());
         self
     }
     #[inline]
@@ -23341,7 +23341,7 @@ impl DisplayPlaneCapabilitiesKHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDisplayPlanePropertiesKHR.html>"]
 #[doc(alias = "VkDisplayPlanePropertiesKHR")]
 pub struct DisplayPlanePropertiesKHR<'a> {
-    pub current_display: Option<DisplayKHR>,
+    pub current_display: Option<BorrowedHandle<'a, DisplayKHR>>,
     pub current_stack_index: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -23359,7 +23359,7 @@ impl<'a> Default for DisplayPlanePropertiesKHR<'a> {
 impl<'a> DisplayPlanePropertiesKHR<'a> {
     #[inline]
     pub fn current_display(mut self, value: &'a raw::DisplayKHR) -> Self {
-        self.current_display = Some(unsafe { value.clone() });
+        self.current_display = Some(value.borrow());
         self
     }
     #[inline]
@@ -23372,7 +23372,7 @@ impl<'a> DisplayPlanePropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkDisplayPropertiesKHR.html>"]
 #[doc(alias = "VkDisplayPropertiesKHR")]
 pub struct DisplayPropertiesKHR<'a> {
-    pub display: Option<DisplayKHR>,
+    pub display: Option<BorrowedHandle<'a, DisplayKHR>>,
     pub display_name: *const c_char,
     pub physical_dimensions: Extent2D,
     pub physical_resolution: Extent2D,
@@ -23400,7 +23400,7 @@ impl<'a> Default for DisplayPropertiesKHR<'a> {
 impl<'a> DisplayPropertiesKHR<'a> {
     #[inline]
     pub fn display(mut self, value: &'a raw::DisplayKHR) -> Self {
-        self.display = Some(unsafe { value.clone() });
+        self.display = Some(value.borrow());
         self
     }
     #[inline]
@@ -23441,7 +23441,7 @@ pub struct DisplaySurfaceCreateInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub flags: u32,
-    pub display_mode: Option<DisplayModeKHR>,
+    pub display_mode: Option<BorrowedHandle<'a, DisplayModeKHR>>,
     pub plane_index: u32,
     pub plane_stack_index: u32,
     pub transform: SurfaceTransformFlagsKHR,
@@ -23481,7 +23481,7 @@ impl<'a> DisplaySurfaceCreateInfoKHR<'a> {
     }
     #[inline]
     pub fn display_mode(mut self, value: &'a raw::DisplayModeKHR) -> Self {
-        self.display_mode = Some(unsafe { value.clone() });
+        self.display_mode = Some(value.borrow());
         self
     }
     #[inline]
@@ -24171,8 +24171,8 @@ impl<'a> DedicatedAllocationBufferCreateInfoNV<'a> {
 pub struct DedicatedAllocationMemoryAllocateInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image: Option<Image>,
-    pub buffer: Option<Buffer>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DedicatedAllocationMemoryAllocateInfoNV<'a> {}
@@ -24199,12 +24199,12 @@ impl<'a> Default for DedicatedAllocationMemoryAllocateInfoNV<'a> {
 impl<'a> DedicatedAllocationMemoryAllocateInfoNV<'a> {
     #[inline]
     pub fn image(mut self, value: Option<&'a raw::Image>) -> Self {
-        self.image = value.map(|v| unsafe { v.clone() });
+        self.image = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn buffer(mut self, value: Option<&'a raw::Buffer>) -> Self {
-        self.buffer = value.map(|v| unsafe { v.clone() });
+        self.buffer = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -24517,7 +24517,7 @@ impl<'a> CuModuleTexturingModeCreateInfoNVX<'a> {
 pub struct CuFunctionCreateInfoNVX<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub module: Option<CuModuleNVX>,
+    pub module: Option<BorrowedHandle<'a, CuModuleNVX>>,
     pub p_name: *const c_char,
     phantom: PhantomData<&'a ()>,
 }
@@ -24541,7 +24541,7 @@ impl<'a> Default for CuFunctionCreateInfoNVX<'a> {
 impl<'a> CuFunctionCreateInfoNVX<'a> {
     #[inline]
     pub fn module(mut self, value: &'a raw::CuModuleNVX) -> Self {
-        self.module = Some(unsafe { value.clone() });
+        self.module = Some(value.borrow());
         self
     }
     #[inline]
@@ -24561,7 +24561,7 @@ impl<'a> CuFunctionCreateInfoNVX<'a> {
 pub struct CuLaunchInfoNVX<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub function: Option<CuFunctionNVX>,
+    pub function: Option<BorrowedHandle<'a, CuFunctionNVX>>,
     pub grid_dim_x: u32,
     pub grid_dim_y: u32,
     pub grid_dim_z: u32,
@@ -24605,7 +24605,7 @@ impl<'a> Default for CuLaunchInfoNVX<'a> {
 impl<'a> CuLaunchInfoNVX<'a> {
     #[inline]
     pub fn function(mut self, value: &'a raw::CuFunctionNVX) -> Self {
-        self.function = Some(unsafe { value.clone() });
+        self.function = Some(value.borrow());
         self
     }
     #[inline]
@@ -24679,9 +24679,9 @@ impl<'a> CuLaunchInfoNVX<'a> {
 pub struct ImageViewHandleInfoNVX<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image_view: Option<ImageView>,
+    pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub descriptor_type: DescriptorType,
-    pub sampler: Option<Sampler>,
+    pub sampler: Option<BorrowedHandle<'a, Sampler>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ImageViewHandleInfoNVX<'a> {}
@@ -24705,7 +24705,7 @@ impl<'a> Default for ImageViewHandleInfoNVX<'a> {
 impl<'a> ImageViewHandleInfoNVX<'a> {
     #[inline]
     pub fn image_view(mut self, value: &'a raw::ImageView) -> Self {
-        self.image_view = Some(unsafe { value.clone() });
+        self.image_view = Some(value.borrow());
         self
     }
     #[inline]
@@ -24715,7 +24715,7 @@ impl<'a> ImageViewHandleInfoNVX<'a> {
     }
     #[inline]
     pub fn sampler(mut self, value: Option<&'a raw::Sampler>) -> Self {
-        self.sampler = value.map(|v| unsafe { v.clone() });
+        self.sampler = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -25688,7 +25688,7 @@ impl<'a> MemoryWin32HandlePropertiesKHR<'a> {
 pub struct MemoryGetWin32HandleInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -25712,7 +25712,7 @@ impl<'a> Default for MemoryGetWin32HandleInfoKHR<'a> {
 impl<'a> MemoryGetWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -25814,7 +25814,7 @@ impl<'a> MemoryFdPropertiesKHR<'a> {
 pub struct MemoryGetFdInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -25838,7 +25838,7 @@ impl<'a> Default for MemoryGetFdInfoKHR<'a> {
 impl<'a> MemoryGetFdInfoKHR<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -25974,7 +25974,7 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
 pub struct ImportSemaphoreWin32HandleInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub semaphore: Option<Semaphore>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub flags: SemaphoreImportFlags,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub handle: VoidPtr,
@@ -26004,7 +26004,7 @@ impl<'a> Default for ImportSemaphoreWin32HandleInfoKHR<'a> {
 impl<'a> ImportSemaphoreWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
-        self.semaphore = Some(unsafe { value.clone() });
+        self.semaphore = Some(value.borrow());
         self
     }
     #[inline]
@@ -26180,7 +26180,7 @@ impl<'a> D3D12FenceSubmitInfoKHR<'a> {
 pub struct SemaphoreGetWin32HandleInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub semaphore: Option<Semaphore>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -26204,7 +26204,7 @@ impl<'a> Default for SemaphoreGetWin32HandleInfoKHR<'a> {
 impl<'a> SemaphoreGetWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
-        self.semaphore = Some(unsafe { value.clone() });
+        self.semaphore = Some(value.borrow());
         self
     }
     #[inline]
@@ -26224,7 +26224,7 @@ impl<'a> SemaphoreGetWin32HandleInfoKHR<'a> {
 pub struct ImportSemaphoreFdInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub semaphore: Option<Semaphore>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub flags: SemaphoreImportFlags,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub fd: c_int,
@@ -26252,7 +26252,7 @@ impl<'a> Default for ImportSemaphoreFdInfoKHR<'a> {
 impl<'a> ImportSemaphoreFdInfoKHR<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
-        self.semaphore = Some(unsafe { value.clone() });
+        self.semaphore = Some(value.borrow());
         self
     }
     #[inline]
@@ -26282,7 +26282,7 @@ impl<'a> ImportSemaphoreFdInfoKHR<'a> {
 pub struct SemaphoreGetFdInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub semaphore: Option<Semaphore>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -26306,7 +26306,7 @@ impl<'a> Default for SemaphoreGetFdInfoKHR<'a> {
 impl<'a> SemaphoreGetFdInfoKHR<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
-        self.semaphore = Some(unsafe { value.clone() });
+        self.semaphore = Some(value.borrow());
         self
     }
     #[inline]
@@ -26326,7 +26326,7 @@ impl<'a> SemaphoreGetFdInfoKHR<'a> {
 pub struct ConditionalRenderingBeginInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub flags: ConditionalRenderingFlagsEXT,
     phantom: PhantomData<&'a ()>,
@@ -26352,7 +26352,7 @@ impl<'a> Default for ConditionalRenderingBeginInfoEXT<'a> {
 impl<'a> ConditionalRenderingBeginInfoEXT<'a> {
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -27909,7 +27909,7 @@ impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {
 pub struct ImportFenceWin32HandleInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub fence: Option<Fence>,
+    pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub flags: FenceImportFlags,
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub handle: VoidPtr,
@@ -27939,7 +27939,7 @@ impl<'a> Default for ImportFenceWin32HandleInfoKHR<'a> {
 impl<'a> ImportFenceWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn fence(mut self, value: &'a raw::Fence) -> Self {
-        self.fence = Some(unsafe { value.clone() });
+        self.fence = Some(value.borrow());
         self
     }
     #[inline]
@@ -28026,7 +28026,7 @@ impl<'a> ExportFenceWin32HandleInfoKHR<'a> {
 pub struct FenceGetWin32HandleInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub fence: Option<Fence>,
+    pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub handle_type: ExternalFenceHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -28050,7 +28050,7 @@ impl<'a> Default for FenceGetWin32HandleInfoKHR<'a> {
 impl<'a> FenceGetWin32HandleInfoKHR<'a> {
     #[inline]
     pub fn fence(mut self, value: &'a raw::Fence) -> Self {
-        self.fence = Some(unsafe { value.clone() });
+        self.fence = Some(value.borrow());
         self
     }
     #[inline]
@@ -28070,7 +28070,7 @@ impl<'a> FenceGetWin32HandleInfoKHR<'a> {
 pub struct ImportFenceFdInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub fence: Option<Fence>,
+    pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub flags: FenceImportFlags,
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub fd: c_int,
@@ -28098,7 +28098,7 @@ impl<'a> Default for ImportFenceFdInfoKHR<'a> {
 impl<'a> ImportFenceFdInfoKHR<'a> {
     #[inline]
     pub fn fence(mut self, value: &'a raw::Fence) -> Self {
-        self.fence = Some(unsafe { value.clone() });
+        self.fence = Some(value.borrow());
         self
     }
     #[inline]
@@ -28128,7 +28128,7 @@ impl<'a> ImportFenceFdInfoKHR<'a> {
 pub struct FenceGetFdInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub fence: Option<Fence>,
+    pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub handle_type: ExternalFenceHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -28152,7 +28152,7 @@ impl<'a> Default for FenceGetFdInfoKHR<'a> {
 impl<'a> FenceGetFdInfoKHR<'a> {
     #[inline]
     pub fn fence(mut self, value: &'a raw::Fence) -> Self {
-        self.fence = Some(unsafe { value.clone() });
+        self.fence = Some(value.borrow());
         self
     }
     #[inline]
@@ -28589,7 +28589,7 @@ impl<'a> PerformanceQueryReservationInfoKHR<'a> {
 pub struct PhysicalDeviceSurfaceInfo2KHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub surface: Option<SurfaceKHR>,
+    pub surface: Option<BorrowedHandle<'a, SurfaceKHR>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSurfaceInfo2KHR<'a> {}
@@ -28611,7 +28611,7 @@ impl<'a> Default for PhysicalDeviceSurfaceInfo2KHR<'a> {
 impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
     #[inline]
     pub fn surface(mut self, value: Option<&'a raw::SurfaceKHR>) -> Self {
-        self.surface = value.map(|v| unsafe { v.clone() });
+        self.surface = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -28811,7 +28811,7 @@ impl<'a> DisplayModeProperties2KHR<'a> {
 pub struct DisplayPlaneInfo2KHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub mode: Option<DisplayModeKHR>,
+    pub mode: Option<BorrowedHandle<'a, DisplayModeKHR>>,
     pub plane_index: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -28835,7 +28835,7 @@ impl<'a> Default for DisplayPlaneInfo2KHR<'a> {
 impl<'a> DisplayPlaneInfo2KHR<'a> {
     #[inline]
     pub fn mode(mut self, value: &'a raw::DisplayModeKHR) -> Self {
-        self.mode = Some(unsafe { value.clone() });
+        self.mode = Some(value.borrow());
         self
     }
     #[inline]
@@ -29552,7 +29552,7 @@ impl<'a> ImportAndroidHardwareBufferInfoANDROID<'a> {
 pub struct MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {}
@@ -29574,7 +29574,7 @@ impl<'a> Default for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
 impl<'a> MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -29923,8 +29923,8 @@ pub struct ExecutionGraphPipelineCreateInfoAMDX<'a> {
     pub stage_count: u32,
     pub(crate) p_stages: *const PipelineShaderStageCreateInfo<'a>,
     pub p_library_info: *const PipelineLibraryCreateInfoKHR<'a>,
-    pub layout: Option<PipelineLayout>,
-    pub base_pipeline_handle: Option<Pipeline>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
+    pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
     phantom: PhantomData<&'a ()>,
 }
@@ -29968,12 +29968,12 @@ impl<'a> ExecutionGraphPipelineCreateInfoAMDX<'a> {
     }
     #[inline]
     pub fn layout(mut self, value: &'a raw::PipelineLayout) -> Self {
-        self.layout = Some(unsafe { value.clone() });
+        self.layout = Some(value.borrow());
         self
     }
     #[inline]
     pub fn base_pipeline_handle(mut self, value: Option<&'a raw::Pipeline>) -> Self {
-        self.base_pipeline_handle = value.map(|v| unsafe { v.clone() });
+        self.base_pipeline_handle = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -31104,8 +31104,8 @@ pub struct AccelerationStructureBuildGeometryInfoKHR<'a> {
     pub ty: AccelerationStructureTypeKHR,
     pub flags: BuildAccelerationStructureFlagsKHR,
     pub mode: BuildAccelerationStructureModeKHR,
-    pub src_acceleration_structure: Option<AccelerationStructureKHR>,
-    pub dst_acceleration_structure: Option<AccelerationStructureKHR>,
+    pub src_acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
+    pub dst_acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub geometry_count: u32,
     pub(crate) p_geometries: *const AccelerationStructureGeometryKHR<'a>,
     pub(crate) pp_geometries: *const *const AccelerationStructureGeometryKHR<'a>,
@@ -31157,7 +31157,7 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
         mut self,
         value: Option<&'a raw::AccelerationStructureKHR>,
     ) -> Self {
-        self.src_acceleration_structure = value.map(|v| unsafe { v.clone() });
+        self.src_acceleration_structure = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -31165,7 +31165,7 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
         mut self,
         value: Option<&'a raw::AccelerationStructureKHR>,
     ) -> Self {
-        self.dst_acceleration_structure = value.map(|v| unsafe { v.clone() });
+        self.dst_acceleration_structure = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -31437,7 +31437,7 @@ pub struct AccelerationStructureCreateInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub create_flags: AccelerationStructureCreateFlagsKHR,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
     pub ty: AccelerationStructureTypeKHR,
@@ -31473,7 +31473,7 @@ impl<'a> AccelerationStructureCreateInfoKHR<'a> {
     }
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -31747,7 +31747,7 @@ impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
 pub struct AccelerationStructureDeviceAddressInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub acceleration_structure: Option<AccelerationStructureKHR>,
+    pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureDeviceAddressInfoKHR<'a> {}
@@ -31769,7 +31769,7 @@ impl<'a> Default for AccelerationStructureDeviceAddressInfoKHR<'a> {
 impl<'a> AccelerationStructureDeviceAddressInfoKHR<'a> {
     #[inline]
     pub fn acceleration_structure(mut self, value: &'a raw::AccelerationStructureKHR) -> Self {
-        self.acceleration_structure = Some(unsafe { value.clone() });
+        self.acceleration_structure = Some(value.borrow());
         self
     }
     #[inline]
@@ -31821,7 +31821,7 @@ impl<'a> AccelerationStructureVersionInfoKHR<'a> {
 pub struct CopyAccelerationStructureToMemoryInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src: Option<AccelerationStructureKHR>,
+    pub src: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub dst: DeviceOrHostAddressKHR,
     pub mode: CopyAccelerationStructureModeKHR,
     phantom: PhantomData<&'a ()>,
@@ -31847,7 +31847,7 @@ impl<'a> Default for CopyAccelerationStructureToMemoryInfoKHR<'a> {
 impl<'a> CopyAccelerationStructureToMemoryInfoKHR<'a> {
     #[inline]
     pub fn src(mut self, value: &'a raw::AccelerationStructureKHR) -> Self {
-        self.src = Some(unsafe { value.clone() });
+        self.src = Some(value.borrow());
         self
     }
     #[inline]
@@ -31873,7 +31873,7 @@ pub struct CopyMemoryToAccelerationStructureInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub src: DeviceOrHostAddressConstKHR,
-    pub dst: Option<AccelerationStructureKHR>,
+    pub dst: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub mode: CopyAccelerationStructureModeKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -31903,7 +31903,7 @@ impl<'a> CopyMemoryToAccelerationStructureInfoKHR<'a> {
     }
     #[inline]
     pub fn dst(mut self, value: &'a raw::AccelerationStructureKHR) -> Self {
-        self.dst = Some(unsafe { value.clone() });
+        self.dst = Some(value.borrow());
         self
     }
     #[inline]
@@ -31923,8 +31923,8 @@ impl<'a> CopyMemoryToAccelerationStructureInfoKHR<'a> {
 pub struct CopyAccelerationStructureInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src: Option<AccelerationStructureKHR>,
-    pub dst: Option<AccelerationStructureKHR>,
+    pub src: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
+    pub dst: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub mode: CopyAccelerationStructureModeKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -31949,12 +31949,12 @@ impl<'a> Default for CopyAccelerationStructureInfoKHR<'a> {
 impl<'a> CopyAccelerationStructureInfoKHR<'a> {
     #[inline]
     pub fn src(mut self, value: &'a raw::AccelerationStructureKHR) -> Self {
-        self.src = Some(unsafe { value.clone() });
+        self.src = Some(value.borrow());
         self
     }
     #[inline]
     pub fn dst(mut self, value: &'a raw::AccelerationStructureKHR) -> Self {
-        self.dst = Some(unsafe { value.clone() });
+        self.dst = Some(value.borrow());
         self
     }
     #[inline]
@@ -32106,8 +32106,8 @@ pub struct RayTracingPipelineCreateInfoKHR<'a> {
     pub p_library_info: *const PipelineLibraryCreateInfoKHR<'a>,
     pub p_library_interface: *const RayTracingPipelineInterfaceCreateInfoKHR<'a>,
     pub p_dynamic_state: *const PipelineDynamicStateCreateInfo<'a>,
-    pub layout: Option<PipelineLayout>,
-    pub base_pipeline_handle: Option<Pipeline>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
+    pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
     phantom: PhantomData<&'a ()>,
 }
@@ -32169,12 +32169,12 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
     }
     #[inline]
     pub fn layout(mut self, value: &'a raw::PipelineLayout) -> Self {
-        self.layout = Some(unsafe { value.clone() });
+        self.layout = Some(value.borrow());
         self
     }
     #[inline]
     pub fn base_pipeline_handle(mut self, value: Option<&'a raw::Pipeline>) -> Self {
-        self.base_pipeline_handle = value.map(|v| unsafe { v.clone() });
+        self.base_pipeline_handle = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -33203,7 +33203,7 @@ impl<'a> ValidationCacheCreateInfoEXT<'a> {
 pub struct ShaderModuleValidationCacheCreateInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub validation_cache: Option<ValidationCacheEXT>,
+    pub validation_cache: Option<BorrowedHandle<'a, ValidationCacheEXT>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ShaderModuleValidationCacheCreateInfoEXT<'a> {}
@@ -33233,7 +33233,7 @@ impl<'a> Default for ShaderModuleValidationCacheCreateInfoEXT<'a> {
 impl<'a> ShaderModuleValidationCacheCreateInfoEXT<'a> {
     #[inline]
     pub fn validation_cache(mut self, value: &'a raw::ValidationCacheEXT) -> Self {
-        self.validation_cache = Some(unsafe { value.clone() });
+        self.validation_cache = Some(value.borrow());
         self
     }
     #[inline]
@@ -33883,8 +33883,8 @@ pub struct RayTracingPipelineCreateInfoNV<'a> {
     pub(crate) group_count: u32,
     pub(crate) p_groups: *const RayTracingShaderGroupCreateInfoNV<'a>,
     pub max_recursion_depth: u32,
-    pub layout: Option<PipelineLayout>,
-    pub base_pipeline_handle: Option<Pipeline>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
+    pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
     phantom: PhantomData<&'a ()>,
 }
@@ -33925,12 +33925,12 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
     }
     #[inline]
     pub fn layout(mut self, value: &'a raw::PipelineLayout) -> Self {
-        self.layout = Some(unsafe { value.clone() });
+        self.layout = Some(value.borrow());
         self
     }
     #[inline]
     pub fn base_pipeline_handle(mut self, value: Option<&'a raw::Pipeline>) -> Self {
-        self.base_pipeline_handle = value.map(|v| unsafe { v.clone() });
+        self.base_pipeline_handle = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -33977,16 +33977,16 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
 pub struct GeometryTrianglesNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub vertex_data: Option<Buffer>,
+    pub vertex_data: Option<BorrowedHandle<'a, Buffer>>,
     pub vertex_offset: DeviceSize,
     pub vertex_count: u32,
     pub vertex_stride: DeviceSize,
     pub vertex_format: Format,
-    pub index_data: Option<Buffer>,
+    pub index_data: Option<BorrowedHandle<'a, Buffer>>,
     pub index_offset: DeviceSize,
     pub index_count: u32,
     pub index_type: IndexType,
-    pub transform_data: Option<Buffer>,
+    pub transform_data: Option<BorrowedHandle<'a, Buffer>>,
     pub transform_offset: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -34019,7 +34019,7 @@ impl<'a> Default for GeometryTrianglesNV<'a> {
 impl<'a> GeometryTrianglesNV<'a> {
     #[inline]
     pub fn vertex_data(mut self, value: Option<&'a raw::Buffer>) -> Self {
-        self.vertex_data = value.map(|v| unsafe { v.clone() });
+        self.vertex_data = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -34044,7 +34044,7 @@ impl<'a> GeometryTrianglesNV<'a> {
     }
     #[inline]
     pub fn index_data(mut self, value: Option<&'a raw::Buffer>) -> Self {
-        self.index_data = value.map(|v| unsafe { v.clone() });
+        self.index_data = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -34064,7 +34064,7 @@ impl<'a> GeometryTrianglesNV<'a> {
     }
     #[inline]
     pub fn transform_data(mut self, value: Option<&'a raw::Buffer>) -> Self {
-        self.transform_data = value.map(|v| unsafe { v.clone() });
+        self.transform_data = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -34084,7 +34084,7 @@ impl<'a> GeometryTrianglesNV<'a> {
 pub struct GeometryAABBNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub aabb_data: Option<Buffer>,
+    pub aabb_data: Option<BorrowedHandle<'a, Buffer>>,
     pub num_aabbs: u32,
     pub stride: u32,
     pub offset: DeviceSize,
@@ -34112,7 +34112,7 @@ impl<'a> Default for GeometryAABBNV<'a> {
 impl<'a> GeometryAABBNV<'a> {
     #[inline]
     pub fn aabb_data(mut self, value: Option<&'a raw::Buffer>) -> Self {
-        self.aabb_data = value.map(|v| unsafe { v.clone() });
+        self.aabb_data = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -34337,8 +34337,8 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
 pub struct BindAccelerationStructureMemoryInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub acceleration_structure: Option<AccelerationStructureNV>,
-    pub memory: Option<DeviceMemory>,
+    pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureNV>>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
     pub(crate) device_index_count: u32,
     pub(crate) p_device_indices: *const u32,
@@ -34367,12 +34367,12 @@ impl<'a> Default for BindAccelerationStructureMemoryInfoNV<'a> {
 impl<'a> BindAccelerationStructureMemoryInfoNV<'a> {
     #[inline]
     pub fn acceleration_structure(mut self, value: &'a raw::AccelerationStructureNV) -> Self {
-        self.acceleration_structure = Some(unsafe { value.clone() });
+        self.acceleration_structure = Some(value.borrow());
         self
     }
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -34472,7 +34472,7 @@ pub struct AccelerationStructureMemoryRequirementsInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub ty: AccelerationStructureMemoryRequirementsTypeNV,
-    pub acceleration_structure: Option<AccelerationStructureNV>,
+    pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureNV>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureMemoryRequirementsInfoNV<'a> {}
@@ -34501,7 +34501,7 @@ impl<'a> AccelerationStructureMemoryRequirementsInfoNV<'a> {
     }
     #[inline]
     pub fn acceleration_structure(mut self, value: &'a raw::AccelerationStructureNV) -> Self {
-        self.acceleration_structure = Some(unsafe { value.clone() });
+        self.acceleration_structure = Some(value.borrow());
         self
     }
     #[inline]
@@ -36527,7 +36527,7 @@ impl<'a> RenderPassFragmentDensityMapCreateInfoEXT<'a> {
 pub struct RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image_view: Option<ImageView>,
+    pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
     phantom: PhantomData<&'a ()>,
 }
@@ -36556,7 +36556,7 @@ impl<'a> Default for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
 impl<'a> RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     #[inline]
     pub fn image_view(mut self, value: &'a raw::ImageView) -> Self {
-        self.image_view = Some(unsafe { value.clone() });
+        self.image_view = Some(value.borrow());
         self
     }
     #[inline]
@@ -36965,7 +36965,7 @@ impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {
 pub struct RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image_view: Option<ImageView>,
+    pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
     pub shading_rate_attachment_texel_size: Extent2D,
     phantom: PhantomData<&'a ()>,
@@ -36996,7 +36996,7 @@ impl<'a> Default for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
 impl<'a> RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     #[inline]
     pub fn image_view(mut self, value: Option<&'a raw::ImageView>) -> Self {
-        self.image_view = value.map(|v| unsafe { v.clone() });
+        self.image_view = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -38643,7 +38643,7 @@ impl<'a> PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
 pub struct PipelineInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub pipeline: Option<Pipeline>,
+    pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineInfoKHR<'a> {}
@@ -38665,7 +38665,7 @@ impl<'a> Default for PipelineInfoKHR<'a> {
 impl<'a> PipelineInfoKHR<'a> {
     #[inline]
     pub fn pipeline(mut self, value: &'a raw::Pipeline) -> Self {
-        self.pipeline = Some(unsafe { value.clone() });
+        self.pipeline = Some(value.borrow());
         self
     }
     #[inline]
@@ -38742,7 +38742,7 @@ impl<'a> PipelineExecutablePropertiesKHR<'a> {
 pub struct PipelineExecutableInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub pipeline: Option<Pipeline>,
+    pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub executable_index: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -38766,7 +38766,7 @@ impl<'a> Default for PipelineExecutableInfoKHR<'a> {
 impl<'a> PipelineExecutableInfoKHR<'a> {
     #[inline]
     pub fn pipeline(mut self, value: &'a raw::Pipeline) -> Self {
-        self.pipeline = Some(unsafe { value.clone() });
+        self.pipeline = Some(value.borrow());
         self
     }
     #[inline]
@@ -39620,7 +39620,7 @@ impl<'a> SwapchainPresentScalingCreateInfoEXT<'a> {
 pub struct ReleaseSwapchainImagesInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub swapchain: Option<SwapchainKHR>,
+    pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     pub(crate) image_index_count: u32,
     pub(crate) p_image_indices: *const u32,
     phantom: PhantomData<&'a ()>,
@@ -39646,7 +39646,7 @@ impl<'a> Default for ReleaseSwapchainImagesInfoEXT<'a> {
 impl<'a> ReleaseSwapchainImagesInfoEXT<'a> {
     #[inline]
     pub fn swapchain(mut self, value: &'a raw::SwapchainKHR) -> Self {
-        self.swapchain = Some(unsafe { value.clone() });
+        self.swapchain = Some(value.borrow());
         self
     }
     #[inline]
@@ -40077,7 +40077,7 @@ impl SetStateFlagsIndirectCommandNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/VkIndirectCommandsStreamNV.html>"]
 #[doc(alias = "VkIndirectCommandsStreamNV")]
 pub struct IndirectCommandsStreamNV<'a> {
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -40095,7 +40095,7 @@ impl<'a> Default for IndirectCommandsStreamNV<'a> {
 impl<'a> IndirectCommandsStreamNV<'a> {
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -40115,7 +40115,7 @@ pub struct IndirectCommandsLayoutTokenNV<'a> {
     pub offset: u32,
     pub vertex_binding_unit: u32,
     pub vertex_dynamic_stride: Bool32,
-    pub pushconstant_pipeline_layout: Option<PipelineLayout>,
+    pub pushconstant_pipeline_layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub pushconstant_shader_stage_flags: ShaderStageFlags,
     pub pushconstant_offset: u32,
     pub pushconstant_size: u32,
@@ -40181,7 +40181,7 @@ impl<'a> IndirectCommandsLayoutTokenNV<'a> {
     }
     #[inline]
     pub fn pushconstant_pipeline_layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.pushconstant_pipeline_layout = value.map(|v| unsafe { v.clone() });
+        self.pushconstant_pipeline_layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -40322,17 +40322,17 @@ pub struct GeneratedCommandsInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub pipeline_bind_point: PipelineBindPoint,
-    pub pipeline: Option<Pipeline>,
-    pub indirect_commands_layout: Option<IndirectCommandsLayoutNV>,
+    pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
+    pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutNV>>,
     pub(crate) stream_count: u32,
     pub(crate) p_streams: *const IndirectCommandsStreamNV<'a>,
     pub sequences_count: u32,
-    pub preprocess_buffer: Option<Buffer>,
+    pub preprocess_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub preprocess_offset: DeviceSize,
     pub preprocess_size: DeviceSize,
-    pub sequences_count_buffer: Option<Buffer>,
+    pub sequences_count_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub sequences_count_offset: DeviceSize,
-    pub sequences_index_buffer: Option<Buffer>,
+    pub sequences_index_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub sequences_index_offset: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -40372,12 +40372,12 @@ impl<'a> GeneratedCommandsInfoNV<'a> {
     }
     #[inline]
     pub fn pipeline(mut self, value: Option<&'a raw::Pipeline>) -> Self {
-        self.pipeline = value.map(|v| unsafe { v.clone() });
+        self.pipeline = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn indirect_commands_layout(mut self, value: &'a raw::IndirectCommandsLayoutNV) -> Self {
-        self.indirect_commands_layout = Some(unsafe { value.clone() });
+        self.indirect_commands_layout = Some(value.borrow());
         self
     }
     #[inline]
@@ -40387,7 +40387,7 @@ impl<'a> GeneratedCommandsInfoNV<'a> {
     }
     #[inline]
     pub fn preprocess_buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.preprocess_buffer = Some(unsafe { value.clone() });
+        self.preprocess_buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -40402,7 +40402,7 @@ impl<'a> GeneratedCommandsInfoNV<'a> {
     }
     #[inline]
     pub fn sequences_count_buffer(mut self, value: Option<&'a raw::Buffer>) -> Self {
-        self.sequences_count_buffer = value.map(|v| unsafe { v.clone() });
+        self.sequences_count_buffer = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -40412,7 +40412,7 @@ impl<'a> GeneratedCommandsInfoNV<'a> {
     }
     #[inline]
     pub fn sequences_index_buffer(mut self, value: Option<&'a raw::Buffer>) -> Self {
-        self.sequences_index_buffer = value.map(|v| unsafe { v.clone() });
+        self.sequences_index_buffer = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -40447,8 +40447,8 @@ pub struct GeneratedCommandsMemoryRequirementsInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub pipeline_bind_point: PipelineBindPoint,
-    pub pipeline: Option<Pipeline>,
-    pub indirect_commands_layout: Option<IndirectCommandsLayoutNV>,
+    pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
+    pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutNV>>,
     pub max_sequences_count: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -40479,12 +40479,12 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoNV<'a> {
     }
     #[inline]
     pub fn pipeline(mut self, value: Option<&'a raw::Pipeline>) -> Self {
-        self.pipeline = value.map(|v| unsafe { v.clone() });
+        self.pipeline = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn indirect_commands_layout(mut self, value: &'a raw::IndirectCommandsLayoutNV) -> Self {
-        self.indirect_commands_layout = Some(unsafe { value.clone() });
+        self.indirect_commands_layout = Some(value.borrow());
         self
     }
     #[inline]
@@ -41761,7 +41761,7 @@ impl<'a> CudaModuleCreateInfoNV<'a> {
 pub struct CudaFunctionCreateInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub module: Option<CudaModuleNV>,
+    pub module: Option<BorrowedHandle<'a, CudaModuleNV>>,
     pub p_name: *const c_char,
     phantom: PhantomData<&'a ()>,
 }
@@ -41785,7 +41785,7 @@ impl<'a> Default for CudaFunctionCreateInfoNV<'a> {
 impl<'a> CudaFunctionCreateInfoNV<'a> {
     #[inline]
     pub fn module(mut self, value: &'a raw::CudaModuleNV) -> Self {
-        self.module = Some(unsafe { value.clone() });
+        self.module = Some(value.borrow());
         self
     }
     #[inline]
@@ -41805,7 +41805,7 @@ impl<'a> CudaFunctionCreateInfoNV<'a> {
 pub struct CudaLaunchInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub function: Option<CudaFunctionNV>,
+    pub function: Option<BorrowedHandle<'a, CudaFunctionNV>>,
     pub grid_dim_x: u32,
     pub grid_dim_y: u32,
     pub grid_dim_z: u32,
@@ -41849,7 +41849,7 @@ impl<'a> Default for CudaLaunchInfoNV<'a> {
 impl<'a> CudaLaunchInfoNV<'a> {
     #[inline]
     pub fn function(mut self, value: &'a raw::CudaFunctionNV) -> Self {
-        self.function = Some(unsafe { value.clone() });
+        self.function = Some(value.borrow());
         self
     }
     #[inline]
@@ -42194,7 +42194,7 @@ impl<'a> ExportMetalDeviceInfoEXT<'a> {
 pub struct ExportMetalCommandQueueInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub queue: Option<Queue>,
+    pub queue: Option<BorrowedHandle<'a, Queue>>,
     pub mtl_command_queue: MTLCommandQueueId,
     phantom: PhantomData<&'a ()>,
 }
@@ -42222,7 +42222,7 @@ impl<'a> Default for ExportMetalCommandQueueInfoEXT<'a> {
 impl<'a> ExportMetalCommandQueueInfoEXT<'a> {
     #[inline]
     pub fn queue(mut self, value: &'a raw::Queue) -> Self {
-        self.queue = Some(unsafe { value.clone() });
+        self.queue = Some(value.borrow());
         self
     }
     #[inline]
@@ -42242,7 +42242,7 @@ impl<'a> ExportMetalCommandQueueInfoEXT<'a> {
 pub struct ExportMetalBufferInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub mtl_buffer: MTLBufferId,
     phantom: PhantomData<&'a ()>,
 }
@@ -42270,7 +42270,7 @@ impl<'a> Default for ExportMetalBufferInfoEXT<'a> {
 impl<'a> ExportMetalBufferInfoEXT<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -42328,9 +42328,9 @@ impl<'a> ImportMetalBufferInfoEXT<'a> {
 pub struct ExportMetalTextureInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image: Option<Image>,
-    pub image_view: Option<ImageView>,
-    pub buffer_view: Option<BufferView>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
+    pub image_view: Option<BorrowedHandle<'a, ImageView>>,
+    pub buffer_view: Option<BorrowedHandle<'a, BufferView>>,
     pub plane: ImageAspectFlags,
     pub mtl_texture: MTLTextureId,
     phantom: PhantomData<&'a ()>,
@@ -42362,17 +42362,17 @@ impl<'a> Default for ExportMetalTextureInfoEXT<'a> {
 impl<'a> ExportMetalTextureInfoEXT<'a> {
     #[inline]
     pub fn image(mut self, value: Option<&'a raw::Image>) -> Self {
-        self.image = value.map(|v| unsafe { v.clone() });
+        self.image = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn image_view(mut self, value: Option<&'a raw::ImageView>) -> Self {
-        self.image_view = value.map(|v| unsafe { v.clone() });
+        self.image_view = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn buffer_view(mut self, value: Option<&'a raw::BufferView>) -> Self {
-        self.buffer_view = value.map(|v| unsafe { v.clone() });
+        self.buffer_view = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -42442,7 +42442,7 @@ impl<'a> ImportMetalTextureInfoEXT<'a> {
 pub struct ExportMetalIOSurfaceInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     pub io_surface: IOSurfaceRef,
     phantom: PhantomData<&'a ()>,
 }
@@ -42470,7 +42470,7 @@ impl<'a> Default for ExportMetalIOSurfaceInfoEXT<'a> {
 impl<'a> ExportMetalIOSurfaceInfoEXT<'a> {
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -42528,8 +42528,8 @@ impl<'a> ImportMetalIOSurfaceInfoEXT<'a> {
 pub struct ExportMetalSharedEventInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub semaphore: Option<Semaphore>,
-    pub event: Option<Event>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
+    pub event: Option<BorrowedHandle<'a, Event>>,
     pub mtl_shared_event: MTLSharedEventId,
     phantom: PhantomData<&'a ()>,
 }
@@ -42558,12 +42558,12 @@ impl<'a> Default for ExportMetalSharedEventInfoEXT<'a> {
 impl<'a> ExportMetalSharedEventInfoEXT<'a> {
     #[inline]
     pub fn semaphore(mut self, value: Option<&'a raw::Semaphore>) -> Self {
-        self.semaphore = value.map(|v| unsafe { v.clone() });
+        self.semaphore = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn event(mut self, value: Option<&'a raw::Event>) -> Self {
-        self.event = value.map(|v| unsafe { v.clone() });
+        self.event = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -43118,7 +43118,7 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
 pub struct DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
@@ -43148,7 +43148,7 @@ impl<'a> Default for DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
 impl<'a> DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -43229,7 +43229,7 @@ impl<'a> DescriptorGetInfoEXT<'a> {
 pub struct BufferCaptureDescriptorDataInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for BufferCaptureDescriptorDataInfoEXT<'a> {}
@@ -43251,7 +43251,7 @@ impl<'a> Default for BufferCaptureDescriptorDataInfoEXT<'a> {
 impl<'a> BufferCaptureDescriptorDataInfoEXT<'a> {
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -43266,7 +43266,7 @@ impl<'a> BufferCaptureDescriptorDataInfoEXT<'a> {
 pub struct ImageCaptureDescriptorDataInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image: Option<Image>,
+    pub image: Option<BorrowedHandle<'a, Image>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ImageCaptureDescriptorDataInfoEXT<'a> {}
@@ -43288,7 +43288,7 @@ impl<'a> Default for ImageCaptureDescriptorDataInfoEXT<'a> {
 impl<'a> ImageCaptureDescriptorDataInfoEXT<'a> {
     #[inline]
     pub fn image(mut self, value: &'a raw::Image) -> Self {
-        self.image = Some(unsafe { value.clone() });
+        self.image = Some(value.borrow());
         self
     }
     #[inline]
@@ -43303,7 +43303,7 @@ impl<'a> ImageCaptureDescriptorDataInfoEXT<'a> {
 pub struct ImageViewCaptureDescriptorDataInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub image_view: Option<ImageView>,
+    pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ImageViewCaptureDescriptorDataInfoEXT<'a> {}
@@ -43325,7 +43325,7 @@ impl<'a> Default for ImageViewCaptureDescriptorDataInfoEXT<'a> {
 impl<'a> ImageViewCaptureDescriptorDataInfoEXT<'a> {
     #[inline]
     pub fn image_view(mut self, value: &'a raw::ImageView) -> Self {
-        self.image_view = Some(unsafe { value.clone() });
+        self.image_view = Some(value.borrow());
         self
     }
     #[inline]
@@ -43340,7 +43340,7 @@ impl<'a> ImageViewCaptureDescriptorDataInfoEXT<'a> {
 pub struct SamplerCaptureDescriptorDataInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub sampler: Option<Sampler>,
+    pub sampler: Option<BorrowedHandle<'a, Sampler>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for SamplerCaptureDescriptorDataInfoEXT<'a> {}
@@ -43362,7 +43362,7 @@ impl<'a> Default for SamplerCaptureDescriptorDataInfoEXT<'a> {
 impl<'a> SamplerCaptureDescriptorDataInfoEXT<'a> {
     #[inline]
     pub fn sampler(mut self, value: &'a raw::Sampler) -> Self {
-        self.sampler = Some(unsafe { value.clone() });
+        self.sampler = Some(value.borrow());
         self
     }
     #[inline]
@@ -43438,8 +43438,8 @@ impl<'a> OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
 pub struct AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub acceleration_structure: Option<AccelerationStructureKHR>,
-    pub acceleration_structure_nv: Option<AccelerationStructureNV>,
+    pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
+    pub acceleration_structure_nv: Option<BorrowedHandle<'a, AccelerationStructureNV>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {}
@@ -43466,7 +43466,7 @@ impl<'a> AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
         mut self,
         value: Option<&'a raw::AccelerationStructureKHR>,
     ) -> Self {
-        self.acceleration_structure = value.map(|v| unsafe { v.clone() });
+        self.acceleration_structure = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -43474,7 +43474,7 @@ impl<'a> AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
         mut self,
         value: Option<&'a raw::AccelerationStructureNV>,
     ) -> Self {
-        self.acceleration_structure_nv = value.map(|v| unsafe { v.clone() });
+        self.acceleration_structure_nv = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -46391,7 +46391,7 @@ impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
 pub struct MemoryGetZirconHandleInfoFUCHSIA<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -46415,7 +46415,7 @@ impl<'a> Default for MemoryGetZirconHandleInfoFUCHSIA<'a> {
 impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -46435,7 +46435,7 @@ impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
 pub struct ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub semaphore: Option<Semaphore>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub flags: SemaphoreImportFlags,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub zircon_handle: VoidPtr,
@@ -46463,7 +46463,7 @@ impl<'a> Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
 impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
-        self.semaphore = Some(unsafe { value.clone() });
+        self.semaphore = Some(value.borrow());
         self
     }
     #[inline]
@@ -46493,7 +46493,7 @@ impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
 pub struct SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub semaphore: Option<Semaphore>,
+    pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -46517,7 +46517,7 @@ impl<'a> Default for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
 impl<'a> SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
-        self.semaphore = Some(unsafe { value.clone() });
+        self.semaphore = Some(value.borrow());
         self
     }
     #[inline]
@@ -46574,7 +46574,7 @@ impl<'a> BufferCollectionCreateInfoFUCHSIA<'a> {
 pub struct ImportMemoryBufferCollectionFUCHSIA<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub collection: Option<BufferCollectionFUCHSIA>,
+    pub collection: Option<BorrowedHandle<'a, BufferCollectionFUCHSIA>>,
     pub index: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -46602,7 +46602,7 @@ impl<'a> Default for ImportMemoryBufferCollectionFUCHSIA<'a> {
 impl<'a> ImportMemoryBufferCollectionFUCHSIA<'a> {
     #[inline]
     pub fn collection(mut self, value: &'a raw::BufferCollectionFUCHSIA) -> Self {
-        self.collection = Some(unsafe { value.clone() });
+        self.collection = Some(value.borrow());
         self
     }
     #[inline]
@@ -46622,7 +46622,7 @@ impl<'a> ImportMemoryBufferCollectionFUCHSIA<'a> {
 pub struct BufferCollectionImageCreateInfoFUCHSIA<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub collection: Option<BufferCollectionFUCHSIA>,
+    pub collection: Option<BorrowedHandle<'a, BufferCollectionFUCHSIA>>,
     pub index: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -46650,7 +46650,7 @@ impl<'a> Default for BufferCollectionImageCreateInfoFUCHSIA<'a> {
 impl<'a> BufferCollectionImageCreateInfoFUCHSIA<'a> {
     #[inline]
     pub fn collection(mut self, value: &'a raw::BufferCollectionFUCHSIA) -> Self {
-        self.collection = Some(unsafe { value.clone() });
+        self.collection = Some(value.borrow());
         self
     }
     #[inline]
@@ -46724,7 +46724,7 @@ impl<'a> BufferConstraintsInfoFUCHSIA<'a> {
 pub struct BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub collection: Option<BufferCollectionFUCHSIA>,
+    pub collection: Option<BorrowedHandle<'a, BufferCollectionFUCHSIA>>,
     pub index: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -46752,7 +46752,7 @@ impl<'a> Default for BufferCollectionBufferCreateInfoFUCHSIA<'a> {
 impl<'a> BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     #[inline]
     pub fn collection(mut self, value: &'a raw::BufferCollectionFUCHSIA) -> Self {
-        self.collection = Some(unsafe { value.clone() });
+        self.collection = Some(value.borrow());
         self
     }
     #[inline]
@@ -47131,7 +47131,7 @@ impl<'a> BufferCollectionConstraintsInfoFUCHSIA<'a> {
 pub struct SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub render_pass: Option<RenderPass>,
+    pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
     pub subpass: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -47159,7 +47159,7 @@ impl<'a> Default for SubpassShadingPipelineCreateInfoHUAWEI<'a> {
 impl<'a> SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     #[inline]
     pub fn render_pass(mut self, value: &'a raw::RenderPass) -> Self {
-        self.render_pass = Some(unsafe { value.clone() });
+        self.render_pass = Some(value.borrow());
         self
     }
     #[inline]
@@ -47314,7 +47314,7 @@ pub type RemoteAddressNV = VoidPtr;
 pub struct MemoryGetRemoteAddressInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -47338,7 +47338,7 @@ impl<'a> Default for MemoryGetRemoteAddressInfoNV<'a> {
 impl<'a> MemoryGetRemoteAddressInfoNV<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]
@@ -48661,7 +48661,7 @@ pub struct MicromapBuildInfoEXT<'a> {
     pub ty: MicromapTypeEXT,
     pub flags: BuildMicromapFlagsEXT,
     pub mode: BuildMicromapModeEXT,
-    pub dst_micromap: Option<MicromapEXT>,
+    pub dst_micromap: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub usage_counts_count: u32,
     pub(crate) p_usage_counts: *const MicromapUsageEXT,
     pub(crate) pp_usage_counts: *const *const MicromapUsageEXT,
@@ -48715,7 +48715,7 @@ impl<'a> MicromapBuildInfoEXT<'a> {
     }
     #[inline]
     pub fn dst_micromap(mut self, value: Option<&'a raw::MicromapEXT>) -> Self {
-        self.dst_micromap = value.map(|v| unsafe { v.clone() });
+        self.dst_micromap = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -48826,7 +48826,7 @@ pub struct MicromapCreateInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub create_flags: MicromapCreateFlagsEXT,
-    pub buffer: Option<Buffer>,
+    pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
     pub ty: MicromapTypeEXT,
@@ -48862,7 +48862,7 @@ impl<'a> MicromapCreateInfoEXT<'a> {
     }
     #[inline]
     pub fn buffer(mut self, value: &'a raw::Buffer) -> Self {
-        self.buffer = Some(unsafe { value.clone() });
+        self.buffer = Some(value.borrow());
         self
     }
     #[inline]
@@ -49041,7 +49041,7 @@ impl<'a> MicromapVersionInfoEXT<'a> {
 pub struct CopyMicromapToMemoryInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src: Option<MicromapEXT>,
+    pub src: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub dst: DeviceOrHostAddressKHR,
     pub mode: CopyMicromapModeEXT,
     phantom: PhantomData<&'a ()>,
@@ -49067,7 +49067,7 @@ impl<'a> Default for CopyMicromapToMemoryInfoEXT<'a> {
 impl<'a> CopyMicromapToMemoryInfoEXT<'a> {
     #[inline]
     pub fn src(mut self, value: &'a raw::MicromapEXT) -> Self {
-        self.src = Some(unsafe { value.clone() });
+        self.src = Some(value.borrow());
         self
     }
     #[inline]
@@ -49093,7 +49093,7 @@ pub struct CopyMemoryToMicromapInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub src: DeviceOrHostAddressConstKHR,
-    pub dst: Option<MicromapEXT>,
+    pub dst: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub mode: CopyMicromapModeEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -49123,7 +49123,7 @@ impl<'a> CopyMemoryToMicromapInfoEXT<'a> {
     }
     #[inline]
     pub fn dst(mut self, value: &'a raw::MicromapEXT) -> Self {
-        self.dst = Some(unsafe { value.clone() });
+        self.dst = Some(value.borrow());
         self
     }
     #[inline]
@@ -49143,8 +49143,8 @@ impl<'a> CopyMemoryToMicromapInfoEXT<'a> {
 pub struct CopyMicromapInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub src: Option<MicromapEXT>,
-    pub dst: Option<MicromapEXT>,
+    pub src: Option<BorrowedHandle<'a, MicromapEXT>>,
+    pub dst: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub mode: CopyMicromapModeEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -49169,12 +49169,12 @@ impl<'a> Default for CopyMicromapInfoEXT<'a> {
 impl<'a> CopyMicromapInfoEXT<'a> {
     #[inline]
     pub fn src(mut self, value: &'a raw::MicromapEXT) -> Self {
-        self.src = Some(unsafe { value.clone() });
+        self.src = Some(value.borrow());
         self
     }
     #[inline]
     pub fn dst(mut self, value: &'a raw::MicromapEXT) -> Self {
-        self.dst = Some(unsafe { value.clone() });
+        self.dst = Some(value.borrow());
         self
     }
     #[inline]
@@ -49252,7 +49252,7 @@ pub struct AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
     pub usage_counts_count: u32,
     pub(crate) p_usage_counts: *const MicromapUsageEXT,
     pub(crate) pp_usage_counts: *const *const MicromapUsageEXT,
-    pub micromap: Option<MicromapEXT>,
+    pub micromap: Option<BorrowedHandle<'a, MicromapEXT>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {}
@@ -49311,7 +49311,7 @@ impl<'a> AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
     }
     #[inline]
     pub fn micromap(mut self, value: Option<&'a raw::MicromapEXT>) -> Self {
-        self.micromap = value.map(|v| unsafe { v.clone() });
+        self.micromap = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -49499,7 +49499,7 @@ pub struct AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     pub usage_counts_count: u32,
     pub(crate) p_usage_counts: *const MicromapUsageEXT,
     pub(crate) pp_usage_counts: *const *const MicromapUsageEXT,
-    pub micromap: Option<MicromapEXT>,
+    pub micromap: Option<BorrowedHandle<'a, MicromapEXT>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
@@ -49615,7 +49615,7 @@ impl<'a> AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     }
     #[inline]
     pub fn micromap(mut self, value: Option<&'a raw::MicromapEXT>) -> Self {
-        self.micromap = value.map(|v| unsafe { v.clone() });
+        self.micromap = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -50306,7 +50306,7 @@ impl<'a> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
 pub struct DescriptorSetBindingReferenceVALVE<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub descriptor_set_layout: Option<DescriptorSetLayout>,
+    pub descriptor_set_layout: Option<BorrowedHandle<'a, DescriptorSetLayout>>,
     pub binding: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -50330,7 +50330,7 @@ impl<'a> Default for DescriptorSetBindingReferenceVALVE<'a> {
 impl<'a> DescriptorSetBindingReferenceVALVE<'a> {
     #[inline]
     pub fn descriptor_set_layout(mut self, value: &'a raw::DescriptorSetLayout) -> Self {
-        self.descriptor_set_layout = Some(unsafe { value.clone() });
+        self.descriptor_set_layout = Some(value.borrow());
         self
     }
     #[inline]
@@ -51281,7 +51281,7 @@ pub struct PipelineIndirectDeviceAddressInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub pipeline_bind_point: PipelineBindPoint,
-    pub pipeline: Option<Pipeline>,
+    pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineIndirectDeviceAddressInfoNV<'a> {}
@@ -51309,7 +51309,7 @@ impl<'a> PipelineIndirectDeviceAddressInfoNV<'a> {
     }
     #[inline]
     pub fn pipeline(mut self, value: &'a raw::Pipeline) -> Self {
-        self.pipeline = Some(unsafe { value.clone() });
+        self.pipeline = Some(value.borrow());
         self
     }
     #[inline]
@@ -54491,7 +54491,7 @@ pub struct PipelineBinaryCreateInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub p_keys_and_data_info: *const PipelineBinaryKeysAndDataKHR<'a>,
-    pub pipeline: Option<Pipeline>,
+    pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub p_pipeline_create_info: *const PipelineCreateInfoKHR<'a>,
     phantom: PhantomData<&'a ()>,
 }
@@ -54524,7 +54524,7 @@ impl<'a> PipelineBinaryCreateInfoKHR<'a> {
     }
     #[inline]
     pub fn pipeline(mut self, value: Option<&'a raw::Pipeline>) -> Self {
-        self.pipeline = value.map(|v| unsafe { v.clone() });
+        self.pipeline = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -54607,7 +54607,7 @@ impl<'a> PipelineBinaryInfoKHR<'a> {
 pub struct ReleaseCapturedPipelineDataInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub pipeline: Option<Pipeline>,
+    pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ReleaseCapturedPipelineDataInfoKHR<'a> {}
@@ -54629,7 +54629,7 @@ impl<'a> Default for ReleaseCapturedPipelineDataInfoKHR<'a> {
 impl<'a> ReleaseCapturedPipelineDataInfoKHR<'a> {
     #[inline]
     pub fn pipeline(mut self, value: &'a raw::Pipeline) -> Self {
-        self.pipeline = Some(unsafe { value.clone() });
+        self.pipeline = Some(value.borrow());
         self
     }
     #[inline]
@@ -54644,7 +54644,7 @@ impl<'a> ReleaseCapturedPipelineDataInfoKHR<'a> {
 pub struct PipelineBinaryDataInfoKHR<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub pipeline_binary: Option<PipelineBinaryKHR>,
+    pub pipeline_binary: Option<BorrowedHandle<'a, PipelineBinaryKHR>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineBinaryDataInfoKHR<'a> {}
@@ -54666,7 +54666,7 @@ impl<'a> Default for PipelineBinaryDataInfoKHR<'a> {
 impl<'a> PipelineBinaryDataInfoKHR<'a> {
     #[inline]
     pub fn pipeline_binary(mut self, value: &'a raw::PipelineBinaryKHR) -> Self {
-        self.pipeline_binary = Some(unsafe { value.clone() });
+        self.pipeline_binary = Some(value.borrow());
         self
     }
     #[inline]
@@ -56120,7 +56120,7 @@ impl<'a> LatencySleepModeInfoNV<'a> {
 pub struct LatencySleepInfoNV<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub signal_semaphore: Option<Semaphore>,
+    pub signal_semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub value: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -56144,7 +56144,7 @@ impl<'a> Default for LatencySleepInfoNV<'a> {
 impl<'a> LatencySleepInfoNV<'a> {
     #[inline]
     pub fn signal_semaphore(mut self, value: &'a raw::Semaphore) -> Self {
-        self.signal_semaphore = Some(unsafe { value.clone() });
+        self.signal_semaphore = Some(value.borrow());
         self
     }
     #[inline]
@@ -57814,7 +57814,7 @@ pub struct SetDescriptorBufferOffsetsInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub stage_flags: ShaderStageFlags,
-    pub layout: Option<PipelineLayout>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub first_set: u32,
     pub(crate) set_count: u32,
     pub(crate) p_buffer_indices: *const u32,
@@ -57850,7 +57850,7 @@ impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
     }
     #[inline]
     pub fn layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.layout = value.map(|v| unsafe { v.clone() });
+        self.layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -57896,7 +57896,7 @@ pub struct BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub stage_flags: ShaderStageFlags,
-    pub layout: Option<PipelineLayout>,
+    pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -57927,7 +57927,7 @@ impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     }
     #[inline]
     pub fn layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.layout = value.map(|v| unsafe { v.clone() });
+        self.layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -60401,8 +60401,8 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
 pub struct GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub indirect_execution_set: Option<IndirectExecutionSetEXT>,
-    pub indirect_commands_layout: Option<IndirectCommandsLayoutEXT>,
+    pub indirect_execution_set: Option<BorrowedHandle<'a, IndirectExecutionSetEXT>>,
+    pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutEXT>>,
     pub max_sequence_count: u32,
     pub max_draw_count: u32,
     phantom: PhantomData<&'a ()>,
@@ -60432,12 +60432,12 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
         mut self,
         value: Option<&'a raw::IndirectExecutionSetEXT>,
     ) -> Self {
-        self.indirect_execution_set = value.map(|v| unsafe { v.clone() });
+        self.indirect_execution_set = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn indirect_commands_layout(mut self, value: &'a raw::IndirectCommandsLayoutEXT) -> Self {
-        self.indirect_commands_layout = Some(unsafe { value.clone() });
+        self.indirect_commands_layout = Some(value.borrow());
         self
     }
     #[inline]
@@ -60520,7 +60520,7 @@ impl<'a> Default for IndirectExecutionSetInfoEXT<'a> {
 pub struct IndirectExecutionSetPipelineInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub initial_pipeline: Option<Pipeline>,
+    pub initial_pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub max_pipeline_count: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -60544,7 +60544,7 @@ impl<'a> Default for IndirectExecutionSetPipelineInfoEXT<'a> {
 impl<'a> IndirectExecutionSetPipelineInfoEXT<'a> {
     #[inline]
     pub fn initial_pipeline(mut self, value: &'a raw::Pipeline) -> Self {
-        self.initial_pipeline = Some(unsafe { value.clone() });
+        self.initial_pipeline = Some(value.borrow());
         self
     }
     #[inline]
@@ -60661,8 +60661,8 @@ pub struct GeneratedCommandsInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub shader_stages: ShaderStageFlags,
-    pub indirect_execution_set: Option<IndirectExecutionSetEXT>,
-    pub indirect_commands_layout: Option<IndirectCommandsLayoutEXT>,
+    pub indirect_execution_set: Option<BorrowedHandle<'a, IndirectExecutionSetEXT>>,
+    pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutEXT>>,
     pub indirect_address: DeviceAddress,
     pub indirect_address_size: DeviceSize,
     pub preprocess_address: DeviceAddress,
@@ -60708,12 +60708,12 @@ impl<'a> GeneratedCommandsInfoEXT<'a> {
         mut self,
         value: Option<&'a raw::IndirectExecutionSetEXT>,
     ) -> Self {
-        self.indirect_execution_set = value.map(|v| unsafe { v.clone() });
+        self.indirect_execution_set = value.map(|v| v.borrow());
         self
     }
     #[inline]
     pub fn indirect_commands_layout(mut self, value: &'a raw::IndirectCommandsLayoutEXT) -> Self {
-        self.indirect_commands_layout = Some(unsafe { value.clone() });
+        self.indirect_commands_layout = Some(value.borrow());
         self
     }
     #[inline]
@@ -60764,7 +60764,7 @@ pub struct WriteIndirectExecutionSetPipelineEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub index: u32,
-    pub pipeline: Option<Pipeline>,
+    pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for WriteIndirectExecutionSetPipelineEXT<'a> {}
@@ -60792,7 +60792,7 @@ impl<'a> WriteIndirectExecutionSetPipelineEXT<'a> {
     }
     #[inline]
     pub fn pipeline(mut self, value: &'a raw::Pipeline) -> Self {
-        self.pipeline = Some(unsafe { value.clone() });
+        self.pipeline = Some(value.borrow());
         self
     }
     #[inline]
@@ -60810,7 +60810,7 @@ pub struct IndirectCommandsLayoutCreateInfoEXT<'a> {
     pub flags: IndirectCommandsLayoutUsageFlagsEXT,
     pub shader_stages: ShaderStageFlags,
     pub indirect_stride: u32,
-    pub pipeline_layout: Option<PipelineLayout>,
+    pub pipeline_layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub(crate) token_count: u32,
     pub(crate) p_tokens: *const IndirectCommandsLayoutTokenEXT<'a>,
     phantom: PhantomData<&'a ()>,
@@ -60854,7 +60854,7 @@ impl<'a> IndirectCommandsLayoutCreateInfoEXT<'a> {
     }
     #[inline]
     pub fn pipeline_layout(mut self, value: Option<&'a raw::PipelineLayout>) -> Self {
-        self.pipeline_layout = value.map(|v| unsafe { v.clone() });
+        self.pipeline_layout = value.map(|v| v.borrow());
         self
     }
     #[inline]
@@ -61218,7 +61218,7 @@ impl<'a> IndirectExecutionSetShaderLayoutInfoEXT<'a> {
 pub struct GeneratedCommandsPipelineInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub pipeline: Option<Pipeline>,
+    pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for GeneratedCommandsPipelineInfoEXT<'a> {}
@@ -61248,7 +61248,7 @@ impl<'a> Default for GeneratedCommandsPipelineInfoEXT<'a> {
 impl<'a> GeneratedCommandsPipelineInfoEXT<'a> {
     #[inline]
     pub fn pipeline(mut self, value: &'a raw::Pipeline) -> Self {
-        self.pipeline = Some(unsafe { value.clone() });
+        self.pipeline = Some(value.borrow());
         self
     }
     #[inline]
@@ -61323,7 +61323,7 @@ pub struct WriteIndirectExecutionSetShaderEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
     pub index: u32,
-    pub shader: Option<ShaderEXT>,
+    pub shader: Option<BorrowedHandle<'a, ShaderEXT>>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for WriteIndirectExecutionSetShaderEXT<'a> {}
@@ -61351,7 +61351,7 @@ impl<'a> WriteIndirectExecutionSetShaderEXT<'a> {
     }
     #[inline]
     pub fn shader(mut self, value: &'a raw::ShaderEXT) -> Self {
-        self.shader = Some(unsafe { value.clone() });
+        self.shader = Some(value.borrow());
         self
     }
     #[inline]
@@ -62189,7 +62189,7 @@ impl<'a> MemoryMetalHandlePropertiesEXT<'a> {
 pub struct MemoryGetMetalHandleInfoEXT<'a> {
     pub(crate) s_type: StructureType,
     pub(crate) p_next: Cell<*const Header>,
-    pub memory: Option<DeviceMemory>,
+    pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -62213,7 +62213,7 @@ impl<'a> Default for MemoryGetMetalHandleInfoEXT<'a> {
 impl<'a> MemoryGetMetalHandleInfoEXT<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
-        self.memory = Some(unsafe { value.clone() });
+        self.memory = Some(value.borrow());
         self
     }
     #[inline]

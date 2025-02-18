@@ -331,7 +331,7 @@ fn generate_raw_command<'a, 'b>(
     Ok(quote! {
         #doc
         pub unsafe fn #func_name<#lifetime #ret_template #(#templates),*>(#(#args_outer_name: #args_outer_type,)* dispatcher: &CommandsDispatcher ) #ret_type {
-            let vulkan_command = dispatcher.#func_name.get().expect("Vulkan command not loaded.");
+            let vulkan_command = dispatcher.#func_name.get();
             #pre_call
             #inner_call
             #post_call

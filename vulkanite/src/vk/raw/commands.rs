@@ -11,10 +11,7 @@ pub unsafe fn create_instance(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Instance> {
-    let vulkan_command = dispatcher
-        .create_instance
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_instance.get();
     let mut p_instance = MaybeUninit::uninit();
     let vk_status = vulkan_command(
         ptr::from_ref(p_create_info),
@@ -30,12 +27,9 @@ pub unsafe fn destroy_instance(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_instance
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_instance.get();
     vulkan_command(
-        instance.map(|v| unsafe { v.clone() }),
+        instance.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -45,15 +39,12 @@ pub unsafe fn enumerate_physical_devices<R: DynamicArray<PhysicalDevice>>(
     instance: &raw::Instance,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .enumerate_physical_devices
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.enumerate_physical_devices.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_physical_device_count = vk_len.as_mut_ptr();
     let p_physical_devices = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         p_physical_device_count,
         p_physical_devices,
     )
@@ -64,7 +55,7 @@ pub unsafe fn enumerate_physical_devices<R: DynamicArray<PhysicalDevice>>(
     let mut p_physical_devices = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { instance.clone() }),
+            Some(instance.borrow()),
             p_physical_device_count,
             p_physical_devices,
         );
@@ -86,15 +77,9 @@ pub unsafe fn get_physical_device_features(
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> PhysicalDeviceFeatures {
-    let vulkan_command = dispatcher
-        .get_physical_device_features
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_features.get();
     let mut p_features = MaybeUninit::uninit();
-    vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        p_features.as_mut_ptr(),
-    );
+    vulkan_command(Some(physical_device.borrow()), p_features.as_mut_ptr());
     p_features.assume_init()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>"]
@@ -104,13 +89,10 @@ pub unsafe fn get_physical_device_format_properties(
     format: Format,
     dispatcher: &CommandsDispatcher,
 ) -> FormatProperties {
-    let vulkan_command = dispatcher
-        .get_physical_device_format_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_format_properties.get();
     let mut p_format_properties = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         format,
         p_format_properties.as_mut_ptr(),
     );
@@ -127,13 +109,10 @@ pub unsafe fn get_physical_device_image_format_properties(
     flags: ImageCreateFlags,
     dispatcher: &CommandsDispatcher,
 ) -> Result<ImageFormatProperties> {
-    let vulkan_command = dispatcher
-        .get_physical_device_image_format_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_image_format_properties.get();
     let mut p_image_format_properties = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         format,
         ty,
         tiling,
@@ -149,15 +128,9 @@ pub unsafe fn get_physical_device_properties(
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> PhysicalDeviceProperties {
-    let vulkan_command = dispatcher
-        .get_physical_device_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_properties.get();
     let mut p_properties = MaybeUninit::uninit();
-    vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        p_properties.as_mut_ptr(),
-    );
+    vulkan_command(Some(physical_device.borrow()), p_properties.as_mut_ptr());
     p_properties.assume_init()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>"]
@@ -168,15 +141,12 @@ pub unsafe fn get_physical_device_queue_family_properties<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> R {
-    let vulkan_command = dispatcher
-        .get_physical_device_queue_family_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_queue_family_properties.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_queue_family_property_count = vk_len.as_mut_ptr();
     let p_queue_family_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_queue_family_property_count,
         p_queue_family_properties,
     );
@@ -185,7 +155,7 @@ pub unsafe fn get_physical_device_queue_family_properties<
     let mut p_queue_family_property_count = ptr::from_mut(&mut vk_len);
     let mut p_queue_family_properties = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_queue_family_property_count,
         p_queue_family_properties,
     );
@@ -198,13 +168,10 @@ pub unsafe fn get_physical_device_memory_properties(
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> PhysicalDeviceMemoryProperties {
-    let vulkan_command = dispatcher
-        .get_physical_device_memory_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_memory_properties.get();
     let mut p_memory_properties = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_memory_properties.as_mut_ptr(),
     );
     p_memory_properties.assume_init()
@@ -216,11 +183,8 @@ pub unsafe fn get_instance_proc_addr(
     p_name: &CStr,
     dispatcher: &CommandsDispatcher,
 ) -> FuncPtr {
-    let vulkan_command = dispatcher
-        .get_instance_proc_addr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(instance.map(|v| unsafe { v.clone() }), p_name.as_ptr())
+    let vulkan_command = dispatcher.get_instance_proc_addr.get();
+    vulkan_command(instance.map(|v| v.borrow()), p_name.as_ptr())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceProcAddr.html>"]
 #[doc(alias = "vkGetDeviceProcAddr")]
@@ -229,11 +193,8 @@ pub unsafe fn get_device_proc_addr(
     p_name: &CStr,
     dispatcher: &CommandsDispatcher,
 ) -> FuncPtr {
-    let vulkan_command = dispatcher
-        .get_device_proc_addr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), p_name.as_ptr())
+    let vulkan_command = dispatcher.get_device_proc_addr.get();
+    vulkan_command(Some(device.borrow()), p_name.as_ptr())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDevice.html>"]
 #[doc(alias = "vkCreateDevice")]
@@ -243,13 +204,10 @@ pub unsafe fn create_device(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Device> {
-    let vulkan_command = dispatcher
-        .create_device
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_device.get();
     let mut p_device = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_device.as_mut_ptr(),
@@ -263,12 +221,9 @@ pub unsafe fn destroy_device(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_device
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_device.get();
     vulkan_command(
-        device.map(|v| unsafe { v.clone() }),
+        device.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -278,10 +233,7 @@ pub unsafe fn enumerate_instance_extension_properties<R: DynamicArray<ExtensionP
     p_layer_name: Option<&CStr>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .enumerate_instance_extension_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.enumerate_instance_extension_properties.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
@@ -320,15 +272,12 @@ pub unsafe fn enumerate_device_extension_properties<R: DynamicArray<ExtensionPro
     p_layer_name: Option<&CStr>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .enumerate_device_extension_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.enumerate_device_extension_properties.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_layer_name.map(|v| v.as_ptr()).unwrap_or(ptr::null()),
         p_property_count,
         p_properties,
@@ -340,7 +289,7 @@ pub unsafe fn enumerate_device_extension_properties<R: DynamicArray<ExtensionPro
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_layer_name.map(|v| v.as_ptr()).unwrap_or(ptr::null()),
             p_property_count,
             p_properties,
@@ -362,10 +311,7 @@ pub unsafe fn enumerate_device_extension_properties<R: DynamicArray<ExtensionPro
 pub unsafe fn enumerate_instance_layer_properties<R: DynamicArray<LayerProperties>>(
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .enumerate_instance_layer_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.enumerate_instance_layer_properties.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
@@ -394,15 +340,12 @@ pub unsafe fn enumerate_device_layer_properties<R: DynamicArray<LayerProperties>
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .enumerate_device_layer_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.enumerate_device_layer_properties.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_property_count,
         p_properties,
     )
@@ -413,7 +356,7 @@ pub unsafe fn enumerate_device_layer_properties<R: DynamicArray<LayerProperties>
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_property_count,
             p_properties,
         );
@@ -437,13 +380,10 @@ pub unsafe fn get_device_queue(
     queue_index: u32,
     dispatcher: &CommandsDispatcher,
 ) -> Queue {
-    let vulkan_command = dispatcher
-        .get_device_queue
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_queue.get();
     let mut p_queue = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         queue_family_index,
         queue_index,
         p_queue.as_mut_ptr(),
@@ -458,26 +398,20 @@ pub unsafe fn queue_submit<'a>(
     fence: Option<&raw::Fence>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .queue_submit
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.queue_submit.get();
     vulkan_command(
-        Some(unsafe { queue.clone() }),
+        Some(queue.borrow()),
         p_submits.as_slice().len() as _,
         p_submits.as_slice().as_ptr().cast(),
-        fence.map(|v| unsafe { v.clone() }),
+        fence.map(|v| v.borrow()),
     )
     .map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueWaitIdle.html>"]
 #[doc(alias = "vkQueueWaitIdle")]
 pub unsafe fn queue_wait_idle(queue: &raw::Queue, dispatcher: &CommandsDispatcher) -> Result<()> {
-    let vulkan_command = dispatcher
-        .queue_wait_idle
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { queue.clone() })).map_success(|| ())
+    let vulkan_command = dispatcher.queue_wait_idle.get();
+    vulkan_command(Some(queue.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDeviceWaitIdle.html>"]
 #[doc(alias = "vkDeviceWaitIdle")]
@@ -485,11 +419,8 @@ pub unsafe fn device_wait_idle(
     device: &raw::Device,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .device_wait_idle
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() })).map_success(|| ())
+    let vulkan_command = dispatcher.device_wait_idle.get();
+    vulkan_command(Some(device.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAllocateMemory.html>"]
 #[doc(alias = "vkAllocateMemory")]
@@ -499,13 +430,10 @@ pub unsafe fn allocate_memory(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DeviceMemory> {
-    let vulkan_command = dispatcher
-        .allocate_memory
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.allocate_memory.get();
     let mut p_memory = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_allocate_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_memory.as_mut_ptr(),
@@ -520,13 +448,10 @@ pub unsafe fn free_memory(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .free_memory
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.free_memory.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        memory.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        memory.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -540,14 +465,11 @@ pub unsafe fn map_memory(
     flags: MemoryMapFlags,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .map_memory
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.map_memory.get();
     let mut pp_data = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { memory.clone() }),
+        Some(device.borrow()),
+        Some(memory.borrow()),
         offset,
         size,
         flags,
@@ -562,14 +484,8 @@ pub unsafe fn unmap_memory(
     memory: &raw::DeviceMemory,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .unmap_memory
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { memory.clone() }),
-    )
+    let vulkan_command = dispatcher.unmap_memory.get();
+    vulkan_command(Some(device.borrow()), Some(memory.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkFlushMappedMemoryRanges.html>"]
 #[doc(alias = "vkFlushMappedMemoryRanges")]
@@ -578,12 +494,9 @@ pub unsafe fn flush_mapped_memory_ranges<'a>(
     p_memory_ranges: impl AsSlice<'a, MappedMemoryRange<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .flush_mapped_memory_ranges
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.flush_mapped_memory_ranges.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_memory_ranges.as_slice().len() as _,
         p_memory_ranges.as_slice().as_ptr().cast(),
     )
@@ -596,12 +509,9 @@ pub unsafe fn invalidate_mapped_memory_ranges<'a>(
     p_memory_ranges: impl AsSlice<'a, MappedMemoryRange<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .invalidate_mapped_memory_ranges
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.invalidate_mapped_memory_ranges.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_memory_ranges.as_slice().len() as _,
         p_memory_ranges.as_slice().as_ptr().cast(),
     )
@@ -614,14 +524,11 @@ pub unsafe fn get_device_memory_commitment(
     memory: &raw::DeviceMemory,
     dispatcher: &CommandsDispatcher,
 ) -> DeviceSize {
-    let vulkan_command = dispatcher
-        .get_device_memory_commitment
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_memory_commitment.get();
     let mut p_committed_memory_in_bytes = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { memory.clone() }),
+        Some(device.borrow()),
+        Some(memory.borrow()),
         p_committed_memory_in_bytes.as_mut_ptr(),
     );
     p_committed_memory_in_bytes.assume_init()
@@ -635,14 +542,11 @@ pub unsafe fn bind_buffer_memory(
     memory_offset: DeviceSize,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .bind_buffer_memory
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.bind_buffer_memory.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { buffer.clone() }),
-        Some(unsafe { memory.clone() }),
+        Some(device.borrow()),
+        Some(buffer.borrow()),
+        Some(memory.borrow()),
         memory_offset,
     )
     .map_success(|| ())
@@ -656,14 +560,11 @@ pub unsafe fn bind_image_memory(
     memory_offset: DeviceSize,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .bind_image_memory
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.bind_image_memory.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
-        Some(unsafe { memory.clone() }),
+        Some(device.borrow()),
+        Some(image.borrow()),
+        Some(memory.borrow()),
         memory_offset,
     )
     .map_success(|| ())
@@ -675,14 +576,11 @@ pub unsafe fn get_buffer_memory_requirements(
     buffer: &raw::Buffer,
     dispatcher: &CommandsDispatcher,
 ) -> MemoryRequirements {
-    let vulkan_command = dispatcher
-        .get_buffer_memory_requirements
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_buffer_memory_requirements.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(device.borrow()),
+        Some(buffer.borrow()),
         p_memory_requirements.as_mut_ptr(),
     );
     p_memory_requirements.assume_init()
@@ -694,14 +592,11 @@ pub unsafe fn get_image_memory_requirements(
     image: &raw::Image,
     dispatcher: &CommandsDispatcher,
 ) -> MemoryRequirements {
-    let vulkan_command = dispatcher
-        .get_image_memory_requirements
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_memory_requirements.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(device.borrow()),
+        Some(image.borrow()),
         p_memory_requirements.as_mut_ptr(),
     );
     p_memory_requirements.assume_init()
@@ -715,16 +610,13 @@ pub unsafe fn get_image_sparse_memory_requirements<
     image: &raw::Image,
     dispatcher: &CommandsDispatcher,
 ) -> R {
-    let vulkan_command = dispatcher
-        .get_image_sparse_memory_requirements
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_sparse_memory_requirements.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_sparse_memory_requirement_count = vk_len.as_mut_ptr();
     let p_sparse_memory_requirements = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(device.borrow()),
+        Some(image.borrow()),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
     );
@@ -733,8 +625,8 @@ pub unsafe fn get_image_sparse_memory_requirements<
     let mut p_sparse_memory_requirement_count = ptr::from_mut(&mut vk_len);
     let mut p_sparse_memory_requirements = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(device.borrow()),
+        Some(image.borrow()),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
     );
@@ -756,13 +648,12 @@ pub unsafe fn get_physical_device_sparse_image_format_properties<
 ) -> R {
     let vulkan_command = dispatcher
         .get_physical_device_sparse_image_format_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         format,
         ty,
         samples,
@@ -776,7 +667,7 @@ pub unsafe fn get_physical_device_sparse_image_format_properties<
     let mut p_property_count = ptr::from_mut(&mut vk_len);
     let mut p_properties = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         format,
         ty,
         samples,
@@ -796,15 +687,12 @@ pub unsafe fn queue_bind_sparse<'a>(
     fence: Option<&raw::Fence>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .queue_bind_sparse
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.queue_bind_sparse.get();
     vulkan_command(
-        Some(unsafe { queue.clone() }),
+        Some(queue.borrow()),
         p_bind_info.as_slice().len() as _,
         p_bind_info.as_slice().as_ptr().cast(),
-        fence.map(|v| unsafe { v.clone() }),
+        fence.map(|v| v.borrow()),
     )
     .map_success(|| ())
 }
@@ -816,13 +704,10 @@ pub unsafe fn create_fence(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Fence> {
-    let vulkan_command = dispatcher
-        .create_fence
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_fence.get();
     let mut p_fence = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_fence.as_mut_ptr(),
@@ -837,13 +722,10 @@ pub unsafe fn destroy_fence(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_fence
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_fence.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        fence.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        fence.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -854,12 +736,9 @@ pub unsafe fn reset_fences<'a, V2: Alias<raw::Fence> + 'a>(
     p_fences: impl AsSlice<'a, V2>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .reset_fences
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.reset_fences.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_fences.as_slice().len() as _,
         p_fences.as_slice().as_ptr().cast(),
     )
@@ -872,15 +751,8 @@ pub unsafe fn get_fence_status(
     fence: &raw::Fence,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .get_fence_status
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { fence.clone() }),
-    )
-    .into_result()
+    let vulkan_command = dispatcher.get_fence_status.get();
+    vulkan_command(Some(device.borrow()), Some(fence.borrow())).into_result()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkWaitForFences.html>"]
 #[doc(alias = "vkWaitForFences")]
@@ -891,12 +763,9 @@ pub unsafe fn wait_for_fences<'a, V2: Alias<raw::Fence> + 'a>(
     timeout: u64,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .wait_for_fences
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.wait_for_fences.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_fences.as_slice().len() as _,
         p_fences.as_slice().as_ptr().cast(),
         wait_all.into(),
@@ -912,13 +781,10 @@ pub unsafe fn create_semaphore(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Semaphore> {
-    let vulkan_command = dispatcher
-        .create_semaphore
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_semaphore.get();
     let mut p_semaphore = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_semaphore.as_mut_ptr(),
@@ -933,13 +799,10 @@ pub unsafe fn destroy_semaphore(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_semaphore
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_semaphore.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        semaphore.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        semaphore.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -951,13 +814,10 @@ pub unsafe fn create_event(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Event> {
-    let vulkan_command = dispatcher
-        .create_event
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_event.get();
     let mut p_event = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_event.as_mut_ptr(),
@@ -972,13 +832,10 @@ pub unsafe fn destroy_event(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_event
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_event.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        event.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        event.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -989,15 +846,8 @@ pub unsafe fn get_event_status(
     event: &raw::Event,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .get_event_status
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { event.clone() }),
-    )
-    .into_result()
+    let vulkan_command = dispatcher.get_event_status.get();
+    vulkan_command(Some(device.borrow()), Some(event.borrow())).into_result()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetEvent.html>"]
 #[doc(alias = "vkSetEvent")]
@@ -1006,15 +856,8 @@ pub unsafe fn set_event(
     event: &raw::Event,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .set_event
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { event.clone() }),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.set_event.get();
+    vulkan_command(Some(device.borrow()), Some(event.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkResetEvent.html>"]
 #[doc(alias = "vkResetEvent")]
@@ -1023,15 +866,8 @@ pub unsafe fn reset_event(
     event: &raw::Event,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .reset_event
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { event.clone() }),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.reset_event.get();
+    vulkan_command(Some(device.borrow()), Some(event.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateQueryPool.html>"]
 #[doc(alias = "vkCreateQueryPool")]
@@ -1041,13 +877,10 @@ pub unsafe fn create_query_pool(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<QueryPool> {
-    let vulkan_command = dispatcher
-        .create_query_pool
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_query_pool.get();
     let mut p_query_pool = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_query_pool.as_mut_ptr(),
@@ -1062,13 +895,10 @@ pub unsafe fn destroy_query_pool(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_query_pool
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_query_pool.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        query_pool.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        query_pool.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1085,13 +915,10 @@ pub unsafe fn get_query_pool_results(
     flags: QueryResultFlags,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .get_query_pool_results
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_query_pool_results.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { query_pool.clone() }),
+        Some(device.borrow()),
+        Some(query_pool.borrow()),
         first_query,
         query_count,
         data_size,
@@ -1109,13 +936,10 @@ pub unsafe fn create_buffer(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Buffer> {
-    let vulkan_command = dispatcher
-        .create_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_buffer.get();
     let mut p_buffer = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_buffer.as_mut_ptr(),
@@ -1130,13 +954,10 @@ pub unsafe fn destroy_buffer(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_buffer.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        buffer.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        buffer.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1148,13 +969,10 @@ pub unsafe fn create_buffer_view(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<BufferView> {
-    let vulkan_command = dispatcher
-        .create_buffer_view
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_buffer_view.get();
     let mut p_view = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_view.as_mut_ptr(),
@@ -1169,13 +987,10 @@ pub unsafe fn destroy_buffer_view(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_buffer_view
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_buffer_view.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        buffer_view.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        buffer_view.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1187,13 +1002,10 @@ pub unsafe fn create_image(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Image> {
-    let vulkan_command = dispatcher
-        .create_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_image.get();
     let mut p_image = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_image.as_mut_ptr(),
@@ -1208,13 +1020,10 @@ pub unsafe fn destroy_image(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_image.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        image.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        image.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1226,14 +1035,11 @@ pub unsafe fn get_image_subresource_layout(
     p_subresource: &ImageSubresource,
     dispatcher: &CommandsDispatcher,
 ) -> SubresourceLayout {
-    let vulkan_command = dispatcher
-        .get_image_subresource_layout
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_subresource_layout.get();
     let mut p_layout = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(device.borrow()),
+        Some(image.borrow()),
         ptr::from_ref(p_subresource),
         p_layout.as_mut_ptr(),
     );
@@ -1247,13 +1053,10 @@ pub unsafe fn create_image_view(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<ImageView> {
-    let vulkan_command = dispatcher
-        .create_image_view
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_image_view.get();
     let mut p_view = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_view.as_mut_ptr(),
@@ -1268,13 +1071,10 @@ pub unsafe fn destroy_image_view(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_image_view
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_image_view.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        image_view.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        image_view.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1286,13 +1086,10 @@ pub unsafe fn create_shader_module(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<ShaderModule> {
-    let vulkan_command = dispatcher
-        .create_shader_module
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_shader_module.get();
     let mut p_shader_module = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_shader_module.as_mut_ptr(),
@@ -1307,13 +1104,10 @@ pub unsafe fn destroy_shader_module(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_shader_module
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_shader_module.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        shader_module.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        shader_module.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1325,13 +1119,10 @@ pub unsafe fn create_pipeline_cache(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<PipelineCache> {
-    let vulkan_command = dispatcher
-        .create_pipeline_cache
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_pipeline_cache.get();
     let mut p_pipeline_cache = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_pipeline_cache.as_mut_ptr(),
@@ -1346,13 +1137,10 @@ pub unsafe fn destroy_pipeline_cache(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_pipeline_cache
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_pipeline_cache.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        pipeline_cache.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        pipeline_cache.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1364,14 +1152,11 @@ pub unsafe fn get_pipeline_cache_data(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<usize> {
-    let vulkan_command = dispatcher
-        .get_pipeline_cache_data
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_pipeline_cache_data.get();
     let mut p_data_size = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { pipeline_cache.clone() }),
+        Some(device.borrow()),
+        Some(pipeline_cache.borrow()),
         p_data_size.as_mut_ptr(),
         p_data,
     );
@@ -1385,13 +1170,10 @@ pub unsafe fn merge_pipeline_caches<'a, V3: Alias<raw::PipelineCache> + 'a>(
     p_src_caches: impl AsSlice<'a, V3>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .merge_pipeline_caches
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.merge_pipeline_caches.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { dst_cache.clone() }),
+        Some(device.borrow()),
+        Some(dst_cache.borrow()),
         p_src_caches.as_slice().len() as _,
         p_src_caches.as_slice().as_ptr().cast(),
     )
@@ -1406,14 +1188,11 @@ pub unsafe fn create_graphics_pipelines<'a, R: DynamicArray<Pipeline>>(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<(Status, R)> {
-    let vulkan_command = dispatcher
-        .create_graphics_pipelines
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_graphics_pipelines.get();
     let mut p_pipelines = R::create_with_capacity(p_create_infos.as_slice().len() as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        pipeline_cache.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        pipeline_cache.map(|v| v.borrow()),
         p_create_infos.as_slice().len() as _,
         p_create_infos.as_slice().as_ptr().cast(),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
@@ -1433,14 +1212,11 @@ pub unsafe fn create_compute_pipelines<'a, R: DynamicArray<Pipeline>>(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<(Status, R)> {
-    let vulkan_command = dispatcher
-        .create_compute_pipelines
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_compute_pipelines.get();
     let mut p_pipelines = R::create_with_capacity(p_create_infos.as_slice().len() as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        pipeline_cache.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        pipeline_cache.map(|v| v.borrow()),
         p_create_infos.as_slice().len() as _,
         p_create_infos.as_slice().as_ptr().cast(),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
@@ -1459,13 +1235,10 @@ pub unsafe fn destroy_pipeline(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_pipeline
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_pipeline.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        pipeline.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        pipeline.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1477,13 +1250,10 @@ pub unsafe fn create_pipeline_layout(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<PipelineLayout> {
-    let vulkan_command = dispatcher
-        .create_pipeline_layout
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_pipeline_layout.get();
     let mut p_pipeline_layout = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_pipeline_layout.as_mut_ptr(),
@@ -1498,13 +1268,10 @@ pub unsafe fn destroy_pipeline_layout(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_pipeline_layout
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_pipeline_layout.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        pipeline_layout.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        pipeline_layout.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1516,13 +1283,10 @@ pub unsafe fn create_sampler(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Sampler> {
-    let vulkan_command = dispatcher
-        .create_sampler
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_sampler.get();
     let mut p_sampler = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_sampler.as_mut_ptr(),
@@ -1537,13 +1301,10 @@ pub unsafe fn destroy_sampler(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_sampler
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_sampler.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        sampler.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        sampler.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1555,13 +1316,10 @@ pub unsafe fn create_descriptor_set_layout(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DescriptorSetLayout> {
-    let vulkan_command = dispatcher
-        .create_descriptor_set_layout
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_descriptor_set_layout.get();
     let mut p_set_layout = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_set_layout.as_mut_ptr(),
@@ -1576,13 +1334,10 @@ pub unsafe fn destroy_descriptor_set_layout(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_descriptor_set_layout
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_descriptor_set_layout.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        descriptor_set_layout.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        descriptor_set_layout.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1594,13 +1349,10 @@ pub unsafe fn create_descriptor_pool(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DescriptorPool> {
-    let vulkan_command = dispatcher
-        .create_descriptor_pool
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_descriptor_pool.get();
     let mut p_descriptor_pool = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_descriptor_pool.as_mut_ptr(),
@@ -1615,13 +1367,10 @@ pub unsafe fn destroy_descriptor_pool(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_descriptor_pool
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_descriptor_pool.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        descriptor_pool.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        descriptor_pool.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1633,16 +1382,8 @@ pub unsafe fn reset_descriptor_pool(
     flags: u32,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .reset_descriptor_pool
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { descriptor_pool.clone() }),
-        flags,
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.reset_descriptor_pool.get();
+    vulkan_command(Some(device.borrow()), Some(descriptor_pool.borrow()), flags).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAllocateDescriptorSets.html>"]
 #[doc(alias = "vkAllocateDescriptorSets")]
@@ -1651,13 +1392,10 @@ pub unsafe fn allocate_descriptor_sets<R: DynamicArray<DescriptorSet>>(
     p_allocate_info: &DescriptorSetAllocateInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .allocate_descriptor_sets
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.allocate_descriptor_sets.get();
     let mut p_descriptor_sets = R::create_with_capacity(p_allocate_info.descriptor_set_count as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_allocate_info),
         p_descriptor_sets.get_content_mut_ptr(),
     );
@@ -1674,13 +1412,10 @@ pub unsafe fn free_descriptor_sets<'a, V3: Alias<raw::DescriptorSet> + 'a>(
     p_descriptor_sets: impl AsSlice<'a, V3>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .free_descriptor_sets
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.free_descriptor_sets.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { descriptor_pool.clone() }),
+        Some(device.borrow()),
+        Some(descriptor_pool.borrow()),
         p_descriptor_sets.as_slice().len() as _,
         p_descriptor_sets.as_slice().as_ptr().cast(),
     )
@@ -1694,12 +1429,9 @@ pub unsafe fn update_descriptor_sets<'a>(
     p_descriptor_copies: impl AsSlice<'a, CopyDescriptorSet<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .update_descriptor_sets
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.update_descriptor_sets.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_descriptor_writes.as_slice().len() as _,
         p_descriptor_writes.as_slice().as_ptr().cast(),
         p_descriptor_copies.as_slice().len() as _,
@@ -1714,13 +1446,10 @@ pub unsafe fn create_framebuffer(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Framebuffer> {
-    let vulkan_command = dispatcher
-        .create_framebuffer
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_framebuffer.get();
     let mut p_framebuffer = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_framebuffer.as_mut_ptr(),
@@ -1735,13 +1464,10 @@ pub unsafe fn destroy_framebuffer(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_framebuffer
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_framebuffer.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        framebuffer.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        framebuffer.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1753,13 +1479,10 @@ pub unsafe fn create_render_pass(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<RenderPass> {
-    let vulkan_command = dispatcher
-        .create_render_pass
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_render_pass.get();
     let mut p_render_pass = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_render_pass.as_mut_ptr(),
@@ -1774,13 +1497,10 @@ pub unsafe fn destroy_render_pass(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_render_pass
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_render_pass.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        render_pass.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        render_pass.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1791,14 +1511,11 @@ pub unsafe fn get_render_area_granularity(
     render_pass: &raw::RenderPass,
     dispatcher: &CommandsDispatcher,
 ) -> Extent2D {
-    let vulkan_command = dispatcher
-        .get_render_area_granularity
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_render_area_granularity.get();
     let mut p_granularity = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { render_pass.clone() }),
+        Some(device.borrow()),
+        Some(render_pass.borrow()),
         p_granularity.as_mut_ptr(),
     );
     p_granularity.assume_init()
@@ -1811,13 +1528,10 @@ pub unsafe fn create_command_pool(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<CommandPool> {
-    let vulkan_command = dispatcher
-        .create_command_pool
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_command_pool.get();
     let mut p_command_pool = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_command_pool.as_mut_ptr(),
@@ -1832,13 +1546,10 @@ pub unsafe fn destroy_command_pool(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_command_pool
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_command_pool.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        command_pool.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        command_pool.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -1850,16 +1561,8 @@ pub unsafe fn reset_command_pool(
     flags: CommandPoolResetFlags,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .reset_command_pool
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { command_pool.clone() }),
-        flags,
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.reset_command_pool.get();
+    vulkan_command(Some(device.borrow()), Some(command_pool.borrow()), flags).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAllocateCommandBuffers.html>"]
 #[doc(alias = "vkAllocateCommandBuffers")]
@@ -1868,13 +1571,10 @@ pub unsafe fn allocate_command_buffers<R: DynamicArray<CommandBuffer>>(
     p_allocate_info: &CommandBufferAllocateInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .allocate_command_buffers
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.allocate_command_buffers.get();
     let mut p_command_buffers = R::create_with_capacity(p_allocate_info.command_buffer_count as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_allocate_info),
         p_command_buffers.get_content_mut_ptr(),
     );
@@ -1891,13 +1591,10 @@ pub unsafe fn free_command_buffers<'a, V3: Alias<raw::CommandBuffer> + 'a>(
     p_command_buffers: impl AsSlice<'a, V3>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .free_command_buffers
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.free_command_buffers.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { command_pool.clone() }),
+        Some(device.borrow()),
+        Some(command_pool.borrow()),
         p_command_buffers.as_slice().len() as _,
         p_command_buffers.as_slice().as_ptr().cast(),
     )
@@ -1909,15 +1606,8 @@ pub unsafe fn begin_command_buffer(
     p_begin_info: &CommandBufferBeginInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .begin_command_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_begin_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.begin_command_buffer.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_begin_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEndCommandBuffer.html>"]
 #[doc(alias = "vkEndCommandBuffer")]
@@ -1925,11 +1615,8 @@ pub unsafe fn end_command_buffer(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .end_command_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() })).map_success(|| ())
+    let vulkan_command = dispatcher.end_command_buffer.get();
+    vulkan_command(Some(command_buffer.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkResetCommandBuffer.html>"]
 #[doc(alias = "vkResetCommandBuffer")]
@@ -1938,11 +1625,8 @@ pub unsafe fn reset_command_buffer(
     flags: CommandBufferResetFlags,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .reset_command_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), flags).map_success(|| ())
+    let vulkan_command = dispatcher.reset_command_buffer.get();
+    vulkan_command(Some(command_buffer.borrow()), flags).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindPipeline.html>"]
 #[doc(alias = "vkCmdBindPipeline")]
@@ -1952,14 +1636,11 @@ pub unsafe fn cmd_bind_pipeline(
     pipeline: &raw::Pipeline,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_pipeline
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_pipeline.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_bind_point,
-        Some(unsafe { pipeline.clone() }),
+        Some(pipeline.borrow()),
     )
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewport.html>"]
@@ -1970,12 +1651,9 @@ pub unsafe fn cmd_set_viewport<'a>(
     p_viewports: impl AsSlice<'a, Viewport>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_viewport
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_viewport.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_viewport,
         p_viewports.as_slice().len() as _,
         p_viewports.as_slice().as_ptr().cast(),
@@ -1989,12 +1667,9 @@ pub unsafe fn cmd_set_scissor<'a>(
     p_scissors: impl AsSlice<'a, Rect2D>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_scissor
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_scissor.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_scissor,
         p_scissors.as_slice().len() as _,
         p_scissors.as_slice().as_ptr().cast(),
@@ -2007,11 +1682,8 @@ pub unsafe fn cmd_set_line_width(
     line_width: f32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_line_width
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), line_width)
+    let vulkan_command = dispatcher.cmd_set_line_width.get();
+    vulkan_command(Some(command_buffer.borrow()), line_width)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBias.html>"]
 #[doc(alias = "vkCmdSetDepthBias")]
@@ -2022,12 +1694,9 @@ pub unsafe fn cmd_set_depth_bias(
     depth_bias_slope_factor: f32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_bias
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_depth_bias.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         depth_bias_constant_factor,
         depth_bias_clamp,
         depth_bias_slope_factor,
@@ -2040,11 +1709,8 @@ pub unsafe fn cmd_set_blend_constants(
     blend_constants: [f32; 4u16 as _],
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_blend_constants
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), blend_constants)
+    let vulkan_command = dispatcher.cmd_set_blend_constants.get();
+    vulkan_command(Some(command_buffer.borrow()), blend_constants)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBounds.html>"]
 #[doc(alias = "vkCmdSetDepthBounds")]
@@ -2054,12 +1720,9 @@ pub unsafe fn cmd_set_depth_bounds(
     max_depth_bounds: f32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_bounds
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_depth_bounds.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         min_depth_bounds,
         max_depth_bounds,
     )
@@ -2072,15 +1735,8 @@ pub unsafe fn cmd_set_stencil_compare_mask(
     compare_mask: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_stencil_compare_mask
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        face_mask,
-        compare_mask,
-    )
+    let vulkan_command = dispatcher.cmd_set_stencil_compare_mask.get();
+    vulkan_command(Some(command_buffer.borrow()), face_mask, compare_mask)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilWriteMask.html>"]
 #[doc(alias = "vkCmdSetStencilWriteMask")]
@@ -2090,15 +1746,8 @@ pub unsafe fn cmd_set_stencil_write_mask(
     write_mask: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_stencil_write_mask
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        face_mask,
-        write_mask,
-    )
+    let vulkan_command = dispatcher.cmd_set_stencil_write_mask.get();
+    vulkan_command(Some(command_buffer.borrow()), face_mask, write_mask)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilReference.html>"]
 #[doc(alias = "vkCmdSetStencilReference")]
@@ -2108,15 +1757,8 @@ pub unsafe fn cmd_set_stencil_reference(
     reference: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_stencil_reference
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        face_mask,
-        reference,
-    )
+    let vulkan_command = dispatcher.cmd_set_stencil_reference.get();
+    vulkan_command(Some(command_buffer.borrow()), face_mask, reference)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindDescriptorSets.html>"]
 #[doc(alias = "vkCmdBindDescriptorSets")]
@@ -2129,14 +1771,11 @@ pub unsafe fn cmd_bind_descriptor_sets<'a, V5: Alias<raw::DescriptorSet> + 'a>(
     p_dynamic_offsets: impl AsSlice<'a, u32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_descriptor_sets
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_descriptor_sets.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_bind_point,
-        Some(unsafe { layout.clone() }),
+        Some(layout.borrow()),
         first_set,
         p_descriptor_sets.as_slice().len() as _,
         p_descriptor_sets.as_slice().as_ptr().cast(),
@@ -2153,13 +1792,10 @@ pub unsafe fn cmd_bind_index_buffer(
     index_type: IndexType,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_index_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_index_buffer.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        buffer.map(|v| unsafe { v.clone() }),
+        Some(command_buffer.borrow()),
+        buffer.map(|v| v.borrow()),
         offset,
         index_type,
     )
@@ -2173,12 +1809,9 @@ pub unsafe fn cmd_bind_vertex_buffers<'a, V3: Alias<raw::Buffer> + 'a>(
     p_offsets: impl AsSlice<'a, DeviceSize>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_vertex_buffers
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_vertex_buffers.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_binding,
         p_offsets.as_slice().len() as _,
         p_buffers.as_slice().as_ptr().cast(),
@@ -2195,12 +1828,9 @@ pub unsafe fn cmd_draw(
     first_instance: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         vertex_count,
         instance_count,
         first_vertex,
@@ -2218,12 +1848,9 @@ pub unsafe fn cmd_draw_indexed(
     first_instance: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indexed
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indexed.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         index_count,
         instance_count,
         first_index,
@@ -2241,13 +1868,10 @@ pub unsafe fn cmd_draw_indirect(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indirect
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indirect.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
         draw_count,
         stride,
@@ -2263,13 +1887,10 @@ pub unsafe fn cmd_draw_indexed_indirect(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indexed_indirect
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indexed_indirect.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
         draw_count,
         stride,
@@ -2284,12 +1905,9 @@ pub unsafe fn cmd_dispatch(
     group_count_z: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_dispatch
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_dispatch.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         group_count_x,
         group_count_y,
         group_count_z,
@@ -2303,15 +1921,8 @@ pub unsafe fn cmd_dispatch_indirect(
     offset: DeviceSize,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_dispatch_indirect
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
-        offset,
-    )
+    let vulkan_command = dispatcher.cmd_dispatch_indirect.get();
+    vulkan_command(Some(command_buffer.borrow()), Some(buffer.borrow()), offset)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyBuffer.html>"]
 #[doc(alias = "vkCmdCopyBuffer")]
@@ -2322,14 +1933,11 @@ pub unsafe fn cmd_copy_buffer<'a>(
     p_regions: impl AsSlice<'a, BufferCopy>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_buffer.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { src_buffer.clone() }),
-        Some(unsafe { dst_buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(src_buffer.borrow()),
+        Some(dst_buffer.borrow()),
         p_regions.as_slice().len() as _,
         p_regions.as_slice().as_ptr().cast(),
     )
@@ -2345,15 +1953,12 @@ pub unsafe fn cmd_copy_image<'a>(
     p_regions: impl AsSlice<'a, ImageCopy>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_image.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { src_image.clone() }),
+        Some(command_buffer.borrow()),
+        Some(src_image.borrow()),
         src_image_layout,
-        Some(unsafe { dst_image.clone() }),
+        Some(dst_image.borrow()),
         dst_image_layout,
         p_regions.as_slice().len() as _,
         p_regions.as_slice().as_ptr().cast(),
@@ -2371,15 +1976,12 @@ pub unsafe fn cmd_blit_image<'a>(
     filter: Filter,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_blit_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_blit_image.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { src_image.clone() }),
+        Some(command_buffer.borrow()),
+        Some(src_image.borrow()),
         src_image_layout,
-        Some(unsafe { dst_image.clone() }),
+        Some(dst_image.borrow()),
         dst_image_layout,
         p_regions.as_slice().len() as _,
         p_regions.as_slice().as_ptr().cast(),
@@ -2396,14 +1998,11 @@ pub unsafe fn cmd_copy_buffer_to_image<'a>(
     p_regions: impl AsSlice<'a, BufferImageCopy>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_buffer_to_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_buffer_to_image.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { src_buffer.clone() }),
-        Some(unsafe { dst_image.clone() }),
+        Some(command_buffer.borrow()),
+        Some(src_buffer.borrow()),
+        Some(dst_image.borrow()),
         dst_image_layout,
         p_regions.as_slice().len() as _,
         p_regions.as_slice().as_ptr().cast(),
@@ -2419,15 +2018,12 @@ pub unsafe fn cmd_copy_image_to_buffer<'a>(
     p_regions: impl AsSlice<'a, BufferImageCopy>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_image_to_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_image_to_buffer.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { src_image.clone() }),
+        Some(command_buffer.borrow()),
+        Some(src_image.borrow()),
         src_image_layout,
-        Some(unsafe { dst_buffer.clone() }),
+        Some(dst_buffer.borrow()),
         p_regions.as_slice().len() as _,
         p_regions.as_slice().as_ptr().cast(),
     )
@@ -2442,13 +2038,10 @@ pub unsafe fn cmd_update_buffer(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_update_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_update_buffer.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { dst_buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(dst_buffer.borrow()),
         dst_offset,
         data_size,
         p_data,
@@ -2464,13 +2057,10 @@ pub unsafe fn cmd_fill_buffer(
     data: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_fill_buffer
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_fill_buffer.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { dst_buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(dst_buffer.borrow()),
         dst_offset,
         size,
         data,
@@ -2486,13 +2076,10 @@ pub unsafe fn cmd_clear_color_image<'a>(
     p_ranges: impl AsSlice<'a, ImageSubresourceRange>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_clear_color_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_clear_color_image.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(command_buffer.borrow()),
+        Some(image.borrow()),
         image_layout,
         ptr::from_ref(p_color),
         p_ranges.as_slice().len() as _,
@@ -2509,13 +2096,10 @@ pub unsafe fn cmd_clear_depth_stencil_image<'a>(
     p_ranges: impl AsSlice<'a, ImageSubresourceRange>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_clear_depth_stencil_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_clear_depth_stencil_image.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(command_buffer.borrow()),
+        Some(image.borrow()),
         image_layout,
         ptr::from_ref(p_depth_stencil),
         p_ranges.as_slice().len() as _,
@@ -2530,12 +2114,9 @@ pub unsafe fn cmd_clear_attachments<'a>(
     p_rects: impl AsSlice<'a, ClearRect>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_clear_attachments
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_clear_attachments.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_attachments.as_slice().len() as _,
         p_attachments.as_slice().as_ptr().cast(),
         p_rects.as_slice().len() as _,
@@ -2553,15 +2134,12 @@ pub unsafe fn cmd_resolve_image<'a>(
     p_regions: impl AsSlice<'a, ImageResolve>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_resolve_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_resolve_image.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { src_image.clone() }),
+        Some(command_buffer.borrow()),
+        Some(src_image.borrow()),
         src_image_layout,
-        Some(unsafe { dst_image.clone() }),
+        Some(dst_image.borrow()),
         dst_image_layout,
         p_regions.as_slice().len() as _,
         p_regions.as_slice().as_ptr().cast(),
@@ -2575,13 +2153,10 @@ pub unsafe fn cmd_set_event(
     stage_mask: PipelineStageFlags,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_event
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_event.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { event.clone() }),
+        Some(command_buffer.borrow()),
+        Some(event.borrow()),
         stage_mask,
     )
 }
@@ -2593,13 +2168,10 @@ pub unsafe fn cmd_reset_event(
     stage_mask: PipelineStageFlags,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_reset_event
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_reset_event.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { event.clone() }),
+        Some(command_buffer.borrow()),
+        Some(event.borrow()),
         stage_mask,
     )
 }
@@ -2615,12 +2187,9 @@ pub unsafe fn cmd_wait_events<'a, V2: Alias<raw::Event> + 'a>(
     p_image_memory_barriers: impl AsSlice<'a, ImageMemoryBarrier<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_wait_events
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_wait_events.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_events.as_slice().len() as _,
         p_events.as_slice().as_ptr().cast(),
         src_stage_mask,
@@ -2645,12 +2214,9 @@ pub unsafe fn cmd_pipeline_barrier<'a>(
     p_image_memory_barriers: impl AsSlice<'a, ImageMemoryBarrier<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_pipeline_barrier
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_pipeline_barrier.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         src_stage_mask,
         dst_stage_mask,
         dependency_flags,
@@ -2671,13 +2237,10 @@ pub unsafe fn cmd_begin_query(
     flags: QueryControlFlags,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_query
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_begin_query.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { query_pool.clone() }),
+        Some(command_buffer.borrow()),
+        Some(query_pool.borrow()),
         query,
         flags,
     )
@@ -2690,13 +2253,10 @@ pub unsafe fn cmd_end_query(
     query: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_query
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_end_query.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { query_pool.clone() }),
+        Some(command_buffer.borrow()),
+        Some(query_pool.borrow()),
         query,
     )
 }
@@ -2709,13 +2269,10 @@ pub unsafe fn cmd_reset_query_pool(
     query_count: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_reset_query_pool
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_reset_query_pool.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { query_pool.clone() }),
+        Some(command_buffer.borrow()),
+        Some(query_pool.borrow()),
         first_query,
         query_count,
     )
@@ -2729,14 +2286,11 @@ pub unsafe fn cmd_write_timestamp(
     query: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_write_timestamp
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_write_timestamp.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_stage,
-        Some(unsafe { query_pool.clone() }),
+        Some(query_pool.borrow()),
         query,
     )
 }
@@ -2753,16 +2307,13 @@ pub unsafe fn cmd_copy_query_pool_results(
     flags: QueryResultFlags,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_query_pool_results
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_query_pool_results.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { query_pool.clone() }),
+        Some(command_buffer.borrow()),
+        Some(query_pool.borrow()),
         first_query,
         query_count,
-        Some(unsafe { dst_buffer.clone() }),
+        Some(dst_buffer.borrow()),
         dst_offset,
         stride,
         flags,
@@ -2779,13 +2330,10 @@ pub unsafe fn cmd_push_constants(
     p_values: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_constants
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_constants.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { layout.clone() }),
+        Some(command_buffer.borrow()),
+        Some(layout.borrow()),
         stage_flags,
         offset,
         size,
@@ -2800,12 +2348,9 @@ pub unsafe fn cmd_begin_render_pass(
     contents: SubpassContents,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_render_pass
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_begin_render_pass.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_render_pass_begin),
         contents,
     )
@@ -2817,11 +2362,8 @@ pub unsafe fn cmd_next_subpass(
     contents: SubpassContents,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_next_subpass
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), contents)
+    let vulkan_command = dispatcher.cmd_next_subpass.get();
+    vulkan_command(Some(command_buffer.borrow()), contents)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderPass.html>"]
 #[doc(alias = "vkCmdEndRenderPass")]
@@ -2829,11 +2371,8 @@ pub unsafe fn cmd_end_render_pass(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_render_pass
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }))
+    let vulkan_command = dispatcher.cmd_end_render_pass.get();
+    vulkan_command(Some(command_buffer.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdExecuteCommands.html>"]
 #[doc(alias = "vkCmdExecuteCommands")]
@@ -2842,12 +2381,9 @@ pub unsafe fn cmd_execute_commands<'a, V2: Alias<raw::CommandBuffer> + 'a>(
     p_command_buffers: impl AsSlice<'a, V2>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_execute_commands
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_execute_commands.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_command_buffers.as_slice().len() as _,
         p_command_buffers.as_slice().as_ptr().cast(),
     )
@@ -2855,10 +2391,7 @@ pub unsafe fn cmd_execute_commands<'a, V2: Alias<raw::CommandBuffer> + 'a>(
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkEnumerateInstanceVersion.html>"]
 #[doc(alias = "vkEnumerateInstanceVersion")]
 pub unsafe fn enumerate_instance_version(dispatcher: &CommandsDispatcher) -> Result<u32> {
-    let vulkan_command = dispatcher
-        .enumerate_instance_version
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.enumerate_instance_version.get();
     let mut p_api_version = MaybeUninit::uninit();
     let vk_status = vulkan_command(p_api_version.as_mut_ptr());
     vk_status.map_success(|| p_api_version.assume_init())
@@ -2870,12 +2403,9 @@ pub unsafe fn bind_buffer_memory2<'a>(
     p_bind_infos: impl AsSlice<'a, BindBufferMemoryInfo<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .bind_buffer_memory2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.bind_buffer_memory2.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_bind_infos.as_slice().len() as _,
         p_bind_infos.as_slice().as_ptr().cast(),
     )
@@ -2888,12 +2418,9 @@ pub unsafe fn bind_buffer_memory2_khr<'a>(
     p_bind_infos: impl AsSlice<'a, BindBufferMemoryInfo<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .bind_buffer_memory2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.bind_buffer_memory2_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_bind_infos.as_slice().len() as _,
         p_bind_infos.as_slice().as_ptr().cast(),
     )
@@ -2906,12 +2433,9 @@ pub unsafe fn bind_image_memory2<'a>(
     p_bind_infos: impl AsSlice<'a, BindImageMemoryInfo<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .bind_image_memory2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.bind_image_memory2.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_bind_infos.as_slice().len() as _,
         p_bind_infos.as_slice().as_ptr().cast(),
     )
@@ -2924,12 +2448,9 @@ pub unsafe fn bind_image_memory2_khr<'a>(
     p_bind_infos: impl AsSlice<'a, BindImageMemoryInfo<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .bind_image_memory2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.bind_image_memory2_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_bind_infos.as_slice().len() as _,
         p_bind_infos.as_slice().as_ptr().cast(),
     )
@@ -2944,13 +2465,10 @@ pub unsafe fn get_device_group_peer_memory_features(
     remote_device_index: u32,
     dispatcher: &CommandsDispatcher,
 ) -> PeerMemoryFeatureFlags {
-    let vulkan_command = dispatcher
-        .get_device_group_peer_memory_features
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_group_peer_memory_features.get();
     let mut p_peer_memory_features = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         heap_index,
         local_device_index,
         remote_device_index,
@@ -2967,13 +2485,10 @@ pub unsafe fn get_device_group_peer_memory_features_khr(
     remote_device_index: u32,
     dispatcher: &CommandsDispatcher,
 ) -> PeerMemoryFeatureFlags {
-    let vulkan_command = dispatcher
-        .get_device_group_peer_memory_features_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_group_peer_memory_features_khr.get();
     let mut p_peer_memory_features = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         heap_index,
         local_device_index,
         remote_device_index,
@@ -2988,11 +2503,8 @@ pub unsafe fn cmd_set_device_mask(
     device_mask: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_device_mask
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), device_mask)
+    let vulkan_command = dispatcher.cmd_set_device_mask.get();
+    vulkan_command(Some(command_buffer.borrow()), device_mask)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDeviceMaskKHR.html>"]
 #[doc(alias = "vkCmdSetDeviceMaskKHR")]
@@ -3001,11 +2513,8 @@ pub unsafe fn cmd_set_device_mask_khr(
     device_mask: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_device_mask_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), device_mask)
+    let vulkan_command = dispatcher.cmd_set_device_mask_khr.get();
+    vulkan_command(Some(command_buffer.borrow()), device_mask)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDispatchBase.html>"]
 #[doc(alias = "vkCmdDispatchBase")]
@@ -3019,12 +2528,9 @@ pub unsafe fn cmd_dispatch_base(
     group_count_z: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_dispatch_base
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_dispatch_base.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         base_group_x,
         base_group_y,
         base_group_z,
@@ -3045,12 +2551,9 @@ pub unsafe fn cmd_dispatch_base_khr(
     group_count_z: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_dispatch_base_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_dispatch_base_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         base_group_x,
         base_group_y,
         base_group_z,
@@ -3067,15 +2570,12 @@ pub unsafe fn enumerate_physical_device_groups<
     instance: &raw::Instance,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .enumerate_physical_device_groups
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.enumerate_physical_device_groups.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_physical_device_group_count = vk_len.as_mut_ptr();
     let p_physical_device_group_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         p_physical_device_group_count,
         p_physical_device_group_properties,
     )
@@ -3086,7 +2586,7 @@ pub unsafe fn enumerate_physical_device_groups<
     let mut p_physical_device_group_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { instance.clone() }),
+            Some(instance.borrow()),
             p_physical_device_group_count,
             p_physical_device_group_properties,
         );
@@ -3110,15 +2610,12 @@ pub unsafe fn enumerate_physical_device_groups_khr<
     instance: &raw::Instance,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .enumerate_physical_device_groups_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.enumerate_physical_device_groups_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_physical_device_group_count = vk_len.as_mut_ptr();
     let p_physical_device_group_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         p_physical_device_group_count,
         p_physical_device_group_properties,
     )
@@ -3129,7 +2626,7 @@ pub unsafe fn enumerate_physical_device_groups_khr<
     let mut p_physical_device_group_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { instance.clone() }),
+            Some(instance.borrow()),
             p_physical_device_group_count,
             p_physical_device_group_properties,
         );
@@ -3152,14 +2649,11 @@ pub unsafe fn get_image_memory_requirements2<S: StructureChainOut<MemoryRequirem
     p_info: &ImageMemoryRequirementsInfo2,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_image_memory_requirements2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_memory_requirements2.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -3175,14 +2669,11 @@ pub unsafe fn get_image_memory_requirements2_khr<
     p_info: &ImageMemoryRequirementsInfo2,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_image_memory_requirements2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_memory_requirements2_khr.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -3198,14 +2689,11 @@ pub unsafe fn get_buffer_memory_requirements2<
     p_info: &BufferMemoryRequirementsInfo2,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_buffer_memory_requirements2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_buffer_memory_requirements2.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -3221,14 +2709,11 @@ pub unsafe fn get_buffer_memory_requirements2_khr<
     p_info: &BufferMemoryRequirementsInfo2,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_buffer_memory_requirements2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_buffer_memory_requirements2_khr.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -3244,15 +2729,12 @@ pub unsafe fn get_image_sparse_memory_requirements2<
     p_info: &ImageSparseMemoryRequirementsInfo2,
     dispatcher: &CommandsDispatcher,
 ) -> R {
-    let vulkan_command = dispatcher
-        .get_image_sparse_memory_requirements2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_sparse_memory_requirements2.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_sparse_memory_requirement_count = vk_len.as_mut_ptr();
     let p_sparse_memory_requirements = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
@@ -3262,7 +2744,7 @@ pub unsafe fn get_image_sparse_memory_requirements2<
     let mut p_sparse_memory_requirement_count = ptr::from_mut(&mut vk_len);
     let mut p_sparse_memory_requirements = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
@@ -3279,15 +2761,12 @@ pub unsafe fn get_image_sparse_memory_requirements2_khr<
     p_info: &ImageSparseMemoryRequirementsInfo2,
     dispatcher: &CommandsDispatcher,
 ) -> R {
-    let vulkan_command = dispatcher
-        .get_image_sparse_memory_requirements2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_sparse_memory_requirements2_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_sparse_memory_requirement_count = vk_len.as_mut_ptr();
     let p_sparse_memory_requirements = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
@@ -3297,7 +2776,7 @@ pub unsafe fn get_image_sparse_memory_requirements2_khr<
     let mut p_sparse_memory_requirement_count = ptr::from_mut(&mut vk_len);
     let mut p_sparse_memory_requirements = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
@@ -3313,14 +2792,11 @@ pub unsafe fn get_physical_device_features2<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_physical_device_features2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_features2.get();
     let mut p_features = MaybeUninit::uninit();
     S::setup_uninit(&mut p_features);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         S::get_uninit_head_ptr(p_features.as_mut_ptr()),
     );
     S::setup_cleanup(p_features.as_mut_ptr());
@@ -3334,14 +2810,11 @@ pub unsafe fn get_physical_device_features2_khr<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_physical_device_features2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_features2_khr.get();
     let mut p_features = MaybeUninit::uninit();
     S::setup_uninit(&mut p_features);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         S::get_uninit_head_ptr(p_features.as_mut_ptr()),
     );
     S::setup_cleanup(p_features.as_mut_ptr());
@@ -3355,14 +2828,11 @@ pub unsafe fn get_physical_device_properties2<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_physical_device_properties2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_properties2.get();
     let mut p_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         S::get_uninit_head_ptr(p_properties.as_mut_ptr()),
     );
     S::setup_cleanup(p_properties.as_mut_ptr());
@@ -3376,14 +2846,11 @@ pub unsafe fn get_physical_device_properties2_khr<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_physical_device_properties2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_properties2_khr.get();
     let mut p_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         S::get_uninit_head_ptr(p_properties.as_mut_ptr()),
     );
     S::setup_cleanup(p_properties.as_mut_ptr());
@@ -3398,14 +2865,11 @@ pub unsafe fn get_physical_device_format_properties2<
     format: Format,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_physical_device_format_properties2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_format_properties2.get();
     let mut p_format_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_format_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         format,
         S::get_uninit_head_ptr(p_format_properties.as_mut_ptr()),
     );
@@ -3421,14 +2885,11 @@ pub unsafe fn get_physical_device_format_properties2_khr<
     format: Format,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_physical_device_format_properties2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_format_properties2_khr.get();
     let mut p_format_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_format_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         format,
         S::get_uninit_head_ptr(p_format_properties.as_mut_ptr()),
     );
@@ -3446,12 +2907,11 @@ pub unsafe fn get_physical_device_image_format_properties2<
 ) -> Result<S> {
     let vulkan_command = dispatcher
         .get_physical_device_image_format_properties2
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_image_format_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_image_format_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_image_format_info),
         S::get_uninit_head_ptr(p_image_format_properties.as_mut_ptr()),
     );
@@ -3471,12 +2931,11 @@ pub unsafe fn get_physical_device_image_format_properties2_khr<
 ) -> Result<S> {
     let vulkan_command = dispatcher
         .get_physical_device_image_format_properties2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_image_format_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_image_format_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_image_format_info),
         S::get_uninit_head_ptr(p_image_format_properties.as_mut_ptr()),
     );
@@ -3495,13 +2954,12 @@ pub unsafe fn get_physical_device_queue_family_properties2<
 ) -> R {
     let vulkan_command = dispatcher
         .get_physical_device_queue_family_properties2
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_queue_family_property_count = vk_len.as_mut_ptr();
     let p_queue_family_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_queue_family_property_count,
         p_queue_family_properties,
     );
@@ -3510,7 +2968,7 @@ pub unsafe fn get_physical_device_queue_family_properties2<
     let mut p_queue_family_property_count = ptr::from_mut(&mut vk_len);
     let mut p_queue_family_properties = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_queue_family_property_count,
         p_queue_family_properties,
     );
@@ -3527,13 +2985,12 @@ pub unsafe fn get_physical_device_queue_family_properties2_khr<
 ) -> R {
     let vulkan_command = dispatcher
         .get_physical_device_queue_family_properties2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_queue_family_property_count = vk_len.as_mut_ptr();
     let p_queue_family_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_queue_family_property_count,
         p_queue_family_properties,
     );
@@ -3542,7 +2999,7 @@ pub unsafe fn get_physical_device_queue_family_properties2_khr<
     let mut p_queue_family_property_count = ptr::from_mut(&mut vk_len);
     let mut p_queue_family_properties = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_queue_family_property_count,
         p_queue_family_properties,
     );
@@ -3557,14 +3014,11 @@ pub unsafe fn get_physical_device_memory_properties2<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_physical_device_memory_properties2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_memory_properties2.get();
     let mut p_memory_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         S::get_uninit_head_ptr(p_memory_properties.as_mut_ptr()),
     );
     S::setup_cleanup(p_memory_properties.as_mut_ptr());
@@ -3578,14 +3032,11 @@ pub unsafe fn get_physical_device_memory_properties2_khr<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_physical_device_memory_properties2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_memory_properties2_khr.get();
     let mut p_memory_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         S::get_uninit_head_ptr(p_memory_properties.as_mut_ptr()),
     );
     S::setup_cleanup(p_memory_properties.as_mut_ptr());
@@ -3602,13 +3053,12 @@ pub unsafe fn get_physical_device_sparse_image_format_properties2<
 ) -> R {
     let vulkan_command = dispatcher
         .get_physical_device_sparse_image_format_properties2
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_format_info),
         p_property_count,
         p_properties,
@@ -3618,7 +3068,7 @@ pub unsafe fn get_physical_device_sparse_image_format_properties2<
     let mut p_property_count = ptr::from_mut(&mut vk_len);
     let mut p_properties = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_format_info),
         p_property_count,
         p_properties,
@@ -3637,13 +3087,12 @@ pub unsafe fn get_physical_device_sparse_image_format_properties2_khr<
 ) -> R {
     let vulkan_command = dispatcher
         .get_physical_device_sparse_image_format_properties2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_format_info),
         p_property_count,
         p_properties,
@@ -3653,7 +3102,7 @@ pub unsafe fn get_physical_device_sparse_image_format_properties2_khr<
     let mut p_property_count = ptr::from_mut(&mut vk_len);
     let mut p_properties = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_format_info),
         p_property_count,
         p_properties,
@@ -3669,15 +3118,8 @@ pub unsafe fn trim_command_pool(
     flags: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .trim_command_pool
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { command_pool.clone() }),
-        flags,
-    )
+    let vulkan_command = dispatcher.trim_command_pool.get();
+    vulkan_command(Some(device.borrow()), Some(command_pool.borrow()), flags)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkTrimCommandPoolKHR.html>"]
 #[doc(alias = "vkTrimCommandPoolKHR")]
@@ -3687,15 +3129,8 @@ pub unsafe fn trim_command_pool_khr(
     flags: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .trim_command_pool_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { command_pool.clone() }),
-        flags,
-    )
+    let vulkan_command = dispatcher.trim_command_pool_khr.get();
+    vulkan_command(Some(device.borrow()), Some(command_pool.borrow()), flags)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceQueue2.html>"]
 #[doc(alias = "vkGetDeviceQueue2")]
@@ -3704,13 +3139,10 @@ pub unsafe fn get_device_queue2(
     p_queue_info: &DeviceQueueInfo2,
     dispatcher: &CommandsDispatcher,
 ) -> Queue {
-    let vulkan_command = dispatcher
-        .get_device_queue2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_queue2.get();
     let mut p_queue = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_queue_info),
         p_queue.as_mut_ptr(),
     );
@@ -3724,13 +3156,10 @@ pub unsafe fn create_sampler_ycbcr_conversion(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SamplerYcbcrConversion> {
-    let vulkan_command = dispatcher
-        .create_sampler_ycbcr_conversion
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_sampler_ycbcr_conversion.get();
     let mut p_ycbcr_conversion = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_ycbcr_conversion.as_mut_ptr(),
@@ -3745,13 +3174,10 @@ pub unsafe fn create_sampler_ycbcr_conversion_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SamplerYcbcrConversion> {
-    let vulkan_command = dispatcher
-        .create_sampler_ycbcr_conversion_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_sampler_ycbcr_conversion_khr.get();
     let mut p_ycbcr_conversion = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_ycbcr_conversion.as_mut_ptr(),
@@ -3766,13 +3192,10 @@ pub unsafe fn destroy_sampler_ycbcr_conversion(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_sampler_ycbcr_conversion
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_sampler_ycbcr_conversion.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        ycbcr_conversion.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        ycbcr_conversion.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -3784,13 +3207,10 @@ pub unsafe fn destroy_sampler_ycbcr_conversion_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_sampler_ycbcr_conversion_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_sampler_ycbcr_conversion_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        ycbcr_conversion.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        ycbcr_conversion.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -3802,13 +3222,10 @@ pub unsafe fn create_descriptor_update_template(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DescriptorUpdateTemplate> {
-    let vulkan_command = dispatcher
-        .create_descriptor_update_template
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_descriptor_update_template.get();
     let mut p_descriptor_update_template = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_descriptor_update_template.as_mut_ptr(),
@@ -3823,13 +3240,10 @@ pub unsafe fn create_descriptor_update_template_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DescriptorUpdateTemplate> {
-    let vulkan_command = dispatcher
-        .create_descriptor_update_template_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_descriptor_update_template_khr.get();
     let mut p_descriptor_update_template = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_descriptor_update_template.as_mut_ptr(),
@@ -3844,13 +3258,10 @@ pub unsafe fn destroy_descriptor_update_template(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_descriptor_update_template
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_descriptor_update_template.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        descriptor_update_template.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        descriptor_update_template.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -3862,13 +3273,10 @@ pub unsafe fn destroy_descriptor_update_template_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_descriptor_update_template_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_descriptor_update_template_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        descriptor_update_template.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        descriptor_update_template.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -3881,14 +3289,11 @@ pub unsafe fn update_descriptor_set_with_template(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .update_descriptor_set_with_template
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.update_descriptor_set_with_template.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { descriptor_set.clone() }),
-        Some(unsafe { descriptor_update_template.clone() }),
+        Some(device.borrow()),
+        Some(descriptor_set.borrow()),
+        Some(descriptor_update_template.borrow()),
         p_data,
     )
 }
@@ -3901,14 +3306,11 @@ pub unsafe fn update_descriptor_set_with_template_khr(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .update_descriptor_set_with_template_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.update_descriptor_set_with_template_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { descriptor_set.clone() }),
-        Some(unsafe { descriptor_update_template.clone() }),
+        Some(device.borrow()),
+        Some(descriptor_set.borrow()),
+        Some(descriptor_update_template.borrow()),
         p_data,
     )
 }
@@ -3923,12 +3325,11 @@ pub unsafe fn get_physical_device_external_buffer_properties<
 ) -> S {
     let vulkan_command = dispatcher
         .get_physical_device_external_buffer_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_external_buffer_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_external_buffer_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_external_buffer_info),
         S::get_uninit_head_ptr(p_external_buffer_properties.as_mut_ptr()),
     );
@@ -3946,12 +3347,11 @@ pub unsafe fn get_physical_device_external_buffer_properties_khr<
 ) -> S {
     let vulkan_command = dispatcher
         .get_physical_device_external_buffer_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_external_buffer_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_external_buffer_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_external_buffer_info),
         S::get_uninit_head_ptr(p_external_buffer_properties.as_mut_ptr()),
     );
@@ -3969,12 +3369,11 @@ pub unsafe fn get_physical_device_external_fence_properties<
 ) -> S {
     let vulkan_command = dispatcher
         .get_physical_device_external_fence_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_external_fence_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_external_fence_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_external_fence_info),
         S::get_uninit_head_ptr(p_external_fence_properties.as_mut_ptr()),
     );
@@ -3992,12 +3391,11 @@ pub unsafe fn get_physical_device_external_fence_properties_khr<
 ) -> S {
     let vulkan_command = dispatcher
         .get_physical_device_external_fence_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_external_fence_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_external_fence_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_external_fence_info),
         S::get_uninit_head_ptr(p_external_fence_properties.as_mut_ptr()),
     );
@@ -4015,12 +3413,11 @@ pub unsafe fn get_physical_device_external_semaphore_properties<
 ) -> S {
     let vulkan_command = dispatcher
         .get_physical_device_external_semaphore_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_external_semaphore_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_external_semaphore_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_external_semaphore_info),
         S::get_uninit_head_ptr(p_external_semaphore_properties.as_mut_ptr()),
     );
@@ -4038,12 +3435,11 @@ pub unsafe fn get_physical_device_external_semaphore_properties_khr<
 ) -> S {
     let vulkan_command = dispatcher
         .get_physical_device_external_semaphore_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_external_semaphore_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_external_semaphore_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_external_semaphore_info),
         S::get_uninit_head_ptr(p_external_semaphore_properties.as_mut_ptr()),
     );
@@ -4059,14 +3455,11 @@ pub unsafe fn get_descriptor_set_layout_support<
     p_create_info: &DescriptorSetLayoutCreateInfo,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_descriptor_set_layout_support
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_descriptor_set_layout_support.get();
     let mut p_support = MaybeUninit::uninit();
     S::setup_uninit(&mut p_support);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         S::get_uninit_head_ptr(p_support.as_mut_ptr()),
     );
@@ -4082,14 +3475,11 @@ pub unsafe fn get_descriptor_set_layout_support_khr<
     p_create_info: &DescriptorSetLayoutCreateInfo,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_descriptor_set_layout_support_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_descriptor_set_layout_support_khr.get();
     let mut p_support = MaybeUninit::uninit();
     S::setup_uninit(&mut p_support);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         S::get_uninit_head_ptr(p_support.as_mut_ptr()),
     );
@@ -4108,15 +3498,12 @@ pub unsafe fn cmd_draw_indirect_count(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indirect_count
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indirect_count.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
-        Some(unsafe { count_buffer.clone() }),
+        Some(count_buffer.borrow()),
         count_buffer_offset,
         max_draw_count,
         stride,
@@ -4134,15 +3521,12 @@ pub unsafe fn cmd_draw_indirect_count_khr(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indirect_count_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indirect_count_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
-        Some(unsafe { count_buffer.clone() }),
+        Some(count_buffer.borrow()),
         count_buffer_offset,
         max_draw_count,
         stride,
@@ -4160,15 +3544,12 @@ pub unsafe fn cmd_draw_indirect_count_amd(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indirect_count_amd
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indirect_count_amd.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
-        Some(unsafe { count_buffer.clone() }),
+        Some(count_buffer.borrow()),
         count_buffer_offset,
         max_draw_count,
         stride,
@@ -4186,15 +3567,12 @@ pub unsafe fn cmd_draw_indexed_indirect_count(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indexed_indirect_count
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indexed_indirect_count.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
-        Some(unsafe { count_buffer.clone() }),
+        Some(count_buffer.borrow()),
         count_buffer_offset,
         max_draw_count,
         stride,
@@ -4212,15 +3590,12 @@ pub unsafe fn cmd_draw_indexed_indirect_count_khr(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indexed_indirect_count_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indexed_indirect_count_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
-        Some(unsafe { count_buffer.clone() }),
+        Some(count_buffer.borrow()),
         count_buffer_offset,
         max_draw_count,
         stride,
@@ -4238,15 +3613,12 @@ pub unsafe fn cmd_draw_indexed_indirect_count_amd(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indexed_indirect_count_amd
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indexed_indirect_count_amd.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
-        Some(unsafe { count_buffer.clone() }),
+        Some(count_buffer.borrow()),
         count_buffer_offset,
         max_draw_count,
         stride,
@@ -4260,13 +3632,10 @@ pub unsafe fn create_render_pass2(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<RenderPass> {
-    let vulkan_command = dispatcher
-        .create_render_pass2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_render_pass2.get();
     let mut p_render_pass = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_render_pass.as_mut_ptr(),
@@ -4281,13 +3650,10 @@ pub unsafe fn create_render_pass2_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<RenderPass> {
-    let vulkan_command = dispatcher
-        .create_render_pass2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_render_pass2_khr.get();
     let mut p_render_pass = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_render_pass.as_mut_ptr(),
@@ -4302,12 +3668,9 @@ pub unsafe fn cmd_begin_render_pass2(
     p_subpass_begin_info: &SubpassBeginInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_render_pass2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_begin_render_pass2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_render_pass_begin),
         ptr::from_ref(p_subpass_begin_info),
     )
@@ -4320,12 +3683,9 @@ pub unsafe fn cmd_begin_render_pass2_khr(
     p_subpass_begin_info: &SubpassBeginInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_render_pass2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_begin_render_pass2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_render_pass_begin),
         ptr::from_ref(p_subpass_begin_info),
     )
@@ -4338,12 +3698,9 @@ pub unsafe fn cmd_next_subpass2(
     p_subpass_end_info: &SubpassEndInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_next_subpass2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_next_subpass2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_subpass_begin_info),
         ptr::from_ref(p_subpass_end_info),
     )
@@ -4356,12 +3713,9 @@ pub unsafe fn cmd_next_subpass2_khr(
     p_subpass_end_info: &SubpassEndInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_next_subpass2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_next_subpass2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_subpass_begin_info),
         ptr::from_ref(p_subpass_end_info),
     )
@@ -4373,12 +3727,9 @@ pub unsafe fn cmd_end_render_pass2(
     p_subpass_end_info: &SubpassEndInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_render_pass2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_end_render_pass2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_subpass_end_info),
     )
 }
@@ -4389,12 +3740,9 @@ pub unsafe fn cmd_end_render_pass2_khr(
     p_subpass_end_info: &SubpassEndInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_render_pass2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_end_render_pass2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_subpass_end_info),
     )
 }
@@ -4407,13 +3755,10 @@ pub unsafe fn reset_query_pool(
     query_count: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .reset_query_pool
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.reset_query_pool.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { query_pool.clone() }),
+        Some(device.borrow()),
+        Some(query_pool.borrow()),
         first_query,
         query_count,
     )
@@ -4427,13 +3772,10 @@ pub unsafe fn reset_query_pool_ext(
     query_count: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .reset_query_pool_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.reset_query_pool_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { query_pool.clone() }),
+        Some(device.borrow()),
+        Some(query_pool.borrow()),
         first_query,
         query_count,
     )
@@ -4445,14 +3787,11 @@ pub unsafe fn get_semaphore_counter_value(
     semaphore: &raw::Semaphore,
     dispatcher: &CommandsDispatcher,
 ) -> Result<u64> {
-    let vulkan_command = dispatcher
-        .get_semaphore_counter_value
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_semaphore_counter_value.get();
     let mut p_value = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { semaphore.clone() }),
+        Some(device.borrow()),
+        Some(semaphore.borrow()),
         p_value.as_mut_ptr(),
     );
     vk_status.map_success(|| p_value.assume_init())
@@ -4464,14 +3803,11 @@ pub unsafe fn get_semaphore_counter_value_khr(
     semaphore: &raw::Semaphore,
     dispatcher: &CommandsDispatcher,
 ) -> Result<u64> {
-    let vulkan_command = dispatcher
-        .get_semaphore_counter_value_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_semaphore_counter_value_khr.get();
     let mut p_value = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { semaphore.clone() }),
+        Some(device.borrow()),
+        Some(semaphore.borrow()),
         p_value.as_mut_ptr(),
     );
     vk_status.map_success(|| p_value.assume_init())
@@ -4484,16 +3820,8 @@ pub unsafe fn wait_semaphores(
     timeout: u64,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .wait_semaphores
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_wait_info),
-        timeout,
-    )
-    .into_result()
+    let vulkan_command = dispatcher.wait_semaphores.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_wait_info), timeout).into_result()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkWaitSemaphoresKHR.html>"]
 #[doc(alias = "vkWaitSemaphoresKHR")]
@@ -4503,16 +3831,8 @@ pub unsafe fn wait_semaphores_khr(
     timeout: u64,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .wait_semaphores_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_wait_info),
-        timeout,
-    )
-    .into_result()
+    let vulkan_command = dispatcher.wait_semaphores_khr.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_wait_info), timeout).into_result()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphore.html>"]
 #[doc(alias = "vkSignalSemaphore")]
@@ -4521,15 +3841,8 @@ pub unsafe fn signal_semaphore(
     p_signal_info: &SemaphoreSignalInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .signal_semaphore
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_signal_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.signal_semaphore.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_signal_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSignalSemaphoreKHR.html>"]
 #[doc(alias = "vkSignalSemaphoreKHR")]
@@ -4538,15 +3851,8 @@ pub unsafe fn signal_semaphore_khr(
     p_signal_info: &SemaphoreSignalInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .signal_semaphore_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_signal_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.signal_semaphore_khr.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_signal_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddress.html>"]
 #[doc(alias = "vkGetBufferDeviceAddress")]
@@ -4555,11 +3861,8 @@ pub unsafe fn get_buffer_device_address(
     p_info: &BufferDeviceAddressInfo,
     dispatcher: &CommandsDispatcher,
 ) -> DeviceAddress {
-    let vulkan_command = dispatcher
-        .get_buffer_device_address
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+    let vulkan_command = dispatcher.get_buffer_device_address.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressKHR.html>"]
 #[doc(alias = "vkGetBufferDeviceAddressKHR")]
@@ -4568,11 +3871,8 @@ pub unsafe fn get_buffer_device_address_khr(
     p_info: &BufferDeviceAddressInfo,
     dispatcher: &CommandsDispatcher,
 ) -> DeviceAddress {
-    let vulkan_command = dispatcher
-        .get_buffer_device_address_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+    let vulkan_command = dispatcher.get_buffer_device_address_khr.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferDeviceAddressEXT.html>"]
 #[doc(alias = "vkGetBufferDeviceAddressEXT")]
@@ -4581,11 +3881,8 @@ pub unsafe fn get_buffer_device_address_ext(
     p_info: &BufferDeviceAddressInfo,
     dispatcher: &CommandsDispatcher,
 ) -> DeviceAddress {
-    let vulkan_command = dispatcher
-        .get_buffer_device_address_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+    let vulkan_command = dispatcher.get_buffer_device_address_ext.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddress.html>"]
 #[doc(alias = "vkGetBufferOpaqueCaptureAddress")]
@@ -4594,11 +3891,8 @@ pub unsafe fn get_buffer_opaque_capture_address(
     p_info: &BufferDeviceAddressInfo,
     dispatcher: &CommandsDispatcher,
 ) -> u64 {
-    let vulkan_command = dispatcher
-        .get_buffer_opaque_capture_address
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+    let vulkan_command = dispatcher.get_buffer_opaque_capture_address.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetBufferOpaqueCaptureAddressKHR.html>"]
 #[doc(alias = "vkGetBufferOpaqueCaptureAddressKHR")]
@@ -4607,11 +3901,8 @@ pub unsafe fn get_buffer_opaque_capture_address_khr(
     p_info: &BufferDeviceAddressInfo,
     dispatcher: &CommandsDispatcher,
 ) -> u64 {
-    let vulkan_command = dispatcher
-        .get_buffer_opaque_capture_address_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+    let vulkan_command = dispatcher.get_buffer_opaque_capture_address_khr.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddress.html>"]
 #[doc(alias = "vkGetDeviceMemoryOpaqueCaptureAddress")]
@@ -4620,11 +3911,8 @@ pub unsafe fn get_device_memory_opaque_capture_address(
     p_info: &DeviceMemoryOpaqueCaptureAddressInfo,
     dispatcher: &CommandsDispatcher,
 ) -> u64 {
-    let vulkan_command = dispatcher
-        .get_device_memory_opaque_capture_address
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+    let vulkan_command = dispatcher.get_device_memory_opaque_capture_address.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>"]
 #[doc(alias = "vkGetDeviceMemoryOpaqueCaptureAddressKHR")]
@@ -4635,9 +3923,8 @@ pub unsafe fn get_device_memory_opaque_capture_address_khr(
 ) -> u64 {
     let vulkan_command = dispatcher
         .get_device_memory_opaque_capture_address_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+        .get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceToolProperties.html>"]
 #[doc(alias = "vkGetPhysicalDeviceToolProperties")]
@@ -4647,15 +3934,12 @@ pub unsafe fn get_physical_device_tool_properties<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_physical_device_tool_properties
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_tool_properties.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_tool_count = vk_len.as_mut_ptr();
     let p_tool_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_tool_count,
         p_tool_properties,
     )
@@ -4666,7 +3950,7 @@ pub unsafe fn get_physical_device_tool_properties<
     let mut p_tool_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_tool_count,
             p_tool_properties,
         );
@@ -4690,15 +3974,12 @@ pub unsafe fn get_physical_device_tool_properties_ext<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_physical_device_tool_properties_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_tool_properties_ext.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_tool_count = vk_len.as_mut_ptr();
     let p_tool_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_tool_count,
         p_tool_properties,
     )
@@ -4709,7 +3990,7 @@ pub unsafe fn get_physical_device_tool_properties_ext<
     let mut p_tool_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_tool_count,
             p_tool_properties,
         );
@@ -4733,13 +4014,10 @@ pub unsafe fn create_private_data_slot(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<PrivateDataSlot> {
-    let vulkan_command = dispatcher
-        .create_private_data_slot
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_private_data_slot.get();
     let mut p_private_data_slot = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_private_data_slot.as_mut_ptr(),
@@ -4754,13 +4032,10 @@ pub unsafe fn create_private_data_slot_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<PrivateDataSlot> {
-    let vulkan_command = dispatcher
-        .create_private_data_slot_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_private_data_slot_ext.get();
     let mut p_private_data_slot = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_private_data_slot.as_mut_ptr(),
@@ -4775,13 +4050,10 @@ pub unsafe fn destroy_private_data_slot(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_private_data_slot
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_private_data_slot.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        private_data_slot.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        private_data_slot.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -4793,13 +4065,10 @@ pub unsafe fn destroy_private_data_slot_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_private_data_slot_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_private_data_slot_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        private_data_slot.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        private_data_slot.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -4813,15 +4082,12 @@ pub unsafe fn set_private_data(
     data: u64,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .set_private_data
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.set_private_data.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         object_type,
         object_handle,
-        Some(unsafe { private_data_slot.clone() }),
+        Some(private_data_slot.borrow()),
         data,
     )
     .map_success(|| ())
@@ -4836,15 +4102,12 @@ pub unsafe fn set_private_data_ext(
     data: u64,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .set_private_data_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.set_private_data_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         object_type,
         object_handle,
-        Some(unsafe { private_data_slot.clone() }),
+        Some(private_data_slot.borrow()),
         data,
     )
     .map_success(|| ())
@@ -4858,16 +4121,13 @@ pub unsafe fn get_private_data(
     private_data_slot: &raw::PrivateDataSlot,
     dispatcher: &CommandsDispatcher,
 ) -> u64 {
-    let vulkan_command = dispatcher
-        .get_private_data
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_private_data.get();
     let mut p_data = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         object_type,
         object_handle,
-        Some(unsafe { private_data_slot.clone() }),
+        Some(private_data_slot.borrow()),
         p_data.as_mut_ptr(),
     );
     p_data.assume_init()
@@ -4881,16 +4141,13 @@ pub unsafe fn get_private_data_ext(
     private_data_slot: &raw::PrivateDataSlot,
     dispatcher: &CommandsDispatcher,
 ) -> u64 {
-    let vulkan_command = dispatcher
-        .get_private_data_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_private_data_ext.get();
     let mut p_data = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         object_type,
         object_handle,
-        Some(unsafe { private_data_slot.clone() }),
+        Some(private_data_slot.borrow()),
         p_data.as_mut_ptr(),
     );
     p_data.assume_init()
@@ -4903,13 +4160,10 @@ pub unsafe fn cmd_set_event2(
     p_dependency_info: &DependencyInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_event2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_event2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { event.clone() }),
+        Some(command_buffer.borrow()),
+        Some(event.borrow()),
         ptr::from_ref(p_dependency_info),
     )
 }
@@ -4921,13 +4175,10 @@ pub unsafe fn cmd_set_event2_khr(
     p_dependency_info: &DependencyInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_event2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_event2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { event.clone() }),
+        Some(command_buffer.borrow()),
+        Some(event.borrow()),
         ptr::from_ref(p_dependency_info),
     )
 }
@@ -4939,13 +4190,10 @@ pub unsafe fn cmd_reset_event2(
     stage_mask: PipelineStageFlags2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_reset_event2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_reset_event2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { event.clone() }),
+        Some(command_buffer.borrow()),
+        Some(event.borrow()),
         stage_mask,
     )
 }
@@ -4957,13 +4205,10 @@ pub unsafe fn cmd_reset_event2_khr(
     stage_mask: PipelineStageFlags2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_reset_event2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_reset_event2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { event.clone() }),
+        Some(command_buffer.borrow()),
+        Some(event.borrow()),
         stage_mask,
     )
 }
@@ -4975,12 +4220,9 @@ pub unsafe fn cmd_wait_events2<'a, V2: Alias<raw::Event> + 'a>(
     p_dependency_infos: impl AsSlice<'a, DependencyInfo<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_wait_events2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_wait_events2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_dependency_infos.as_slice().len() as _,
         p_events.as_slice().as_ptr().cast(),
         p_dependency_infos.as_slice().as_ptr().cast(),
@@ -4994,12 +4236,9 @@ pub unsafe fn cmd_wait_events2_khr<'a, V2: Alias<raw::Event> + 'a>(
     p_dependency_infos: impl AsSlice<'a, DependencyInfo<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_wait_events2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_wait_events2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_dependency_infos.as_slice().len() as _,
         p_events.as_slice().as_ptr().cast(),
         p_dependency_infos.as_slice().as_ptr().cast(),
@@ -5012,12 +4251,9 @@ pub unsafe fn cmd_pipeline_barrier2(
     p_dependency_info: &DependencyInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_pipeline_barrier2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_pipeline_barrier2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_dependency_info),
     )
 }
@@ -5028,12 +4264,9 @@ pub unsafe fn cmd_pipeline_barrier2_khr(
     p_dependency_info: &DependencyInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_pipeline_barrier2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_pipeline_barrier2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_dependency_info),
     )
 }
@@ -5046,14 +4279,11 @@ pub unsafe fn cmd_write_timestamp2(
     query: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_write_timestamp2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_write_timestamp2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         stage,
-        Some(unsafe { query_pool.clone() }),
+        Some(query_pool.borrow()),
         query,
     )
 }
@@ -5066,14 +4296,11 @@ pub unsafe fn cmd_write_timestamp2_khr(
     query: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_write_timestamp2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_write_timestamp2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         stage,
-        Some(unsafe { query_pool.clone() }),
+        Some(query_pool.borrow()),
         query,
     )
 }
@@ -5085,15 +4312,12 @@ pub unsafe fn queue_submit2<'a>(
     fence: Option<&raw::Fence>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .queue_submit2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.queue_submit2.get();
     vulkan_command(
-        Some(unsafe { queue.clone() }),
+        Some(queue.borrow()),
         p_submits.as_slice().len() as _,
         p_submits.as_slice().as_ptr().cast(),
-        fence.map(|v| unsafe { v.clone() }),
+        fence.map(|v| v.borrow()),
     )
     .map_success(|| ())
 }
@@ -5105,15 +4329,12 @@ pub unsafe fn queue_submit2_khr<'a>(
     fence: Option<&raw::Fence>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .queue_submit2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.queue_submit2_khr.get();
     vulkan_command(
-        Some(unsafe { queue.clone() }),
+        Some(queue.borrow()),
         p_submits.as_slice().len() as _,
         p_submits.as_slice().as_ptr().cast(),
-        fence.map(|v| unsafe { v.clone() }),
+        fence.map(|v| v.borrow()),
     )
     .map_success(|| ())
 }
@@ -5124,12 +4345,9 @@ pub unsafe fn cmd_copy_buffer2(
     p_copy_buffer_info: &CopyBufferInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_buffer2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_buffer2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_copy_buffer_info),
     )
 }
@@ -5140,12 +4358,9 @@ pub unsafe fn cmd_copy_buffer2_khr(
     p_copy_buffer_info: &CopyBufferInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_buffer2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_buffer2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_copy_buffer_info),
     )
 }
@@ -5156,12 +4371,9 @@ pub unsafe fn cmd_copy_image2(
     p_copy_image_info: &CopyImageInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_image2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_image2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_copy_image_info),
     )
 }
@@ -5172,12 +4384,9 @@ pub unsafe fn cmd_copy_image2_khr(
     p_copy_image_info: &CopyImageInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_image2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_image2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_copy_image_info),
     )
 }
@@ -5188,12 +4397,9 @@ pub unsafe fn cmd_copy_buffer_to_image2(
     p_copy_buffer_to_image_info: &CopyBufferToImageInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_buffer_to_image2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_buffer_to_image2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_copy_buffer_to_image_info),
     )
 }
@@ -5204,12 +4410,9 @@ pub unsafe fn cmd_copy_buffer_to_image2_khr(
     p_copy_buffer_to_image_info: &CopyBufferToImageInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_buffer_to_image2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_buffer_to_image2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_copy_buffer_to_image_info),
     )
 }
@@ -5220,12 +4423,9 @@ pub unsafe fn cmd_copy_image_to_buffer2(
     p_copy_image_to_buffer_info: &CopyImageToBufferInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_image_to_buffer2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_image_to_buffer2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_copy_image_to_buffer_info),
     )
 }
@@ -5236,12 +4436,9 @@ pub unsafe fn cmd_copy_image_to_buffer2_khr(
     p_copy_image_to_buffer_info: &CopyImageToBufferInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_image_to_buffer2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_image_to_buffer2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_copy_image_to_buffer_info),
     )
 }
@@ -5252,12 +4449,9 @@ pub unsafe fn cmd_blit_image2(
     p_blit_image_info: &BlitImageInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_blit_image2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_blit_image2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_blit_image_info),
     )
 }
@@ -5268,12 +4462,9 @@ pub unsafe fn cmd_blit_image2_khr(
     p_blit_image_info: &BlitImageInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_blit_image2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_blit_image2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_blit_image_info),
     )
 }
@@ -5284,12 +4475,9 @@ pub unsafe fn cmd_resolve_image2(
     p_resolve_image_info: &ResolveImageInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_resolve_image2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_resolve_image2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_resolve_image_info),
     )
 }
@@ -5300,12 +4488,9 @@ pub unsafe fn cmd_resolve_image2_khr(
     p_resolve_image_info: &ResolveImageInfo2,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_resolve_image2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_resolve_image2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_resolve_image_info),
     )
 }
@@ -5316,12 +4501,9 @@ pub unsafe fn cmd_begin_rendering(
     p_rendering_info: &RenderingInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_rendering
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_begin_rendering.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_rendering_info),
     )
 }
@@ -5332,12 +4514,9 @@ pub unsafe fn cmd_begin_rendering_khr(
     p_rendering_info: &RenderingInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_rendering_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_begin_rendering_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_rendering_info),
     )
 }
@@ -5347,11 +4526,8 @@ pub unsafe fn cmd_end_rendering(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_rendering
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }))
+    let vulkan_command = dispatcher.cmd_end_rendering.get();
+    vulkan_command(Some(command_buffer.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndRenderingKHR.html>"]
 #[doc(alias = "vkCmdEndRenderingKHR")]
@@ -5359,11 +4535,8 @@ pub unsafe fn cmd_end_rendering_khr(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_rendering_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }))
+    let vulkan_command = dispatcher.cmd_end_rendering_khr.get();
+    vulkan_command(Some(command_buffer.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullMode.html>"]
 #[doc(alias = "vkCmdSetCullMode")]
@@ -5372,11 +4545,8 @@ pub unsafe fn cmd_set_cull_mode(
     cull_mode: CullModeFlags,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_cull_mode
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), cull_mode)
+    let vulkan_command = dispatcher.cmd_set_cull_mode.get();
+    vulkan_command(Some(command_buffer.borrow()), cull_mode)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCullModeEXT.html>"]
 #[doc(alias = "vkCmdSetCullModeEXT")]
@@ -5385,11 +4555,8 @@ pub unsafe fn cmd_set_cull_mode_ext(
     cull_mode: CullModeFlags,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_cull_mode_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), cull_mode)
+    let vulkan_command = dispatcher.cmd_set_cull_mode_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), cull_mode)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetFrontFace.html>"]
 #[doc(alias = "vkCmdSetFrontFace")]
@@ -5398,11 +4565,8 @@ pub unsafe fn cmd_set_front_face(
     front_face: FrontFace,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_front_face
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), front_face)
+    let vulkan_command = dispatcher.cmd_set_front_face.get();
+    vulkan_command(Some(command_buffer.borrow()), front_face)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetFrontFaceEXT.html>"]
 #[doc(alias = "vkCmdSetFrontFaceEXT")]
@@ -5411,11 +4575,8 @@ pub unsafe fn cmd_set_front_face_ext(
     front_face: FrontFace,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_front_face_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), front_face)
+    let vulkan_command = dispatcher.cmd_set_front_face_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), front_face)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveTopology.html>"]
 #[doc(alias = "vkCmdSetPrimitiveTopology")]
@@ -5424,11 +4585,8 @@ pub unsafe fn cmd_set_primitive_topology(
     primitive_topology: PrimitiveTopology,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_primitive_topology
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), primitive_topology)
+    let vulkan_command = dispatcher.cmd_set_primitive_topology.get();
+    vulkan_command(Some(command_buffer.borrow()), primitive_topology)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveTopologyEXT.html>"]
 #[doc(alias = "vkCmdSetPrimitiveTopologyEXT")]
@@ -5437,11 +4595,8 @@ pub unsafe fn cmd_set_primitive_topology_ext(
     primitive_topology: PrimitiveTopology,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_primitive_topology_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), primitive_topology)
+    let vulkan_command = dispatcher.cmd_set_primitive_topology_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), primitive_topology)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWithCount.html>"]
 #[doc(alias = "vkCmdSetViewportWithCount")]
@@ -5450,12 +4605,9 @@ pub unsafe fn cmd_set_viewport_with_count<'a>(
     p_viewports: impl AsSlice<'a, Viewport>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_viewport_with_count
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_viewport_with_count.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_viewports.as_slice().len() as _,
         p_viewports.as_slice().as_ptr().cast(),
     )
@@ -5467,12 +4619,9 @@ pub unsafe fn cmd_set_viewport_with_count_ext<'a>(
     p_viewports: impl AsSlice<'a, Viewport>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_viewport_with_count_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_viewport_with_count_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_viewports.as_slice().len() as _,
         p_viewports.as_slice().as_ptr().cast(),
     )
@@ -5484,12 +4633,9 @@ pub unsafe fn cmd_set_scissor_with_count<'a>(
     p_scissors: impl AsSlice<'a, Rect2D>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_scissor_with_count
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_scissor_with_count.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_scissors.as_slice().len() as _,
         p_scissors.as_slice().as_ptr().cast(),
     )
@@ -5501,12 +4647,9 @@ pub unsafe fn cmd_set_scissor_with_count_ext<'a>(
     p_scissors: impl AsSlice<'a, Rect2D>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_scissor_with_count_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_scissor_with_count_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_scissors.as_slice().len() as _,
         p_scissors.as_slice().as_ptr().cast(),
     )
@@ -5522,12 +4665,9 @@ pub unsafe fn cmd_bind_vertex_buffers2<'a, V3: Alias<raw::Buffer> + 'a>(
     p_strides: Option<impl AsSlice<'a, DeviceSize>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_vertex_buffers2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_vertex_buffers2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_binding,
         p_offsets.as_slice().len() as _,
         p_buffers.as_slice().as_ptr().cast(),
@@ -5551,12 +4691,9 @@ pub unsafe fn cmd_bind_vertex_buffers2_ext<'a, V3: Alias<raw::Buffer> + 'a>(
     p_strides: Option<impl AsSlice<'a, DeviceSize>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_vertex_buffers2_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_vertex_buffers2_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_binding,
         p_offsets.as_slice().len() as _,
         p_buffers.as_slice().as_ptr().cast(),
@@ -5576,14 +4713,8 @@ pub unsafe fn cmd_set_depth_test_enable(
     depth_test_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_test_enable
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        depth_test_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_depth_test_enable.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_test_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthTestEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthTestEnableEXT")]
@@ -5592,14 +4723,8 @@ pub unsafe fn cmd_set_depth_test_enable_ext(
     depth_test_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_test_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        depth_test_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_depth_test_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_test_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthWriteEnable.html>"]
 #[doc(alias = "vkCmdSetDepthWriteEnable")]
@@ -5608,14 +4733,8 @@ pub unsafe fn cmd_set_depth_write_enable(
     depth_write_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_write_enable
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        depth_write_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_depth_write_enable.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_write_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthWriteEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthWriteEnableEXT")]
@@ -5624,14 +4743,8 @@ pub unsafe fn cmd_set_depth_write_enable_ext(
     depth_write_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_write_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        depth_write_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_depth_write_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_write_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthCompareOp.html>"]
 #[doc(alias = "vkCmdSetDepthCompareOp")]
@@ -5640,11 +4753,8 @@ pub unsafe fn cmd_set_depth_compare_op(
     depth_compare_op: CompareOp,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_compare_op
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), depth_compare_op)
+    let vulkan_command = dispatcher.cmd_set_depth_compare_op.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_compare_op)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthCompareOpEXT.html>"]
 #[doc(alias = "vkCmdSetDepthCompareOpEXT")]
@@ -5653,11 +4763,8 @@ pub unsafe fn cmd_set_depth_compare_op_ext(
     depth_compare_op: CompareOp,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_compare_op_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), depth_compare_op)
+    let vulkan_command = dispatcher.cmd_set_depth_compare_op_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_compare_op)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBoundsTestEnable.html>"]
 #[doc(alias = "vkCmdSetDepthBoundsTestEnable")]
@@ -5666,12 +4773,9 @@ pub unsafe fn cmd_set_depth_bounds_test_enable(
     depth_bounds_test_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_bounds_test_enable
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_depth_bounds_test_enable.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         depth_bounds_test_enable.into(),
     )
 }
@@ -5682,12 +4786,9 @@ pub unsafe fn cmd_set_depth_bounds_test_enable_ext(
     depth_bounds_test_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_bounds_test_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_depth_bounds_test_enable_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         depth_bounds_test_enable.into(),
     )
 }
@@ -5698,14 +4799,8 @@ pub unsafe fn cmd_set_stencil_test_enable(
     stencil_test_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_stencil_test_enable
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        stencil_test_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_stencil_test_enable.get();
+    vulkan_command(Some(command_buffer.borrow()), stencil_test_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilTestEnableEXT.html>"]
 #[doc(alias = "vkCmdSetStencilTestEnableEXT")]
@@ -5714,14 +4809,8 @@ pub unsafe fn cmd_set_stencil_test_enable_ext(
     stencil_test_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_stencil_test_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        stencil_test_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_stencil_test_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), stencil_test_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetStencilOp.html>"]
 #[doc(alias = "vkCmdSetStencilOp")]
@@ -5734,12 +4823,9 @@ pub unsafe fn cmd_set_stencil_op(
     compare_op: CompareOp,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_stencil_op
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_stencil_op.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         face_mask,
         fail_op,
         pass_op,
@@ -5758,12 +4844,9 @@ pub unsafe fn cmd_set_stencil_op_ext(
     compare_op: CompareOp,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_stencil_op_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_stencil_op_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         face_mask,
         fail_op,
         pass_op,
@@ -5778,12 +4861,9 @@ pub unsafe fn cmd_set_rasterizer_discard_enable(
     rasterizer_discard_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_rasterizer_discard_enable
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_rasterizer_discard_enable.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         rasterizer_discard_enable.into(),
     )
 }
@@ -5794,12 +4874,9 @@ pub unsafe fn cmd_set_rasterizer_discard_enable_ext(
     rasterizer_discard_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_rasterizer_discard_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_rasterizer_discard_enable_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         rasterizer_discard_enable.into(),
     )
 }
@@ -5810,14 +4887,8 @@ pub unsafe fn cmd_set_depth_bias_enable(
     depth_bias_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_bias_enable
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        depth_bias_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_depth_bias_enable.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_bias_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthBiasEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthBiasEnableEXT")]
@@ -5826,14 +4897,8 @@ pub unsafe fn cmd_set_depth_bias_enable_ext(
     depth_bias_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_bias_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        depth_bias_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_depth_bias_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_bias_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPrimitiveRestartEnable.html>"]
 #[doc(alias = "vkCmdSetPrimitiveRestartEnable")]
@@ -5842,12 +4907,9 @@ pub unsafe fn cmd_set_primitive_restart_enable(
     primitive_restart_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_primitive_restart_enable
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_primitive_restart_enable.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         primitive_restart_enable.into(),
     )
 }
@@ -5858,12 +4920,9 @@ pub unsafe fn cmd_set_primitive_restart_enable_ext(
     primitive_restart_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_primitive_restart_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_primitive_restart_enable_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         primitive_restart_enable.into(),
     )
 }
@@ -5876,14 +4935,11 @@ pub unsafe fn get_device_buffer_memory_requirements<
     p_info: &DeviceBufferMemoryRequirements,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_device_buffer_memory_requirements
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_buffer_memory_requirements.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -5899,14 +4955,11 @@ pub unsafe fn get_device_buffer_memory_requirements_khr<
     p_info: &DeviceBufferMemoryRequirements,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_device_buffer_memory_requirements_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_buffer_memory_requirements_khr.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -5922,14 +4975,11 @@ pub unsafe fn get_device_image_memory_requirements<
     p_info: &DeviceImageMemoryRequirements,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_device_image_memory_requirements
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_image_memory_requirements.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -5945,14 +4995,11 @@ pub unsafe fn get_device_image_memory_requirements_khr<
     p_info: &DeviceImageMemoryRequirements,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_device_image_memory_requirements_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_image_memory_requirements_khr.get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -5968,15 +5015,12 @@ pub unsafe fn get_device_image_sparse_memory_requirements<
     p_info: &DeviceImageMemoryRequirements,
     dispatcher: &CommandsDispatcher,
 ) -> R {
-    let vulkan_command = dispatcher
-        .get_device_image_sparse_memory_requirements
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_image_sparse_memory_requirements.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_sparse_memory_requirement_count = vk_len.as_mut_ptr();
     let p_sparse_memory_requirements = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
@@ -5986,7 +5030,7 @@ pub unsafe fn get_device_image_sparse_memory_requirements<
     let mut p_sparse_memory_requirement_count = ptr::from_mut(&mut vk_len);
     let mut p_sparse_memory_requirements = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
@@ -6005,13 +5049,12 @@ pub unsafe fn get_device_image_sparse_memory_requirements_khr<
 ) -> R {
     let vulkan_command = dispatcher
         .get_device_image_sparse_memory_requirements_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_sparse_memory_requirement_count = vk_len.as_mut_ptr();
     let p_sparse_memory_requirements = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
@@ -6021,7 +5064,7 @@ pub unsafe fn get_device_image_sparse_memory_requirements_khr<
     let mut p_sparse_memory_requirement_count = ptr::from_mut(&mut vk_len);
     let mut p_sparse_memory_requirements = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         p_sparse_memory_requirement_count,
         p_sparse_memory_requirements,
@@ -6037,12 +5080,9 @@ pub unsafe fn cmd_set_line_stipple(
     line_stipple_pattern: u16,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_line_stipple
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_line_stipple.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         line_stipple_factor,
         line_stipple_pattern,
     )
@@ -6055,12 +5095,9 @@ pub unsafe fn cmd_set_line_stipple_khr(
     line_stipple_pattern: u16,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_line_stipple_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_line_stipple_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         line_stipple_factor,
         line_stipple_pattern,
     )
@@ -6073,12 +5110,9 @@ pub unsafe fn cmd_set_line_stipple_ext(
     line_stipple_pattern: u16,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_line_stipple_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_line_stipple_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         line_stipple_factor,
         line_stipple_pattern,
     )
@@ -6090,13 +5124,10 @@ pub unsafe fn map_memory2(
     p_memory_map_info: &MemoryMapInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .map_memory2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.map_memory2.get();
     let mut pp_data = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_memory_map_info),
         pp_data.as_mut_ptr(),
     );
@@ -6109,13 +5140,10 @@ pub unsafe fn map_memory2_khr(
     p_memory_map_info: &MemoryMapInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .map_memory2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.map_memory2_khr.get();
     let mut pp_data = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_memory_map_info),
         pp_data.as_mut_ptr(),
     );
@@ -6128,15 +5156,8 @@ pub unsafe fn unmap_memory2(
     p_memory_unmap_info: &MemoryUnmapInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .unmap_memory2
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_memory_unmap_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.unmap_memory2.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_memory_unmap_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkUnmapMemory2KHR.html>"]
 #[doc(alias = "vkUnmapMemory2KHR")]
@@ -6145,15 +5166,8 @@ pub unsafe fn unmap_memory2_khr(
     p_memory_unmap_info: &MemoryUnmapInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .unmap_memory2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_memory_unmap_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.unmap_memory2_khr.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_memory_unmap_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindIndexBuffer2.html>"]
 #[doc(alias = "vkCmdBindIndexBuffer2")]
@@ -6165,13 +5179,10 @@ pub unsafe fn cmd_bind_index_buffer2(
     index_type: IndexType,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_index_buffer2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_index_buffer2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        buffer.map(|v| unsafe { v.clone() }),
+        Some(command_buffer.borrow()),
+        buffer.map(|v| v.borrow()),
         offset,
         size,
         index_type,
@@ -6187,13 +5198,10 @@ pub unsafe fn cmd_bind_index_buffer2_khr(
     index_type: IndexType,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_index_buffer2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_index_buffer2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        buffer.map(|v| unsafe { v.clone() }),
+        Some(command_buffer.borrow()),
+        buffer.map(|v| v.borrow()),
         offset,
         size,
         index_type,
@@ -6206,13 +5214,10 @@ pub unsafe fn get_rendering_area_granularity(
     p_rendering_area_info: &RenderingAreaInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Extent2D {
-    let vulkan_command = dispatcher
-        .get_rendering_area_granularity
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_rendering_area_granularity.get();
     let mut p_granularity = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_rendering_area_info),
         p_granularity.as_mut_ptr(),
     );
@@ -6225,13 +5230,10 @@ pub unsafe fn get_rendering_area_granularity_khr(
     p_rendering_area_info: &RenderingAreaInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Extent2D {
-    let vulkan_command = dispatcher
-        .get_rendering_area_granularity_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_rendering_area_granularity_khr.get();
     let mut p_granularity = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_rendering_area_info),
         p_granularity.as_mut_ptr(),
     );
@@ -6246,14 +5248,11 @@ pub unsafe fn get_device_image_subresource_layout<
     p_info: &DeviceImageSubresourceInfo,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_device_image_subresource_layout
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_image_subresource_layout.get();
     let mut p_layout = MaybeUninit::uninit();
     S::setup_uninit(&mut p_layout);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
     );
@@ -6269,14 +5268,11 @@ pub unsafe fn get_device_image_subresource_layout_khr<
     p_info: &DeviceImageSubresourceInfo,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_device_image_subresource_layout_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_image_subresource_layout_khr.get();
     let mut p_layout = MaybeUninit::uninit();
     S::setup_uninit(&mut p_layout);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
     );
@@ -6291,15 +5287,12 @@ pub unsafe fn get_image_subresource_layout2<S: StructureChainOut<SubresourceLayo
     p_subresource: &ImageSubresource2,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_image_subresource_layout2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_subresource_layout2.get();
     let mut p_layout = MaybeUninit::uninit();
     S::setup_uninit(&mut p_layout);
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(device.borrow()),
+        Some(image.borrow()),
         ptr::from_ref(p_subresource),
         S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
     );
@@ -6316,15 +5309,12 @@ pub unsafe fn get_image_subresource_layout2_khr<
     p_subresource: &ImageSubresource2,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_image_subresource_layout2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_subresource_layout2_khr.get();
     let mut p_layout = MaybeUninit::uninit();
     S::setup_uninit(&mut p_layout);
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(device.borrow()),
+        Some(image.borrow()),
         ptr::from_ref(p_subresource),
         S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
     );
@@ -6341,15 +5331,12 @@ pub unsafe fn get_image_subresource_layout2_ext<
     p_subresource: &ImageSubresource2,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_image_subresource_layout2_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_subresource_layout2_ext.get();
     let mut p_layout = MaybeUninit::uninit();
     S::setup_uninit(&mut p_layout);
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(device.borrow()),
+        Some(image.borrow()),
         ptr::from_ref(p_subresource),
         S::get_uninit_head_ptr(p_layout.as_mut_ptr()),
     );
@@ -6366,14 +5353,11 @@ pub unsafe fn cmd_push_descriptor_set<'a>(
     p_descriptor_writes: impl AsSlice<'a, WriteDescriptorSet<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_descriptor_set.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_bind_point,
-        Some(unsafe { layout.clone() }),
+        Some(layout.borrow()),
         set,
         p_descriptor_writes.as_slice().len() as _,
         p_descriptor_writes.as_slice().as_ptr().cast(),
@@ -6389,14 +5373,11 @@ pub unsafe fn cmd_push_descriptor_set_khr<'a>(
     p_descriptor_writes: impl AsSlice<'a, WriteDescriptorSet<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_descriptor_set_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_bind_point,
-        Some(unsafe { layout.clone() }),
+        Some(layout.borrow()),
         set,
         p_descriptor_writes.as_slice().len() as _,
         p_descriptor_writes.as_slice().as_ptr().cast(),
@@ -6412,14 +5393,11 @@ pub unsafe fn cmd_push_descriptor_set_with_template(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set_with_template
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_descriptor_set_with_template.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { descriptor_update_template.clone() }),
-        Some(unsafe { layout.clone() }),
+        Some(command_buffer.borrow()),
+        Some(descriptor_update_template.borrow()),
+        Some(layout.borrow()),
         set,
         p_data,
     )
@@ -6434,14 +5412,11 @@ pub unsafe fn cmd_push_descriptor_set_with_template_khr(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set_with_template_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_descriptor_set_with_template_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { descriptor_update_template.clone() }),
-        Some(unsafe { layout.clone() }),
+        Some(command_buffer.borrow()),
+        Some(descriptor_update_template.borrow()),
+        Some(layout.borrow()),
         set,
         p_data,
     )
@@ -6453,12 +5428,9 @@ pub unsafe fn cmd_set_rendering_attachment_locations(
     p_location_info: &RenderingAttachmentLocationInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_rendering_attachment_locations
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_rendering_attachment_locations.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_location_info),
     )
 }
@@ -6469,12 +5441,9 @@ pub unsafe fn cmd_set_rendering_attachment_locations_khr(
     p_location_info: &RenderingAttachmentLocationInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_rendering_attachment_locations_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_rendering_attachment_locations_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_location_info),
     )
 }
@@ -6485,12 +5454,9 @@ pub unsafe fn cmd_set_rendering_input_attachment_indices(
     p_input_attachment_index_info: &RenderingInputAttachmentIndexInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_rendering_input_attachment_indices
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_rendering_input_attachment_indices.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_input_attachment_index_info),
     )
 }
@@ -6503,10 +5469,9 @@ pub unsafe fn cmd_set_rendering_input_attachment_indices_khr(
 ) {
     let vulkan_command = dispatcher
         .cmd_set_rendering_input_attachment_indices_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_input_attachment_index_info),
     )
 }
@@ -6517,12 +5482,9 @@ pub unsafe fn cmd_bind_descriptor_sets2(
     p_bind_descriptor_sets_info: &BindDescriptorSetsInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_descriptor_sets2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_descriptor_sets2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_bind_descriptor_sets_info),
     )
 }
@@ -6533,12 +5495,9 @@ pub unsafe fn cmd_bind_descriptor_sets2_khr(
     p_bind_descriptor_sets_info: &BindDescriptorSetsInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_descriptor_sets2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_descriptor_sets2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_bind_descriptor_sets_info),
     )
 }
@@ -6549,12 +5508,9 @@ pub unsafe fn cmd_push_constants2(
     p_push_constants_info: &PushConstantsInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_constants2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_constants2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_push_constants_info),
     )
 }
@@ -6565,12 +5521,9 @@ pub unsafe fn cmd_push_constants2_khr(
     p_push_constants_info: &PushConstantsInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_constants2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_constants2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_push_constants_info),
     )
 }
@@ -6581,12 +5534,9 @@ pub unsafe fn cmd_push_descriptor_set2(
     p_push_descriptor_set_info: &PushDescriptorSetInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_descriptor_set2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_push_descriptor_set_info),
     )
 }
@@ -6597,12 +5547,9 @@ pub unsafe fn cmd_push_descriptor_set2_khr(
     p_push_descriptor_set_info: &PushDescriptorSetInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_descriptor_set2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_push_descriptor_set_info),
     )
 }
@@ -6613,12 +5560,9 @@ pub unsafe fn cmd_push_descriptor_set_with_template2(
     p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set_with_template2
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_descriptor_set_with_template2.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_push_descriptor_set_with_template_info),
     )
 }
@@ -6629,12 +5573,9 @@ pub unsafe fn cmd_push_descriptor_set_with_template2_khr(
     p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfo,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_push_descriptor_set_with_template2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_push_descriptor_set_with_template2_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_push_descriptor_set_with_template_info),
     )
 }
@@ -6645,12 +5586,9 @@ pub unsafe fn copy_memory_to_image(
     p_copy_memory_to_image_info: &CopyMemoryToImageInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .copy_memory_to_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_memory_to_image.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_copy_memory_to_image_info),
     )
     .map_success(|| ())
@@ -6662,12 +5600,9 @@ pub unsafe fn copy_memory_to_image_ext(
     p_copy_memory_to_image_info: &CopyMemoryToImageInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .copy_memory_to_image_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_memory_to_image_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_copy_memory_to_image_info),
     )
     .map_success(|| ())
@@ -6679,12 +5614,9 @@ pub unsafe fn copy_image_to_memory(
     p_copy_image_to_memory_info: &CopyImageToMemoryInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .copy_image_to_memory
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_image_to_memory.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_copy_image_to_memory_info),
     )
     .map_success(|| ())
@@ -6696,12 +5628,9 @@ pub unsafe fn copy_image_to_memory_ext(
     p_copy_image_to_memory_info: &CopyImageToMemoryInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .copy_image_to_memory_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_image_to_memory_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_copy_image_to_memory_info),
     )
     .map_success(|| ())
@@ -6713,12 +5642,9 @@ pub unsafe fn copy_image_to_image(
     p_copy_image_to_image_info: &CopyImageToImageInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .copy_image_to_image
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_image_to_image.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_copy_image_to_image_info),
     )
     .map_success(|| ())
@@ -6730,12 +5656,9 @@ pub unsafe fn copy_image_to_image_ext(
     p_copy_image_to_image_info: &CopyImageToImageInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .copy_image_to_image_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_image_to_image_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_copy_image_to_image_info),
     )
     .map_success(|| ())
@@ -6747,12 +5670,9 @@ pub unsafe fn transition_image_layout<'a>(
     p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfo<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .transition_image_layout
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.transition_image_layout.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_transitions.as_slice().len() as _,
         p_transitions.as_slice().as_ptr().cast(),
     )
@@ -6765,12 +5685,9 @@ pub unsafe fn transition_image_layout_ext<'a>(
     p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfo<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .transition_image_layout_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.transition_image_layout_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_transitions.as_slice().len() as _,
         p_transitions.as_slice().as_ptr().cast(),
     )
@@ -6784,13 +5701,10 @@ pub unsafe fn destroy_surface_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_surface_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_surface_khr.get();
     vulkan_command(
-        Some(unsafe { instance.clone() }),
-        surface.map(|v| unsafe { v.clone() }),
+        Some(instance.borrow()),
+        surface.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -6802,15 +5716,12 @@ pub unsafe fn get_physical_device_surface_support_khr(
     surface: &raw::SurfaceKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<bool> {
-    let vulkan_command = dispatcher
-        .get_physical_device_surface_support_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_surface_support_khr.get();
     let mut p_supported = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         queue_family_index,
-        Some(unsafe { surface.clone() }),
+        Some(surface.borrow()),
         p_supported.as_mut_ptr(),
     );
     vk_status.map_success(|| p_supported.assume_init().into())
@@ -6824,12 +5735,11 @@ pub unsafe fn get_physical_device_surface_capabilities_khr(
 ) -> Result<SurfaceCapabilitiesKHR> {
     let vulkan_command = dispatcher
         .get_physical_device_surface_capabilities_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_surface_capabilities = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        Some(unsafe { surface.clone() }),
+        Some(physical_device.borrow()),
+        Some(surface.borrow()),
         p_surface_capabilities.as_mut_ptr(),
     );
     vk_status.map_success(|| p_surface_capabilities.assume_init())
@@ -6841,16 +5751,13 @@ pub unsafe fn get_physical_device_surface_formats_khr<R: DynamicArray<SurfaceFor
     surface: Option<&raw::SurfaceKHR>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_physical_device_surface_formats_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_surface_formats_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_surface_format_count = vk_len.as_mut_ptr();
     let p_surface_formats = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        surface.map(|v| unsafe { v.clone() }),
+        Some(physical_device.borrow()),
+        surface.map(|v| v.borrow()),
         p_surface_format_count,
         p_surface_formats,
     )
@@ -6861,8 +5768,8 @@ pub unsafe fn get_physical_device_surface_formats_khr<R: DynamicArray<SurfaceFor
     let mut p_surface_formats = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
-            surface.map(|v| unsafe { v.clone() }),
+            Some(physical_device.borrow()),
+            surface.map(|v| v.borrow()),
             p_surface_format_count,
             p_surface_formats,
         );
@@ -6887,14 +5794,13 @@ pub unsafe fn get_physical_device_surface_present_modes_khr<R: DynamicArray<Pres
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_surface_present_modes_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_present_mode_count = vk_len.as_mut_ptr();
     let p_present_modes = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        surface.map(|v| unsafe { v.clone() }),
+        Some(physical_device.borrow()),
+        surface.map(|v| v.borrow()),
         p_present_mode_count,
         p_present_modes,
     )
@@ -6905,8 +5811,8 @@ pub unsafe fn get_physical_device_surface_present_modes_khr<R: DynamicArray<Pres
     let mut p_present_modes = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
-            surface.map(|v| unsafe { v.clone() }),
+            Some(physical_device.borrow()),
+            surface.map(|v| v.borrow()),
             p_present_mode_count,
             p_present_modes,
         );
@@ -6930,13 +5836,10 @@ pub unsafe fn create_swapchain_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SwapchainKHR> {
-    let vulkan_command = dispatcher
-        .create_swapchain_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_swapchain_khr.get();
     let mut p_swapchain = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_swapchain.as_mut_ptr(),
@@ -6951,13 +5854,10 @@ pub unsafe fn destroy_swapchain_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_swapchain_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_swapchain_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        swapchain.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        swapchain.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -6968,16 +5868,13 @@ pub unsafe fn get_swapchain_images_khr<R: DynamicArray<Image>>(
     swapchain: &raw::SwapchainKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_swapchain_images_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_swapchain_images_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_swapchain_image_count = vk_len.as_mut_ptr();
     let p_swapchain_images = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         p_swapchain_image_count,
         p_swapchain_images,
     )
@@ -6988,8 +5885,8 @@ pub unsafe fn get_swapchain_images_khr<R: DynamicArray<Image>>(
     let mut p_swapchain_images = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { device.clone() }),
-            Some(unsafe { swapchain.clone() }),
+            Some(device.borrow()),
+            Some(swapchain.borrow()),
             p_swapchain_image_count,
             p_swapchain_images,
         );
@@ -7015,17 +5912,14 @@ pub unsafe fn acquire_next_image_khr(
     fence: Option<&raw::Fence>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<(Status, u32)> {
-    let vulkan_command = dispatcher
-        .acquire_next_image_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.acquire_next_image_khr.get();
     let mut p_image_index = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         timeout,
-        semaphore.map(|v| unsafe { v.clone() }),
-        fence.map(|v| unsafe { v.clone() }),
+        semaphore.map(|v| v.borrow()),
+        fence.map(|v| v.borrow()),
         p_image_index.as_mut_ptr(),
     );
     vk_status.map_successes(|| p_image_index.assume_init())
@@ -7037,15 +5931,8 @@ pub unsafe fn queue_present_khr(
     p_present_info: &PresentInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .queue_present_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { queue.clone() }),
-        ptr::from_ref(p_present_info),
-    )
-    .into_result()
+    let vulkan_command = dispatcher.queue_present_khr.get();
+    vulkan_command(Some(queue.borrow()), ptr::from_ref(p_present_info)).into_result()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>"]
 #[doc(alias = "vkGetDeviceGroupPresentCapabilitiesKHR")]
@@ -7055,14 +5942,11 @@ pub unsafe fn get_device_group_present_capabilities_khr<
     device: &raw::Device,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_device_group_present_capabilities_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_group_present_capabilities_khr.get();
     let mut p_device_group_present_capabilities = MaybeUninit::uninit();
     S::setup_uninit(&mut p_device_group_present_capabilities);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         S::get_uninit_head_ptr(p_device_group_present_capabilities.as_mut_ptr()),
     );
     vk_status.map_success(|| {
@@ -7077,14 +5961,11 @@ pub unsafe fn get_device_group_surface_present_modes_khr(
     surface: &raw::SurfaceKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DeviceGroupPresentModeFlagsKHR> {
-    let vulkan_command = dispatcher
-        .get_device_group_surface_present_modes_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_group_surface_present_modes_khr.get();
     let mut p_modes = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { surface.clone() }),
+        Some(device.borrow()),
+        Some(surface.borrow()),
         p_modes.as_mut_ptr(),
     );
     vk_status.map_success(|| p_modes.assume_init())
@@ -7096,16 +5977,13 @@ pub unsafe fn get_physical_device_present_rectangles_khr<R: DynamicArray<Rect2D>
     surface: &raw::SurfaceKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_physical_device_present_rectangles_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_present_rectangles_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_rect_count = vk_len.as_mut_ptr();
     let p_rects = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        Some(unsafe { surface.clone() }),
+        Some(physical_device.borrow()),
+        Some(surface.borrow()),
         p_rect_count,
         p_rects,
     )
@@ -7116,8 +5994,8 @@ pub unsafe fn get_physical_device_present_rectangles_khr<R: DynamicArray<Rect2D>
     let mut p_rects = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
-            Some(unsafe { surface.clone() }),
+            Some(physical_device.borrow()),
+            Some(surface.borrow()),
             p_rect_count,
             p_rects,
         );
@@ -7140,13 +6018,10 @@ pub unsafe fn acquire_next_image2_khr(
     p_acquire_info: &AcquireNextImageInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<(Status, u32)> {
-    let vulkan_command = dispatcher
-        .acquire_next_image2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.acquire_next_image2_khr.get();
     let mut p_image_index = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_acquire_info),
         p_image_index.as_mut_ptr(),
     );
@@ -7160,15 +6035,12 @@ pub unsafe fn get_physical_device_display_properties_khr<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_physical_device_display_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_display_properties_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_property_count,
         p_properties,
     )
@@ -7179,7 +6051,7 @@ pub unsafe fn get_physical_device_display_properties_khr<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_property_count,
             p_properties,
         );
@@ -7205,13 +6077,12 @@ pub unsafe fn get_physical_device_display_plane_properties_khr<
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_display_plane_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_property_count,
         p_properties,
     )
@@ -7222,7 +6093,7 @@ pub unsafe fn get_physical_device_display_plane_properties_khr<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_property_count,
             p_properties,
         );
@@ -7245,15 +6116,12 @@ pub unsafe fn get_display_plane_supported_displays_khr<R: DynamicArray<DisplayKH
     plane_index: u32,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_display_plane_supported_displays_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_display_plane_supported_displays_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_display_count = vk_len.as_mut_ptr();
     let p_displays = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         plane_index,
         p_display_count,
         p_displays,
@@ -7265,7 +6133,7 @@ pub unsafe fn get_display_plane_supported_displays_khr<R: DynamicArray<DisplayKH
     let mut p_displays = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             plane_index,
             p_display_count,
             p_displays,
@@ -7291,16 +6159,13 @@ pub unsafe fn get_display_mode_properties_khr<
     display: &raw::DisplayKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_display_mode_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_display_mode_properties_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        Some(unsafe { display.clone() }),
+        Some(physical_device.borrow()),
+        Some(display.borrow()),
         p_property_count,
         p_properties,
     )
@@ -7311,8 +6176,8 @@ pub unsafe fn get_display_mode_properties_khr<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
-            Some(unsafe { display.clone() }),
+            Some(physical_device.borrow()),
+            Some(display.borrow()),
             p_property_count,
             p_properties,
         );
@@ -7337,14 +6202,11 @@ pub unsafe fn create_display_mode_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DisplayModeKHR> {
-    let vulkan_command = dispatcher
-        .create_display_mode_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_display_mode_khr.get();
     let mut p_mode = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        Some(unsafe { display.clone() }),
+        Some(physical_device.borrow()),
+        Some(display.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_mode.as_mut_ptr(),
@@ -7359,14 +6221,11 @@ pub unsafe fn get_display_plane_capabilities_khr(
     plane_index: u32,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DisplayPlaneCapabilitiesKHR> {
-    let vulkan_command = dispatcher
-        .get_display_plane_capabilities_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_display_plane_capabilities_khr.get();
     let mut p_capabilities = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        Some(unsafe { mode.clone() }),
+        Some(physical_device.borrow()),
+        Some(mode.borrow()),
         plane_index,
         p_capabilities.as_mut_ptr(),
     );
@@ -7380,13 +6239,10 @@ pub unsafe fn create_display_plane_surface_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_display_plane_surface_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_display_plane_surface_khr.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -7401,13 +6257,10 @@ pub unsafe fn create_shared_swapchains_khr<'a, R: DynamicArray<SwapchainKHR>>(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .create_shared_swapchains_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_shared_swapchains_khr.get();
     let mut p_swapchains = R::create_with_capacity(p_create_infos.as_slice().len() as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_create_infos.as_slice().len() as _,
         p_create_infos.as_slice().as_ptr().cast(),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
@@ -7426,13 +6279,10 @@ pub unsafe fn create_xlib_surface_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_xlib_surface_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_xlib_surface_khr.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -7450,10 +6300,9 @@ pub unsafe fn get_physical_device_xlib_presentation_support_khr(
 ) -> bool {
     let vulkan_command = dispatcher
         .get_physical_device_xlib_presentation_support_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         queue_family_index,
         ptr::from_ref(dpy),
         visual_id,
@@ -7468,13 +6317,10 @@ pub unsafe fn create_xcb_surface_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_xcb_surface_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_xcb_surface_khr.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -7492,10 +6338,9 @@ pub unsafe fn get_physical_device_xcb_presentation_support_khr(
 ) -> bool {
     let vulkan_command = dispatcher
         .get_physical_device_xcb_presentation_support_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         queue_family_index,
         ptr::from_ref(connection),
         visualid,
@@ -7510,13 +6355,10 @@ pub unsafe fn create_wayland_surface_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_wayland_surface_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_wayland_surface_khr.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -7533,10 +6375,9 @@ pub unsafe fn get_physical_device_wayland_presentation_support_khr(
 ) -> bool {
     let vulkan_command = dispatcher
         .get_physical_device_wayland_presentation_support_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         queue_family_index,
         ptr::from_ref(display),
     )
@@ -7550,13 +6391,10 @@ pub unsafe fn create_android_surface_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_android_surface_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_android_surface_khr.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -7571,13 +6409,10 @@ pub unsafe fn create_win32_surface_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_win32_surface_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_win32_surface_khr.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -7593,9 +6428,8 @@ pub unsafe fn get_physical_device_win32_presentation_support_khr(
 ) -> bool {
     let vulkan_command = dispatcher
         .get_physical_device_win32_presentation_support_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { physical_device.clone() }), queue_family_index).into()
+        .get();
+    vulkan_command(Some(physical_device.borrow()), queue_family_index).into()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDebugReportCallbackEXT.html>"]
 #[doc(alias = "vkCreateDebugReportCallbackEXT")]
@@ -7605,13 +6439,10 @@ pub unsafe fn create_debug_report_callback_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DebugReportCallbackEXT> {
-    let vulkan_command = dispatcher
-        .create_debug_report_callback_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_debug_report_callback_ext.get();
     let mut p_callback = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_callback.as_mut_ptr(),
@@ -7626,13 +6457,10 @@ pub unsafe fn destroy_debug_report_callback_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_debug_report_callback_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_debug_report_callback_ext.get();
     vulkan_command(
-        Some(unsafe { instance.clone() }),
-        callback.map(|v| unsafe { v.clone() }),
+        Some(instance.borrow()),
+        callback.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -7649,12 +6477,9 @@ pub unsafe fn debug_report_message_ext(
     p_message: &CStr,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .debug_report_message_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.debug_report_message_ext.get();
     vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         flags,
         object_type,
         object,
@@ -7671,11 +6496,8 @@ pub unsafe fn debug_marker_set_object_tag_ext(
     p_tag_info: &DebugMarkerObjectTagInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .debug_marker_set_object_tag_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_tag_info)).map_success(|| ())
+    let vulkan_command = dispatcher.debug_marker_set_object_tag_ext.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_tag_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html>"]
 #[doc(alias = "vkDebugMarkerSetObjectNameEXT")]
@@ -7684,11 +6506,8 @@ pub unsafe fn debug_marker_set_object_name_ext(
     p_name_info: &DebugMarkerObjectNameInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .debug_marker_set_object_name_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_name_info)).map_success(|| ())
+    let vulkan_command = dispatcher.debug_marker_set_object_name_ext.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_name_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerBeginEXT.html>"]
 #[doc(alias = "vkCmdDebugMarkerBeginEXT")]
@@ -7697,14 +6516,8 @@ pub unsafe fn cmd_debug_marker_begin_ext(
     p_marker_info: &DebugMarkerMarkerInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_debug_marker_begin_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_marker_info),
-    )
+    let vulkan_command = dispatcher.cmd_debug_marker_begin_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_marker_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerEndEXT.html>"]
 #[doc(alias = "vkCmdDebugMarkerEndEXT")]
@@ -7712,11 +6525,8 @@ pub unsafe fn cmd_debug_marker_end_ext(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_debug_marker_end_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }))
+    let vulkan_command = dispatcher.cmd_debug_marker_end_ext.get();
+    vulkan_command(Some(command_buffer.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDebugMarkerInsertEXT.html>"]
 #[doc(alias = "vkCmdDebugMarkerInsertEXT")]
@@ -7725,14 +6535,8 @@ pub unsafe fn cmd_debug_marker_insert_ext(
     p_marker_info: &DebugMarkerMarkerInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_debug_marker_insert_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_marker_info),
-    )
+    let vulkan_command = dispatcher.cmd_debug_marker_insert_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_marker_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindTransformFeedbackBuffersEXT.html>"]
 #[doc(alias = "vkCmdBindTransformFeedbackBuffersEXT")]
@@ -7744,12 +6548,9 @@ pub unsafe fn cmd_bind_transform_feedback_buffers_ext<'a, V3: Alias<raw::Buffer>
     p_sizes: Option<impl AsSlice<'a, DeviceSize>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_transform_feedback_buffers_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_transform_feedback_buffers_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_binding,
         p_offsets.as_slice().len() as _,
         p_buffers.as_slice().as_ptr().cast(),
@@ -7768,12 +6569,9 @@ pub unsafe fn cmd_begin_transform_feedback_ext<'a, V3: Alias<raw::Buffer> + 'a>(
     p_counter_buffer_offsets: Option<impl AsSlice<'a, DeviceSize>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_transform_feedback_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_begin_transform_feedback_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_counter_buffer,
         p_counter_buffers.as_slice().len() as _,
         p_counter_buffers.as_slice().as_ptr().cast(),
@@ -7791,12 +6589,9 @@ pub unsafe fn cmd_end_transform_feedback_ext<'a, V3: Alias<raw::Buffer> + 'a>(
     p_counter_buffer_offsets: Option<impl AsSlice<'a, DeviceSize>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_transform_feedback_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_end_transform_feedback_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_counter_buffer,
         p_counter_buffers.as_slice().len() as _,
         p_counter_buffers.as_slice().as_ptr().cast(),
@@ -7815,13 +6610,10 @@ pub unsafe fn cmd_begin_query_indexed_ext(
     index: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_query_indexed_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_begin_query_indexed_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { query_pool.clone() }),
+        Some(command_buffer.borrow()),
+        Some(query_pool.borrow()),
         query,
         flags,
         index,
@@ -7836,13 +6628,10 @@ pub unsafe fn cmd_end_query_indexed_ext(
     index: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_query_indexed_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_end_query_indexed_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { query_pool.clone() }),
+        Some(command_buffer.borrow()),
+        Some(query_pool.borrow()),
         query,
         index,
     )
@@ -7859,15 +6648,12 @@ pub unsafe fn cmd_draw_indirect_byte_count_ext(
     vertex_stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_indirect_byte_count_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_indirect_byte_count_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         instance_count,
         first_instance,
-        Some(unsafe { counter_buffer.clone() }),
+        Some(counter_buffer.borrow()),
         counter_buffer_offset,
         counter_offset,
         vertex_stride,
@@ -7881,13 +6667,10 @@ pub unsafe fn create_cu_module_nvx(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<CuModuleNVX> {
-    let vulkan_command = dispatcher
-        .create_cu_module_nvx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_cu_module_nvx.get();
     let mut p_module = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_module.as_mut_ptr(),
@@ -7902,13 +6685,10 @@ pub unsafe fn create_cu_function_nvx(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<CuFunctionNVX> {
-    let vulkan_command = dispatcher
-        .create_cu_function_nvx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_cu_function_nvx.get();
     let mut p_function = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_function.as_mut_ptr(),
@@ -7923,13 +6703,10 @@ pub unsafe fn destroy_cu_module_nvx(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_cu_module_nvx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_cu_module_nvx.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { module.clone() }),
+        Some(device.borrow()),
+        Some(module.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -7941,13 +6718,10 @@ pub unsafe fn destroy_cu_function_nvx(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_cu_function_nvx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_cu_function_nvx.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { function.clone() }),
+        Some(device.borrow()),
+        Some(function.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -7958,14 +6732,8 @@ pub unsafe fn cmd_cu_launch_kernel_nvx(
     p_launch_info: &CuLaunchInfoNVX,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_cu_launch_kernel_nvx
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_launch_info),
-    )
+    let vulkan_command = dispatcher.cmd_cu_launch_kernel_nvx.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_launch_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageViewHandleNVX.html>"]
 #[doc(alias = "vkGetImageViewHandleNVX")]
@@ -7974,11 +6742,8 @@ pub unsafe fn get_image_view_handle_nvx(
     p_info: &ImageViewHandleInfoNVX,
     dispatcher: &CommandsDispatcher,
 ) -> u32 {
-    let vulkan_command = dispatcher
-        .get_image_view_handle_nvx
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+    let vulkan_command = dispatcher.get_image_view_handle_nvx.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageViewHandle64NVX.html>"]
 #[doc(alias = "vkGetImageViewHandle64NVX")]
@@ -7987,11 +6752,8 @@ pub unsafe fn get_image_view_handle64_nvx(
     p_info: &ImageViewHandleInfoNVX,
     dispatcher: &CommandsDispatcher,
 ) -> u64 {
-    let vulkan_command = dispatcher
-        .get_image_view_handle64_nvx
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+    let vulkan_command = dispatcher.get_image_view_handle64_nvx.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageViewAddressNVX.html>"]
 #[doc(alias = "vkGetImageViewAddressNVX")]
@@ -8002,15 +6764,12 @@ pub unsafe fn get_image_view_address_nvx<
     image_view: &raw::ImageView,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_image_view_address_nvx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_image_view_address_nvx.get();
     let mut p_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image_view.clone() }),
+        Some(device.borrow()),
+        Some(image_view.borrow()),
         S::get_uninit_head_ptr(p_properties.as_mut_ptr()),
     );
     vk_status.map_success(|| {
@@ -8028,14 +6787,11 @@ pub unsafe fn get_shader_info_amd(
     p_info: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<usize> {
-    let vulkan_command = dispatcher
-        .get_shader_info_amd
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_shader_info_amd.get();
     let mut p_info_size = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { pipeline.clone() }),
+        Some(device.borrow()),
+        Some(pipeline.borrow()),
         shader_stage,
         info_type,
         p_info_size.as_mut_ptr(),
@@ -8051,13 +6807,10 @@ pub unsafe fn create_stream_descriptor_surface_ggp(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_stream_descriptor_surface_ggp
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_stream_descriptor_surface_ggp.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -8078,11 +6831,10 @@ pub unsafe fn get_physical_device_external_image_format_properties_nv(
 ) -> Result<ExternalImageFormatPropertiesNV> {
     let vulkan_command = dispatcher
         .get_physical_device_external_image_format_properties_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_external_image_format_properties = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         format,
         ty,
         tiling,
@@ -8101,14 +6853,11 @@ pub unsafe fn get_memory_win32_handle_nv(
     handle_type: ExternalMemoryHandleTypeFlagsNV,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .get_memory_win32_handle_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_win32_handle_nv.get();
     let mut p_handle = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { memory.clone() }),
+        Some(device.borrow()),
+        Some(memory.borrow()),
         handle_type,
         p_handle.as_mut_ptr(),
     );
@@ -8122,13 +6871,10 @@ pub unsafe fn create_vi_surface_nn(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_vi_surface_nn
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_vi_surface_nn.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -8142,13 +6888,10 @@ pub unsafe fn get_memory_win32_handle_khr(
     p_get_win32_handle_info: &MemoryGetWin32HandleInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .get_memory_win32_handle_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_win32_handle_khr.get();
     let mut p_handle = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_get_win32_handle_info),
         p_handle.as_mut_ptr(),
     );
@@ -8164,14 +6907,11 @@ pub unsafe fn get_memory_win32_handle_properties_khr<
     handle: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_memory_win32_handle_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_win32_handle_properties_khr.get();
     let mut p_memory_win32_handle_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_win32_handle_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         handle_type,
         handle,
         S::get_uninit_head_ptr(p_memory_win32_handle_properties.as_mut_ptr()),
@@ -8188,13 +6928,10 @@ pub unsafe fn get_memory_fd_khr(
     p_get_fd_info: &MemoryGetFdInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<c_int> {
-    let vulkan_command = dispatcher
-        .get_memory_fd_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_fd_khr.get();
     let mut p_fd = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_get_fd_info),
         p_fd.as_mut_ptr(),
     );
@@ -8208,14 +6945,11 @@ pub unsafe fn get_memory_fd_properties_khr<S: StructureChainOut<MemoryFdProperti
     fd: c_int,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_memory_fd_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_fd_properties_khr.get();
     let mut p_memory_fd_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_fd_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         handle_type,
         fd,
         S::get_uninit_head_ptr(p_memory_fd_properties.as_mut_ptr()),
@@ -8232,12 +6966,9 @@ pub unsafe fn import_semaphore_win32_handle_khr(
     p_import_semaphore_win32_handle_info: &ImportSemaphoreWin32HandleInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .import_semaphore_win32_handle_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.import_semaphore_win32_handle_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_import_semaphore_win32_handle_info),
     )
     .map_success(|| ())
@@ -8249,13 +6980,10 @@ pub unsafe fn get_semaphore_win32_handle_khr(
     p_get_win32_handle_info: &SemaphoreGetWin32HandleInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .get_semaphore_win32_handle_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_semaphore_win32_handle_khr.get();
     let mut p_handle = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_get_win32_handle_info),
         p_handle.as_mut_ptr(),
     );
@@ -8268,12 +6996,9 @@ pub unsafe fn import_semaphore_fd_khr(
     p_import_semaphore_fd_info: &ImportSemaphoreFdInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .import_semaphore_fd_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.import_semaphore_fd_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_import_semaphore_fd_info),
     )
     .map_success(|| ())
@@ -8285,13 +7010,10 @@ pub unsafe fn get_semaphore_fd_khr(
     p_get_fd_info: &SemaphoreGetFdInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<c_int> {
-    let vulkan_command = dispatcher
-        .get_semaphore_fd_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_semaphore_fd_khr.get();
     let mut p_fd = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_get_fd_info),
         p_fd.as_mut_ptr(),
     );
@@ -8304,12 +7026,9 @@ pub unsafe fn cmd_begin_conditional_rendering_ext(
     p_conditional_rendering_begin: &ConditionalRenderingBeginInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_conditional_rendering_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_begin_conditional_rendering_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_conditional_rendering_begin),
     )
 }
@@ -8319,11 +7038,8 @@ pub unsafe fn cmd_end_conditional_rendering_ext(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_conditional_rendering_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }))
+    let vulkan_command = dispatcher.cmd_end_conditional_rendering_ext.get();
+    vulkan_command(Some(command_buffer.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWScalingNV.html>"]
 #[doc(alias = "vkCmdSetViewportWScalingNV")]
@@ -8333,12 +7049,9 @@ pub unsafe fn cmd_set_viewport_wscaling_nv<'a>(
     p_viewport_wscalings: impl AsSlice<'a, ViewportWScalingNV>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_viewport_wscaling_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_viewport_wscaling_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_viewport,
         p_viewport_wscalings.as_slice().len() as _,
         p_viewport_wscalings.as_slice().as_ptr().cast(),
@@ -8351,15 +7064,8 @@ pub unsafe fn release_display_ext(
     display: &raw::DisplayKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .release_display_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        Some(unsafe { display.clone() }),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.release_display_ext.get();
+    vulkan_command(Some(physical_device.borrow()), Some(display.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkAcquireXlibDisplayEXT.html>"]
 #[doc(alias = "vkAcquireXlibDisplayEXT")]
@@ -8369,14 +7075,11 @@ pub unsafe fn acquire_xlib_display_ext(
     display: &raw::DisplayKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .acquire_xlib_display_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.acquire_xlib_display_ext.get();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(dpy),
-        Some(unsafe { display.clone() }),
+        Some(display.borrow()),
     )
     .map_success(|| ())
 }
@@ -8388,13 +7091,10 @@ pub unsafe fn get_rand_routput_display_ext(
     rr_output: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DisplayKHR> {
-    let vulkan_command = dispatcher
-        .get_rand_routput_display_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_rand_routput_display_ext.get();
     let mut p_display = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(dpy),
         rr_output,
         p_display.as_mut_ptr(),
@@ -8412,13 +7112,12 @@ pub unsafe fn get_physical_device_surface_capabilities2_ext<
 ) -> Result<S> {
     let vulkan_command = dispatcher
         .get_physical_device_surface_capabilities2_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_surface_capabilities = MaybeUninit::uninit();
     S::setup_uninit(&mut p_surface_capabilities);
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        Some(unsafe { surface.clone() }),
+        Some(physical_device.borrow()),
+        Some(surface.borrow()),
         S::get_uninit_head_ptr(p_surface_capabilities.as_mut_ptr()),
     );
     vk_status.map_success(|| {
@@ -8434,13 +7133,10 @@ pub unsafe fn display_power_control_ext(
     p_display_power_info: &DisplayPowerInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .display_power_control_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.display_power_control_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { display.clone() }),
+        Some(device.borrow()),
+        Some(display.borrow()),
         ptr::from_ref(p_display_power_info),
     )
     .map_success(|| ())
@@ -8453,13 +7149,10 @@ pub unsafe fn register_device_event_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Fence> {
-    let vulkan_command = dispatcher
-        .register_device_event_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.register_device_event_ext.get();
     let mut p_fence = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_device_event_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_fence.as_mut_ptr(),
@@ -8475,14 +7168,11 @@ pub unsafe fn register_display_event_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Fence> {
-    let vulkan_command = dispatcher
-        .register_display_event_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.register_display_event_ext.get();
     let mut p_fence = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { display.clone() }),
+        Some(device.borrow()),
+        Some(display.borrow()),
         ptr::from_ref(p_display_event_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_fence.as_mut_ptr(),
@@ -8497,14 +7187,11 @@ pub unsafe fn get_swapchain_counter_ext(
     counter: SurfaceCounterFlagsEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<u64> {
-    let vulkan_command = dispatcher
-        .get_swapchain_counter_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_swapchain_counter_ext.get();
     let mut p_counter_value = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         counter,
         p_counter_value.as_mut_ptr(),
     );
@@ -8517,14 +7204,11 @@ pub unsafe fn get_refresh_cycle_duration_google(
     swapchain: &raw::SwapchainKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<RefreshCycleDurationGOOGLE> {
-    let vulkan_command = dispatcher
-        .get_refresh_cycle_duration_google
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_refresh_cycle_duration_google.get();
     let mut p_display_timing_properties = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         p_display_timing_properties.as_mut_ptr(),
     );
     vk_status.map_success(|| p_display_timing_properties.assume_init())
@@ -8536,16 +7220,13 @@ pub unsafe fn get_past_presentation_timing_google<R: DynamicArray<PastPresentati
     swapchain: &raw::SwapchainKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_past_presentation_timing_google
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_past_presentation_timing_google.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_presentation_timing_count = vk_len.as_mut_ptr();
     let p_presentation_timings = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         p_presentation_timing_count,
         p_presentation_timings,
     )
@@ -8556,8 +7237,8 @@ pub unsafe fn get_past_presentation_timing_google<R: DynamicArray<PastPresentati
     let mut p_presentation_timings = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { device.clone() }),
-            Some(unsafe { swapchain.clone() }),
+            Some(device.borrow()),
+            Some(swapchain.borrow()),
             p_presentation_timing_count,
             p_presentation_timings,
         );
@@ -8581,12 +7262,9 @@ pub unsafe fn cmd_set_discard_rectangle_ext<'a>(
     p_discard_rectangles: impl AsSlice<'a, Rect2D>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_discard_rectangle_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_discard_rectangle_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_discard_rectangle,
         p_discard_rectangles.as_slice().len() as _,
         p_discard_rectangles.as_slice().as_ptr().cast(),
@@ -8599,12 +7277,9 @@ pub unsafe fn cmd_set_discard_rectangle_enable_ext(
     discard_rectangle_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_discard_rectangle_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_discard_rectangle_enable_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         discard_rectangle_enable.into(),
     )
 }
@@ -8615,14 +7290,8 @@ pub unsafe fn cmd_set_discard_rectangle_mode_ext(
     discard_rectangle_mode: DiscardRectangleModeEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_discard_rectangle_mode_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        discard_rectangle_mode,
-    )
+    let vulkan_command = dispatcher.cmd_set_discard_rectangle_mode_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), discard_rectangle_mode)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetHdrMetadataEXT.html>"]
 #[doc(alias = "vkSetHdrMetadataEXT")]
@@ -8632,12 +7301,9 @@ pub unsafe fn set_hdr_metadata_ext<'a, V2: Alias<raw::SwapchainKHR> + 'a>(
     p_metadata: impl AsSlice<'a, HdrMetadataEXT<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .set_hdr_metadata_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.set_hdr_metadata_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_metadata.as_slice().len() as _,
         p_swapchains.as_slice().as_ptr().cast(),
         p_metadata.as_slice().as_ptr().cast(),
@@ -8650,15 +7316,8 @@ pub unsafe fn get_swapchain_status_khr(
     swapchain: &raw::SwapchainKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .get_swapchain_status_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
-    )
-    .into_result()
+    let vulkan_command = dispatcher.get_swapchain_status_khr.get();
+    vulkan_command(Some(device.borrow()), Some(swapchain.borrow())).into_result()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkImportFenceWin32HandleKHR.html>"]
 #[doc(alias = "vkImportFenceWin32HandleKHR")]
@@ -8667,12 +7326,9 @@ pub unsafe fn import_fence_win32_handle_khr(
     p_import_fence_win32_handle_info: &ImportFenceWin32HandleInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .import_fence_win32_handle_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.import_fence_win32_handle_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_import_fence_win32_handle_info),
     )
     .map_success(|| ())
@@ -8684,13 +7340,10 @@ pub unsafe fn get_fence_win32_handle_khr(
     p_get_win32_handle_info: &FenceGetWin32HandleInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .get_fence_win32_handle_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_fence_win32_handle_khr.get();
     let mut p_handle = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_get_win32_handle_info),
         p_handle.as_mut_ptr(),
     );
@@ -8703,15 +7356,8 @@ pub unsafe fn import_fence_fd_khr(
     p_import_fence_fd_info: &ImportFenceFdInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .import_fence_fd_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_import_fence_fd_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.import_fence_fd_khr.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_import_fence_fd_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetFenceFdKHR.html>"]
 #[doc(alias = "vkGetFenceFdKHR")]
@@ -8720,13 +7366,10 @@ pub unsafe fn get_fence_fd_khr(
     p_get_fd_info: &FenceGetFdInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<c_int> {
-    let vulkan_command = dispatcher
-        .get_fence_fd_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_fence_fd_khr.get();
     let mut p_fd = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_get_fd_info),
         p_fd.as_mut_ptr(),
     );
@@ -8741,11 +7384,10 @@ pub unsafe fn get_physical_device_queue_family_performance_query_passes_khr(
 ) -> u32 {
     let vulkan_command = dispatcher
         .get_physical_device_queue_family_performance_query_passes_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_num_passes = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_performance_query_create_info),
         p_num_passes.as_mut_ptr(),
     );
@@ -8758,20 +7400,14 @@ pub unsafe fn acquire_profiling_lock_khr(
     p_info: &AcquireProfilingLockInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .acquire_profiling_lock_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info)).map_success(|| ())
+    let vulkan_command = dispatcher.acquire_profiling_lock_khr.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkReleaseProfilingLockKHR.html>"]
 #[doc(alias = "vkReleaseProfilingLockKHR")]
 pub unsafe fn release_profiling_lock_khr(device: &raw::Device, dispatcher: &CommandsDispatcher) {
-    let vulkan_command = dispatcher
-        .release_profiling_lock_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }))
+    let vulkan_command = dispatcher.release_profiling_lock_khr.get();
+    vulkan_command(Some(device.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html>"]
 #[doc(alias = "vkGetPhysicalDeviceSurfaceCapabilities2KHR")]
@@ -8784,12 +7420,11 @@ pub unsafe fn get_physical_device_surface_capabilities2_khr<
 ) -> Result<S> {
     let vulkan_command = dispatcher
         .get_physical_device_surface_capabilities2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_surface_capabilities = MaybeUninit::uninit();
     S::setup_uninit(&mut p_surface_capabilities);
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_surface_info),
         S::get_uninit_head_ptr(p_surface_capabilities.as_mut_ptr()),
     );
@@ -8807,15 +7442,12 @@ pub unsafe fn get_physical_device_surface_formats2_khr<
     p_surface_info: &PhysicalDeviceSurfaceInfo2KHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_physical_device_surface_formats2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_surface_formats2_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_surface_format_count = vk_len.as_mut_ptr();
     let p_surface_formats = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_surface_info),
         p_surface_format_count,
         p_surface_formats,
@@ -8827,7 +7459,7 @@ pub unsafe fn get_physical_device_surface_formats2_khr<
     let mut p_surface_formats = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             ptr::from_ref(p_surface_info),
             p_surface_format_count,
             p_surface_formats,
@@ -8852,15 +7484,12 @@ pub unsafe fn get_physical_device_display_properties2_khr<
     physical_device: &raw::PhysicalDevice,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_physical_device_display_properties2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_physical_device_display_properties2_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_property_count,
         p_properties,
     )
@@ -8871,7 +7500,7 @@ pub unsafe fn get_physical_device_display_properties2_khr<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_property_count,
             p_properties,
         );
@@ -8897,13 +7526,12 @@ pub unsafe fn get_physical_device_display_plane_properties2_khr<
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_display_plane_properties2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_property_count,
         p_properties,
     )
@@ -8914,7 +7542,7 @@ pub unsafe fn get_physical_device_display_plane_properties2_khr<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_property_count,
             p_properties,
         );
@@ -8939,16 +7567,13 @@ pub unsafe fn get_display_mode_properties2_khr<
     display: &raw::DisplayKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_display_mode_properties2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_display_mode_properties2_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        Some(unsafe { display.clone() }),
+        Some(physical_device.borrow()),
+        Some(display.borrow()),
         p_property_count,
         p_properties,
     )
@@ -8959,8 +7584,8 @@ pub unsafe fn get_display_mode_properties2_khr<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
-            Some(unsafe { display.clone() }),
+            Some(physical_device.borrow()),
+            Some(display.borrow()),
             p_property_count,
             p_properties,
         );
@@ -8985,14 +7610,11 @@ pub unsafe fn get_display_plane_capabilities2_khr<
     p_display_plane_info: &DisplayPlaneInfo2KHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_display_plane_capabilities2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_display_plane_capabilities2_khr.get();
     let mut p_capabilities = MaybeUninit::uninit();
     S::setup_uninit(&mut p_capabilities);
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_display_plane_info),
         S::get_uninit_head_ptr(p_capabilities.as_mut_ptr()),
     );
@@ -9009,13 +7631,10 @@ pub unsafe fn create_iossurface_mvk(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_iossurface_mvk
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_iossurface_mvk.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -9030,13 +7649,10 @@ pub unsafe fn create_mac_ossurface_mvk(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_mac_ossurface_mvk
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_mac_ossurface_mvk.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -9050,11 +7666,8 @@ pub unsafe fn set_debug_utils_object_name_ext(
     p_name_info: &DebugUtilsObjectNameInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .set_debug_utils_object_name_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_name_info)).map_success(|| ())
+    let vulkan_command = dispatcher.set_debug_utils_object_name_ext.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_name_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html>"]
 #[doc(alias = "vkSetDebugUtilsObjectTagEXT")]
@@ -9063,11 +7676,8 @@ pub unsafe fn set_debug_utils_object_tag_ext(
     p_tag_info: &DebugUtilsObjectTagInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .set_debug_utils_object_tag_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_tag_info)).map_success(|| ())
+    let vulkan_command = dispatcher.set_debug_utils_object_tag_ext.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_tag_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueBeginDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkQueueBeginDebugUtilsLabelEXT")]
@@ -9076,20 +7686,14 @@ pub unsafe fn queue_begin_debug_utils_label_ext(
     p_label_info: &DebugUtilsLabelEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .queue_begin_debug_utils_label_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { queue.clone() }), ptr::from_ref(p_label_info))
+    let vulkan_command = dispatcher.queue_begin_debug_utils_label_ext.get();
+    vulkan_command(Some(queue.borrow()), ptr::from_ref(p_label_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkQueueEndDebugUtilsLabelEXT")]
 pub unsafe fn queue_end_debug_utils_label_ext(queue: &raw::Queue, dispatcher: &CommandsDispatcher) {
-    let vulkan_command = dispatcher
-        .queue_end_debug_utils_label_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { queue.clone() }))
+    let vulkan_command = dispatcher.queue_end_debug_utils_label_ext.get();
+    vulkan_command(Some(queue.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkQueueInsertDebugUtilsLabelEXT")]
@@ -9098,11 +7702,8 @@ pub unsafe fn queue_insert_debug_utils_label_ext(
     p_label_info: &DebugUtilsLabelEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .queue_insert_debug_utils_label_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { queue.clone() }), ptr::from_ref(p_label_info))
+    let vulkan_command = dispatcher.queue_insert_debug_utils_label_ext.get();
+    vulkan_command(Some(queue.borrow()), ptr::from_ref(p_label_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkCmdBeginDebugUtilsLabelEXT")]
@@ -9111,14 +7712,8 @@ pub unsafe fn cmd_begin_debug_utils_label_ext(
     p_label_info: &DebugUtilsLabelEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_begin_debug_utils_label_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_label_info),
-    )
+    let vulkan_command = dispatcher.cmd_begin_debug_utils_label_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_label_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkCmdEndDebugUtilsLabelEXT")]
@@ -9126,11 +7721,8 @@ pub unsafe fn cmd_end_debug_utils_label_ext(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_end_debug_utils_label_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }))
+    let vulkan_command = dispatcher.cmd_end_debug_utils_label_ext.get();
+    vulkan_command(Some(command_buffer.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkCmdInsertDebugUtilsLabelEXT")]
@@ -9139,14 +7731,8 @@ pub unsafe fn cmd_insert_debug_utils_label_ext(
     p_label_info: &DebugUtilsLabelEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_insert_debug_utils_label_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_label_info),
-    )
+    let vulkan_command = dispatcher.cmd_insert_debug_utils_label_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_label_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html>"]
 #[doc(alias = "vkCreateDebugUtilsMessengerEXT")]
@@ -9156,13 +7742,10 @@ pub unsafe fn create_debug_utils_messenger_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DebugUtilsMessengerEXT> {
-    let vulkan_command = dispatcher
-        .create_debug_utils_messenger_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_debug_utils_messenger_ext.get();
     let mut p_messenger = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_messenger.as_mut_ptr(),
@@ -9177,13 +7760,10 @@ pub unsafe fn destroy_debug_utils_messenger_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_debug_utils_messenger_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_debug_utils_messenger_ext.get();
     vulkan_command(
-        Some(unsafe { instance.clone() }),
-        messenger.map(|v| unsafe { v.clone() }),
+        Some(instance.borrow()),
+        messenger.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -9196,12 +7776,9 @@ pub unsafe fn submit_debug_utils_message_ext(
     p_callback_data: &DebugUtilsMessengerCallbackDataEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .submit_debug_utils_message_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.submit_debug_utils_message_ext.get();
     vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         message_severity,
         message_types,
         ptr::from_ref(p_callback_data),
@@ -9218,12 +7795,11 @@ pub unsafe fn get_android_hardware_buffer_properties_android<
 ) -> Result<S> {
     let vulkan_command = dispatcher
         .get_android_hardware_buffer_properties_android
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(buffer),
         S::get_uninit_head_ptr(p_properties.as_mut_ptr()),
     );
@@ -9240,12 +7816,9 @@ pub unsafe fn get_memory_android_hardware_buffer_android(
     p_buffer: &&AHardwareBuffer,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .get_memory_android_hardware_buffer_android
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_android_hardware_buffer_android.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         ptr::from_ref(p_buffer).cast(),
     )
@@ -9260,14 +7833,11 @@ pub unsafe fn create_execution_graph_pipelines_amdx<'a, R: DynamicArray<Pipeline
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<(Status, R)> {
-    let vulkan_command = dispatcher
-        .create_execution_graph_pipelines_amdx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_execution_graph_pipelines_amdx.get();
     let mut p_pipelines = R::create_with_capacity(p_create_infos.as_slice().len() as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        pipeline_cache.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        pipeline_cache.map(|v| v.borrow()),
         p_create_infos.as_slice().len() as _,
         p_create_infos.as_slice().as_ptr().cast(),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
@@ -9289,13 +7859,12 @@ pub unsafe fn get_execution_graph_pipeline_scratch_size_amdx<
 ) -> Result<S> {
     let vulkan_command = dispatcher
         .get_execution_graph_pipeline_scratch_size_amdx
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_size_info = MaybeUninit::uninit();
     S::setup_uninit(&mut p_size_info);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { execution_graph.clone() }),
+        Some(device.borrow()),
+        Some(execution_graph.borrow()),
         S::get_uninit_head_ptr(p_size_info.as_mut_ptr()),
     );
     vk_status.map_success(|| {
@@ -9313,12 +7882,11 @@ pub unsafe fn get_execution_graph_pipeline_node_index_amdx(
 ) -> Result<u32> {
     let vulkan_command = dispatcher
         .get_execution_graph_pipeline_node_index_amdx
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_node_index = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { execution_graph.clone() }),
+        Some(device.borrow()),
+        Some(execution_graph.borrow()),
         ptr::from_ref(p_node_info),
         p_node_index.as_mut_ptr(),
     );
@@ -9333,13 +7901,10 @@ pub unsafe fn cmd_initialize_graph_scratch_memory_amdx(
     scratch_size: DeviceSize,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_initialize_graph_scratch_memory_amdx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_initialize_graph_scratch_memory_amdx.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { execution_graph.clone() }),
+        Some(command_buffer.borrow()),
+        Some(execution_graph.borrow()),
         scratch,
         scratch_size,
     )
@@ -9353,12 +7918,9 @@ pub unsafe fn cmd_dispatch_graph_amdx(
     p_count_info: &DispatchGraphCountInfoAMDX,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_dispatch_graph_amdx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_dispatch_graph_amdx.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         scratch,
         scratch_size,
         ptr::from_ref(p_count_info),
@@ -9373,12 +7935,9 @@ pub unsafe fn cmd_dispatch_graph_indirect_amdx(
     p_count_info: &DispatchGraphCountInfoAMDX,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_dispatch_graph_indirect_amdx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_dispatch_graph_indirect_amdx.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         scratch,
         scratch_size,
         ptr::from_ref(p_count_info),
@@ -9393,12 +7952,9 @@ pub unsafe fn cmd_dispatch_graph_indirect_count_amdx(
     count_info: DeviceAddress,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_dispatch_graph_indirect_count_amdx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_dispatch_graph_indirect_count_amdx.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         scratch,
         scratch_size,
         count_info,
@@ -9411,12 +7967,9 @@ pub unsafe fn cmd_set_sample_locations_ext(
     p_sample_locations_info: &SampleLocationsInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_sample_locations_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_sample_locations_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_sample_locations_info),
     )
 }
@@ -9431,12 +7984,11 @@ pub unsafe fn get_physical_device_multisample_properties_ext<
 ) -> S {
     let vulkan_command = dispatcher
         .get_physical_device_multisample_properties_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_multisample_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_multisample_properties);
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         samples,
         S::get_uninit_head_ptr(p_multisample_properties.as_mut_ptr()),
     );
@@ -9451,13 +8003,10 @@ pub unsafe fn create_acceleration_structure_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<AccelerationStructureKHR> {
-    let vulkan_command = dispatcher
-        .create_acceleration_structure_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_acceleration_structure_khr.get();
     let mut p_acceleration_structure = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_acceleration_structure.as_mut_ptr(),
@@ -9472,13 +8021,10 @@ pub unsafe fn destroy_acceleration_structure_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_acceleration_structure_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_acceleration_structure_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        acceleration_structure.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        acceleration_structure.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -9490,12 +8036,9 @@ pub unsafe fn cmd_build_acceleration_structures_khr<'a>(
     pp_build_range_infos: &&AccelerationStructureBuildRangeInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_build_acceleration_structures_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_build_acceleration_structures_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_infos.as_slice().len() as _,
         p_infos.as_slice().as_ptr().cast(),
         ptr::from_ref(pp_build_range_infos).cast(),
@@ -9513,10 +8056,9 @@ pub unsafe fn cmd_build_acceleration_structures_indirect_khr<'a>(
 ) {
     let vulkan_command = dispatcher
         .cmd_build_acceleration_structures_indirect_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_indirect_strides.as_slice().len() as _,
         p_infos.as_slice().as_ptr().cast(),
         p_indirect_device_addresses.as_slice().as_ptr().cast(),
@@ -9533,13 +8075,10 @@ pub unsafe fn build_acceleration_structures_khr<'a>(
     pp_build_range_infos: &&AccelerationStructureBuildRangeInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .build_acceleration_structures_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.build_acceleration_structures_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        deferred_operation.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        deferred_operation.map(|v| v.borrow()),
         p_infos.as_slice().len() as _,
         p_infos.as_slice().as_ptr().cast(),
         ptr::from_ref(pp_build_range_infos).cast(),
@@ -9554,13 +8093,10 @@ pub unsafe fn copy_acceleration_structure_khr(
     p_info: &CopyAccelerationStructureInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .copy_acceleration_structure_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_acceleration_structure_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        deferred_operation.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        deferred_operation.map(|v| v.borrow()),
         ptr::from_ref(p_info),
     )
     .into_result()
@@ -9573,13 +8109,10 @@ pub unsafe fn copy_acceleration_structure_to_memory_khr(
     p_info: &CopyAccelerationStructureToMemoryInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .copy_acceleration_structure_to_memory_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_acceleration_structure_to_memory_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        deferred_operation.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        deferred_operation.map(|v| v.borrow()),
         ptr::from_ref(p_info),
     )
     .into_result()
@@ -9592,13 +8125,10 @@ pub unsafe fn copy_memory_to_acceleration_structure_khr(
     p_info: &CopyMemoryToAccelerationStructureInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .copy_memory_to_acceleration_structure_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_memory_to_acceleration_structure_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        deferred_operation.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        deferred_operation.map(|v| v.borrow()),
         ptr::from_ref(p_info),
     )
     .into_result()
@@ -9619,10 +8149,9 @@ pub unsafe fn write_acceleration_structures_properties_khr<
 ) -> Result<()> {
     let vulkan_command = dispatcher
         .write_acceleration_structures_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_acceleration_structures.as_slice().len() as _,
         p_acceleration_structures.as_slice().as_ptr().cast(),
         query_type,
@@ -9639,14 +8168,8 @@ pub unsafe fn cmd_copy_acceleration_structure_khr(
     p_info: &CopyAccelerationStructureInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_acceleration_structure_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_info),
-    )
+    let vulkan_command = dispatcher.cmd_copy_acceleration_structure_khr.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyAccelerationStructureToMemoryKHR.html>"]
 #[doc(alias = "vkCmdCopyAccelerationStructureToMemoryKHR")]
@@ -9657,12 +8180,8 @@ pub unsafe fn cmd_copy_acceleration_structure_to_memory_khr(
 ) {
     let vulkan_command = dispatcher
         .cmd_copy_acceleration_structure_to_memory_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_info),
-    )
+        .get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToAccelerationStructureKHR.html>"]
 #[doc(alias = "vkCmdCopyMemoryToAccelerationStructureKHR")]
@@ -9673,12 +8192,8 @@ pub unsafe fn cmd_copy_memory_to_acceleration_structure_khr(
 ) {
     let vulkan_command = dispatcher
         .cmd_copy_memory_to_acceleration_structure_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_info),
-    )
+        .get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureDeviceAddressKHR.html>"]
 #[doc(alias = "vkGetAccelerationStructureDeviceAddressKHR")]
@@ -9689,9 +8204,8 @@ pub unsafe fn get_acceleration_structure_device_address_khr(
 ) -> DeviceAddress {
     let vulkan_command = dispatcher
         .get_acceleration_structure_device_address_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+        .get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html>"]
 #[doc(alias = "vkCmdWriteAccelerationStructuresPropertiesKHR")]
@@ -9708,14 +8222,13 @@ pub unsafe fn cmd_write_acceleration_structures_properties_khr<
 ) {
     let vulkan_command = dispatcher
         .cmd_write_acceleration_structures_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_acceleration_structures.as_slice().len() as _,
         p_acceleration_structures.as_slice().as_ptr().cast(),
         query_type,
-        Some(unsafe { query_pool.clone() }),
+        Some(query_pool.borrow()),
         first_query,
     )
 }
@@ -9728,11 +8241,10 @@ pub unsafe fn get_device_acceleration_structure_compatibility_khr(
 ) -> AccelerationStructureCompatibilityKHR {
     let vulkan_command = dispatcher
         .get_device_acceleration_structure_compatibility_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_compatibility = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_version_info),
         p_compatibility.as_mut_ptr(),
     );
@@ -9750,14 +8262,11 @@ pub unsafe fn get_acceleration_structure_build_sizes_khr<
     p_max_primitive_counts: Option<impl AsSlice<'a, u32>>,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_acceleration_structure_build_sizes_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_acceleration_structure_build_sizes_khr.get();
     let mut p_size_info = MaybeUninit::uninit();
     S::setup_uninit(&mut p_size_info);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         build_type,
         ptr::from_ref(p_build_info),
         p_max_primitive_counts
@@ -9781,12 +8290,9 @@ pub unsafe fn cmd_trace_rays_khr(
     depth: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_trace_rays_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_trace_rays_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_raygen_shader_binding_table),
         ptr::from_ref(p_miss_shader_binding_table),
         ptr::from_ref(p_hit_shader_binding_table),
@@ -9806,15 +8312,12 @@ pub unsafe fn create_ray_tracing_pipelines_khr<'a, R: DynamicArray<Pipeline>>(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<(Status, R)> {
-    let vulkan_command = dispatcher
-        .create_ray_tracing_pipelines_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_ray_tracing_pipelines_khr.get();
     let mut p_pipelines = R::create_with_capacity(p_create_infos.as_slice().len() as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        deferred_operation.map(|v| unsafe { v.clone() }),
-        pipeline_cache.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        deferred_operation.map(|v| v.borrow()),
+        pipeline_cache.map(|v| v.borrow()),
         p_create_infos.as_slice().len() as _,
         p_create_infos.as_slice().as_ptr().cast(),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
@@ -9836,13 +8339,10 @@ pub unsafe fn get_ray_tracing_shader_group_handles_khr(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .get_ray_tracing_shader_group_handles_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_ray_tracing_shader_group_handles_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { pipeline.clone() }),
+        Some(device.borrow()),
+        Some(pipeline.borrow()),
         first_group,
         group_count,
         data_size,
@@ -9861,13 +8361,10 @@ pub unsafe fn get_ray_tracing_shader_group_handles_nv(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .get_ray_tracing_shader_group_handles_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_ray_tracing_shader_group_handles_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { pipeline.clone() }),
+        Some(device.borrow()),
+        Some(pipeline.borrow()),
         first_group,
         group_count,
         data_size,
@@ -9888,11 +8385,10 @@ pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles_khr(
 ) -> Result<()> {
     let vulkan_command = dispatcher
         .get_ray_tracing_capture_replay_shader_group_handles_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { pipeline.clone() }),
+        Some(device.borrow()),
+        Some(pipeline.borrow()),
         first_group,
         group_count,
         data_size,
@@ -9911,12 +8407,9 @@ pub unsafe fn cmd_trace_rays_indirect_khr(
     indirect_device_address: DeviceAddress,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_trace_rays_indirect_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_trace_rays_indirect_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_raygen_shader_binding_table),
         ptr::from_ref(p_miss_shader_binding_table),
         ptr::from_ref(p_hit_shader_binding_table),
@@ -9933,13 +8426,10 @@ pub unsafe fn get_ray_tracing_shader_group_stack_size_khr(
     group_shader: ShaderGroupShaderKHR,
     dispatcher: &CommandsDispatcher,
 ) -> DeviceSize {
-    let vulkan_command = dispatcher
-        .get_ray_tracing_shader_group_stack_size_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_ray_tracing_shader_group_stack_size_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { pipeline.clone() }),
+        Some(device.borrow()),
+        Some(pipeline.borrow()),
         group,
         group_shader,
     )
@@ -9951,11 +8441,8 @@ pub unsafe fn cmd_set_ray_tracing_pipeline_stack_size_khr(
     pipeline_stack_size: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_ray_tracing_pipeline_stack_size_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), pipeline_stack_size)
+    let vulkan_command = dispatcher.cmd_set_ray_tracing_pipeline_stack_size_khr.get();
+    vulkan_command(Some(command_buffer.borrow()), pipeline_stack_size)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageDrmFormatModifierPropertiesEXT.html>"]
 #[doc(alias = "vkGetImageDrmFormatModifierPropertiesEXT")]
@@ -9968,13 +8455,12 @@ pub unsafe fn get_image_drm_format_modifier_properties_ext<
 ) -> Result<S> {
     let vulkan_command = dispatcher
         .get_image_drm_format_modifier_properties_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { image.clone() }),
+        Some(device.borrow()),
+        Some(image.borrow()),
         S::get_uninit_head_ptr(p_properties.as_mut_ptr()),
     );
     vk_status.map_success(|| {
@@ -9990,13 +8476,10 @@ pub unsafe fn create_validation_cache_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<ValidationCacheEXT> {
-    let vulkan_command = dispatcher
-        .create_validation_cache_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_validation_cache_ext.get();
     let mut p_validation_cache = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_validation_cache.as_mut_ptr(),
@@ -10011,13 +8494,10 @@ pub unsafe fn destroy_validation_cache_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_validation_cache_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_validation_cache_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        validation_cache.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        validation_cache.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -10029,13 +8509,10 @@ pub unsafe fn merge_validation_caches_ext<'a, V3: Alias<raw::ValidationCacheEXT>
     p_src_caches: impl AsSlice<'a, V3>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .merge_validation_caches_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.merge_validation_caches_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { dst_cache.clone() }),
+        Some(device.borrow()),
+        Some(dst_cache.borrow()),
         p_src_caches.as_slice().len() as _,
         p_src_caches.as_slice().as_ptr().cast(),
     )
@@ -10049,14 +8526,11 @@ pub unsafe fn get_validation_cache_data_ext(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<usize> {
-    let vulkan_command = dispatcher
-        .get_validation_cache_data_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_validation_cache_data_ext.get();
     let mut p_data_size = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { validation_cache.clone() }),
+        Some(device.borrow()),
+        Some(validation_cache.borrow()),
         p_data_size.as_mut_ptr(),
         p_data,
     );
@@ -10070,13 +8544,10 @@ pub unsafe fn cmd_bind_shading_rate_image_nv(
     image_layout: ImageLayout,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_shading_rate_image_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_shading_rate_image_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        image_view.map(|v| unsafe { v.clone() }),
+        Some(command_buffer.borrow()),
+        image_view.map(|v| v.borrow()),
         image_layout,
     )
 }
@@ -10088,12 +8559,9 @@ pub unsafe fn cmd_set_viewport_shading_rate_palette_nv<'a>(
     p_shading_rate_palettes: impl AsSlice<'a, ShadingRatePaletteNV<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_viewport_shading_rate_palette_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_viewport_shading_rate_palette_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_viewport,
         p_shading_rate_palettes.as_slice().len() as _,
         p_shading_rate_palettes.as_slice().as_ptr().cast(),
@@ -10107,12 +8575,9 @@ pub unsafe fn cmd_set_coarse_sample_order_nv<'a>(
     p_custom_sample_orders: impl AsSlice<'a, CoarseSampleOrderCustomNV<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_coarse_sample_order_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_coarse_sample_order_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         sample_order_type,
         p_custom_sample_orders.as_slice().len() as _,
         p_custom_sample_orders.as_slice().as_ptr().cast(),
@@ -10126,13 +8591,10 @@ pub unsafe fn create_acceleration_structure_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<AccelerationStructureNV> {
-    let vulkan_command = dispatcher
-        .create_acceleration_structure_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_acceleration_structure_nv.get();
     let mut p_acceleration_structure = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_acceleration_structure.as_mut_ptr(),
@@ -10147,13 +8609,10 @@ pub unsafe fn destroy_acceleration_structure_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_acceleration_structure_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_acceleration_structure_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        acceleration_structure.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        acceleration_structure.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -10168,12 +8627,11 @@ pub unsafe fn get_acceleration_structure_memory_requirements_nv<
 ) -> S {
     let vulkan_command = dispatcher
         .get_acceleration_structure_memory_requirements_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -10187,12 +8645,9 @@ pub unsafe fn bind_acceleration_structure_memory_nv<'a>(
     p_bind_infos: impl AsSlice<'a, BindAccelerationStructureMemoryInfoNV<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .bind_acceleration_structure_memory_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.bind_acceleration_structure_memory_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_bind_infos.as_slice().len() as _,
         p_bind_infos.as_slice().as_ptr().cast(),
     )
@@ -10212,19 +8667,16 @@ pub unsafe fn cmd_build_acceleration_structure_nv(
     scratch_offset: DeviceSize,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_build_acceleration_structure_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_build_acceleration_structure_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_info),
-        instance_data.map(|v| unsafe { v.clone() }),
+        instance_data.map(|v| v.borrow()),
         instance_offset,
         update.into(),
-        Some(unsafe { dst.clone() }),
-        src.map(|v| unsafe { v.clone() }),
-        Some(unsafe { scratch.clone() }),
+        Some(dst.borrow()),
+        src.map(|v| v.borrow()),
+        Some(scratch.borrow()),
         scratch_offset,
     )
 }
@@ -10237,14 +8689,11 @@ pub unsafe fn cmd_copy_acceleration_structure_nv(
     mode: CopyAccelerationStructureModeKHR,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_acceleration_structure_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_acceleration_structure_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { dst.clone() }),
-        Some(unsafe { src.clone() }),
+        Some(command_buffer.borrow()),
+        Some(dst.borrow()),
+        Some(src.borrow()),
         mode,
     )
 }
@@ -10268,21 +8717,18 @@ pub unsafe fn cmd_trace_rays_nv(
     depth: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_trace_rays_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_trace_rays_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { raygen_shader_binding_table_buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(raygen_shader_binding_table_buffer.borrow()),
         raygen_shader_binding_offset,
-        miss_shader_binding_table_buffer.map(|v| unsafe { v.clone() }),
+        miss_shader_binding_table_buffer.map(|v| v.borrow()),
         miss_shader_binding_offset,
         miss_shader_binding_stride,
-        hit_shader_binding_table_buffer.map(|v| unsafe { v.clone() }),
+        hit_shader_binding_table_buffer.map(|v| v.borrow()),
         hit_shader_binding_offset,
         hit_shader_binding_stride,
-        callable_shader_binding_table_buffer.map(|v| unsafe { v.clone() }),
+        callable_shader_binding_table_buffer.map(|v| v.borrow()),
         callable_shader_binding_offset,
         callable_shader_binding_stride,
         width,
@@ -10299,14 +8745,11 @@ pub unsafe fn create_ray_tracing_pipelines_nv<'a, R: DynamicArray<Pipeline>>(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<(Status, R)> {
-    let vulkan_command = dispatcher
-        .create_ray_tracing_pipelines_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_ray_tracing_pipelines_nv.get();
     let mut p_pipelines = R::create_with_capacity(p_create_infos.as_slice().len() as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        pipeline_cache.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        pipeline_cache.map(|v| v.borrow()),
         p_create_infos.as_slice().len() as _,
         p_create_infos.as_slice().as_ptr().cast(),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
@@ -10326,13 +8769,10 @@ pub unsafe fn get_acceleration_structure_handle_nv(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .get_acceleration_structure_handle_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_acceleration_structure_handle_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { acceleration_structure.clone() }),
+        Some(device.borrow()),
+        Some(acceleration_structure.borrow()),
         data_size,
         p_data,
     )
@@ -10353,14 +8793,13 @@ pub unsafe fn cmd_write_acceleration_structures_properties_nv<
 ) {
     let vulkan_command = dispatcher
         .cmd_write_acceleration_structures_properties_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_acceleration_structures.as_slice().len() as _,
         p_acceleration_structures.as_slice().as_ptr().cast(),
         query_type,
-        Some(unsafe { query_pool.clone() }),
+        Some(query_pool.borrow()),
         first_query,
     )
 }
@@ -10372,16 +8811,8 @@ pub unsafe fn compile_deferred_nv(
     shader: u32,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .compile_deferred_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { pipeline.clone() }),
-        shader,
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.compile_deferred_nv.get();
+    vulkan_command(Some(device.borrow()), Some(pipeline.borrow()), shader).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html>"]
 #[doc(alias = "vkGetMemoryHostPointerPropertiesEXT")]
@@ -10393,14 +8824,11 @@ pub unsafe fn get_memory_host_pointer_properties_ext<
     p_host_pointer: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_memory_host_pointer_properties_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_host_pointer_properties_ext.get();
     let mut p_memory_host_pointer_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_host_pointer_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         handle_type,
         p_host_pointer,
         S::get_uninit_head_ptr(p_memory_host_pointer_properties.as_mut_ptr()),
@@ -10420,14 +8848,11 @@ pub unsafe fn cmd_write_buffer_marker_amd(
     marker: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_write_buffer_marker_amd
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_write_buffer_marker_amd.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_stage,
-        Some(unsafe { dst_buffer.clone() }),
+        Some(dst_buffer.borrow()),
         dst_offset,
         marker,
     )
@@ -10442,14 +8867,11 @@ pub unsafe fn cmd_write_buffer_marker2_amd(
     marker: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_write_buffer_marker2_amd
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_write_buffer_marker2_amd.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         stage,
-        Some(unsafe { dst_buffer.clone() }),
+        Some(dst_buffer.borrow()),
         dst_offset,
         marker,
     )
@@ -10462,15 +8884,8 @@ pub unsafe fn cmd_draw_mesh_tasks_nv(
     first_task: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_mesh_tasks_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        task_count,
-        first_task,
-    )
+    let vulkan_command = dispatcher.cmd_draw_mesh_tasks_nv.get();
+    vulkan_command(Some(command_buffer.borrow()), task_count, first_task)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksIndirectNV")]
@@ -10482,13 +8897,10 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_nv(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_mesh_tasks_indirect_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_mesh_tasks_indirect_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
         draw_count,
         stride,
@@ -10506,15 +8918,12 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_count_nv(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_mesh_tasks_indirect_count_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_mesh_tasks_indirect_count_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
-        Some(unsafe { count_buffer.clone() }),
+        Some(count_buffer.borrow()),
         count_buffer_offset,
         max_draw_count,
         stride,
@@ -10528,12 +8937,9 @@ pub unsafe fn cmd_set_exclusive_scissor_enable_nv<'a>(
     p_exclusive_scissor_enables: impl AsSlice<'a, Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_exclusive_scissor_enable_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_exclusive_scissor_enable_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_exclusive_scissor,
         p_exclusive_scissor_enables.as_slice().len() as _,
         p_exclusive_scissor_enables.as_slice().as_ptr().cast(),
@@ -10547,12 +8953,9 @@ pub unsafe fn cmd_set_exclusive_scissor_nv<'a>(
     p_exclusive_scissors: impl AsSlice<'a, Rect2D>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_exclusive_scissor_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_exclusive_scissor_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_exclusive_scissor,
         p_exclusive_scissors.as_slice().len() as _,
         p_exclusive_scissors.as_slice().as_ptr().cast(),
@@ -10565,11 +8968,8 @@ pub unsafe fn cmd_set_checkpoint_nv(
     p_checkpoint_marker: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_checkpoint_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), p_checkpoint_marker)
+    let vulkan_command = dispatcher.cmd_set_checkpoint_nv.get();
+    vulkan_command(Some(command_buffer.borrow()), p_checkpoint_marker)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetQueueCheckpointDataNV.html>"]
 #[doc(alias = "vkGetQueueCheckpointDataNV")]
@@ -10577,15 +8977,12 @@ pub unsafe fn get_queue_checkpoint_data_nv<R: DynamicArray<CheckpointDataNV<'sta
     queue: &raw::Queue,
     dispatcher: &CommandsDispatcher,
 ) -> R {
-    let vulkan_command = dispatcher
-        .get_queue_checkpoint_data_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_queue_checkpoint_data_nv.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_checkpoint_data_count = vk_len.as_mut_ptr();
     let p_checkpoint_data = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { queue.clone() }),
+        Some(queue.borrow()),
         p_checkpoint_data_count,
         p_checkpoint_data,
     );
@@ -10594,7 +8991,7 @@ pub unsafe fn get_queue_checkpoint_data_nv<R: DynamicArray<CheckpointDataNV<'sta
     let mut p_checkpoint_data_count = ptr::from_mut(&mut vk_len);
     let mut p_checkpoint_data = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { queue.clone() }),
+        Some(queue.borrow()),
         p_checkpoint_data_count,
         p_checkpoint_data,
     );
@@ -10607,15 +9004,12 @@ pub unsafe fn get_queue_checkpoint_data2_nv<R: DynamicArray<CheckpointData2NV<'s
     queue: &raw::Queue,
     dispatcher: &CommandsDispatcher,
 ) -> R {
-    let vulkan_command = dispatcher
-        .get_queue_checkpoint_data2_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_queue_checkpoint_data2_nv.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_checkpoint_data_count = vk_len.as_mut_ptr();
     let p_checkpoint_data = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { queue.clone() }),
+        Some(queue.borrow()),
         p_checkpoint_data_count,
         p_checkpoint_data,
     );
@@ -10624,7 +9018,7 @@ pub unsafe fn get_queue_checkpoint_data2_nv<R: DynamicArray<CheckpointData2NV<'s
     let mut p_checkpoint_data_count = ptr::from_mut(&mut vk_len);
     let mut p_checkpoint_data = vk_vec.get_content_mut_ptr();
     vulkan_command(
-        Some(unsafe { queue.clone() }),
+        Some(queue.borrow()),
         p_checkpoint_data_count,
         p_checkpoint_data,
     );
@@ -10638,15 +9032,8 @@ pub unsafe fn initialize_performance_api_intel(
     p_initialize_info: &InitializePerformanceApiInfoINTEL,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .initialize_performance_api_intel
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_initialize_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.initialize_performance_api_intel.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_initialize_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkUninitializePerformanceApiINTEL.html>"]
 #[doc(alias = "vkUninitializePerformanceApiINTEL")]
@@ -10654,11 +9041,8 @@ pub unsafe fn uninitialize_performance_api_intel(
     device: &raw::Device,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .uninitialize_performance_api_intel
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }))
+    let vulkan_command = dispatcher.uninitialize_performance_api_intel.get();
+    vulkan_command(Some(device.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPerformanceMarkerINTEL.html>"]
 #[doc(alias = "vkCmdSetPerformanceMarkerINTEL")]
@@ -10667,15 +9051,8 @@ pub unsafe fn cmd_set_performance_marker_intel(
     p_marker_info: &PerformanceMarkerInfoINTEL,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .cmd_set_performance_marker_intel
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_marker_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.cmd_set_performance_marker_intel.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_marker_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPerformanceStreamMarkerINTEL.html>"]
 #[doc(alias = "vkCmdSetPerformanceStreamMarkerINTEL")]
@@ -10684,15 +9061,8 @@ pub unsafe fn cmd_set_performance_stream_marker_intel(
     p_marker_info: &PerformanceStreamMarkerInfoINTEL,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .cmd_set_performance_stream_marker_intel
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_marker_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.cmd_set_performance_stream_marker_intel.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_marker_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPerformanceOverrideINTEL.html>"]
 #[doc(alias = "vkCmdSetPerformanceOverrideINTEL")]
@@ -10701,12 +9071,9 @@ pub unsafe fn cmd_set_performance_override_intel(
     p_override_info: &PerformanceOverrideInfoINTEL,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .cmd_set_performance_override_intel
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_performance_override_intel.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_override_info),
     )
     .map_success(|| ())
@@ -10718,13 +9085,10 @@ pub unsafe fn acquire_performance_configuration_intel(
     p_acquire_info: &PerformanceConfigurationAcquireInfoINTEL,
     dispatcher: &CommandsDispatcher,
 ) -> Result<PerformanceConfigurationINTEL> {
-    let vulkan_command = dispatcher
-        .acquire_performance_configuration_intel
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.acquire_performance_configuration_intel.get();
     let mut p_configuration = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_acquire_info),
         p_configuration.as_mut_ptr(),
     );
@@ -10737,15 +9101,8 @@ pub unsafe fn release_performance_configuration_intel(
     configuration: Option<&raw::PerformanceConfigurationINTEL>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .release_performance_configuration_intel
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        configuration.map(|v| unsafe { v.clone() }),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.release_performance_configuration_intel.get();
+    vulkan_command(Some(device.borrow()), configuration.map(|v| v.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkQueueSetPerformanceConfigurationINTEL.html>"]
 #[doc(alias = "vkQueueSetPerformanceConfigurationINTEL")]
@@ -10754,15 +9111,8 @@ pub unsafe fn queue_set_performance_configuration_intel(
     configuration: &raw::PerformanceConfigurationINTEL,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .queue_set_performance_configuration_intel
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { queue.clone() }),
-        Some(unsafe { configuration.clone() }),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.queue_set_performance_configuration_intel.get();
+    vulkan_command(Some(queue.borrow()), Some(configuration.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPerformanceParameterINTEL.html>"]
 #[doc(alias = "vkGetPerformanceParameterINTEL")]
@@ -10771,16 +9121,9 @@ pub unsafe fn get_performance_parameter_intel(
     parameter: PerformanceParameterTypeINTEL,
     dispatcher: &CommandsDispatcher,
 ) -> Result<PerformanceValueINTEL> {
-    let vulkan_command = dispatcher
-        .get_performance_parameter_intel
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_performance_parameter_intel.get();
     let mut p_value = MaybeUninit::uninit();
-    let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        parameter,
-        p_value.as_mut_ptr(),
-    );
+    let vk_status = vulkan_command(Some(device.borrow()), parameter, p_value.as_mut_ptr());
     vk_status.map_success(|| p_value.assume_init())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetLocalDimmingAMD.html>"]
@@ -10791,13 +9134,10 @@ pub unsafe fn set_local_dimming_amd(
     local_dimming_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .set_local_dimming_amd
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.set_local_dimming_amd.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swap_chain.clone() }),
+        Some(device.borrow()),
+        Some(swap_chain.borrow()),
         local_dimming_enable.into(),
     )
 }
@@ -10809,13 +9149,10 @@ pub unsafe fn create_image_pipe_surface_fuchsia(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_image_pipe_surface_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_image_pipe_surface_fuchsia.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -10830,13 +9167,10 @@ pub unsafe fn create_metal_surface_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_metal_surface_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_metal_surface_ext.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -10853,13 +9187,12 @@ pub unsafe fn get_physical_device_fragment_shading_rates_khr<
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_fragment_shading_rates_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_fragment_shading_rate_count = vk_len.as_mut_ptr();
     let p_fragment_shading_rates = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_fragment_shading_rate_count,
         p_fragment_shading_rates,
     )
@@ -10870,7 +9203,7 @@ pub unsafe fn get_physical_device_fragment_shading_rates_khr<
     let mut p_fragment_shading_rates = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_fragment_shading_rate_count,
             p_fragment_shading_rates,
         );
@@ -10894,12 +9227,9 @@ pub unsafe fn cmd_set_fragment_shading_rate_khr(
     combiner_ops: [FragmentShadingRateCombinerOpKHR; 2u16 as _],
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_fragment_shading_rate_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_fragment_shading_rate_khr.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_fragment_size),
         combiner_ops,
     )
@@ -10913,13 +9243,10 @@ pub unsafe fn wait_for_present_khr(
     timeout: u64,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .wait_for_present_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.wait_for_present_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         present_id,
         timeout,
     )
@@ -10935,13 +9262,12 @@ pub unsafe fn get_physical_device_cooperative_matrix_properties_nv<
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_cooperative_matrix_properties_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_property_count,
         p_properties,
     )
@@ -10952,7 +9278,7 @@ pub unsafe fn get_physical_device_cooperative_matrix_properties_nv<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_property_count,
             p_properties,
         );
@@ -10978,13 +9304,12 @@ pub unsafe fn get_physical_device_supported_framebuffer_mixed_samples_combinatio
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_supported_framebuffer_mixed_samples_combinations_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_combination_count = vk_len.as_mut_ptr();
     let p_combinations = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_combination_count,
         p_combinations,
     )
@@ -10995,7 +9320,7 @@ pub unsafe fn get_physical_device_supported_framebuffer_mixed_samples_combinatio
     let mut p_combinations = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_combination_count,
             p_combinations,
         );
@@ -11020,13 +9345,12 @@ pub unsafe fn get_physical_device_surface_present_modes2_ext<R: DynamicArray<Pre
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_surface_present_modes2_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_present_mode_count = vk_len.as_mut_ptr();
     let p_present_modes = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_surface_info),
         p_present_mode_count,
         p_present_modes,
@@ -11038,7 +9362,7 @@ pub unsafe fn get_physical_device_surface_present_modes2_ext<R: DynamicArray<Pre
     let mut p_present_modes = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             ptr::from_ref(p_surface_info),
             p_present_mode_count,
             p_present_modes,
@@ -11062,15 +9386,8 @@ pub unsafe fn acquire_full_screen_exclusive_mode_ext(
     swapchain: &raw::SwapchainKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .acquire_full_screen_exclusive_mode_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.acquire_full_screen_exclusive_mode_ext.get();
+    vulkan_command(Some(device.borrow()), Some(swapchain.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkReleaseFullScreenExclusiveModeEXT.html>"]
 #[doc(alias = "vkReleaseFullScreenExclusiveModeEXT")]
@@ -11079,15 +9396,8 @@ pub unsafe fn release_full_screen_exclusive_mode_ext(
     swapchain: &raw::SwapchainKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .release_full_screen_exclusive_mode_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.release_full_screen_exclusive_mode_ext.get();
+    vulkan_command(Some(device.borrow()), Some(swapchain.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeviceGroupSurfacePresentModes2EXT.html>"]
 #[doc(alias = "vkGetDeviceGroupSurfacePresentModes2EXT")]
@@ -11096,13 +9406,10 @@ pub unsafe fn get_device_group_surface_present_modes2_ext(
     p_surface_info: &PhysicalDeviceSurfaceInfo2KHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DeviceGroupPresentModeFlagsKHR> {
-    let vulkan_command = dispatcher
-        .get_device_group_surface_present_modes2_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_group_surface_present_modes2_ext.get();
     let mut p_modes = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_surface_info),
         p_modes.as_mut_ptr(),
     );
@@ -11116,13 +9423,10 @@ pub unsafe fn create_headless_surface_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_headless_surface_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_headless_surface_ext.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -11136,13 +9440,10 @@ pub unsafe fn create_deferred_operation_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DeferredOperationKHR> {
-    let vulkan_command = dispatcher
-        .create_deferred_operation_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_deferred_operation_khr.get();
     let mut p_deferred_operation = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_deferred_operation.as_mut_ptr(),
     );
@@ -11156,13 +9457,10 @@ pub unsafe fn destroy_deferred_operation_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_deferred_operation_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_deferred_operation_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        operation.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        operation.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -11173,14 +9471,8 @@ pub unsafe fn get_deferred_operation_max_concurrency_khr(
     operation: &raw::DeferredOperationKHR,
     dispatcher: &CommandsDispatcher,
 ) -> u32 {
-    let vulkan_command = dispatcher
-        .get_deferred_operation_max_concurrency_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { operation.clone() }),
-    )
+    let vulkan_command = dispatcher.get_deferred_operation_max_concurrency_khr.get();
+    vulkan_command(Some(device.borrow()), Some(operation.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDeferredOperationResultKHR.html>"]
 #[doc(alias = "vkGetDeferredOperationResultKHR")]
@@ -11189,15 +9481,8 @@ pub unsafe fn get_deferred_operation_result_khr(
     operation: &raw::DeferredOperationKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .get_deferred_operation_result_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { operation.clone() }),
-    )
-    .into_result()
+    let vulkan_command = dispatcher.get_deferred_operation_result_khr.get();
+    vulkan_command(Some(device.borrow()), Some(operation.borrow())).into_result()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkDeferredOperationJoinKHR.html>"]
 #[doc(alias = "vkDeferredOperationJoinKHR")]
@@ -11206,15 +9491,8 @@ pub unsafe fn deferred_operation_join_khr(
     operation: &raw::DeferredOperationKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .deferred_operation_join_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { operation.clone() }),
-    )
-    .into_result()
+    let vulkan_command = dispatcher.deferred_operation_join_khr.get();
+    vulkan_command(Some(device.borrow()), Some(operation.borrow())).into_result()
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html>"]
 #[doc(alias = "vkGetPipelineExecutablePropertiesKHR")]
@@ -11225,15 +9503,12 @@ pub unsafe fn get_pipeline_executable_properties_khr<
     p_pipeline_info: &PipelineInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_pipeline_executable_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_pipeline_executable_properties_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_executable_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_pipeline_info),
         p_executable_count,
         p_properties,
@@ -11245,7 +9520,7 @@ pub unsafe fn get_pipeline_executable_properties_khr<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { device.clone() }),
+            Some(device.borrow()),
             ptr::from_ref(p_pipeline_info),
             p_executable_count,
             p_properties,
@@ -11271,15 +9546,12 @@ pub unsafe fn get_pipeline_executable_statistics_khr<
     p_executable_info: &PipelineExecutableInfoKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_pipeline_executable_statistics_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_pipeline_executable_statistics_khr.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_statistic_count = vk_len.as_mut_ptr();
     let p_statistics = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_executable_info),
         p_statistic_count,
         p_statistics,
@@ -11291,7 +9563,7 @@ pub unsafe fn get_pipeline_executable_statistics_khr<
     let mut p_statistics = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { device.clone() }),
+            Some(device.borrow()),
             ptr::from_ref(p_executable_info),
             p_statistic_count,
             p_statistics,
@@ -11319,13 +9591,12 @@ pub unsafe fn get_pipeline_executable_internal_representations_khr<
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_pipeline_executable_internal_representations_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_internal_representation_count = vk_len.as_mut_ptr();
     let p_internal_representations = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_executable_info),
         p_internal_representation_count,
         p_internal_representations,
@@ -11337,7 +9608,7 @@ pub unsafe fn get_pipeline_executable_internal_representations_khr<
     let mut p_internal_representations = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { device.clone() }),
+            Some(device.borrow()),
             ptr::from_ref(p_executable_info),
             p_internal_representation_count,
             p_internal_representations,
@@ -11361,15 +9632,8 @@ pub unsafe fn release_swapchain_images_ext(
     p_release_info: &ReleaseSwapchainImagesInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .release_swapchain_images_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_release_info),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.release_swapchain_images_ext.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_release_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetGeneratedCommandsMemoryRequirementsNV.html>"]
 #[doc(alias = "vkGetGeneratedCommandsMemoryRequirementsNV")]
@@ -11382,12 +9646,11 @@ pub unsafe fn get_generated_commands_memory_requirements_nv<
 ) -> S {
     let vulkan_command = dispatcher
         .get_generated_commands_memory_requirements_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -11401,12 +9664,9 @@ pub unsafe fn cmd_preprocess_generated_commands_nv(
     p_generated_commands_info: &GeneratedCommandsInfoNV,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_preprocess_generated_commands_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_preprocess_generated_commands_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_generated_commands_info),
     )
 }
@@ -11418,12 +9678,9 @@ pub unsafe fn cmd_execute_generated_commands_nv(
     p_generated_commands_info: &GeneratedCommandsInfoNV,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_execute_generated_commands_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_execute_generated_commands_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         is_preprocessed.into(),
         ptr::from_ref(p_generated_commands_info),
     )
@@ -11437,14 +9694,11 @@ pub unsafe fn cmd_bind_pipeline_shader_group_nv(
     group_index: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_pipeline_shader_group_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_pipeline_shader_group_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_bind_point,
-        Some(unsafe { pipeline.clone() }),
+        Some(pipeline.borrow()),
         group_index,
     )
 }
@@ -11456,13 +9710,10 @@ pub unsafe fn create_indirect_commands_layout_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<IndirectCommandsLayoutNV> {
-    let vulkan_command = dispatcher
-        .create_indirect_commands_layout_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_indirect_commands_layout_nv.get();
     let mut p_indirect_commands_layout = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_indirect_commands_layout.as_mut_ptr(),
@@ -11477,13 +9728,10 @@ pub unsafe fn destroy_indirect_commands_layout_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_indirect_commands_layout_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_indirect_commands_layout_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        indirect_commands_layout.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        indirect_commands_layout.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -11494,12 +9742,9 @@ pub unsafe fn cmd_set_depth_bias2_ext(
     p_depth_bias_info: &DepthBiasInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_bias2_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_depth_bias2_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_depth_bias_info),
     )
 }
@@ -11511,14 +9756,11 @@ pub unsafe fn acquire_drm_display_ext(
     display: &raw::DisplayKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .acquire_drm_display_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.acquire_drm_display_ext.get();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         drm_fd,
-        Some(unsafe { display.clone() }),
+        Some(display.borrow()),
     )
     .map_success(|| ())
 }
@@ -11530,13 +9772,10 @@ pub unsafe fn get_drm_display_ext(
     connector_id: u32,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DisplayKHR> {
-    let vulkan_command = dispatcher
-        .get_drm_display_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_drm_display_ext.get();
     let mut display = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         drm_fd,
         connector_id,
         display.as_mut_ptr(),
@@ -11551,13 +9790,10 @@ pub unsafe fn create_cuda_module_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<CudaModuleNV> {
-    let vulkan_command = dispatcher
-        .create_cuda_module_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_cuda_module_nv.get();
     let mut p_module = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_module.as_mut_ptr(),
@@ -11572,14 +9808,11 @@ pub unsafe fn get_cuda_module_cache_nv(
     p_cache_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<usize> {
-    let vulkan_command = dispatcher
-        .get_cuda_module_cache_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_cuda_module_cache_nv.get();
     let mut p_cache_size = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { module.clone() }),
+        Some(device.borrow()),
+        Some(module.borrow()),
         p_cache_size.as_mut_ptr(),
         p_cache_data,
     );
@@ -11593,13 +9826,10 @@ pub unsafe fn create_cuda_function_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<CudaFunctionNV> {
-    let vulkan_command = dispatcher
-        .create_cuda_function_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_cuda_function_nv.get();
     let mut p_function = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_function.as_mut_ptr(),
@@ -11614,13 +9844,10 @@ pub unsafe fn destroy_cuda_module_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_cuda_module_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_cuda_module_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { module.clone() }),
+        Some(device.borrow()),
+        Some(module.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -11632,13 +9859,10 @@ pub unsafe fn destroy_cuda_function_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_cuda_function_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_cuda_function_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { function.clone() }),
+        Some(device.borrow()),
+        Some(function.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -11649,14 +9873,8 @@ pub unsafe fn cmd_cuda_launch_kernel_nv(
     p_launch_info: &CudaLaunchInfoNV,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_cuda_launch_kernel_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_launch_info),
-    )
+    let vulkan_command = dispatcher.cmd_cuda_launch_kernel_nv.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_launch_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkExportMetalObjectsEXT.html>"]
 #[doc(alias = "vkExportMetalObjectsEXT")]
@@ -11664,14 +9882,11 @@ pub unsafe fn export_metal_objects_ext<S: StructureChainOut<ExportMetalObjectsIn
     device: &raw::Device,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .export_metal_objects_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.export_metal_objects_ext.get();
     let mut p_metal_objects_info = MaybeUninit::uninit();
     S::setup_uninit(&mut p_metal_objects_info);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         S::get_uninit_head_ptr(p_metal_objects_info.as_mut_ptr()),
     );
     S::setup_cleanup(p_metal_objects_info.as_mut_ptr());
@@ -11684,14 +9899,11 @@ pub unsafe fn get_descriptor_set_layout_size_ext(
     layout: &raw::DescriptorSetLayout,
     dispatcher: &CommandsDispatcher,
 ) -> DeviceSize {
-    let vulkan_command = dispatcher
-        .get_descriptor_set_layout_size_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_descriptor_set_layout_size_ext.get();
     let mut p_layout_size_in_bytes = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { layout.clone() }),
+        Some(device.borrow()),
+        Some(layout.borrow()),
         p_layout_size_in_bytes.as_mut_ptr(),
     );
     p_layout_size_in_bytes.assume_init()
@@ -11706,12 +9918,11 @@ pub unsafe fn get_descriptor_set_layout_binding_offset_ext(
 ) -> DeviceSize {
     let vulkan_command = dispatcher
         .get_descriptor_set_layout_binding_offset_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_offset = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { layout.clone() }),
+        Some(device.borrow()),
+        Some(layout.borrow()),
         binding,
         p_offset.as_mut_ptr(),
     );
@@ -11726,12 +9937,9 @@ pub unsafe fn get_descriptor_ext(
     p_descriptor: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .get_descriptor_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_descriptor_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_descriptor_info),
         data_size,
         p_descriptor,
@@ -11744,12 +9952,9 @@ pub unsafe fn cmd_bind_descriptor_buffers_ext<'a>(
     p_binding_infos: impl AsSlice<'a, DescriptorBufferBindingInfoEXT<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_descriptor_buffers_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_descriptor_buffers_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_binding_infos.as_slice().len() as _,
         p_binding_infos.as_slice().as_ptr().cast(),
     )
@@ -11765,14 +9970,11 @@ pub unsafe fn cmd_set_descriptor_buffer_offsets_ext<'a>(
     p_offsets: impl AsSlice<'a, DeviceSize>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_descriptor_buffer_offsets_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_descriptor_buffer_offsets_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_bind_point,
-        Some(unsafe { layout.clone() }),
+        Some(layout.borrow()),
         first_set,
         p_offsets.as_slice().len() as _,
         p_buffer_indices.as_slice().as_ptr().cast(),
@@ -11790,12 +9992,11 @@ pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers_ext(
 ) {
     let vulkan_command = dispatcher
         .cmd_bind_descriptor_buffer_embedded_samplers_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_bind_point,
-        Some(unsafe { layout.clone() }),
+        Some(layout.borrow()),
         set,
     )
 }
@@ -11809,14 +10010,8 @@ pub unsafe fn get_buffer_opaque_capture_descriptor_data_ext(
 ) -> Result<()> {
     let vulkan_command = dispatcher
         .get_buffer_opaque_capture_descriptor_data_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_info),
-        p_data,
-    )
-    .map_success(|| ())
+        .get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info), p_data).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetImageOpaqueCaptureDescriptorDataEXT")]
@@ -11828,14 +10023,8 @@ pub unsafe fn get_image_opaque_capture_descriptor_data_ext(
 ) -> Result<()> {
     let vulkan_command = dispatcher
         .get_image_opaque_capture_descriptor_data_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_info),
-        p_data,
-    )
-    .map_success(|| ())
+        .get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info), p_data).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetImageViewOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetImageViewOpaqueCaptureDescriptorDataEXT")]
@@ -11847,14 +10036,8 @@ pub unsafe fn get_image_view_opaque_capture_descriptor_data_ext(
 ) -> Result<()> {
     let vulkan_command = dispatcher
         .get_image_view_opaque_capture_descriptor_data_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_info),
-        p_data,
-    )
-    .map_success(|| ())
+        .get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info), p_data).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetSamplerOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetSamplerOpaqueCaptureDescriptorDataEXT")]
@@ -11866,14 +10049,8 @@ pub unsafe fn get_sampler_opaque_capture_descriptor_data_ext(
 ) -> Result<()> {
     let vulkan_command = dispatcher
         .get_sampler_opaque_capture_descriptor_data_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_info),
-        p_data,
-    )
-    .map_success(|| ())
+        .get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info), p_data).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT")]
@@ -11885,14 +10062,8 @@ pub unsafe fn get_acceleration_structure_opaque_capture_descriptor_data_ext(
 ) -> Result<()> {
     let vulkan_command = dispatcher
         .get_acceleration_structure_opaque_capture_descriptor_data_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        ptr::from_ref(p_info),
-        p_data,
-    )
-    .map_success(|| ())
+        .get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info), p_data).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetFragmentShadingRateEnumNV.html>"]
 #[doc(alias = "vkCmdSetFragmentShadingRateEnumNV")]
@@ -11902,15 +10073,8 @@ pub unsafe fn cmd_set_fragment_shading_rate_enum_nv(
     combiner_ops: [FragmentShadingRateCombinerOpKHR; 2u16 as _],
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_fragment_shading_rate_enum_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        shading_rate,
-        combiner_ops,
-    )
+    let vulkan_command = dispatcher.cmd_set_fragment_shading_rate_enum_nv.get();
+    vulkan_command(Some(command_buffer.borrow()), shading_rate, combiner_ops)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMeshTasksEXT.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksEXT")]
@@ -11921,12 +10085,9 @@ pub unsafe fn cmd_draw_mesh_tasks_ext(
     group_count_z: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_mesh_tasks_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_mesh_tasks_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         group_count_x,
         group_count_y,
         group_count_z,
@@ -11942,13 +10103,10 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_ext(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_mesh_tasks_indirect_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_mesh_tasks_indirect_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
         draw_count,
         stride,
@@ -11966,15 +10124,12 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_count_ext(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_mesh_tasks_indirect_count_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_mesh_tasks_indirect_count_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
+        Some(command_buffer.borrow()),
+        Some(buffer.borrow()),
         offset,
-        Some(unsafe { count_buffer.clone() }),
+        Some(count_buffer.borrow()),
         count_buffer_offset,
         max_draw_count,
         stride,
@@ -11987,15 +10142,8 @@ pub unsafe fn acquire_winrt_display_nv(
     display: &raw::DisplayKHR,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .acquire_winrt_display_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { physical_device.clone() }),
-        Some(unsafe { display.clone() }),
-    )
-    .map_success(|| ())
+    let vulkan_command = dispatcher.acquire_winrt_display_nv.get();
+    vulkan_command(Some(physical_device.borrow()), Some(display.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetWinrtDisplayNV.html>"]
 #[doc(alias = "vkGetWinrtDisplayNV")]
@@ -12004,13 +10152,10 @@ pub unsafe fn get_winrt_display_nv(
     device_relative_id: u32,
     dispatcher: &CommandsDispatcher,
 ) -> Result<DisplayKHR> {
-    let vulkan_command = dispatcher
-        .get_winrt_display_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_winrt_display_nv.get();
     let mut p_display = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         device_relative_id,
         p_display.as_mut_ptr(),
     );
@@ -12024,13 +10169,10 @@ pub unsafe fn create_direct_fbsurface_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_direct_fbsurface_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_direct_fbsurface_ext.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -12047,10 +10189,9 @@ pub unsafe fn get_physical_device_direct_fbpresentation_support_ext(
 ) -> bool {
     let vulkan_command = dispatcher
         .get_physical_device_direct_fbpresentation_support_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         queue_family_index,
         ptr::from_ref(dfb),
     )
@@ -12064,12 +10205,9 @@ pub unsafe fn cmd_set_vertex_input_ext<'a>(
     p_vertex_attribute_descriptions: impl AsSlice<'a, VertexInputAttributeDescription2EXT<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_vertex_input_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_vertex_input_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_vertex_binding_descriptions.as_slice().len() as _,
         p_vertex_binding_descriptions.as_slice().as_ptr().cast(),
         p_vertex_attribute_descriptions.as_slice().len() as _,
@@ -12083,13 +10221,10 @@ pub unsafe fn get_memory_zircon_handle_fuchsia(
     p_get_zircon_handle_info: &MemoryGetZirconHandleInfoFUCHSIA,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .get_memory_zircon_handle_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_zircon_handle_fuchsia.get();
     let mut p_zircon_handle = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_get_zircon_handle_info),
         p_zircon_handle.as_mut_ptr(),
     );
@@ -12105,14 +10240,11 @@ pub unsafe fn get_memory_zircon_handle_properties_fuchsia<
     zircon_handle: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_memory_zircon_handle_properties_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_zircon_handle_properties_fuchsia.get();
     let mut p_memory_zircon_handle_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_zircon_handle_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         handle_type,
         zircon_handle,
         S::get_uninit_head_ptr(p_memory_zircon_handle_properties.as_mut_ptr()),
@@ -12129,12 +10261,9 @@ pub unsafe fn import_semaphore_zircon_handle_fuchsia(
     p_import_semaphore_zircon_handle_info: &ImportSemaphoreZirconHandleInfoFUCHSIA,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .import_semaphore_zircon_handle_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.import_semaphore_zircon_handle_fuchsia.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_import_semaphore_zircon_handle_info),
     )
     .map_success(|| ())
@@ -12146,13 +10275,10 @@ pub unsafe fn get_semaphore_zircon_handle_fuchsia(
     p_get_zircon_handle_info: &SemaphoreGetZirconHandleInfoFUCHSIA,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .get_semaphore_zircon_handle_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_semaphore_zircon_handle_fuchsia.get();
     let mut p_zircon_handle = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_get_zircon_handle_info),
         p_zircon_handle.as_mut_ptr(),
     );
@@ -12166,13 +10292,10 @@ pub unsafe fn create_buffer_collection_fuchsia(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<BufferCollectionFUCHSIA> {
-    let vulkan_command = dispatcher
-        .create_buffer_collection_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_buffer_collection_fuchsia.get();
     let mut p_collection = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_collection.as_mut_ptr(),
@@ -12189,11 +10312,10 @@ pub unsafe fn set_buffer_collection_image_constraints_fuchsia(
 ) -> Result<()> {
     let vulkan_command = dispatcher
         .set_buffer_collection_image_constraints_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { collection.clone() }),
+        Some(device.borrow()),
+        Some(collection.borrow()),
         ptr::from_ref(p_image_constraints_info),
     )
     .map_success(|| ())
@@ -12208,11 +10330,10 @@ pub unsafe fn set_buffer_collection_buffer_constraints_fuchsia(
 ) -> Result<()> {
     let vulkan_command = dispatcher
         .set_buffer_collection_buffer_constraints_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { collection.clone() }),
+        Some(device.borrow()),
+        Some(collection.borrow()),
         ptr::from_ref(p_buffer_constraints_info),
     )
     .map_success(|| ())
@@ -12225,13 +10346,10 @@ pub unsafe fn destroy_buffer_collection_fuchsia(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_buffer_collection_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_buffer_collection_fuchsia.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { collection.clone() }),
+        Some(device.borrow()),
+        Some(collection.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -12244,15 +10362,12 @@ pub unsafe fn get_buffer_collection_properties_fuchsia<
     collection: &raw::BufferCollectionFUCHSIA,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_buffer_collection_properties_fuchsia
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_buffer_collection_properties_fuchsia.get();
     let mut p_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { collection.clone() }),
+        Some(device.borrow()),
+        Some(collection.borrow()),
         S::get_uninit_head_ptr(p_properties.as_mut_ptr()),
     );
     vk_status.map_success(|| {
@@ -12269,12 +10384,11 @@ pub unsafe fn get_device_subpass_shading_max_workgroup_size_huawei<R: DynamicArr
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_device_subpass_shading_max_workgroup_size_huawei
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_max_workgroup_size = R::create_with_capacity(1 as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { renderpass.clone() }),
+        Some(device.borrow()),
+        Some(renderpass.borrow()),
         p_max_workgroup_size.get_content_mut_ptr(),
     );
     vk_status.map_success(|| {
@@ -12288,11 +10402,8 @@ pub unsafe fn cmd_subpass_shading_huawei(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_subpass_shading_huawei
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }))
+    let vulkan_command = dispatcher.cmd_subpass_shading_huawei.get();
+    vulkan_command(Some(command_buffer.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdBindInvocationMaskHUAWEI.html>"]
 #[doc(alias = "vkCmdBindInvocationMaskHUAWEI")]
@@ -12302,13 +10413,10 @@ pub unsafe fn cmd_bind_invocation_mask_huawei(
     image_layout: ImageLayout,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_invocation_mask_huawei
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_invocation_mask_huawei.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        image_view.map(|v| unsafe { v.clone() }),
+        Some(command_buffer.borrow()),
+        image_view.map(|v| v.borrow()),
         image_layout,
     )
 }
@@ -12319,13 +10427,10 @@ pub unsafe fn get_memory_remote_address_nv(
     p_memory_get_remote_address_info: &MemoryGetRemoteAddressInfoNV,
     dispatcher: &CommandsDispatcher,
 ) -> Result<RemoteAddressNV> {
-    let vulkan_command = dispatcher
-        .get_memory_remote_address_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_remote_address_nv.get();
     let mut p_address = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_memory_get_remote_address_info),
         p_address.as_mut_ptr(),
     );
@@ -12338,13 +10443,10 @@ pub unsafe fn get_pipeline_properties_ext(
     p_pipeline_info: &PipelineInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<BaseOutStructure<'static>> {
-    let vulkan_command = dispatcher
-        .get_pipeline_properties_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_pipeline_properties_ext.get();
     let mut p_pipeline_properties = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_pipeline_info),
         p_pipeline_properties.as_mut_ptr(),
     );
@@ -12357,14 +10459,8 @@ pub unsafe fn cmd_set_patch_control_points_ext(
     patch_control_points: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_patch_control_points_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        patch_control_points,
-    )
+    let vulkan_command = dispatcher.cmd_set_patch_control_points_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), patch_control_points)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEXT.html>"]
 #[doc(alias = "vkCmdSetLogicOpEXT")]
@@ -12373,11 +10469,8 @@ pub unsafe fn cmd_set_logic_op_ext(
     logic_op: LogicOp,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_logic_op_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), logic_op)
+    let vulkan_command = dispatcher.cmd_set_logic_op_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), logic_op)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateScreenSurfaceQNX.html>"]
 #[doc(alias = "vkCreateScreenSurfaceQNX")]
@@ -12387,13 +10480,10 @@ pub unsafe fn create_screen_surface_qnx(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<SurfaceKHR> {
-    let vulkan_command = dispatcher
-        .create_screen_surface_qnx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_screen_surface_qnx.get();
     let mut p_surface = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { instance.clone() }),
+        Some(instance.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_surface.as_mut_ptr(),
@@ -12410,10 +10500,9 @@ pub unsafe fn get_physical_device_screen_presentation_support_qnx(
 ) -> bool {
     let vulkan_command = dispatcher
         .get_physical_device_screen_presentation_support_qnx
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         queue_family_index,
         ptr::from_ref(window),
     )
@@ -12426,12 +10515,9 @@ pub unsafe fn cmd_set_color_write_enable_ext<'a>(
     p_color_write_enables: impl AsSlice<'a, Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_color_write_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_color_write_enable_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_color_write_enables.as_slice().len() as _,
         p_color_write_enables.as_slice().as_ptr().cast(),
     )
@@ -12443,14 +10529,8 @@ pub unsafe fn cmd_trace_rays_indirect2_khr(
     indirect_device_address: DeviceAddress,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_trace_rays_indirect2_khr
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        indirect_device_address,
-    )
+    let vulkan_command = dispatcher.cmd_trace_rays_indirect2_khr.get();
+    vulkan_command(Some(command_buffer.borrow()), indirect_device_address)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdDrawMultiEXT.html>"]
 #[doc(alias = "vkCmdDrawMultiEXT")]
@@ -12462,12 +10542,9 @@ pub unsafe fn cmd_draw_multi_ext<'a>(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_multi_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_multi_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_vertex_info.as_slice().len() as _,
         p_vertex_info.as_slice().as_ptr().cast(),
         instance_count,
@@ -12486,12 +10563,9 @@ pub unsafe fn cmd_draw_multi_indexed_ext<'a>(
     p_vertex_offset: Option<&i32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_multi_indexed_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_multi_indexed_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_index_info.as_slice().len() as _,
         p_index_info.as_slice().as_ptr().cast(),
         instance_count,
@@ -12510,13 +10584,10 @@ pub unsafe fn create_micromap_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<MicromapEXT> {
-    let vulkan_command = dispatcher
-        .create_micromap_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_micromap_ext.get();
     let mut p_micromap = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_micromap.as_mut_ptr(),
@@ -12531,13 +10602,10 @@ pub unsafe fn destroy_micromap_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_micromap_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_micromap_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        micromap.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        micromap.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -12548,12 +10616,9 @@ pub unsafe fn cmd_build_micromaps_ext<'a>(
     p_infos: impl AsSlice<'a, MicromapBuildInfoEXT<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_build_micromaps_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_build_micromaps_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_infos.as_slice().len() as _,
         p_infos.as_slice().as_ptr().cast(),
     )
@@ -12566,13 +10631,10 @@ pub unsafe fn build_micromaps_ext<'a>(
     p_infos: impl AsSlice<'a, MicromapBuildInfoEXT<'a>>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .build_micromaps_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.build_micromaps_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        deferred_operation.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        deferred_operation.map(|v| v.borrow()),
         p_infos.as_slice().len() as _,
         p_infos.as_slice().as_ptr().cast(),
     )
@@ -12586,13 +10648,10 @@ pub unsafe fn copy_micromap_ext(
     p_info: &CopyMicromapInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .copy_micromap_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_micromap_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        deferred_operation.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        deferred_operation.map(|v| v.borrow()),
         ptr::from_ref(p_info),
     )
     .into_result()
@@ -12605,13 +10664,10 @@ pub unsafe fn copy_micromap_to_memory_ext(
     p_info: &CopyMicromapToMemoryInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .copy_micromap_to_memory_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_micromap_to_memory_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        deferred_operation.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        deferred_operation.map(|v| v.borrow()),
         ptr::from_ref(p_info),
     )
     .into_result()
@@ -12624,13 +10680,10 @@ pub unsafe fn copy_memory_to_micromap_ext(
     p_info: &CopyMemoryToMicromapInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<Status> {
-    let vulkan_command = dispatcher
-        .copy_memory_to_micromap_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.copy_memory_to_micromap_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        deferred_operation.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        deferred_operation.map(|v| v.borrow()),
         ptr::from_ref(p_info),
     )
     .into_result()
@@ -12646,12 +10699,9 @@ pub unsafe fn write_micromaps_properties_ext<'a, V2: Alias<raw::MicromapEXT> + '
     stride: usize,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .write_micromaps_properties_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.write_micromaps_properties_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_micromaps.as_slice().len() as _,
         p_micromaps.as_slice().as_ptr().cast(),
         query_type,
@@ -12668,14 +10718,8 @@ pub unsafe fn cmd_copy_micromap_ext(
     p_info: &CopyMicromapInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_micromap_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_info),
-    )
+    let vulkan_command = dispatcher.cmd_copy_micromap_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMicromapToMemoryEXT.html>"]
 #[doc(alias = "vkCmdCopyMicromapToMemoryEXT")]
@@ -12684,14 +10728,8 @@ pub unsafe fn cmd_copy_micromap_to_memory_ext(
     p_info: &CopyMicromapToMemoryInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_micromap_to_memory_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_info),
-    )
+    let vulkan_command = dispatcher.cmd_copy_micromap_to_memory_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdCopyMemoryToMicromapEXT.html>"]
 #[doc(alias = "vkCmdCopyMemoryToMicromapEXT")]
@@ -12700,14 +10738,8 @@ pub unsafe fn cmd_copy_memory_to_micromap_ext(
     p_info: &CopyMemoryToMicromapInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_memory_to_micromap_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_info),
-    )
+    let vulkan_command = dispatcher.cmd_copy_memory_to_micromap_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdWriteMicromapsPropertiesEXT.html>"]
 #[doc(alias = "vkCmdWriteMicromapsPropertiesEXT")]
@@ -12719,16 +10751,13 @@ pub unsafe fn cmd_write_micromaps_properties_ext<'a, V2: Alias<raw::MicromapEXT>
     first_query: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_write_micromaps_properties_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_write_micromaps_properties_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_micromaps.as_slice().len() as _,
         p_micromaps.as_slice().as_ptr().cast(),
         query_type,
-        Some(unsafe { query_pool.clone() }),
+        Some(query_pool.borrow()),
         first_query,
     )
 }
@@ -12739,13 +10768,10 @@ pub unsafe fn get_device_micromap_compatibility_ext(
     p_version_info: &MicromapVersionInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> AccelerationStructureCompatibilityKHR {
-    let vulkan_command = dispatcher
-        .get_device_micromap_compatibility_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_device_micromap_compatibility_ext.get();
     let mut p_compatibility = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_version_info),
         p_compatibility.as_mut_ptr(),
     );
@@ -12761,14 +10787,11 @@ pub unsafe fn get_micromap_build_sizes_ext<
     p_build_info: &MicromapBuildInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_micromap_build_sizes_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_micromap_build_sizes_ext.get();
     let mut p_size_info = MaybeUninit::uninit();
     S::setup_uninit(&mut p_size_info);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         build_type,
         ptr::from_ref(p_build_info),
         S::get_uninit_head_ptr(p_size_info.as_mut_ptr()),
@@ -12785,12 +10808,9 @@ pub unsafe fn cmd_draw_cluster_huawei(
     group_count_z: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_cluster_huawei
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_draw_cluster_huawei.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         group_count_x,
         group_count_y,
         group_count_z,
@@ -12804,15 +10824,8 @@ pub unsafe fn cmd_draw_cluster_indirect_huawei(
     offset: DeviceSize,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_draw_cluster_indirect_huawei
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { buffer.clone() }),
-        offset,
-    )
+    let vulkan_command = dispatcher.cmd_draw_cluster_indirect_huawei.get();
+    vulkan_command(Some(command_buffer.borrow()), Some(buffer.borrow()), offset)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkSetDeviceMemoryPriorityEXT.html>"]
 #[doc(alias = "vkSetDeviceMemoryPriorityEXT")]
@@ -12822,15 +10835,8 @@ pub unsafe fn set_device_memory_priority_ext(
     priority: f32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .set_device_memory_priority_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { memory.clone() }),
-        priority,
-    )
+    let vulkan_command = dispatcher.set_device_memory_priority_ext.get();
+    vulkan_command(Some(device.borrow()), Some(memory.borrow()), priority)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetDescriptorSetLayoutHostMappingInfoVALVE.html>"]
 #[doc(alias = "vkGetDescriptorSetLayoutHostMappingInfoVALVE")]
@@ -12843,12 +10849,11 @@ pub unsafe fn get_descriptor_set_layout_host_mapping_info_valve<
 ) -> S {
     let vulkan_command = dispatcher
         .get_descriptor_set_layout_host_mapping_info_valve
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_host_mapping = MaybeUninit::uninit();
     S::setup_uninit(&mut p_host_mapping);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_binding_reference),
         S::get_uninit_head_ptr(p_host_mapping.as_mut_ptr()),
     );
@@ -12862,14 +10867,11 @@ pub unsafe fn get_descriptor_set_host_mapping_valve(
     descriptor_set: &raw::DescriptorSet,
     dispatcher: &CommandsDispatcher,
 ) -> VoidPtr {
-    let vulkan_command = dispatcher
-        .get_descriptor_set_host_mapping_valve
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_descriptor_set_host_mapping_valve.get();
     let mut pp_data = MaybeUninit::uninit();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { descriptor_set.clone() }),
+        Some(device.borrow()),
+        Some(descriptor_set.borrow()),
         pp_data.as_mut_ptr(),
     );
     pp_data.assume_init()
@@ -12883,12 +10885,9 @@ pub unsafe fn cmd_copy_memory_indirect_nv(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_memory_indirect_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_memory_indirect_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         copy_buffer_address,
         copy_count,
         stride,
@@ -12905,16 +10904,13 @@ pub unsafe fn cmd_copy_memory_to_image_indirect_nv<'a>(
     p_image_subresources: impl AsSlice<'a, ImageSubresourceLayers>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_copy_memory_to_image_indirect_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_copy_memory_to_image_indirect_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         copy_buffer_address,
         p_image_subresources.as_slice().len() as _,
         stride,
-        Some(unsafe { dst_image.clone() }),
+        Some(dst_image.borrow()),
         dst_image_layout,
         p_image_subresources.as_slice().as_ptr().cast(),
     )
@@ -12926,12 +10922,9 @@ pub unsafe fn cmd_decompress_memory_nv<'a>(
     p_decompress_memory_regions: impl AsSlice<'a, DecompressMemoryRegionNV>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_decompress_memory_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_decompress_memory_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_decompress_memory_regions.as_slice().len() as _,
         p_decompress_memory_regions.as_slice().as_ptr().cast(),
     )
@@ -12945,12 +10938,9 @@ pub unsafe fn cmd_decompress_memory_indirect_count_nv(
     stride: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_decompress_memory_indirect_count_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_decompress_memory_indirect_count_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         indirect_commands_address,
         indirect_commands_count_address,
         stride,
@@ -12967,12 +10957,11 @@ pub unsafe fn get_pipeline_indirect_memory_requirements_nv<
 ) -> S {
     let vulkan_command = dispatcher
         .get_pipeline_indirect_memory_requirements_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -12987,14 +10976,11 @@ pub unsafe fn cmd_update_pipeline_indirect_buffer_nv(
     pipeline: &raw::Pipeline,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_update_pipeline_indirect_buffer_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_update_pipeline_indirect_buffer_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         pipeline_bind_point,
-        Some(unsafe { pipeline.clone() }),
+        Some(pipeline.borrow()),
     )
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPipelineIndirectDeviceAddressNV.html>"]
@@ -13004,11 +10990,8 @@ pub unsafe fn get_pipeline_indirect_device_address_nv(
     p_info: &PipelineIndirectDeviceAddressInfoNV,
     dispatcher: &CommandsDispatcher,
 ) -> DeviceAddress {
-    let vulkan_command = dispatcher
-        .get_pipeline_indirect_device_address_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info))
+    let vulkan_command = dispatcher.get_pipeline_indirect_device_address_nv.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClampEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthClampEnableEXT")]
@@ -13017,14 +11000,8 @@ pub unsafe fn cmd_set_depth_clamp_enable_ext(
     depth_clamp_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_clamp_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        depth_clamp_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_depth_clamp_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_clamp_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetPolygonModeEXT.html>"]
 #[doc(alias = "vkCmdSetPolygonModeEXT")]
@@ -13033,11 +11010,8 @@ pub unsafe fn cmd_set_polygon_mode_ext(
     polygon_mode: PolygonMode,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_polygon_mode_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), polygon_mode)
+    let vulkan_command = dispatcher.cmd_set_polygon_mode_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), polygon_mode)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationSamplesEXT.html>"]
 #[doc(alias = "vkCmdSetRasterizationSamplesEXT")]
@@ -13046,14 +11020,8 @@ pub unsafe fn cmd_set_rasterization_samples_ext(
     rasterization_samples: SampleCountFlags,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_rasterization_samples_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        rasterization_samples,
-    )
+    let vulkan_command = dispatcher.cmd_set_rasterization_samples_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), rasterization_samples)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleMaskEXT.html>"]
 #[doc(alias = "vkCmdSetSampleMaskEXT")]
@@ -13063,12 +11031,9 @@ pub unsafe fn cmd_set_sample_mask_ext<'a>(
     p_sample_mask: impl AsSlice<'a, SampleMask>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_sample_mask_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_sample_mask_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         samples,
         p_sample_mask.as_slice().as_ptr().cast(),
     )
@@ -13080,12 +11045,9 @@ pub unsafe fn cmd_set_alpha_to_coverage_enable_ext(
     alpha_to_coverage_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_alpha_to_coverage_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_alpha_to_coverage_enable_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         alpha_to_coverage_enable.into(),
     )
 }
@@ -13096,14 +11058,8 @@ pub unsafe fn cmd_set_alpha_to_one_enable_ext(
     alpha_to_one_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_alpha_to_one_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        alpha_to_one_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_alpha_to_one_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), alpha_to_one_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLogicOpEnableEXT.html>"]
 #[doc(alias = "vkCmdSetLogicOpEnableEXT")]
@@ -13112,14 +11068,8 @@ pub unsafe fn cmd_set_logic_op_enable_ext(
     logic_op_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_logic_op_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        logic_op_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_logic_op_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), logic_op_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetColorBlendEnableEXT.html>"]
 #[doc(alias = "vkCmdSetColorBlendEnableEXT")]
@@ -13129,12 +11079,9 @@ pub unsafe fn cmd_set_color_blend_enable_ext<'a>(
     p_color_blend_enables: impl AsSlice<'a, Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_color_blend_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_color_blend_enable_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_attachment,
         p_color_blend_enables.as_slice().len() as _,
         p_color_blend_enables.as_slice().as_ptr().cast(),
@@ -13148,12 +11095,9 @@ pub unsafe fn cmd_set_color_blend_equation_ext<'a>(
     p_color_blend_equations: impl AsSlice<'a, ColorBlendEquationEXT>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_color_blend_equation_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_color_blend_equation_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_attachment,
         p_color_blend_equations.as_slice().len() as _,
         p_color_blend_equations.as_slice().as_ptr().cast(),
@@ -13167,12 +11111,9 @@ pub unsafe fn cmd_set_color_write_mask_ext<'a>(
     p_color_write_masks: impl AsSlice<'a, ColorComponentFlags>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_color_write_mask_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_color_write_mask_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_attachment,
         p_color_write_masks.as_slice().len() as _,
         p_color_write_masks.as_slice().as_ptr().cast(),
@@ -13185,11 +11126,8 @@ pub unsafe fn cmd_set_tessellation_domain_origin_ext(
     domain_origin: TessellationDomainOrigin,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_tessellation_domain_origin_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), domain_origin)
+    let vulkan_command = dispatcher.cmd_set_tessellation_domain_origin_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), domain_origin)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetRasterizationStreamEXT.html>"]
 #[doc(alias = "vkCmdSetRasterizationStreamEXT")]
@@ -13198,14 +11136,8 @@ pub unsafe fn cmd_set_rasterization_stream_ext(
     rasterization_stream: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_rasterization_stream_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        rasterization_stream,
-    )
+    let vulkan_command = dispatcher.cmd_set_rasterization_stream_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), rasterization_stream)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetConservativeRasterizationModeEXT.html>"]
 #[doc(alias = "vkCmdSetConservativeRasterizationModeEXT")]
@@ -13214,12 +11146,9 @@ pub unsafe fn cmd_set_conservative_rasterization_mode_ext(
     conservative_rasterization_mode: ConservativeRasterizationModeEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_conservative_rasterization_mode_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_conservative_rasterization_mode_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         conservative_rasterization_mode,
     )
 }
@@ -13232,10 +11161,9 @@ pub unsafe fn cmd_set_extra_primitive_overestimation_size_ext(
 ) {
     let vulkan_command = dispatcher
         .cmd_set_extra_primitive_overestimation_size_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         extra_primitive_overestimation_size,
     )
 }
@@ -13246,14 +11174,8 @@ pub unsafe fn cmd_set_depth_clip_enable_ext(
     depth_clip_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_clip_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        depth_clip_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_depth_clip_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), depth_clip_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetSampleLocationsEnableEXT.html>"]
 #[doc(alias = "vkCmdSetSampleLocationsEnableEXT")]
@@ -13262,12 +11184,9 @@ pub unsafe fn cmd_set_sample_locations_enable_ext(
     sample_locations_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_sample_locations_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_sample_locations_enable_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         sample_locations_enable.into(),
     )
 }
@@ -13279,12 +11198,9 @@ pub unsafe fn cmd_set_color_blend_advanced_ext<'a>(
     p_color_blend_advanced: impl AsSlice<'a, ColorBlendAdvancedEXT>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_color_blend_advanced_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_color_blend_advanced_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_attachment,
         p_color_blend_advanced.as_slice().len() as _,
         p_color_blend_advanced.as_slice().as_ptr().cast(),
@@ -13297,14 +11213,8 @@ pub unsafe fn cmd_set_provoking_vertex_mode_ext(
     provoking_vertex_mode: ProvokingVertexModeEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_provoking_vertex_mode_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        provoking_vertex_mode,
-    )
+    let vulkan_command = dispatcher.cmd_set_provoking_vertex_mode_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), provoking_vertex_mode)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineRasterizationModeEXT.html>"]
 #[doc(alias = "vkCmdSetLineRasterizationModeEXT")]
@@ -13313,14 +11223,8 @@ pub unsafe fn cmd_set_line_rasterization_mode_ext(
     line_rasterization_mode: LineRasterizationModeEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_line_rasterization_mode_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        line_rasterization_mode,
-    )
+    let vulkan_command = dispatcher.cmd_set_line_rasterization_mode_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), line_rasterization_mode)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetLineStippleEnableEXT.html>"]
 #[doc(alias = "vkCmdSetLineStippleEnableEXT")]
@@ -13329,14 +11233,8 @@ pub unsafe fn cmd_set_line_stipple_enable_ext(
     stippled_line_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_line_stipple_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        stippled_line_enable.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_line_stipple_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), stippled_line_enable.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetDepthClipNegativeOneToOneEXT.html>"]
 #[doc(alias = "vkCmdSetDepthClipNegativeOneToOneEXT")]
@@ -13345,14 +11243,8 @@ pub unsafe fn cmd_set_depth_clip_negative_one_to_one_ext(
     negative_one_to_one: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_clip_negative_one_to_one_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        negative_one_to_one.into(),
-    )
+    let vulkan_command = dispatcher.cmd_set_depth_clip_negative_one_to_one_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), negative_one_to_one.into())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetViewportWScalingEnableNV.html>"]
 #[doc(alias = "vkCmdSetViewportWScalingEnableNV")]
@@ -13361,12 +11253,9 @@ pub unsafe fn cmd_set_viewport_wscaling_enable_nv(
     viewport_wscaling_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_viewport_wscaling_enable_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_viewport_wscaling_enable_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         viewport_wscaling_enable.into(),
     )
 }
@@ -13378,12 +11267,9 @@ pub unsafe fn cmd_set_viewport_swizzle_nv<'a>(
     p_viewport_swizzles: impl AsSlice<'a, ViewportSwizzleNV>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_viewport_swizzle_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_viewport_swizzle_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         first_viewport,
         p_viewport_swizzles.as_slice().len() as _,
         p_viewport_swizzles.as_slice().as_ptr().cast(),
@@ -13396,12 +11282,9 @@ pub unsafe fn cmd_set_coverage_to_color_enable_nv(
     coverage_to_color_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_coverage_to_color_enable_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_coverage_to_color_enable_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         coverage_to_color_enable.into(),
     )
 }
@@ -13412,14 +11295,8 @@ pub unsafe fn cmd_set_coverage_to_color_location_nv(
     coverage_to_color_location: u32,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_coverage_to_color_location_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        coverage_to_color_location,
-    )
+    let vulkan_command = dispatcher.cmd_set_coverage_to_color_location_nv.get();
+    vulkan_command(Some(command_buffer.borrow()), coverage_to_color_location)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationModeNV.html>"]
 #[doc(alias = "vkCmdSetCoverageModulationModeNV")]
@@ -13428,14 +11305,8 @@ pub unsafe fn cmd_set_coverage_modulation_mode_nv(
     coverage_modulation_mode: CoverageModulationModeNV,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_coverage_modulation_mode_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        coverage_modulation_mode,
-    )
+    let vulkan_command = dispatcher.cmd_set_coverage_modulation_mode_nv.get();
+    vulkan_command(Some(command_buffer.borrow()), coverage_modulation_mode)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdSetCoverageModulationTableEnableNV.html>"]
 #[doc(alias = "vkCmdSetCoverageModulationTableEnableNV")]
@@ -13444,12 +11315,9 @@ pub unsafe fn cmd_set_coverage_modulation_table_enable_nv(
     coverage_modulation_table_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_coverage_modulation_table_enable_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_coverage_modulation_table_enable_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         coverage_modulation_table_enable.into(),
     )
 }
@@ -13460,12 +11328,9 @@ pub unsafe fn cmd_set_coverage_modulation_table_nv<'a>(
     p_coverage_modulation_table: impl AsSlice<'a, f32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_coverage_modulation_table_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_coverage_modulation_table_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_coverage_modulation_table.as_slice().len() as _,
         p_coverage_modulation_table.as_slice().as_ptr().cast(),
     )
@@ -13477,12 +11342,9 @@ pub unsafe fn cmd_set_shading_rate_image_enable_nv(
     shading_rate_image_enable: impl Into<Bool32>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_shading_rate_image_enable_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_shading_rate_image_enable_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         shading_rate_image_enable.into(),
     )
 }
@@ -13495,10 +11357,9 @@ pub unsafe fn cmd_set_representative_fragment_test_enable_nv(
 ) {
     let vulkan_command = dispatcher
         .cmd_set_representative_fragment_test_enable_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         representative_fragment_test_enable.into(),
     )
 }
@@ -13509,14 +11370,8 @@ pub unsafe fn cmd_set_coverage_reduction_mode_nv(
     coverage_reduction_mode: CoverageReductionModeNV,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_coverage_reduction_mode_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        coverage_reduction_mode,
-    )
+    let vulkan_command = dispatcher.cmd_set_coverage_reduction_mode_nv.get();
+    vulkan_command(Some(command_buffer.borrow()), coverage_reduction_mode)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetShaderModuleIdentifierEXT.html>"]
 #[doc(alias = "vkGetShaderModuleIdentifierEXT")]
@@ -13527,15 +11382,12 @@ pub unsafe fn get_shader_module_identifier_ext<
     shader_module: &raw::ShaderModule,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_shader_module_identifier_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_shader_module_identifier_ext.get();
     let mut p_identifier = MaybeUninit::uninit();
     S::setup_uninit(&mut p_identifier);
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { shader_module.clone() }),
+        Some(device.borrow()),
+        Some(shader_module.borrow()),
         S::get_uninit_head_ptr(p_identifier.as_mut_ptr()),
     );
     S::setup_cleanup(p_identifier.as_mut_ptr());
@@ -13552,12 +11404,11 @@ pub unsafe fn get_shader_module_create_info_identifier_ext<
 ) -> S {
     let vulkan_command = dispatcher
         .get_shader_module_create_info_identifier_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_identifier = MaybeUninit::uninit();
     S::setup_uninit(&mut p_identifier);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         S::get_uninit_head_ptr(p_identifier.as_mut_ptr()),
     );
@@ -13575,13 +11426,12 @@ pub unsafe fn get_physical_device_optical_flow_image_formats_nv<
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_optical_flow_image_formats_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_format_count = vk_len.as_mut_ptr();
     let p_image_format_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         ptr::from_ref(p_optical_flow_image_format_info),
         p_format_count,
         p_image_format_properties,
@@ -13593,7 +11443,7 @@ pub unsafe fn get_physical_device_optical_flow_image_formats_nv<
     let mut p_image_format_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             ptr::from_ref(p_optical_flow_image_format_info),
             p_format_count,
             p_image_format_properties,
@@ -13618,13 +11468,10 @@ pub unsafe fn create_optical_flow_session_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<OpticalFlowSessionNV> {
-    let vulkan_command = dispatcher
-        .create_optical_flow_session_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_optical_flow_session_nv.get();
     let mut p_session = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_session.as_mut_ptr(),
@@ -13639,13 +11486,10 @@ pub unsafe fn destroy_optical_flow_session_nv(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_optical_flow_session_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_optical_flow_session_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { session.clone() }),
+        Some(device.borrow()),
+        Some(session.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -13659,15 +11503,12 @@ pub unsafe fn bind_optical_flow_session_image_nv(
     layout: ImageLayout,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .bind_optical_flow_session_image_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.bind_optical_flow_session_image_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { session.clone() }),
+        Some(device.borrow()),
+        Some(session.borrow()),
         binding_point,
-        view.map(|v| unsafe { v.clone() }),
+        view.map(|v| v.borrow()),
         layout,
     )
     .map_success(|| ())
@@ -13680,13 +11521,10 @@ pub unsafe fn cmd_optical_flow_execute_nv(
     p_execute_info: &OpticalFlowExecuteInfoNV,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_optical_flow_execute_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_optical_flow_execute_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        Some(unsafe { session.clone() }),
+        Some(command_buffer.borrow()),
+        Some(session.borrow()),
         ptr::from_ref(p_execute_info),
     )
 }
@@ -13697,11 +11535,8 @@ pub unsafe fn anti_lag_update_amd(
     p_data: &AntiLagDataAMD,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .anti_lag_update_amd
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_data))
+    let vulkan_command = dispatcher.anti_lag_update_amd.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_data))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCreateShadersEXT.html>"]
 #[doc(alias = "vkCreateShadersEXT")]
@@ -13711,13 +11546,10 @@ pub unsafe fn create_shaders_ext<'a, R: DynamicArray<ShaderEXT>>(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<(Status, R)> {
-    let vulkan_command = dispatcher
-        .create_shaders_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_shaders_ext.get();
     let mut p_shaders = R::create_with_capacity(p_create_infos.as_slice().len() as _);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_create_infos.as_slice().len() as _,
         p_create_infos.as_slice().as_ptr().cast(),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
@@ -13736,13 +11568,10 @@ pub unsafe fn destroy_shader_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_shader_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_shader_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        shader.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        shader.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -13754,14 +11583,11 @@ pub unsafe fn get_shader_binary_data_ext(
     p_data: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<usize> {
-    let vulkan_command = dispatcher
-        .get_shader_binary_data_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_shader_binary_data_ext.get();
     let mut p_data_size = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { shader.clone() }),
+        Some(device.borrow()),
+        Some(shader.borrow()),
         p_data_size.as_mut_ptr(),
         p_data,
     );
@@ -13775,12 +11601,9 @@ pub unsafe fn cmd_bind_shaders_ext<'a, V3: Alias<raw::ShaderEXT> + 'a>(
     p_shaders: impl AsSlice<'a, V3>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_bind_shaders_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_bind_shaders_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_shaders.as_slice().len() as _,
         p_stages.as_slice().as_ptr().cast(),
         p_shaders.as_slice().as_ptr().cast(),
@@ -13794,12 +11617,9 @@ pub unsafe fn cmd_set_depth_clamp_range_ext(
     p_depth_clamp_range: Option<&DepthClampRangeEXT>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_depth_clamp_range_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_depth_clamp_range_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         depth_clamp_mode,
         p_depth_clamp_range
             .map(|v| ptr::from_ref(v))
@@ -13816,14 +11636,11 @@ pub unsafe fn create_pipeline_binaries_khr<
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<(Status, S)> {
-    let vulkan_command = dispatcher
-        .create_pipeline_binaries_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_pipeline_binaries_khr.get();
     let mut p_binaries = MaybeUninit::uninit();
     S::setup_uninit(&mut p_binaries);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         S::get_uninit_head_ptr(p_binaries.as_mut_ptr()),
@@ -13841,13 +11658,10 @@ pub unsafe fn destroy_pipeline_binary_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_pipeline_binary_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_pipeline_binary_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        pipeline_binary.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        pipeline_binary.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -13858,14 +11672,11 @@ pub unsafe fn get_pipeline_key_khr<S: StructureChainOut<PipelineBinaryKeyKHR<'st
     p_pipeline_create_info: Option<&PipelineCreateInfoKHR>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_pipeline_key_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_pipeline_key_khr.get();
     let mut p_pipeline_key = MaybeUninit::uninit();
     S::setup_uninit(&mut p_pipeline_key);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         p_pipeline_create_info
             .map(|v| ptr::from_ref(v))
             .unwrap_or(ptr::null()),
@@ -13884,12 +11695,9 @@ pub unsafe fn release_captured_pipeline_data_khr(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .release_captured_pipeline_data_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.release_captured_pipeline_data_khr.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
@@ -13902,16 +11710,13 @@ pub unsafe fn get_framebuffer_tile_properties_qcom<R: DynamicArray<TilePropertie
     framebuffer: &raw::Framebuffer,
     dispatcher: &CommandsDispatcher,
 ) -> Result<R> {
-    let vulkan_command = dispatcher
-        .get_framebuffer_tile_properties_qcom
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_framebuffer_tile_properties_qcom.get();
     let mut vk_len = MaybeUninit::uninit();
     let p_properties_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { framebuffer.clone() }),
+        Some(device.borrow()),
+        Some(framebuffer.borrow()),
         p_properties_count,
         p_properties,
     )
@@ -13922,8 +11727,8 @@ pub unsafe fn get_framebuffer_tile_properties_qcom<R: DynamicArray<TilePropertie
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { device.clone() }),
-            Some(unsafe { framebuffer.clone() }),
+            Some(device.borrow()),
+            Some(framebuffer.borrow()),
             p_properties_count,
             p_properties,
         );
@@ -13948,14 +11753,11 @@ pub unsafe fn get_dynamic_rendering_tile_properties_qcom<
     p_rendering_info: &RenderingInfo,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_dynamic_rendering_tile_properties_qcom
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_dynamic_rendering_tile_properties_qcom.get();
     let mut p_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_rendering_info),
         S::get_uninit_head_ptr(p_properties.as_mut_ptr()),
     );
@@ -13974,13 +11776,12 @@ pub unsafe fn get_physical_device_cooperative_vector_properties_nv<
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_cooperative_vector_properties_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_property_count,
         p_properties,
     )
@@ -13991,7 +11792,7 @@ pub unsafe fn get_physical_device_cooperative_vector_properties_nv<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_property_count,
             p_properties,
         );
@@ -14014,11 +11815,8 @@ pub unsafe fn convert_cooperative_vector_matrix_nv(
     p_info: &ConvertCooperativeVectorMatrixInfoNV,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .convert_cooperative_vector_matrix_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { device.clone() }), ptr::from_ref(p_info)).map_success(|| ())
+    let vulkan_command = dispatcher.convert_cooperative_vector_matrix_nv.get();
+    vulkan_command(Some(device.borrow()), ptr::from_ref(p_info)).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdConvertCooperativeVectorMatrixNV.html>"]
 #[doc(alias = "vkCmdConvertCooperativeVectorMatrixNV")]
@@ -14027,12 +11825,9 @@ pub unsafe fn cmd_convert_cooperative_vector_matrix_nv<'a>(
     p_infos: impl AsSlice<'a, ConvertCooperativeVectorMatrixInfoNV<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_convert_cooperative_vector_matrix_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_convert_cooperative_vector_matrix_nv.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         p_infos.as_slice().len() as _,
         p_infos.as_slice().as_ptr().cast(),
     )
@@ -14045,13 +11840,10 @@ pub unsafe fn set_latency_sleep_mode_nv(
     p_sleep_mode_info: &LatencySleepModeInfoNV,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .set_latency_sleep_mode_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.set_latency_sleep_mode_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         ptr::from_ref(p_sleep_mode_info),
     )
     .map_success(|| ())
@@ -14064,13 +11856,10 @@ pub unsafe fn latency_sleep_nv(
     p_sleep_info: &LatencySleepInfoNV,
     dispatcher: &CommandsDispatcher,
 ) -> Result<()> {
-    let vulkan_command = dispatcher
-        .latency_sleep_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.latency_sleep_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         ptr::from_ref(p_sleep_info),
     )
     .map_success(|| ())
@@ -14083,13 +11872,10 @@ pub unsafe fn set_latency_marker_nv(
     p_latency_marker_info: &SetLatencyMarkerInfoNV,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .set_latency_marker_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.set_latency_marker_nv.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         ptr::from_ref(p_latency_marker_info),
     )
 }
@@ -14100,15 +11886,12 @@ pub unsafe fn get_latency_timings_nv<S: StructureChainOut<GetLatencyMarkerInfoNV
     swapchain: &raw::SwapchainKHR,
     dispatcher: &CommandsDispatcher,
 ) -> S {
-    let vulkan_command = dispatcher
-        .get_latency_timings_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_latency_timings_nv.get();
     let mut p_latency_marker_info = MaybeUninit::uninit();
     S::setup_uninit(&mut p_latency_marker_info);
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { swapchain.clone() }),
+        Some(device.borrow()),
+        Some(swapchain.borrow()),
         S::get_uninit_head_ptr(p_latency_marker_info.as_mut_ptr()),
     );
     S::setup_cleanup(p_latency_marker_info.as_mut_ptr());
@@ -14121,14 +11904,8 @@ pub unsafe fn queue_notify_out_of_band_nv(
     p_queue_type_info: &OutOfBandQueueTypeInfoNV,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .queue_notify_out_of_band_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { queue.clone() }),
-        ptr::from_ref(p_queue_type_info),
-    )
+    let vulkan_command = dispatcher.queue_notify_out_of_band_nv.get();
+    vulkan_command(Some(queue.borrow()), ptr::from_ref(p_queue_type_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR.html>"]
 #[doc(alias = "vkGetPhysicalDeviceCooperativeMatrixPropertiesKHR")]
@@ -14140,13 +11917,12 @@ pub unsafe fn get_physical_device_cooperative_matrix_properties_khr<
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_cooperative_matrix_properties_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_property_count,
         p_properties,
     )
@@ -14157,7 +11933,7 @@ pub unsafe fn get_physical_device_cooperative_matrix_properties_khr<
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_property_count,
             p_properties,
         );
@@ -14180,11 +11956,8 @@ pub unsafe fn cmd_set_attachment_feedback_loop_enable_ext(
     aspect_mask: ImageAspectFlags,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_attachment_feedback_loop_enable_ext
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(Some(unsafe { command_buffer.clone() }), aspect_mask)
+    let vulkan_command = dispatcher.cmd_set_attachment_feedback_loop_enable_ext.get();
+    vulkan_command(Some(command_buffer.borrow()), aspect_mask)
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetScreenBufferPropertiesQNX.html>"]
 #[doc(alias = "vkGetScreenBufferPropertiesQNX")]
@@ -14195,14 +11968,11 @@ pub unsafe fn get_screen_buffer_properties_qnx<
     buffer: &VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_screen_buffer_properties_qnx
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_screen_buffer_properties_qnx.get();
     let mut p_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(buffer),
         S::get_uninit_head_ptr(p_properties.as_mut_ptr()),
     );
@@ -14219,13 +11989,12 @@ pub unsafe fn get_physical_device_calibrateable_time_domains_khr<R: DynamicArray
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_calibrateable_time_domains_khr
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_time_domain_count = vk_len.as_mut_ptr();
     let p_time_domains = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_time_domain_count,
         p_time_domains,
     )
@@ -14236,7 +12005,7 @@ pub unsafe fn get_physical_device_calibrateable_time_domains_khr<R: DynamicArray
     let mut p_time_domains = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_time_domain_count,
             p_time_domains,
         );
@@ -14260,13 +12029,12 @@ pub unsafe fn get_physical_device_calibrateable_time_domains_ext<R: DynamicArray
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_calibrateable_time_domains_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_time_domain_count = vk_len.as_mut_ptr();
     let p_time_domains = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_time_domain_count,
         p_time_domains,
     )
@@ -14277,7 +12045,7 @@ pub unsafe fn get_physical_device_calibrateable_time_domains_ext<R: DynamicArray
     let mut p_time_domains = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_time_domain_count,
             p_time_domains,
         );
@@ -14300,12 +12068,9 @@ pub unsafe fn cmd_set_descriptor_buffer_offsets2_ext(
     p_set_descriptor_buffer_offsets_info: &SetDescriptorBufferOffsetsInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_set_descriptor_buffer_offsets2_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_set_descriptor_buffer_offsets2_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_set_descriptor_buffer_offsets_info),
     )
 }
@@ -14318,10 +12083,9 @@ pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers2_ext(
 ) {
     let vulkan_command = dispatcher
         .cmd_bind_descriptor_buffer_embedded_samplers2_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_bind_descriptor_buffer_embedded_samplers_info),
     )
 }
@@ -14336,12 +12100,11 @@ pub unsafe fn get_cluster_acceleration_structure_build_sizes_nv<
 ) -> S {
     let vulkan_command = dispatcher
         .get_cluster_acceleration_structure_build_sizes_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_size_info = MaybeUninit::uninit();
     S::setup_uninit(&mut p_size_info);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_size_info.as_mut_ptr()),
     );
@@ -14357,10 +12120,9 @@ pub unsafe fn cmd_build_cluster_acceleration_structure_indirect_nv(
 ) {
     let vulkan_command = dispatcher
         .cmd_build_cluster_acceleration_structure_indirect_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_command_infos),
     )
 }
@@ -14375,12 +12137,11 @@ pub unsafe fn get_partitioned_acceleration_structures_build_sizes_nv<
 ) -> S {
     let vulkan_command = dispatcher
         .get_partitioned_acceleration_structures_build_sizes_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_size_info = MaybeUninit::uninit();
     S::setup_uninit(&mut p_size_info);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_size_info.as_mut_ptr()),
     );
@@ -14396,12 +12157,8 @@ pub unsafe fn cmd_build_partitioned_acceleration_structures_nv(
 ) {
     let vulkan_command = dispatcher
         .cmd_build_partitioned_acceleration_structures_nv
-        .get()
-        .expect("Vulkan command not loaded.");
-    vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
-        ptr::from_ref(p_build_info),
-    )
+        .get();
+    vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_build_info))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkGetGeneratedCommandsMemoryRequirementsEXT.html>"]
 #[doc(alias = "vkGetGeneratedCommandsMemoryRequirementsEXT")]
@@ -14414,12 +12171,11 @@ pub unsafe fn get_generated_commands_memory_requirements_ext<
 ) -> S {
     let vulkan_command = dispatcher
         .get_generated_commands_memory_requirements_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut p_memory_requirements = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_requirements);
     vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_info),
         S::get_uninit_head_ptr(p_memory_requirements.as_mut_ptr()),
     );
@@ -14434,14 +12190,11 @@ pub unsafe fn cmd_preprocess_generated_commands_ext(
     state_command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_preprocess_generated_commands_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_preprocess_generated_commands_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         ptr::from_ref(p_generated_commands_info),
-        Some(unsafe { state_command_buffer.clone() }),
+        Some(state_command_buffer.borrow()),
     )
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.3-extensions/man/html/vkCmdExecuteGeneratedCommandsEXT.html>"]
@@ -14452,12 +12205,9 @@ pub unsafe fn cmd_execute_generated_commands_ext(
     p_generated_commands_info: &GeneratedCommandsInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .cmd_execute_generated_commands_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.cmd_execute_generated_commands_ext.get();
     vulkan_command(
-        Some(unsafe { command_buffer.clone() }),
+        Some(command_buffer.borrow()),
         is_preprocessed.into(),
         ptr::from_ref(p_generated_commands_info),
     )
@@ -14470,13 +12220,10 @@ pub unsafe fn create_indirect_commands_layout_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<IndirectCommandsLayoutEXT> {
-    let vulkan_command = dispatcher
-        .create_indirect_commands_layout_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_indirect_commands_layout_ext.get();
     let mut p_indirect_commands_layout = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_indirect_commands_layout.as_mut_ptr(),
@@ -14491,13 +12238,10 @@ pub unsafe fn destroy_indirect_commands_layout_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_indirect_commands_layout_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_indirect_commands_layout_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        indirect_commands_layout.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        indirect_commands_layout.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -14509,13 +12253,10 @@ pub unsafe fn create_indirect_execution_set_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) -> Result<IndirectExecutionSetEXT> {
-    let vulkan_command = dispatcher
-        .create_indirect_execution_set_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.create_indirect_execution_set_ext.get();
     let mut p_indirect_execution_set = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_create_info),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
         p_indirect_execution_set.as_mut_ptr(),
@@ -14530,13 +12271,10 @@ pub unsafe fn destroy_indirect_execution_set_ext(
     p_allocator: Option<&AllocationCallbacks>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .destroy_indirect_execution_set_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.destroy_indirect_execution_set_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        indirect_execution_set.map(|v| unsafe { v.clone() }),
+        Some(device.borrow()),
+        indirect_execution_set.map(|v| v.borrow()),
         p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
     )
 }
@@ -14548,13 +12286,10 @@ pub unsafe fn update_indirect_execution_set_pipeline_ext<'a>(
     p_execution_set_writes: impl AsSlice<'a, WriteIndirectExecutionSetPipelineEXT<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .update_indirect_execution_set_pipeline_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.update_indirect_execution_set_pipeline_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { indirect_execution_set.clone() }),
+        Some(device.borrow()),
+        Some(indirect_execution_set.borrow()),
         p_execution_set_writes.as_slice().len() as _,
         p_execution_set_writes.as_slice().as_ptr().cast(),
     )
@@ -14567,13 +12302,10 @@ pub unsafe fn update_indirect_execution_set_shader_ext<'a>(
     p_execution_set_writes: impl AsSlice<'a, WriteIndirectExecutionSetShaderEXT<'a>>,
     dispatcher: &CommandsDispatcher,
 ) {
-    let vulkan_command = dispatcher
-        .update_indirect_execution_set_shader_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.update_indirect_execution_set_shader_ext.get();
     vulkan_command(
-        Some(unsafe { device.clone() }),
-        Some(unsafe { indirect_execution_set.clone() }),
+        Some(device.borrow()),
+        Some(indirect_execution_set.borrow()),
         p_execution_set_writes.as_slice().len() as _,
         p_execution_set_writes.as_slice().as_ptr().cast(),
     )
@@ -14588,13 +12320,12 @@ pub unsafe fn get_physical_device_cooperative_matrix_flexible_dimensions_propert
 ) -> Result<R> {
     let vulkan_command = dispatcher
         .get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv
-        .get()
-        .expect("Vulkan command not loaded.");
+        .get();
     let mut vk_len = MaybeUninit::uninit();
     let p_property_count = vk_len.as_mut_ptr();
     let p_properties = ptr::null_mut();
     vulkan_command(
-        Some(unsafe { physical_device.clone() }),
+        Some(physical_device.borrow()),
         p_property_count,
         p_properties,
     )
@@ -14605,7 +12336,7 @@ pub unsafe fn get_physical_device_cooperative_matrix_flexible_dimensions_propert
     let mut p_properties = vk_vec.get_content_mut_ptr();
     let vk_status = loop {
         let status = vulkan_command(
-            Some(unsafe { physical_device.clone() }),
+            Some(physical_device.borrow()),
             p_property_count,
             p_properties,
         );
@@ -14628,13 +12359,10 @@ pub unsafe fn get_memory_metal_handle_ext(
     p_get_metal_handle_info: &MemoryGetMetalHandleInfoEXT,
     dispatcher: &CommandsDispatcher,
 ) -> Result<VoidPtr> {
-    let vulkan_command = dispatcher
-        .get_memory_metal_handle_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_metal_handle_ext.get();
     let mut p_handle = MaybeUninit::uninit();
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         ptr::from_ref(p_get_metal_handle_info),
         p_handle.as_mut_ptr(),
     );
@@ -14650,14 +12378,11 @@ pub unsafe fn get_memory_metal_handle_properties_ext<
     p_handle: VoidPtr,
     dispatcher: &CommandsDispatcher,
 ) -> Result<S> {
-    let vulkan_command = dispatcher
-        .get_memory_metal_handle_properties_ext
-        .get()
-        .expect("Vulkan command not loaded.");
+    let vulkan_command = dispatcher.get_memory_metal_handle_properties_ext.get();
     let mut p_memory_metal_handle_properties = MaybeUninit::uninit();
     S::setup_uninit(&mut p_memory_metal_handle_properties);
     let vk_status = vulkan_command(
-        Some(unsafe { device.clone() }),
+        Some(device.borrow()),
         handle_type,
         p_handle,
         S::get_uninit_head_ptr(p_memory_metal_handle_properties.as_mut_ptr()),

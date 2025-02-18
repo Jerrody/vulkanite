@@ -178,8 +178,10 @@ use arrayvec::ArrayVec;
 /// Entry point of the vulkan library, this is used to retrieve Vulkan functions
 /// This function can be retrieved by loading the library using [Dispatcher::new_loaded], using your own library
 /// loading code or some external libraries provide it like SDL with `SDL_Vulkan_GetVkGetInstanceProcAddr`
-pub type GetInstanceProcAddrSignature =
-    unsafe extern "system" fn(Option<vk::raw::Instance>, *const c_char) -> *const ();
+pub type GetInstanceProcAddrSignature = unsafe extern "system" fn(
+    Option<BorrowedHandle<'_, vk::raw::Instance>>,
+    *const c_char,
+) -> *const ();
 
 /// Dispatcher type used to hold the [vk::CommandsDispatcher] object
 /// The dispatcher type loads once all the vulkan commands that can be used then is used
@@ -207,7 +209,7 @@ pub trait Dispatcher: Clone {
     /// Internal function used to load a library and return the dispatcher along with a library object which ensures the llibrary
     /// is kept loaded while the object is alive
     /// # Safety
-    /// The [libloading::Library] object must be dropped only after Vulkan is done being used (all objects have been unitialized and no
+    /// - The [libloading::Library] object must be dropped only after Vulkan is done being used (all objects have been unitialized and no
     /// vulkan command is called after)
     #[cfg(feature = "loaded")]
     unsafe fn new_loaded_and_lib(
@@ -222,16 +224,19 @@ pub trait Dispatcher: Clone {
 
     /// Create a loads the Vulkan library, retrieve the entry point from it and initialize the dispatcher using it*
     /// This will return an error if the vulkan library or its entry point cannot be found
-    /// This function is unsafe because it needs to assume that the Vulkan library being loaded follows the Vulkan specification
     /// Library unloading depends on the implementation, for [MultiDispatcher] it happends as soon as all dispatcher are dropped.
     /// While for [DynamicDispatcher] one should call [DynamicDispatcher::unload()]
+    /// SAFETY:
+    /// - The Vulkan library being loaded follows the Vulkan specification
+    /// - When using a [DynamicDispatcher], there should be a call to [DynamicDispatcher::unload()] between two calls to this function
     #[cfg(feature = "loaded")]
     unsafe fn new_loaded() -> core::result::Result<Self, loaded::LoadingError>;
 }
 
-// TODO: this is safe (Option<fn> being set to None is guaranteed to match memory being zero-ed)
-// but this unsafe is not necessary (can't use Default::default because it is not const...)
-static DYNAMIC_DISPATCHER: vk::CommandsDispatcher = unsafe { std::mem::zeroed() };
+/// When using a dynamic dispatcher for a single instance/device, we can put it in static memory
+/// This way, when compiled with optimizations, function called will be optimized to a simple jump
+/// to a given indirect address
+static DYNAMIC_DISPATCHER: vk::CommandsDispatcher = vk::CommandsDispatcher::new();
 
 /// Dynamic dispatcher
 /// Dispatcher implementation loading commands in static memory. This is a cost-free abstraction
@@ -279,9 +284,10 @@ impl Dispatcher for DynamicDispatcher {
 impl DynamicDispatcher {
     /// Unloads the loaded library
     /// # Safety:
-    /// Only call this function if the dispatcher was loaded with [Dispatcher::new_loaded].
-    /// Only call this function after all vulkan handles have been freed/destroyed
-    /// You cannot call any vulkan command before creating a new dispatcher.
+    /// - Only call this function if the dispatcher was loaded with [Dispatcher::new_loaded].
+    /// - Only call this function after all vulkan handles have been freed/destroyed
+    /// - You cannot call any vulkan command before creating a new dispatcher.
+    /// - There should be a call to [Dispatcher::new_loaded] between two consecutive calls to [Self::unload]
     pub unsafe fn unload() {
         loaded::DYNAMIC_VULKAN_LIB.0.set(None);
     }
@@ -310,7 +316,7 @@ impl Dispatcher for MultiDispatcher {
     }
 
     unsafe fn new(get_instance_proc_addr: GetInstanceProcAddrSignature) -> Self {
-        let dispatcher = vk::CommandsDispatcher::default();
+        let dispatcher = vk::CommandsDispatcher::new();
         dispatcher.load_proc_addr(get_instance_proc_addr);
         Self(std::sync::Arc::new(DispatcherWithLib {
             dispatcher,

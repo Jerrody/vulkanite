@@ -1115,8 +1115,13 @@ impl<'a> Generator<'a> {
                 quote! (#ty_ident)
             }
             AT::Handle(ty) => {
+                let lifetime = if add_lifetime {
+                    quote! ('a)
+                } else {
+                    quote! ('_)
+                };
                 let ty_ident = self.get_ident_name(ty)?;
-                quote! (Option<#ty_ident>)
+                quote! (Option<BorrowedHandle<#lifetime, #ty_ident>>)
             }
             AT::Func(_ty) => {
                 quote!(FuncPtr)
@@ -1262,9 +1267,9 @@ impl<'a> Generator<'a> {
             AdvancedType::Handle(_) => {
                 add_option = true;
                 if optional {
-                    Ok(quote!(#name.map(|v| unsafe { v.clone() })))
+                    Ok(quote!(#name.map(|v| v.borrow())))
                 } else {
-                    Ok(quote!(unsafe { #name.clone() }))
+                    Ok(quote!(#name.borrow() ))
                 }
             }
             AdvancedType::HandlePtr(_) => Ok(handle_ptr_option()),

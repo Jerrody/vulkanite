@@ -6,6 +6,7 @@ use std::fmt::{self, Display};
 use crate::GetInstanceProcAddrSignature;
 
 pub(super) struct VulkanLibHolder(pub(super) Cell<Option<Library>>);
+// SAFETY: We make sure all functions setting VulkanLibHolder are unsafe and not thread-safe
 unsafe impl Sync for VulkanLibHolder {}
 
 pub(super) static DYNAMIC_VULKAN_LIB: VulkanLibHolder = VulkanLibHolder(Cell::new(None));
@@ -49,7 +50,7 @@ impl Display for MissingEntryPoint {
 }
 impl std::error::Error for MissingEntryPoint {}
 
-/// Safety: do not drop Library before the entry point
+/// Safety: do not drop Library before the entry point and everything created by the entry point
 pub(super) unsafe fn load_proc_addr_and_lib(
 ) -> Result<(GetInstanceProcAddrSignature, Library), LoadingError> {
     // code from ash
