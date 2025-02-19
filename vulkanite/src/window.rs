@@ -111,27 +111,23 @@ pub mod raw {
 
             #[cfg(all(target_os = "macos", feature = "raw-window-metal"))]
             (RawDisplayHandle::AppKit(_), RawWindowHandle::AppKit(window)) => {
-                use raw_window_metal::{appkit, Layer};
+                use raw_window_metal::Layer;
 
-                let layer = match appkit::metal_layer_from_handle(window) {
-                    Layer::Existing(layer) | Layer::Allocated(layer) => layer,
-                };
+                let layer = unsafe { Layer::from_ns_view(window.ns_view) };
 
                 let surface_desc = vk::MetalSurfaceCreateInfoEXT::default()
-                    .layer(unsafe { layer.cast().as_ref() });
+                    .layer(Some(unsafe { layer.as_ptr().cast().as_ref() }));
                 vk::raw::create_metal_surface_ext(instance, &surface_desc, allocator, dispatcher)
             }
 
             #[cfg(all(target_os = "ios", feature = "raw-window-metal"))]
             (RawDisplayHandle::UiKit(_), RawWindowHandle::UiKit(window)) => {
-                use raw_window_metal::{uikit, Layer};
+                use raw_window_metal::Layer;
 
-                let layer = match uikit::metal_layer_from_handle(window) {
-                    Layer::Existing(layer) | Layer::Allocated(layer) => layer,
-                };
+                let layer = unsafe { Layer::from_ui_view(window.ui_view) };
 
                 let surface_desc = vk::MetalSurfaceCreateInfoEXT::default()
-                    .layer(unsafe { layer.cast().as_ref() });
+                    .layer(Some(unsafe { layer.as_ptr().cast().as_ref() }));
                 vk::raw::create_metal_surface_ext(instance, &surface_desc, allocator, dispatcher)
             }
             _ => Err(vk::Status::ErrorExtensionNotPresent),
