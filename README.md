@@ -12,7 +12,7 @@ which makes it differ from the popular Vulkan crate ash.
 ## Safety
 Vulkan handles can be mostly be seen as references to Vulkan object. As such, using this crate, Vulkan handles **cannot be NULL**
 (there is no vk::NULL_HANDLE value), being given a handle means you can assume it is not null and valid.
-All vulkan functions which take as parameters handles which can be null now instead take as parameter an [`Option<Handle>`].
+All vulkan functions taking as parameters handles which can be null now instead take as parameter an [`Option<Handle>`].
 
 Concerning command safety, I decided to take an approach similar to the `cxx` crate: guarantee safety at the boundary between rust and Vulkan API/driver code (likely written in C). These bindings also try to ensure that anything that can be checked to be according to the Vulkan Specification while being mostly cost-free / ran at compile time is done this way.
 
@@ -22,10 +22,11 @@ Note that these bindings assume the driver implementation complies, at least min
 will lead to undefined behavior in the rust code.
 
 ## Smart handles
-Similar to the C++ bindings, this binding groups vulkan commands by the handle which 'executes' it. Therefore the owing code on ash:
+Similar to the C++ bindings, this binding groups vulkan commands by the handle which 'executes' it. Therefore the following code using ash:
 ```rust
 unsafe {
     device.begin_command_buffer(
+        cmd_buffer,
         &vk::CommandBufferBeginInfo::default()
             .flags(vk::CommandBufferUsageFlags::ONE_TIME_SUBMIT)
     )
@@ -33,7 +34,7 @@ unsafe {
     swapchain_khr.queue_present_khr(queue, &present_info)?;
 }
 ```
-becomes:
+becomes with vulkanite:
 ```rust
 cmd_buffer.begin(
     &vk::CommandBufferBeginInfo::default()
@@ -44,8 +45,8 @@ queue.present_khr(&present_info)?;
 ```
 
 ## Result
-The Vulkan `VkResult` enum as been rename as [vk::Status] (this is the only enum/structure whose name is different ared to the C bindings).
-Instead [`vk::Result<A>`] is defined as [Result<A, vk::Status>] and all Vulkan commands which return a Result in the inal specification instead
+The Vulkan `VkResult` enum has been renamed to [vk::Status] (this is the only enum/structure whose name is different compared to the C bindings).
+Instead [`vk::Result<A>`] is defined as [Result<A, vk::Status>] and all Vulkan commands which return a Result in the final specification instead
 return a [vk::Result] now:
 ```rust
 let device = instance.create_device(&device_info)?;
@@ -110,16 +111,16 @@ let vk_props: vk::PhysicalDeviceProperties2 = physical_device.get_properties2();
 let (vk_props,) = physical_device.get_properties2();
 ```
 
-Note that the structure chain integrity is checked as compile time: the following code will lead to a compile error ::PhysicalDeviceVulkan11Features] cannot
-be used in a structure chain whose head is [vk::PhysicalDeviceFeatures]):
+Note that the structure chain integrity is checked as compile time: the following code will lead to a compile error [vk::PhysicalDeviceVulkan11Features] cannot
+be used in a structure chain whose head is [vk::PhysicalDeviceProperties2]):
 ```rust
 let (_, _) : (_, vk::PhysicalDeviceVulkan11Features) = physical_device.get_properties2();
 ```
 This compile-time check applies also to the next part:
 
 ## Structure chain as command inputs
-The first possible way to build a structure chain is to use `structure.push_next(&mut next_structure)`. There are also iple
-macros provided to do the same in a way similar to the C++ bindings:
+The first possible way to build a structure chain is to use `structure.push_next(&mut next_structure)`. There are also multiple
+macros provided to do the same in a cleaner way similar to the C++ bindings:
 
 ```rust
 let mut device_info = vk_headers::structure_chain!(
