@@ -328,8 +328,15 @@ fn generate_raw_command<'a, 'b>(
     let func_name = format_ident!("{name}");
     let doc = make_doc_link(vk_name);
     let lifetime = (!vec_fields.is_empty()).then(|| quote! ('a, ));
+
+    // if we don't do anything fancy, strongly encourage the compiler to inline this function
+    // it will generate much simpler/shorter assembly (in particular when using the default allocator)
+    // and won't be inlined otherwise because of crate boundaries
+    let inline_tag = output_fields.is_empty().then(|| quote! (#[inline]));
+
     Ok(quote! {
         #doc
+        #inline_tag
         pub unsafe fn #func_name<#lifetime #ret_template #(#templates),*>(#(#args_outer_name: #args_outer_type,)* dispatcher: &CommandsDispatcher ) #ret_type {
             let vulkan_command = dispatcher.#func_name.get();
             #pre_call

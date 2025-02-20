@@ -252,6 +252,7 @@ static DYNAMIC_DISPATCHER: vk::CommandsDispatcher = vk::CommandsDispatcher::new(
 pub struct DynamicDispatcher(pub(crate) ());
 
 impl Dispatcher for DynamicDispatcher {
+    #[inline(always)]
     fn get_command_dispatcher(&self) -> &vk::CommandsDispatcher {
         &DYNAMIC_DISPATCHER
     }
@@ -311,38 +312,42 @@ struct DispatcherWithLib {
 pub struct MultiDispatcher(std::sync::Arc<DispatcherWithLib>);
 
 impl Dispatcher for MultiDispatcher {
+    #[inline(always)]
     fn get_command_dispatcher(&self) -> &vk::CommandsDispatcher {
         &self.0.dispatcher
     }
 
     unsafe fn new(get_instance_proc_addr: GetInstanceProcAddrSignature) -> Self {
-        let dispatcher = vk::CommandsDispatcher::new();
-        dispatcher.load_proc_addr(get_instance_proc_addr);
-        Self(std::sync::Arc::new(DispatcherWithLib {
-            dispatcher,
+        let dispatcher = std::sync::Arc::new(DispatcherWithLib {
+            dispatcher: vk::CommandsDispatcher::new(),
             #[cfg(feature = "loaded")]
             library: None,
-        }))
+        });
+        dispatcher.dispatcher.load_proc_addr(get_instance_proc_addr);
+
+        Self(dispatcher)
     }
 
     fn clone_with_instance(&self, instance: &vk::raw::Instance) -> Self {
-        let dispatcher = self.0.dispatcher.clone();
-        unsafe { dispatcher.load_instance(instance) };
-        Self(std::sync::Arc::new(DispatcherWithLib {
-            dispatcher,
+        let dispatcher = std::sync::Arc::new(DispatcherWithLib {
+            dispatcher: self.0.dispatcher.clone(),
             #[cfg(feature = "loaded")]
             library: self.0.library.clone(),
-        }))
+        });
+
+        unsafe { dispatcher.dispatcher.load_instance(instance) };
+        Self(dispatcher)
     }
 
     fn clone_with_device(&self, device: &vk::raw::Device) -> Self {
-        let dispatcher = self.0.dispatcher.clone();
-        unsafe { dispatcher.load_device(device) };
-        Self(std::sync::Arc::new(DispatcherWithLib {
-            dispatcher,
+        let dispatcher = std::sync::Arc::new(DispatcherWithLib {
+            dispatcher: self.0.dispatcher.clone(),
             #[cfg(feature = "loaded")]
             library: self.0.library.clone(),
-        }))
+        });
+
+        unsafe { dispatcher.dispatcher.load_device(device) };
+        Self(dispatcher)
     }
 
     #[cfg(feature = "loaded")]
@@ -558,6 +563,7 @@ pub trait Handle: private::Sealed + Sized {
     /// The advantage is that BorrowedHandle<'a, Self> has internally the exact same memory
     /// representation as the raw handle it represents and therefore should be used when a deref is not enough
     /// like for vulkan commands that require arrays of handles
+    #[inline(always)]
     fn borrow<'a>(&'a self) -> BorrowedHandle<'a, Self> {
         BorrowedHandle {
             value: self.as_raw(),
@@ -566,6 +572,7 @@ pub trait Handle: private::Sealed + Sized {
     }
 
     /// See [Handle::borrow]
+    #[inline(always)]
     fn borrow_mut<'a>(&'a mut self) -> BorrowedMutHandle<'a, Self> {
         BorrowedMutHandle {
             value: self.as_raw(),
@@ -591,6 +598,7 @@ pub struct BorrowedHandle<'a, T: Handle> {
 unsafe impl<'a, T: Handle> Alias<T> for BorrowedHandle<'a, T> {}
 
 impl<'a, T: Handle> AsRef<T> for BorrowedHandle<'a, T> {
+    #[inline(always)]
     fn as_ref(&self) -> &T {
         // SAFETY: BorrowedHandle<T> and T have the same internal representation
         // Moreover, the reference will only live as long as the borrowed handle
@@ -612,6 +620,7 @@ pub struct BorrowedMutHandle<'a, T: Handle> {
 unsafe impl<'a, T: Handle> Alias<T> for BorrowedMutHandle<'a, T> {}
 
 impl<'a, T: Handle> AsMut<T> for BorrowedMutHandle<'a, T> {
+    #[inline(always)]
     fn as_mut(&mut self) -> &mut T {
         // SAFETY: Same as [BorrowedHandle::AsRef]
         unsafe { mem::transmute(self) }

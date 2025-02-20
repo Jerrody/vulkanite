@@ -116,10 +116,12 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
                 }
             }
 
+            #[inline(always)]
             pub fn get_dispatcher(&self) -> &D {
                 &self.disp
             }
 
+            #[inline(always)]
             pub fn get_allocator(&self) -> &A {
                 &self.alloc
             }
@@ -166,6 +168,7 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
                 impl<D: Dispatcher, A: Allocator> Deref for #id_name<D,A> {
                     type Target = raw::#id_name;
 
+                    #[inline(always)]
                     fn deref(&self) -> &Self::Target {
                         // Safety: raw::#id_name is repr(transparent) of raw::#id_name::InnerType
                         unsafe{ std::mem::transmute(&self.inner) }
@@ -181,10 +184,12 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
                         }
                     }
 
+                    #[inline(always)]
                     pub fn get_dispatcher(&self) -> &D {
                         &self.disp
                     }
 
+                    #[inline(always)]
                     pub fn get_allocator(&self) -> &A {
                         &self.alloc
                     }
@@ -461,8 +466,14 @@ where
     let unsafe_tag = name.starts_with("destroy").then(|| quote!(unsafe));
     let lifetime = (!cmd_parsed.vec_fields.is_empty()).then(|| quote! ('a, ));
 
+    // Tell the compiler it should try to inline the function across crate boundaries
+    // Without the inline tag it won't and when inlined the generated assembly is much simpler/shorter
+    // for functions with templates, let the compiler handle whether or not to inline it
+    let inline_tag = ret_template.is_none().then(|| quote! (#[inline]));
+
     Ok(quote! {
         #doc_tag
+        #inline_tag
         pub #unsafe_tag fn #fn_name<#lifetime #ret_template #(#arg_template),*>(&self, #(#arg_outer_name: #arg_outer_type),*) #ret_type {
             #pre_call
             unsafe {

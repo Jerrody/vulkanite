@@ -22,6 +22,7 @@ pub unsafe fn create_instance(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyInstance.html>"]
 #[doc(alias = "vkDestroyInstance")]
+#[inline]
 pub unsafe fn destroy_instance(
     instance: Option<&raw::Instance>,
     p_allocator: Option<&AllocationCallbacks>,
@@ -178,6 +179,7 @@ pub unsafe fn get_physical_device_memory_properties(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetInstanceProcAddr.html>"]
 #[doc(alias = "vkGetInstanceProcAddr")]
+#[inline]
 pub unsafe fn get_instance_proc_addr(
     instance: Option<&raw::Instance>,
     p_name: &CStr,
@@ -188,6 +190,7 @@ pub unsafe fn get_instance_proc_addr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceProcAddr.html>"]
 #[doc(alias = "vkGetDeviceProcAddr")]
+#[inline]
 pub unsafe fn get_device_proc_addr(
     device: &raw::Device,
     p_name: &CStr,
@@ -216,6 +219,7 @@ pub unsafe fn create_device(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDevice.html>"]
 #[doc(alias = "vkDestroyDevice")]
+#[inline]
 pub unsafe fn destroy_device(
     device: Option<&raw::Device>,
     p_allocator: Option<&AllocationCallbacks>,
@@ -392,6 +396,7 @@ pub unsafe fn get_device_queue(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueSubmit.html>"]
 #[doc(alias = "vkQueueSubmit")]
+#[inline]
 pub unsafe fn queue_submit<'a>(
     queue: &raw::Queue,
     p_submits: impl AsSlice<'a, SubmitInfo<'a>>,
@@ -409,12 +414,14 @@ pub unsafe fn queue_submit<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueWaitIdle.html>"]
 #[doc(alias = "vkQueueWaitIdle")]
+#[inline]
 pub unsafe fn queue_wait_idle(queue: &raw::Queue, dispatcher: &CommandsDispatcher) -> Result<()> {
     let vulkan_command = dispatcher.queue_wait_idle.get();
     vulkan_command(Some(queue.borrow())).map_success(|| ())
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDeviceWaitIdle.html>"]
 #[doc(alias = "vkDeviceWaitIdle")]
+#[inline]
 pub unsafe fn device_wait_idle(
     device: &raw::Device,
     dispatcher: &CommandsDispatcher,
@@ -442,6 +449,7 @@ pub unsafe fn allocate_memory(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkFreeMemory.html>"]
 #[doc(alias = "vkFreeMemory")]
+#[inline]
 pub unsafe fn free_memory(
     device: &raw::Device,
     memory: Option<&raw::DeviceMemory>,
@@ -479,6 +487,7 @@ pub unsafe fn map_memory(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkUnmapMemory.html>"]
 #[doc(alias = "vkUnmapMemory")]
+#[inline]
 pub unsafe fn unmap_memory(
     device: &raw::Device,
     memory: &raw::DeviceMemory,
@@ -489,6 +498,7 @@ pub unsafe fn unmap_memory(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkFlushMappedMemoryRanges.html>"]
 #[doc(alias = "vkFlushMappedMemoryRanges")]
+#[inline]
 pub unsafe fn flush_mapped_memory_ranges<'a>(
     device: &raw::Device,
     p_memory_ranges: impl AsSlice<'a, MappedMemoryRange<'a>>,
@@ -504,6 +514,7 @@ pub unsafe fn flush_mapped_memory_ranges<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkInvalidateMappedMemoryRanges.html>"]
 #[doc(alias = "vkInvalidateMappedMemoryRanges")]
+#[inline]
 pub unsafe fn invalidate_mapped_memory_ranges<'a>(
     device: &raw::Device,
     p_memory_ranges: impl AsSlice<'a, MappedMemoryRange<'a>>,
@@ -535,6 +546,7 @@ pub unsafe fn get_device_memory_commitment(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindBufferMemory.html>"]
 #[doc(alias = "vkBindBufferMemory")]
+#[inline]
 pub unsafe fn bind_buffer_memory(
     device: &raw::Device,
     buffer: &raw::Buffer,
@@ -553,6 +565,7 @@ pub unsafe fn bind_buffer_memory(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindImageMemory.html>"]
 #[doc(alias = "vkBindImageMemory")]
+#[inline]
 pub unsafe fn bind_image_memory(
     device: &raw::Device,
     image: &raw::Image,
@@ -681,6 +694,7 @@ pub unsafe fn get_physical_device_sparse_image_format_properties<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueBindSparse.html>"]
 #[doc(alias = "vkQueueBindSparse")]
+#[inline]
 pub unsafe fn queue_bind_sparse<'a>(
     queue: &raw::Queue,
     p_bind_info: impl AsSlice<'a, BindSparseInfo<'a>>,
@@ -716,6 +730,7 @@ pub unsafe fn create_fence(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyFence.html>"]
 #[doc(alias = "vkDestroyFence")]
+#[inline]
 pub unsafe fn destroy_fence(
     device: &raw::Device,
     fence: Option<&raw::Fence>,
@@ -731,6 +746,7 @@ pub unsafe fn destroy_fence(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkResetFences.html>"]
 #[doc(alias = "vkResetFences")]
+#[inline]
 pub unsafe fn reset_fences<'a, V2: Alias<raw::Fence> + 'a>(
     device: &raw::Device,
     p_fences: impl AsSlice<'a, V2>,
@@ -746,6 +762,7 @@ pub unsafe fn reset_fences<'a, V2: Alias<raw::Fence> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetFenceStatus.html>"]
 #[doc(alias = "vkGetFenceStatus")]
+#[inline]
 pub unsafe fn get_fence_status(
     device: &raw::Device,
     fence: &raw::Fence,
@@ -756,6 +773,7 @@ pub unsafe fn get_fence_status(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkWaitForFences.html>"]
 #[doc(alias = "vkWaitForFences")]
+#[inline]
 pub unsafe fn wait_for_fences<'a, V2: Alias<raw::Fence> + 'a>(
     device: &raw::Device,
     p_fences: impl AsSlice<'a, V2>,
@@ -793,6 +811,7 @@ pub unsafe fn create_semaphore(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySemaphore.html>"]
 #[doc(alias = "vkDestroySemaphore")]
+#[inline]
 pub unsafe fn destroy_semaphore(
     device: &raw::Device,
     semaphore: Option<&raw::Semaphore>,
@@ -826,6 +845,7 @@ pub unsafe fn create_event(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyEvent.html>"]
 #[doc(alias = "vkDestroyEvent")]
+#[inline]
 pub unsafe fn destroy_event(
     device: &raw::Device,
     event: Option<&raw::Event>,
@@ -841,6 +861,7 @@ pub unsafe fn destroy_event(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetEventStatus.html>"]
 #[doc(alias = "vkGetEventStatus")]
+#[inline]
 pub unsafe fn get_event_status(
     device: &raw::Device,
     event: &raw::Event,
@@ -851,6 +872,7 @@ pub unsafe fn get_event_status(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetEvent.html>"]
 #[doc(alias = "vkSetEvent")]
+#[inline]
 pub unsafe fn set_event(
     device: &raw::Device,
     event: &raw::Event,
@@ -861,6 +883,7 @@ pub unsafe fn set_event(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkResetEvent.html>"]
 #[doc(alias = "vkResetEvent")]
+#[inline]
 pub unsafe fn reset_event(
     device: &raw::Device,
     event: &raw::Event,
@@ -889,6 +912,7 @@ pub unsafe fn create_query_pool(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyQueryPool.html>"]
 #[doc(alias = "vkDestroyQueryPool")]
+#[inline]
 pub unsafe fn destroy_query_pool(
     device: &raw::Device,
     query_pool: Option<&raw::QueryPool>,
@@ -904,6 +928,7 @@ pub unsafe fn destroy_query_pool(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetQueryPoolResults.html>"]
 #[doc(alias = "vkGetQueryPoolResults")]
+#[inline]
 pub unsafe fn get_query_pool_results(
     device: &raw::Device,
     query_pool: &raw::QueryPool,
@@ -948,6 +973,7 @@ pub unsafe fn create_buffer(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyBuffer.html>"]
 #[doc(alias = "vkDestroyBuffer")]
+#[inline]
 pub unsafe fn destroy_buffer(
     device: &raw::Device,
     buffer: Option<&raw::Buffer>,
@@ -981,6 +1007,7 @@ pub unsafe fn create_buffer_view(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyBufferView.html>"]
 #[doc(alias = "vkDestroyBufferView")]
+#[inline]
 pub unsafe fn destroy_buffer_view(
     device: &raw::Device,
     buffer_view: Option<&raw::BufferView>,
@@ -1014,6 +1041,7 @@ pub unsafe fn create_image(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyImage.html>"]
 #[doc(alias = "vkDestroyImage")]
+#[inline]
 pub unsafe fn destroy_image(
     device: &raw::Device,
     image: Option<&raw::Image>,
@@ -1065,6 +1093,7 @@ pub unsafe fn create_image_view(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyImageView.html>"]
 #[doc(alias = "vkDestroyImageView")]
+#[inline]
 pub unsafe fn destroy_image_view(
     device: &raw::Device,
     image_view: Option<&raw::ImageView>,
@@ -1098,6 +1127,7 @@ pub unsafe fn create_shader_module(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyShaderModule.html>"]
 #[doc(alias = "vkDestroyShaderModule")]
+#[inline]
 pub unsafe fn destroy_shader_module(
     device: &raw::Device,
     shader_module: Option<&raw::ShaderModule>,
@@ -1131,6 +1161,7 @@ pub unsafe fn create_pipeline_cache(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPipelineCache.html>"]
 #[doc(alias = "vkDestroyPipelineCache")]
+#[inline]
 pub unsafe fn destroy_pipeline_cache(
     device: &raw::Device,
     pipeline_cache: Option<&raw::PipelineCache>,
@@ -1164,6 +1195,7 @@ pub unsafe fn get_pipeline_cache_data(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkMergePipelineCaches.html>"]
 #[doc(alias = "vkMergePipelineCaches")]
+#[inline]
 pub unsafe fn merge_pipeline_caches<'a, V3: Alias<raw::PipelineCache> + 'a>(
     device: &raw::Device,
     dst_cache: &raw::PipelineCache,
@@ -1229,6 +1261,7 @@ pub unsafe fn create_compute_pipelines<'a, R: DynamicArray<Pipeline>>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPipeline.html>"]
 #[doc(alias = "vkDestroyPipeline")]
+#[inline]
 pub unsafe fn destroy_pipeline(
     device: &raw::Device,
     pipeline: Option<&raw::Pipeline>,
@@ -1262,6 +1295,7 @@ pub unsafe fn create_pipeline_layout(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPipelineLayout.html>"]
 #[doc(alias = "vkDestroyPipelineLayout")]
+#[inline]
 pub unsafe fn destroy_pipeline_layout(
     device: &raw::Device,
     pipeline_layout: Option<&raw::PipelineLayout>,
@@ -1295,6 +1329,7 @@ pub unsafe fn create_sampler(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySampler.html>"]
 #[doc(alias = "vkDestroySampler")]
+#[inline]
 pub unsafe fn destroy_sampler(
     device: &raw::Device,
     sampler: Option<&raw::Sampler>,
@@ -1328,6 +1363,7 @@ pub unsafe fn create_descriptor_set_layout(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDescriptorSetLayout.html>"]
 #[doc(alias = "vkDestroyDescriptorSetLayout")]
+#[inline]
 pub unsafe fn destroy_descriptor_set_layout(
     device: &raw::Device,
     descriptor_set_layout: Option<&raw::DescriptorSetLayout>,
@@ -1361,6 +1397,7 @@ pub unsafe fn create_descriptor_pool(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDescriptorPool.html>"]
 #[doc(alias = "vkDestroyDescriptorPool")]
+#[inline]
 pub unsafe fn destroy_descriptor_pool(
     device: &raw::Device,
     descriptor_pool: Option<&raw::DescriptorPool>,
@@ -1376,6 +1413,7 @@ pub unsafe fn destroy_descriptor_pool(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkResetDescriptorPool.html>"]
 #[doc(alias = "vkResetDescriptorPool")]
+#[inline]
 pub unsafe fn reset_descriptor_pool(
     device: &raw::Device,
     descriptor_pool: &raw::DescriptorPool,
@@ -1406,6 +1444,7 @@ pub unsafe fn allocate_descriptor_sets<R: DynamicArray<DescriptorSet>>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkFreeDescriptorSets.html>"]
 #[doc(alias = "vkFreeDescriptorSets")]
+#[inline]
 pub unsafe fn free_descriptor_sets<'a, V3: Alias<raw::DescriptorSet> + 'a>(
     device: &raw::Device,
     descriptor_pool: &raw::DescriptorPool,
@@ -1423,6 +1462,7 @@ pub unsafe fn free_descriptor_sets<'a, V3: Alias<raw::DescriptorSet> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkUpdateDescriptorSets.html>"]
 #[doc(alias = "vkUpdateDescriptorSets")]
+#[inline]
 pub unsafe fn update_descriptor_sets<'a>(
     device: &raw::Device,
     p_descriptor_writes: impl AsSlice<'a, WriteDescriptorSet<'a>>,
@@ -1458,6 +1498,7 @@ pub unsafe fn create_framebuffer(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyFramebuffer.html>"]
 #[doc(alias = "vkDestroyFramebuffer")]
+#[inline]
 pub unsafe fn destroy_framebuffer(
     device: &raw::Device,
     framebuffer: Option<&raw::Framebuffer>,
@@ -1491,6 +1532,7 @@ pub unsafe fn create_render_pass(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyRenderPass.html>"]
 #[doc(alias = "vkDestroyRenderPass")]
+#[inline]
 pub unsafe fn destroy_render_pass(
     device: &raw::Device,
     render_pass: Option<&raw::RenderPass>,
@@ -1540,6 +1582,7 @@ pub unsafe fn create_command_pool(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyCommandPool.html>"]
 #[doc(alias = "vkDestroyCommandPool")]
+#[inline]
 pub unsafe fn destroy_command_pool(
     device: &raw::Device,
     command_pool: Option<&raw::CommandPool>,
@@ -1555,6 +1598,7 @@ pub unsafe fn destroy_command_pool(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkResetCommandPool.html>"]
 #[doc(alias = "vkResetCommandPool")]
+#[inline]
 pub unsafe fn reset_command_pool(
     device: &raw::Device,
     command_pool: &raw::CommandPool,
@@ -1585,6 +1629,7 @@ pub unsafe fn allocate_command_buffers<R: DynamicArray<CommandBuffer>>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkFreeCommandBuffers.html>"]
 #[doc(alias = "vkFreeCommandBuffers")]
+#[inline]
 pub unsafe fn free_command_buffers<'a, V3: Alias<raw::CommandBuffer> + 'a>(
     device: &raw::Device,
     command_pool: &raw::CommandPool,
@@ -1601,6 +1646,7 @@ pub unsafe fn free_command_buffers<'a, V3: Alias<raw::CommandBuffer> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBeginCommandBuffer.html>"]
 #[doc(alias = "vkBeginCommandBuffer")]
+#[inline]
 pub unsafe fn begin_command_buffer(
     command_buffer: &raw::CommandBuffer,
     p_begin_info: &CommandBufferBeginInfo,
@@ -1611,6 +1657,7 @@ pub unsafe fn begin_command_buffer(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkEndCommandBuffer.html>"]
 #[doc(alias = "vkEndCommandBuffer")]
+#[inline]
 pub unsafe fn end_command_buffer(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
@@ -1620,6 +1667,7 @@ pub unsafe fn end_command_buffer(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkResetCommandBuffer.html>"]
 #[doc(alias = "vkResetCommandBuffer")]
+#[inline]
 pub unsafe fn reset_command_buffer(
     command_buffer: &raw::CommandBuffer,
     flags: CommandBufferResetFlags,
@@ -1630,6 +1678,7 @@ pub unsafe fn reset_command_buffer(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindPipeline.html>"]
 #[doc(alias = "vkCmdBindPipeline")]
+#[inline]
 pub unsafe fn cmd_bind_pipeline(
     command_buffer: &raw::CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
@@ -1645,6 +1694,7 @@ pub unsafe fn cmd_bind_pipeline(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewport.html>"]
 #[doc(alias = "vkCmdSetViewport")]
+#[inline]
 pub unsafe fn cmd_set_viewport<'a>(
     command_buffer: &raw::CommandBuffer,
     first_viewport: u32,
@@ -1661,6 +1711,7 @@ pub unsafe fn cmd_set_viewport<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetScissor.html>"]
 #[doc(alias = "vkCmdSetScissor")]
+#[inline]
 pub unsafe fn cmd_set_scissor<'a>(
     command_buffer: &raw::CommandBuffer,
     first_scissor: u32,
@@ -1677,6 +1728,7 @@ pub unsafe fn cmd_set_scissor<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineWidth.html>"]
 #[doc(alias = "vkCmdSetLineWidth")]
+#[inline]
 pub unsafe fn cmd_set_line_width(
     command_buffer: &raw::CommandBuffer,
     line_width: f32,
@@ -1687,6 +1739,7 @@ pub unsafe fn cmd_set_line_width(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthBias.html>"]
 #[doc(alias = "vkCmdSetDepthBias")]
+#[inline]
 pub unsafe fn cmd_set_depth_bias(
     command_buffer: &raw::CommandBuffer,
     depth_bias_constant_factor: f32,
@@ -1704,6 +1757,7 @@ pub unsafe fn cmd_set_depth_bias(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetBlendConstants.html>"]
 #[doc(alias = "vkCmdSetBlendConstants")]
+#[inline]
 pub unsafe fn cmd_set_blend_constants(
     command_buffer: &raw::CommandBuffer,
     blend_constants: [f32; 4u16 as _],
@@ -1714,6 +1768,7 @@ pub unsafe fn cmd_set_blend_constants(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthBounds.html>"]
 #[doc(alias = "vkCmdSetDepthBounds")]
+#[inline]
 pub unsafe fn cmd_set_depth_bounds(
     command_buffer: &raw::CommandBuffer,
     min_depth_bounds: f32,
@@ -1729,6 +1784,7 @@ pub unsafe fn cmd_set_depth_bounds(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetStencilCompareMask.html>"]
 #[doc(alias = "vkCmdSetStencilCompareMask")]
+#[inline]
 pub unsafe fn cmd_set_stencil_compare_mask(
     command_buffer: &raw::CommandBuffer,
     face_mask: StencilFaceFlags,
@@ -1740,6 +1796,7 @@ pub unsafe fn cmd_set_stencil_compare_mask(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetStencilWriteMask.html>"]
 #[doc(alias = "vkCmdSetStencilWriteMask")]
+#[inline]
 pub unsafe fn cmd_set_stencil_write_mask(
     command_buffer: &raw::CommandBuffer,
     face_mask: StencilFaceFlags,
@@ -1751,6 +1808,7 @@ pub unsafe fn cmd_set_stencil_write_mask(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetStencilReference.html>"]
 #[doc(alias = "vkCmdSetStencilReference")]
+#[inline]
 pub unsafe fn cmd_set_stencil_reference(
     command_buffer: &raw::CommandBuffer,
     face_mask: StencilFaceFlags,
@@ -1762,6 +1820,7 @@ pub unsafe fn cmd_set_stencil_reference(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindDescriptorSets.html>"]
 #[doc(alias = "vkCmdBindDescriptorSets")]
+#[inline]
 pub unsafe fn cmd_bind_descriptor_sets<'a, V5: Alias<raw::DescriptorSet> + 'a>(
     command_buffer: &raw::CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
@@ -1785,6 +1844,7 @@ pub unsafe fn cmd_bind_descriptor_sets<'a, V5: Alias<raw::DescriptorSet> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindIndexBuffer.html>"]
 #[doc(alias = "vkCmdBindIndexBuffer")]
+#[inline]
 pub unsafe fn cmd_bind_index_buffer(
     command_buffer: &raw::CommandBuffer,
     buffer: Option<&raw::Buffer>,
@@ -1802,6 +1862,7 @@ pub unsafe fn cmd_bind_index_buffer(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindVertexBuffers.html>"]
 #[doc(alias = "vkCmdBindVertexBuffers")]
+#[inline]
 pub unsafe fn cmd_bind_vertex_buffers<'a, V3: Alias<raw::Buffer> + 'a>(
     command_buffer: &raw::CommandBuffer,
     first_binding: u32,
@@ -1820,6 +1881,7 @@ pub unsafe fn cmd_bind_vertex_buffers<'a, V3: Alias<raw::Buffer> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDraw.html>"]
 #[doc(alias = "vkCmdDraw")]
+#[inline]
 pub unsafe fn cmd_draw(
     command_buffer: &raw::CommandBuffer,
     vertex_count: u32,
@@ -1839,6 +1901,7 @@ pub unsafe fn cmd_draw(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndexed.html>"]
 #[doc(alias = "vkCmdDrawIndexed")]
+#[inline]
 pub unsafe fn cmd_draw_indexed(
     command_buffer: &raw::CommandBuffer,
     index_count: u32,
@@ -1860,6 +1923,7 @@ pub unsafe fn cmd_draw_indexed(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndirect.html>"]
 #[doc(alias = "vkCmdDrawIndirect")]
+#[inline]
 pub unsafe fn cmd_draw_indirect(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -1879,6 +1943,7 @@ pub unsafe fn cmd_draw_indirect(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndexedIndirect.html>"]
 #[doc(alias = "vkCmdDrawIndexedIndirect")]
+#[inline]
 pub unsafe fn cmd_draw_indexed_indirect(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -1898,6 +1963,7 @@ pub unsafe fn cmd_draw_indexed_indirect(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatch.html>"]
 #[doc(alias = "vkCmdDispatch")]
+#[inline]
 pub unsafe fn cmd_dispatch(
     command_buffer: &raw::CommandBuffer,
     group_count_x: u32,
@@ -1915,6 +1981,7 @@ pub unsafe fn cmd_dispatch(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchIndirect.html>"]
 #[doc(alias = "vkCmdDispatchIndirect")]
+#[inline]
 pub unsafe fn cmd_dispatch_indirect(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -1926,6 +1993,7 @@ pub unsafe fn cmd_dispatch_indirect(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyBuffer.html>"]
 #[doc(alias = "vkCmdCopyBuffer")]
+#[inline]
 pub unsafe fn cmd_copy_buffer<'a>(
     command_buffer: &raw::CommandBuffer,
     src_buffer: &raw::Buffer,
@@ -1944,6 +2012,7 @@ pub unsafe fn cmd_copy_buffer<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyImage.html>"]
 #[doc(alias = "vkCmdCopyImage")]
+#[inline]
 pub unsafe fn cmd_copy_image<'a>(
     command_buffer: &raw::CommandBuffer,
     src_image: &raw::Image,
@@ -1966,6 +2035,7 @@ pub unsafe fn cmd_copy_image<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBlitImage.html>"]
 #[doc(alias = "vkCmdBlitImage")]
+#[inline]
 pub unsafe fn cmd_blit_image<'a>(
     command_buffer: &raw::CommandBuffer,
     src_image: &raw::Image,
@@ -1990,6 +2060,7 @@ pub unsafe fn cmd_blit_image<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyBufferToImage.html>"]
 #[doc(alias = "vkCmdCopyBufferToImage")]
+#[inline]
 pub unsafe fn cmd_copy_buffer_to_image<'a>(
     command_buffer: &raw::CommandBuffer,
     src_buffer: &raw::Buffer,
@@ -2010,6 +2081,7 @@ pub unsafe fn cmd_copy_buffer_to_image<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyImageToBuffer.html>"]
 #[doc(alias = "vkCmdCopyImageToBuffer")]
+#[inline]
 pub unsafe fn cmd_copy_image_to_buffer<'a>(
     command_buffer: &raw::CommandBuffer,
     src_image: &raw::Image,
@@ -2030,6 +2102,7 @@ pub unsafe fn cmd_copy_image_to_buffer<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdUpdateBuffer.html>"]
 #[doc(alias = "vkCmdUpdateBuffer")]
+#[inline]
 pub unsafe fn cmd_update_buffer(
     command_buffer: &raw::CommandBuffer,
     dst_buffer: &raw::Buffer,
@@ -2049,6 +2122,7 @@ pub unsafe fn cmd_update_buffer(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdFillBuffer.html>"]
 #[doc(alias = "vkCmdFillBuffer")]
+#[inline]
 pub unsafe fn cmd_fill_buffer(
     command_buffer: &raw::CommandBuffer,
     dst_buffer: &raw::Buffer,
@@ -2068,6 +2142,7 @@ pub unsafe fn cmd_fill_buffer(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdClearColorImage.html>"]
 #[doc(alias = "vkCmdClearColorImage")]
+#[inline]
 pub unsafe fn cmd_clear_color_image<'a>(
     command_buffer: &raw::CommandBuffer,
     image: &raw::Image,
@@ -2088,6 +2163,7 @@ pub unsafe fn cmd_clear_color_image<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdClearDepthStencilImage.html>"]
 #[doc(alias = "vkCmdClearDepthStencilImage")]
+#[inline]
 pub unsafe fn cmd_clear_depth_stencil_image<'a>(
     command_buffer: &raw::CommandBuffer,
     image: &raw::Image,
@@ -2108,6 +2184,7 @@ pub unsafe fn cmd_clear_depth_stencil_image<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdClearAttachments.html>"]
 #[doc(alias = "vkCmdClearAttachments")]
+#[inline]
 pub unsafe fn cmd_clear_attachments<'a>(
     command_buffer: &raw::CommandBuffer,
     p_attachments: impl AsSlice<'a, ClearAttachment>,
@@ -2125,6 +2202,7 @@ pub unsafe fn cmd_clear_attachments<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdResolveImage.html>"]
 #[doc(alias = "vkCmdResolveImage")]
+#[inline]
 pub unsafe fn cmd_resolve_image<'a>(
     command_buffer: &raw::CommandBuffer,
     src_image: &raw::Image,
@@ -2147,6 +2225,7 @@ pub unsafe fn cmd_resolve_image<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetEvent.html>"]
 #[doc(alias = "vkCmdSetEvent")]
+#[inline]
 pub unsafe fn cmd_set_event(
     command_buffer: &raw::CommandBuffer,
     event: &raw::Event,
@@ -2162,6 +2241,7 @@ pub unsafe fn cmd_set_event(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdResetEvent.html>"]
 #[doc(alias = "vkCmdResetEvent")]
+#[inline]
 pub unsafe fn cmd_reset_event(
     command_buffer: &raw::CommandBuffer,
     event: &raw::Event,
@@ -2177,6 +2257,7 @@ pub unsafe fn cmd_reset_event(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWaitEvents.html>"]
 #[doc(alias = "vkCmdWaitEvents")]
+#[inline]
 pub unsafe fn cmd_wait_events<'a, V2: Alias<raw::Event> + 'a>(
     command_buffer: &raw::CommandBuffer,
     p_events: impl AsSlice<'a, V2>,
@@ -2204,6 +2285,7 @@ pub unsafe fn cmd_wait_events<'a, V2: Alias<raw::Event> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPipelineBarrier.html>"]
 #[doc(alias = "vkCmdPipelineBarrier")]
+#[inline]
 pub unsafe fn cmd_pipeline_barrier<'a>(
     command_buffer: &raw::CommandBuffer,
     src_stage_mask: PipelineStageFlags,
@@ -2230,6 +2312,7 @@ pub unsafe fn cmd_pipeline_barrier<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginQuery.html>"]
 #[doc(alias = "vkCmdBeginQuery")]
+#[inline]
 pub unsafe fn cmd_begin_query(
     command_buffer: &raw::CommandBuffer,
     query_pool: &raw::QueryPool,
@@ -2247,6 +2330,7 @@ pub unsafe fn cmd_begin_query(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndQuery.html>"]
 #[doc(alias = "vkCmdEndQuery")]
+#[inline]
 pub unsafe fn cmd_end_query(
     command_buffer: &raw::CommandBuffer,
     query_pool: &raw::QueryPool,
@@ -2262,6 +2346,7 @@ pub unsafe fn cmd_end_query(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdResetQueryPool.html>"]
 #[doc(alias = "vkCmdResetQueryPool")]
+#[inline]
 pub unsafe fn cmd_reset_query_pool(
     command_buffer: &raw::CommandBuffer,
     query_pool: &raw::QueryPool,
@@ -2279,6 +2364,7 @@ pub unsafe fn cmd_reset_query_pool(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteTimestamp.html>"]
 #[doc(alias = "vkCmdWriteTimestamp")]
+#[inline]
 pub unsafe fn cmd_write_timestamp(
     command_buffer: &raw::CommandBuffer,
     pipeline_stage: PipelineStageFlags,
@@ -2296,6 +2382,7 @@ pub unsafe fn cmd_write_timestamp(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyQueryPoolResults.html>"]
 #[doc(alias = "vkCmdCopyQueryPoolResults")]
+#[inline]
 pub unsafe fn cmd_copy_query_pool_results(
     command_buffer: &raw::CommandBuffer,
     query_pool: &raw::QueryPool,
@@ -2321,6 +2408,7 @@ pub unsafe fn cmd_copy_query_pool_results(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushConstants.html>"]
 #[doc(alias = "vkCmdPushConstants")]
+#[inline]
 pub unsafe fn cmd_push_constants(
     command_buffer: &raw::CommandBuffer,
     layout: &raw::PipelineLayout,
@@ -2342,6 +2430,7 @@ pub unsafe fn cmd_push_constants(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginRenderPass.html>"]
 #[doc(alias = "vkCmdBeginRenderPass")]
+#[inline]
 pub unsafe fn cmd_begin_render_pass(
     command_buffer: &raw::CommandBuffer,
     p_render_pass_begin: &RenderPassBeginInfo,
@@ -2357,6 +2446,7 @@ pub unsafe fn cmd_begin_render_pass(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdNextSubpass.html>"]
 #[doc(alias = "vkCmdNextSubpass")]
+#[inline]
 pub unsafe fn cmd_next_subpass(
     command_buffer: &raw::CommandBuffer,
     contents: SubpassContents,
@@ -2367,6 +2457,7 @@ pub unsafe fn cmd_next_subpass(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndRenderPass.html>"]
 #[doc(alias = "vkCmdEndRenderPass")]
+#[inline]
 pub unsafe fn cmd_end_render_pass(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
@@ -2376,6 +2467,7 @@ pub unsafe fn cmd_end_render_pass(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdExecuteCommands.html>"]
 #[doc(alias = "vkCmdExecuteCommands")]
+#[inline]
 pub unsafe fn cmd_execute_commands<'a, V2: Alias<raw::CommandBuffer> + 'a>(
     command_buffer: &raw::CommandBuffer,
     p_command_buffers: impl AsSlice<'a, V2>,
@@ -2398,6 +2490,7 @@ pub unsafe fn enumerate_instance_version(dispatcher: &CommandsDispatcher) -> Res
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindBufferMemory2.html>"]
 #[doc(alias = "vkBindBufferMemory2")]
+#[inline]
 pub unsafe fn bind_buffer_memory2<'a>(
     device: &raw::Device,
     p_bind_infos: impl AsSlice<'a, BindBufferMemoryInfo<'a>>,
@@ -2413,6 +2506,7 @@ pub unsafe fn bind_buffer_memory2<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindBufferMemory2KHR.html>"]
 #[doc(alias = "vkBindBufferMemory2KHR")]
+#[inline]
 pub unsafe fn bind_buffer_memory2_khr<'a>(
     device: &raw::Device,
     p_bind_infos: impl AsSlice<'a, BindBufferMemoryInfo<'a>>,
@@ -2428,6 +2522,7 @@ pub unsafe fn bind_buffer_memory2_khr<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindImageMemory2.html>"]
 #[doc(alias = "vkBindImageMemory2")]
+#[inline]
 pub unsafe fn bind_image_memory2<'a>(
     device: &raw::Device,
     p_bind_infos: impl AsSlice<'a, BindImageMemoryInfo<'a>>,
@@ -2443,6 +2538,7 @@ pub unsafe fn bind_image_memory2<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindImageMemory2KHR.html>"]
 #[doc(alias = "vkBindImageMemory2KHR")]
+#[inline]
 pub unsafe fn bind_image_memory2_khr<'a>(
     device: &raw::Device,
     p_bind_infos: impl AsSlice<'a, BindImageMemoryInfo<'a>>,
@@ -2498,6 +2594,7 @@ pub unsafe fn get_device_group_peer_memory_features_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDeviceMask.html>"]
 #[doc(alias = "vkCmdSetDeviceMask")]
+#[inline]
 pub unsafe fn cmd_set_device_mask(
     command_buffer: &raw::CommandBuffer,
     device_mask: u32,
@@ -2508,6 +2605,7 @@ pub unsafe fn cmd_set_device_mask(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDeviceMaskKHR.html>"]
 #[doc(alias = "vkCmdSetDeviceMaskKHR")]
+#[inline]
 pub unsafe fn cmd_set_device_mask_khr(
     command_buffer: &raw::CommandBuffer,
     device_mask: u32,
@@ -2518,6 +2616,7 @@ pub unsafe fn cmd_set_device_mask_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchBase.html>"]
 #[doc(alias = "vkCmdDispatchBase")]
+#[inline]
 pub unsafe fn cmd_dispatch_base(
     command_buffer: &raw::CommandBuffer,
     base_group_x: u32,
@@ -2541,6 +2640,7 @@ pub unsafe fn cmd_dispatch_base(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchBaseKHR.html>"]
 #[doc(alias = "vkCmdDispatchBaseKHR")]
+#[inline]
 pub unsafe fn cmd_dispatch_base_khr(
     command_buffer: &raw::CommandBuffer,
     base_group_x: u32,
@@ -3112,6 +3212,7 @@ pub unsafe fn get_physical_device_sparse_image_format_properties2_khr<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkTrimCommandPool.html>"]
 #[doc(alias = "vkTrimCommandPool")]
+#[inline]
 pub unsafe fn trim_command_pool(
     device: &raw::Device,
     command_pool: &raw::CommandPool,
@@ -3123,6 +3224,7 @@ pub unsafe fn trim_command_pool(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkTrimCommandPoolKHR.html>"]
 #[doc(alias = "vkTrimCommandPoolKHR")]
+#[inline]
 pub unsafe fn trim_command_pool_khr(
     device: &raw::Device,
     command_pool: &raw::CommandPool,
@@ -3186,6 +3288,7 @@ pub unsafe fn create_sampler_ycbcr_conversion_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySamplerYcbcrConversion.html>"]
 #[doc(alias = "vkDestroySamplerYcbcrConversion")]
+#[inline]
 pub unsafe fn destroy_sampler_ycbcr_conversion(
     device: &raw::Device,
     ycbcr_conversion: Option<&raw::SamplerYcbcrConversion>,
@@ -3201,6 +3304,7 @@ pub unsafe fn destroy_sampler_ycbcr_conversion(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySamplerYcbcrConversionKHR.html>"]
 #[doc(alias = "vkDestroySamplerYcbcrConversionKHR")]
+#[inline]
 pub unsafe fn destroy_sampler_ycbcr_conversion_khr(
     device: &raw::Device,
     ycbcr_conversion: Option<&raw::SamplerYcbcrConversion>,
@@ -3252,6 +3356,7 @@ pub unsafe fn create_descriptor_update_template_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDescriptorUpdateTemplate.html>"]
 #[doc(alias = "vkDestroyDescriptorUpdateTemplate")]
+#[inline]
 pub unsafe fn destroy_descriptor_update_template(
     device: &raw::Device,
     descriptor_update_template: Option<&raw::DescriptorUpdateTemplate>,
@@ -3267,6 +3372,7 @@ pub unsafe fn destroy_descriptor_update_template(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDescriptorUpdateTemplateKHR.html>"]
 #[doc(alias = "vkDestroyDescriptorUpdateTemplateKHR")]
+#[inline]
 pub unsafe fn destroy_descriptor_update_template_khr(
     device: &raw::Device,
     descriptor_update_template: Option<&raw::DescriptorUpdateTemplate>,
@@ -3282,6 +3388,7 @@ pub unsafe fn destroy_descriptor_update_template_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkUpdateDescriptorSetWithTemplate.html>"]
 #[doc(alias = "vkUpdateDescriptorSetWithTemplate")]
+#[inline]
 pub unsafe fn update_descriptor_set_with_template(
     device: &raw::Device,
     descriptor_set: &raw::DescriptorSet,
@@ -3299,6 +3406,7 @@ pub unsafe fn update_descriptor_set_with_template(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkUpdateDescriptorSetWithTemplateKHR.html>"]
 #[doc(alias = "vkUpdateDescriptorSetWithTemplateKHR")]
+#[inline]
 pub unsafe fn update_descriptor_set_with_template_khr(
     device: &raw::Device,
     descriptor_set: &raw::DescriptorSet,
@@ -3488,6 +3596,7 @@ pub unsafe fn get_descriptor_set_layout_support_khr<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndirectCount.html>"]
 #[doc(alias = "vkCmdDrawIndirectCount")]
+#[inline]
 pub unsafe fn cmd_draw_indirect_count(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -3511,6 +3620,7 @@ pub unsafe fn cmd_draw_indirect_count(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndirectCountKHR.html>"]
 #[doc(alias = "vkCmdDrawIndirectCountKHR")]
+#[inline]
 pub unsafe fn cmd_draw_indirect_count_khr(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -3534,6 +3644,7 @@ pub unsafe fn cmd_draw_indirect_count_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndirectCountAMD.html>"]
 #[doc(alias = "vkCmdDrawIndirectCountAMD")]
+#[inline]
 pub unsafe fn cmd_draw_indirect_count_amd(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -3557,6 +3668,7 @@ pub unsafe fn cmd_draw_indirect_count_amd(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndexedIndirectCount.html>"]
 #[doc(alias = "vkCmdDrawIndexedIndirectCount")]
+#[inline]
 pub unsafe fn cmd_draw_indexed_indirect_count(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -3580,6 +3692,7 @@ pub unsafe fn cmd_draw_indexed_indirect_count(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndexedIndirectCountKHR.html>"]
 #[doc(alias = "vkCmdDrawIndexedIndirectCountKHR")]
+#[inline]
 pub unsafe fn cmd_draw_indexed_indirect_count_khr(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -3603,6 +3716,7 @@ pub unsafe fn cmd_draw_indexed_indirect_count_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndexedIndirectCountAMD.html>"]
 #[doc(alias = "vkCmdDrawIndexedIndirectCountAMD")]
+#[inline]
 pub unsafe fn cmd_draw_indexed_indirect_count_amd(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -3662,6 +3776,7 @@ pub unsafe fn create_render_pass2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginRenderPass2.html>"]
 #[doc(alias = "vkCmdBeginRenderPass2")]
+#[inline]
 pub unsafe fn cmd_begin_render_pass2(
     command_buffer: &raw::CommandBuffer,
     p_render_pass_begin: &RenderPassBeginInfo,
@@ -3677,6 +3792,7 @@ pub unsafe fn cmd_begin_render_pass2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginRenderPass2KHR.html>"]
 #[doc(alias = "vkCmdBeginRenderPass2KHR")]
+#[inline]
 pub unsafe fn cmd_begin_render_pass2_khr(
     command_buffer: &raw::CommandBuffer,
     p_render_pass_begin: &RenderPassBeginInfo,
@@ -3692,6 +3808,7 @@ pub unsafe fn cmd_begin_render_pass2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdNextSubpass2.html>"]
 #[doc(alias = "vkCmdNextSubpass2")]
+#[inline]
 pub unsafe fn cmd_next_subpass2(
     command_buffer: &raw::CommandBuffer,
     p_subpass_begin_info: &SubpassBeginInfo,
@@ -3707,6 +3824,7 @@ pub unsafe fn cmd_next_subpass2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdNextSubpass2KHR.html>"]
 #[doc(alias = "vkCmdNextSubpass2KHR")]
+#[inline]
 pub unsafe fn cmd_next_subpass2_khr(
     command_buffer: &raw::CommandBuffer,
     p_subpass_begin_info: &SubpassBeginInfo,
@@ -3722,6 +3840,7 @@ pub unsafe fn cmd_next_subpass2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndRenderPass2.html>"]
 #[doc(alias = "vkCmdEndRenderPass2")]
+#[inline]
 pub unsafe fn cmd_end_render_pass2(
     command_buffer: &raw::CommandBuffer,
     p_subpass_end_info: &SubpassEndInfo,
@@ -3735,6 +3854,7 @@ pub unsafe fn cmd_end_render_pass2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndRenderPass2KHR.html>"]
 #[doc(alias = "vkCmdEndRenderPass2KHR")]
+#[inline]
 pub unsafe fn cmd_end_render_pass2_khr(
     command_buffer: &raw::CommandBuffer,
     p_subpass_end_info: &SubpassEndInfo,
@@ -3748,6 +3868,7 @@ pub unsafe fn cmd_end_render_pass2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkResetQueryPool.html>"]
 #[doc(alias = "vkResetQueryPool")]
+#[inline]
 pub unsafe fn reset_query_pool(
     device: &raw::Device,
     query_pool: &raw::QueryPool,
@@ -3765,6 +3886,7 @@ pub unsafe fn reset_query_pool(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkResetQueryPoolEXT.html>"]
 #[doc(alias = "vkResetQueryPoolEXT")]
+#[inline]
 pub unsafe fn reset_query_pool_ext(
     device: &raw::Device,
     query_pool: &raw::QueryPool,
@@ -3814,6 +3936,7 @@ pub unsafe fn get_semaphore_counter_value_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkWaitSemaphores.html>"]
 #[doc(alias = "vkWaitSemaphores")]
+#[inline]
 pub unsafe fn wait_semaphores(
     device: &raw::Device,
     p_wait_info: &SemaphoreWaitInfo,
@@ -3825,6 +3948,7 @@ pub unsafe fn wait_semaphores(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkWaitSemaphoresKHR.html>"]
 #[doc(alias = "vkWaitSemaphoresKHR")]
+#[inline]
 pub unsafe fn wait_semaphores_khr(
     device: &raw::Device,
     p_wait_info: &SemaphoreWaitInfo,
@@ -3836,6 +3960,7 @@ pub unsafe fn wait_semaphores_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSignalSemaphore.html>"]
 #[doc(alias = "vkSignalSemaphore")]
+#[inline]
 pub unsafe fn signal_semaphore(
     device: &raw::Device,
     p_signal_info: &SemaphoreSignalInfo,
@@ -3846,6 +3971,7 @@ pub unsafe fn signal_semaphore(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSignalSemaphoreKHR.html>"]
 #[doc(alias = "vkSignalSemaphoreKHR")]
+#[inline]
 pub unsafe fn signal_semaphore_khr(
     device: &raw::Device,
     p_signal_info: &SemaphoreSignalInfo,
@@ -3856,6 +3982,7 @@ pub unsafe fn signal_semaphore_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetBufferDeviceAddress.html>"]
 #[doc(alias = "vkGetBufferDeviceAddress")]
+#[inline]
 pub unsafe fn get_buffer_device_address(
     device: &raw::Device,
     p_info: &BufferDeviceAddressInfo,
@@ -3866,6 +3993,7 @@ pub unsafe fn get_buffer_device_address(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetBufferDeviceAddressKHR.html>"]
 #[doc(alias = "vkGetBufferDeviceAddressKHR")]
+#[inline]
 pub unsafe fn get_buffer_device_address_khr(
     device: &raw::Device,
     p_info: &BufferDeviceAddressInfo,
@@ -3876,6 +4004,7 @@ pub unsafe fn get_buffer_device_address_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetBufferDeviceAddressEXT.html>"]
 #[doc(alias = "vkGetBufferDeviceAddressEXT")]
+#[inline]
 pub unsafe fn get_buffer_device_address_ext(
     device: &raw::Device,
     p_info: &BufferDeviceAddressInfo,
@@ -3886,6 +4015,7 @@ pub unsafe fn get_buffer_device_address_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetBufferOpaqueCaptureAddress.html>"]
 #[doc(alias = "vkGetBufferOpaqueCaptureAddress")]
+#[inline]
 pub unsafe fn get_buffer_opaque_capture_address(
     device: &raw::Device,
     p_info: &BufferDeviceAddressInfo,
@@ -3896,6 +4026,7 @@ pub unsafe fn get_buffer_opaque_capture_address(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetBufferOpaqueCaptureAddressKHR.html>"]
 #[doc(alias = "vkGetBufferOpaqueCaptureAddressKHR")]
+#[inline]
 pub unsafe fn get_buffer_opaque_capture_address_khr(
     device: &raw::Device,
     p_info: &BufferDeviceAddressInfo,
@@ -3906,6 +4037,7 @@ pub unsafe fn get_buffer_opaque_capture_address_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceMemoryOpaqueCaptureAddress.html>"]
 #[doc(alias = "vkGetDeviceMemoryOpaqueCaptureAddress")]
+#[inline]
 pub unsafe fn get_device_memory_opaque_capture_address(
     device: &raw::Device,
     p_info: &DeviceMemoryOpaqueCaptureAddressInfo,
@@ -3916,6 +4048,7 @@ pub unsafe fn get_device_memory_opaque_capture_address(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>"]
 #[doc(alias = "vkGetDeviceMemoryOpaqueCaptureAddressKHR")]
+#[inline]
 pub unsafe fn get_device_memory_opaque_capture_address_khr(
     device: &raw::Device,
     p_info: &DeviceMemoryOpaqueCaptureAddressInfo,
@@ -4044,6 +4177,7 @@ pub unsafe fn create_private_data_slot_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPrivateDataSlot.html>"]
 #[doc(alias = "vkDestroyPrivateDataSlot")]
+#[inline]
 pub unsafe fn destroy_private_data_slot(
     device: &raw::Device,
     private_data_slot: Option<&raw::PrivateDataSlot>,
@@ -4059,6 +4193,7 @@ pub unsafe fn destroy_private_data_slot(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPrivateDataSlotEXT.html>"]
 #[doc(alias = "vkDestroyPrivateDataSlotEXT")]
+#[inline]
 pub unsafe fn destroy_private_data_slot_ext(
     device: &raw::Device,
     private_data_slot: Option<&raw::PrivateDataSlot>,
@@ -4074,6 +4209,7 @@ pub unsafe fn destroy_private_data_slot_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetPrivateData.html>"]
 #[doc(alias = "vkSetPrivateData")]
+#[inline]
 pub unsafe fn set_private_data(
     device: &raw::Device,
     object_type: ObjectType,
@@ -4094,6 +4230,7 @@ pub unsafe fn set_private_data(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetPrivateDataEXT.html>"]
 #[doc(alias = "vkSetPrivateDataEXT")]
+#[inline]
 pub unsafe fn set_private_data_ext(
     device: &raw::Device,
     object_type: ObjectType,
@@ -4154,6 +4291,7 @@ pub unsafe fn get_private_data_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetEvent2.html>"]
 #[doc(alias = "vkCmdSetEvent2")]
+#[inline]
 pub unsafe fn cmd_set_event2(
     command_buffer: &raw::CommandBuffer,
     event: &raw::Event,
@@ -4169,6 +4307,7 @@ pub unsafe fn cmd_set_event2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetEvent2KHR.html>"]
 #[doc(alias = "vkCmdSetEvent2KHR")]
+#[inline]
 pub unsafe fn cmd_set_event2_khr(
     command_buffer: &raw::CommandBuffer,
     event: &raw::Event,
@@ -4184,6 +4323,7 @@ pub unsafe fn cmd_set_event2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdResetEvent2.html>"]
 #[doc(alias = "vkCmdResetEvent2")]
+#[inline]
 pub unsafe fn cmd_reset_event2(
     command_buffer: &raw::CommandBuffer,
     event: &raw::Event,
@@ -4199,6 +4339,7 @@ pub unsafe fn cmd_reset_event2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdResetEvent2KHR.html>"]
 #[doc(alias = "vkCmdResetEvent2KHR")]
+#[inline]
 pub unsafe fn cmd_reset_event2_khr(
     command_buffer: &raw::CommandBuffer,
     event: &raw::Event,
@@ -4214,6 +4355,7 @@ pub unsafe fn cmd_reset_event2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWaitEvents2.html>"]
 #[doc(alias = "vkCmdWaitEvents2")]
+#[inline]
 pub unsafe fn cmd_wait_events2<'a, V2: Alias<raw::Event> + 'a>(
     command_buffer: &raw::CommandBuffer,
     p_events: impl AsSlice<'a, V2>,
@@ -4230,6 +4372,7 @@ pub unsafe fn cmd_wait_events2<'a, V2: Alias<raw::Event> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWaitEvents2KHR.html>"]
 #[doc(alias = "vkCmdWaitEvents2KHR")]
+#[inline]
 pub unsafe fn cmd_wait_events2_khr<'a, V2: Alias<raw::Event> + 'a>(
     command_buffer: &raw::CommandBuffer,
     p_events: impl AsSlice<'a, V2>,
@@ -4246,6 +4389,7 @@ pub unsafe fn cmd_wait_events2_khr<'a, V2: Alias<raw::Event> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPipelineBarrier2.html>"]
 #[doc(alias = "vkCmdPipelineBarrier2")]
+#[inline]
 pub unsafe fn cmd_pipeline_barrier2(
     command_buffer: &raw::CommandBuffer,
     p_dependency_info: &DependencyInfo,
@@ -4259,6 +4403,7 @@ pub unsafe fn cmd_pipeline_barrier2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPipelineBarrier2KHR.html>"]
 #[doc(alias = "vkCmdPipelineBarrier2KHR")]
+#[inline]
 pub unsafe fn cmd_pipeline_barrier2_khr(
     command_buffer: &raw::CommandBuffer,
     p_dependency_info: &DependencyInfo,
@@ -4272,6 +4417,7 @@ pub unsafe fn cmd_pipeline_barrier2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteTimestamp2.html>"]
 #[doc(alias = "vkCmdWriteTimestamp2")]
+#[inline]
 pub unsafe fn cmd_write_timestamp2(
     command_buffer: &raw::CommandBuffer,
     stage: PipelineStageFlags2,
@@ -4289,6 +4435,7 @@ pub unsafe fn cmd_write_timestamp2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteTimestamp2KHR.html>"]
 #[doc(alias = "vkCmdWriteTimestamp2KHR")]
+#[inline]
 pub unsafe fn cmd_write_timestamp2_khr(
     command_buffer: &raw::CommandBuffer,
     stage: PipelineStageFlags2,
@@ -4306,6 +4453,7 @@ pub unsafe fn cmd_write_timestamp2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueSubmit2.html>"]
 #[doc(alias = "vkQueueSubmit2")]
+#[inline]
 pub unsafe fn queue_submit2<'a>(
     queue: &raw::Queue,
     p_submits: impl AsSlice<'a, SubmitInfo2<'a>>,
@@ -4323,6 +4471,7 @@ pub unsafe fn queue_submit2<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueSubmit2KHR.html>"]
 #[doc(alias = "vkQueueSubmit2KHR")]
+#[inline]
 pub unsafe fn queue_submit2_khr<'a>(
     queue: &raw::Queue,
     p_submits: impl AsSlice<'a, SubmitInfo2<'a>>,
@@ -4340,6 +4489,7 @@ pub unsafe fn queue_submit2_khr<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyBuffer2.html>"]
 #[doc(alias = "vkCmdCopyBuffer2")]
+#[inline]
 pub unsafe fn cmd_copy_buffer2(
     command_buffer: &raw::CommandBuffer,
     p_copy_buffer_info: &CopyBufferInfo2,
@@ -4353,6 +4503,7 @@ pub unsafe fn cmd_copy_buffer2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyBuffer2KHR.html>"]
 #[doc(alias = "vkCmdCopyBuffer2KHR")]
+#[inline]
 pub unsafe fn cmd_copy_buffer2_khr(
     command_buffer: &raw::CommandBuffer,
     p_copy_buffer_info: &CopyBufferInfo2,
@@ -4366,6 +4517,7 @@ pub unsafe fn cmd_copy_buffer2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyImage2.html>"]
 #[doc(alias = "vkCmdCopyImage2")]
+#[inline]
 pub unsafe fn cmd_copy_image2(
     command_buffer: &raw::CommandBuffer,
     p_copy_image_info: &CopyImageInfo2,
@@ -4379,6 +4531,7 @@ pub unsafe fn cmd_copy_image2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyImage2KHR.html>"]
 #[doc(alias = "vkCmdCopyImage2KHR")]
+#[inline]
 pub unsafe fn cmd_copy_image2_khr(
     command_buffer: &raw::CommandBuffer,
     p_copy_image_info: &CopyImageInfo2,
@@ -4392,6 +4545,7 @@ pub unsafe fn cmd_copy_image2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyBufferToImage2.html>"]
 #[doc(alias = "vkCmdCopyBufferToImage2")]
+#[inline]
 pub unsafe fn cmd_copy_buffer_to_image2(
     command_buffer: &raw::CommandBuffer,
     p_copy_buffer_to_image_info: &CopyBufferToImageInfo2,
@@ -4405,6 +4559,7 @@ pub unsafe fn cmd_copy_buffer_to_image2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyBufferToImage2KHR.html>"]
 #[doc(alias = "vkCmdCopyBufferToImage2KHR")]
+#[inline]
 pub unsafe fn cmd_copy_buffer_to_image2_khr(
     command_buffer: &raw::CommandBuffer,
     p_copy_buffer_to_image_info: &CopyBufferToImageInfo2,
@@ -4418,6 +4573,7 @@ pub unsafe fn cmd_copy_buffer_to_image2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyImageToBuffer2.html>"]
 #[doc(alias = "vkCmdCopyImageToBuffer2")]
+#[inline]
 pub unsafe fn cmd_copy_image_to_buffer2(
     command_buffer: &raw::CommandBuffer,
     p_copy_image_to_buffer_info: &CopyImageToBufferInfo2,
@@ -4431,6 +4587,7 @@ pub unsafe fn cmd_copy_image_to_buffer2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyImageToBuffer2KHR.html>"]
 #[doc(alias = "vkCmdCopyImageToBuffer2KHR")]
+#[inline]
 pub unsafe fn cmd_copy_image_to_buffer2_khr(
     command_buffer: &raw::CommandBuffer,
     p_copy_image_to_buffer_info: &CopyImageToBufferInfo2,
@@ -4444,6 +4601,7 @@ pub unsafe fn cmd_copy_image_to_buffer2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBlitImage2.html>"]
 #[doc(alias = "vkCmdBlitImage2")]
+#[inline]
 pub unsafe fn cmd_blit_image2(
     command_buffer: &raw::CommandBuffer,
     p_blit_image_info: &BlitImageInfo2,
@@ -4457,6 +4615,7 @@ pub unsafe fn cmd_blit_image2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBlitImage2KHR.html>"]
 #[doc(alias = "vkCmdBlitImage2KHR")]
+#[inline]
 pub unsafe fn cmd_blit_image2_khr(
     command_buffer: &raw::CommandBuffer,
     p_blit_image_info: &BlitImageInfo2,
@@ -4470,6 +4629,7 @@ pub unsafe fn cmd_blit_image2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdResolveImage2.html>"]
 #[doc(alias = "vkCmdResolveImage2")]
+#[inline]
 pub unsafe fn cmd_resolve_image2(
     command_buffer: &raw::CommandBuffer,
     p_resolve_image_info: &ResolveImageInfo2,
@@ -4483,6 +4643,7 @@ pub unsafe fn cmd_resolve_image2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdResolveImage2KHR.html>"]
 #[doc(alias = "vkCmdResolveImage2KHR")]
+#[inline]
 pub unsafe fn cmd_resolve_image2_khr(
     command_buffer: &raw::CommandBuffer,
     p_resolve_image_info: &ResolveImageInfo2,
@@ -4496,6 +4657,7 @@ pub unsafe fn cmd_resolve_image2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginRendering.html>"]
 #[doc(alias = "vkCmdBeginRendering")]
+#[inline]
 pub unsafe fn cmd_begin_rendering(
     command_buffer: &raw::CommandBuffer,
     p_rendering_info: &RenderingInfo,
@@ -4509,6 +4671,7 @@ pub unsafe fn cmd_begin_rendering(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginRenderingKHR.html>"]
 #[doc(alias = "vkCmdBeginRenderingKHR")]
+#[inline]
 pub unsafe fn cmd_begin_rendering_khr(
     command_buffer: &raw::CommandBuffer,
     p_rendering_info: &RenderingInfo,
@@ -4522,6 +4685,7 @@ pub unsafe fn cmd_begin_rendering_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndRendering.html>"]
 #[doc(alias = "vkCmdEndRendering")]
+#[inline]
 pub unsafe fn cmd_end_rendering(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
@@ -4531,6 +4695,7 @@ pub unsafe fn cmd_end_rendering(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndRenderingKHR.html>"]
 #[doc(alias = "vkCmdEndRenderingKHR")]
+#[inline]
 pub unsafe fn cmd_end_rendering_khr(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
@@ -4540,6 +4705,7 @@ pub unsafe fn cmd_end_rendering_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCullMode.html>"]
 #[doc(alias = "vkCmdSetCullMode")]
+#[inline]
 pub unsafe fn cmd_set_cull_mode(
     command_buffer: &raw::CommandBuffer,
     cull_mode: CullModeFlags,
@@ -4550,6 +4716,7 @@ pub unsafe fn cmd_set_cull_mode(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCullModeEXT.html>"]
 #[doc(alias = "vkCmdSetCullModeEXT")]
+#[inline]
 pub unsafe fn cmd_set_cull_mode_ext(
     command_buffer: &raw::CommandBuffer,
     cull_mode: CullModeFlags,
@@ -4560,6 +4727,7 @@ pub unsafe fn cmd_set_cull_mode_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetFrontFace.html>"]
 #[doc(alias = "vkCmdSetFrontFace")]
+#[inline]
 pub unsafe fn cmd_set_front_face(
     command_buffer: &raw::CommandBuffer,
     front_face: FrontFace,
@@ -4570,6 +4738,7 @@ pub unsafe fn cmd_set_front_face(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetFrontFaceEXT.html>"]
 #[doc(alias = "vkCmdSetFrontFaceEXT")]
+#[inline]
 pub unsafe fn cmd_set_front_face_ext(
     command_buffer: &raw::CommandBuffer,
     front_face: FrontFace,
@@ -4580,6 +4749,7 @@ pub unsafe fn cmd_set_front_face_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetPrimitiveTopology.html>"]
 #[doc(alias = "vkCmdSetPrimitiveTopology")]
+#[inline]
 pub unsafe fn cmd_set_primitive_topology(
     command_buffer: &raw::CommandBuffer,
     primitive_topology: PrimitiveTopology,
@@ -4590,6 +4760,7 @@ pub unsafe fn cmd_set_primitive_topology(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetPrimitiveTopologyEXT.html>"]
 #[doc(alias = "vkCmdSetPrimitiveTopologyEXT")]
+#[inline]
 pub unsafe fn cmd_set_primitive_topology_ext(
     command_buffer: &raw::CommandBuffer,
     primitive_topology: PrimitiveTopology,
@@ -4600,6 +4771,7 @@ pub unsafe fn cmd_set_primitive_topology_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportWithCount.html>"]
 #[doc(alias = "vkCmdSetViewportWithCount")]
+#[inline]
 pub unsafe fn cmd_set_viewport_with_count<'a>(
     command_buffer: &raw::CommandBuffer,
     p_viewports: impl AsSlice<'a, Viewport>,
@@ -4614,6 +4786,7 @@ pub unsafe fn cmd_set_viewport_with_count<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportWithCountEXT.html>"]
 #[doc(alias = "vkCmdSetViewportWithCountEXT")]
+#[inline]
 pub unsafe fn cmd_set_viewport_with_count_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     p_viewports: impl AsSlice<'a, Viewport>,
@@ -4628,6 +4801,7 @@ pub unsafe fn cmd_set_viewport_with_count_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetScissorWithCount.html>"]
 #[doc(alias = "vkCmdSetScissorWithCount")]
+#[inline]
 pub unsafe fn cmd_set_scissor_with_count<'a>(
     command_buffer: &raw::CommandBuffer,
     p_scissors: impl AsSlice<'a, Rect2D>,
@@ -4642,6 +4816,7 @@ pub unsafe fn cmd_set_scissor_with_count<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetScissorWithCountEXT.html>"]
 #[doc(alias = "vkCmdSetScissorWithCountEXT")]
+#[inline]
 pub unsafe fn cmd_set_scissor_with_count_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     p_scissors: impl AsSlice<'a, Rect2D>,
@@ -4656,6 +4831,7 @@ pub unsafe fn cmd_set_scissor_with_count_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindVertexBuffers2.html>"]
 #[doc(alias = "vkCmdBindVertexBuffers2")]
+#[inline]
 pub unsafe fn cmd_bind_vertex_buffers2<'a, V3: Alias<raw::Buffer> + 'a>(
     command_buffer: &raw::CommandBuffer,
     first_binding: u32,
@@ -4682,6 +4858,7 @@ pub unsafe fn cmd_bind_vertex_buffers2<'a, V3: Alias<raw::Buffer> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindVertexBuffers2EXT.html>"]
 #[doc(alias = "vkCmdBindVertexBuffers2EXT")]
+#[inline]
 pub unsafe fn cmd_bind_vertex_buffers2_ext<'a, V3: Alias<raw::Buffer> + 'a>(
     command_buffer: &raw::CommandBuffer,
     first_binding: u32,
@@ -4708,6 +4885,7 @@ pub unsafe fn cmd_bind_vertex_buffers2_ext<'a, V3: Alias<raw::Buffer> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthTestEnable.html>"]
 #[doc(alias = "vkCmdSetDepthTestEnable")]
+#[inline]
 pub unsafe fn cmd_set_depth_test_enable(
     command_buffer: &raw::CommandBuffer,
     depth_test_enable: impl Into<Bool32>,
@@ -4718,6 +4896,7 @@ pub unsafe fn cmd_set_depth_test_enable(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthTestEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthTestEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_test_enable_ext(
     command_buffer: &raw::CommandBuffer,
     depth_test_enable: impl Into<Bool32>,
@@ -4728,6 +4907,7 @@ pub unsafe fn cmd_set_depth_test_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthWriteEnable.html>"]
 #[doc(alias = "vkCmdSetDepthWriteEnable")]
+#[inline]
 pub unsafe fn cmd_set_depth_write_enable(
     command_buffer: &raw::CommandBuffer,
     depth_write_enable: impl Into<Bool32>,
@@ -4738,6 +4918,7 @@ pub unsafe fn cmd_set_depth_write_enable(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthWriteEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthWriteEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_write_enable_ext(
     command_buffer: &raw::CommandBuffer,
     depth_write_enable: impl Into<Bool32>,
@@ -4748,6 +4929,7 @@ pub unsafe fn cmd_set_depth_write_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthCompareOp.html>"]
 #[doc(alias = "vkCmdSetDepthCompareOp")]
+#[inline]
 pub unsafe fn cmd_set_depth_compare_op(
     command_buffer: &raw::CommandBuffer,
     depth_compare_op: CompareOp,
@@ -4758,6 +4940,7 @@ pub unsafe fn cmd_set_depth_compare_op(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthCompareOpEXT.html>"]
 #[doc(alias = "vkCmdSetDepthCompareOpEXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_compare_op_ext(
     command_buffer: &raw::CommandBuffer,
     depth_compare_op: CompareOp,
@@ -4768,6 +4951,7 @@ pub unsafe fn cmd_set_depth_compare_op_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthBoundsTestEnable.html>"]
 #[doc(alias = "vkCmdSetDepthBoundsTestEnable")]
+#[inline]
 pub unsafe fn cmd_set_depth_bounds_test_enable(
     command_buffer: &raw::CommandBuffer,
     depth_bounds_test_enable: impl Into<Bool32>,
@@ -4781,6 +4965,7 @@ pub unsafe fn cmd_set_depth_bounds_test_enable(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthBoundsTestEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthBoundsTestEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_bounds_test_enable_ext(
     command_buffer: &raw::CommandBuffer,
     depth_bounds_test_enable: impl Into<Bool32>,
@@ -4794,6 +4979,7 @@ pub unsafe fn cmd_set_depth_bounds_test_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetStencilTestEnable.html>"]
 #[doc(alias = "vkCmdSetStencilTestEnable")]
+#[inline]
 pub unsafe fn cmd_set_stencil_test_enable(
     command_buffer: &raw::CommandBuffer,
     stencil_test_enable: impl Into<Bool32>,
@@ -4804,6 +4990,7 @@ pub unsafe fn cmd_set_stencil_test_enable(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetStencilTestEnableEXT.html>"]
 #[doc(alias = "vkCmdSetStencilTestEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_stencil_test_enable_ext(
     command_buffer: &raw::CommandBuffer,
     stencil_test_enable: impl Into<Bool32>,
@@ -4814,6 +5001,7 @@ pub unsafe fn cmd_set_stencil_test_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetStencilOp.html>"]
 #[doc(alias = "vkCmdSetStencilOp")]
+#[inline]
 pub unsafe fn cmd_set_stencil_op(
     command_buffer: &raw::CommandBuffer,
     face_mask: StencilFaceFlags,
@@ -4835,6 +5023,7 @@ pub unsafe fn cmd_set_stencil_op(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetStencilOpEXT.html>"]
 #[doc(alias = "vkCmdSetStencilOpEXT")]
+#[inline]
 pub unsafe fn cmd_set_stencil_op_ext(
     command_buffer: &raw::CommandBuffer,
     face_mask: StencilFaceFlags,
@@ -4856,6 +5045,7 @@ pub unsafe fn cmd_set_stencil_op_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRasterizerDiscardEnable.html>"]
 #[doc(alias = "vkCmdSetRasterizerDiscardEnable")]
+#[inline]
 pub unsafe fn cmd_set_rasterizer_discard_enable(
     command_buffer: &raw::CommandBuffer,
     rasterizer_discard_enable: impl Into<Bool32>,
@@ -4869,6 +5059,7 @@ pub unsafe fn cmd_set_rasterizer_discard_enable(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRasterizerDiscardEnableEXT.html>"]
 #[doc(alias = "vkCmdSetRasterizerDiscardEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_rasterizer_discard_enable_ext(
     command_buffer: &raw::CommandBuffer,
     rasterizer_discard_enable: impl Into<Bool32>,
@@ -4882,6 +5073,7 @@ pub unsafe fn cmd_set_rasterizer_discard_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthBiasEnable.html>"]
 #[doc(alias = "vkCmdSetDepthBiasEnable")]
+#[inline]
 pub unsafe fn cmd_set_depth_bias_enable(
     command_buffer: &raw::CommandBuffer,
     depth_bias_enable: impl Into<Bool32>,
@@ -4892,6 +5084,7 @@ pub unsafe fn cmd_set_depth_bias_enable(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthBiasEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthBiasEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_bias_enable_ext(
     command_buffer: &raw::CommandBuffer,
     depth_bias_enable: impl Into<Bool32>,
@@ -4902,6 +5095,7 @@ pub unsafe fn cmd_set_depth_bias_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetPrimitiveRestartEnable.html>"]
 #[doc(alias = "vkCmdSetPrimitiveRestartEnable")]
+#[inline]
 pub unsafe fn cmd_set_primitive_restart_enable(
     command_buffer: &raw::CommandBuffer,
     primitive_restart_enable: impl Into<Bool32>,
@@ -4915,6 +5109,7 @@ pub unsafe fn cmd_set_primitive_restart_enable(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetPrimitiveRestartEnableEXT.html>"]
 #[doc(alias = "vkCmdSetPrimitiveRestartEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_primitive_restart_enable_ext(
     command_buffer: &raw::CommandBuffer,
     primitive_restart_enable: impl Into<Bool32>,
@@ -5074,6 +5269,7 @@ pub unsafe fn get_device_image_sparse_memory_requirements_khr<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineStipple.html>"]
 #[doc(alias = "vkCmdSetLineStipple")]
+#[inline]
 pub unsafe fn cmd_set_line_stipple(
     command_buffer: &raw::CommandBuffer,
     line_stipple_factor: u32,
@@ -5089,6 +5285,7 @@ pub unsafe fn cmd_set_line_stipple(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineStippleKHR.html>"]
 #[doc(alias = "vkCmdSetLineStippleKHR")]
+#[inline]
 pub unsafe fn cmd_set_line_stipple_khr(
     command_buffer: &raw::CommandBuffer,
     line_stipple_factor: u32,
@@ -5104,6 +5301,7 @@ pub unsafe fn cmd_set_line_stipple_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineStippleEXT.html>"]
 #[doc(alias = "vkCmdSetLineStippleEXT")]
+#[inline]
 pub unsafe fn cmd_set_line_stipple_ext(
     command_buffer: &raw::CommandBuffer,
     line_stipple_factor: u32,
@@ -5151,6 +5349,7 @@ pub unsafe fn map_memory2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkUnmapMemory2.html>"]
 #[doc(alias = "vkUnmapMemory2")]
+#[inline]
 pub unsafe fn unmap_memory2(
     device: &raw::Device,
     p_memory_unmap_info: &MemoryUnmapInfo,
@@ -5161,6 +5360,7 @@ pub unsafe fn unmap_memory2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkUnmapMemory2KHR.html>"]
 #[doc(alias = "vkUnmapMemory2KHR")]
+#[inline]
 pub unsafe fn unmap_memory2_khr(
     device: &raw::Device,
     p_memory_unmap_info: &MemoryUnmapInfo,
@@ -5171,6 +5371,7 @@ pub unsafe fn unmap_memory2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindIndexBuffer2.html>"]
 #[doc(alias = "vkCmdBindIndexBuffer2")]
+#[inline]
 pub unsafe fn cmd_bind_index_buffer2(
     command_buffer: &raw::CommandBuffer,
     buffer: Option<&raw::Buffer>,
@@ -5190,6 +5391,7 @@ pub unsafe fn cmd_bind_index_buffer2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindIndexBuffer2KHR.html>"]
 #[doc(alias = "vkCmdBindIndexBuffer2KHR")]
+#[inline]
 pub unsafe fn cmd_bind_index_buffer2_khr(
     command_buffer: &raw::CommandBuffer,
     buffer: Option<&raw::Buffer>,
@@ -5345,6 +5547,7 @@ pub unsafe fn get_image_subresource_layout2_ext<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSet.html>"]
 #[doc(alias = "vkCmdPushDescriptorSet")]
+#[inline]
 pub unsafe fn cmd_push_descriptor_set<'a>(
     command_buffer: &raw::CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
@@ -5365,6 +5568,7 @@ pub unsafe fn cmd_push_descriptor_set<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetKHR.html>"]
 #[doc(alias = "vkCmdPushDescriptorSetKHR")]
+#[inline]
 pub unsafe fn cmd_push_descriptor_set_khr<'a>(
     command_buffer: &raw::CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
@@ -5385,6 +5589,7 @@ pub unsafe fn cmd_push_descriptor_set_khr<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplate.html>"]
 #[doc(alias = "vkCmdPushDescriptorSetWithTemplate")]
+#[inline]
 pub unsafe fn cmd_push_descriptor_set_with_template(
     command_buffer: &raw::CommandBuffer,
     descriptor_update_template: &raw::DescriptorUpdateTemplate,
@@ -5404,6 +5609,7 @@ pub unsafe fn cmd_push_descriptor_set_with_template(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
 #[doc(alias = "vkCmdPushDescriptorSetWithTemplateKHR")]
+#[inline]
 pub unsafe fn cmd_push_descriptor_set_with_template_khr(
     command_buffer: &raw::CommandBuffer,
     descriptor_update_template: &raw::DescriptorUpdateTemplate,
@@ -5423,6 +5629,7 @@ pub unsafe fn cmd_push_descriptor_set_with_template_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRenderingAttachmentLocations.html>"]
 #[doc(alias = "vkCmdSetRenderingAttachmentLocations")]
+#[inline]
 pub unsafe fn cmd_set_rendering_attachment_locations(
     command_buffer: &raw::CommandBuffer,
     p_location_info: &RenderingAttachmentLocationInfo,
@@ -5436,6 +5643,7 @@ pub unsafe fn cmd_set_rendering_attachment_locations(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRenderingAttachmentLocationsKHR.html>"]
 #[doc(alias = "vkCmdSetRenderingAttachmentLocationsKHR")]
+#[inline]
 pub unsafe fn cmd_set_rendering_attachment_locations_khr(
     command_buffer: &raw::CommandBuffer,
     p_location_info: &RenderingAttachmentLocationInfo,
@@ -5449,6 +5657,7 @@ pub unsafe fn cmd_set_rendering_attachment_locations_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRenderingInputAttachmentIndices.html>"]
 #[doc(alias = "vkCmdSetRenderingInputAttachmentIndices")]
+#[inline]
 pub unsafe fn cmd_set_rendering_input_attachment_indices(
     command_buffer: &raw::CommandBuffer,
     p_input_attachment_index_info: &RenderingInputAttachmentIndexInfo,
@@ -5462,6 +5671,7 @@ pub unsafe fn cmd_set_rendering_input_attachment_indices(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRenderingInputAttachmentIndicesKHR.html>"]
 #[doc(alias = "vkCmdSetRenderingInputAttachmentIndicesKHR")]
+#[inline]
 pub unsafe fn cmd_set_rendering_input_attachment_indices_khr(
     command_buffer: &raw::CommandBuffer,
     p_input_attachment_index_info: &RenderingInputAttachmentIndexInfo,
@@ -5477,6 +5687,7 @@ pub unsafe fn cmd_set_rendering_input_attachment_indices_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindDescriptorSets2.html>"]
 #[doc(alias = "vkCmdBindDescriptorSets2")]
+#[inline]
 pub unsafe fn cmd_bind_descriptor_sets2(
     command_buffer: &raw::CommandBuffer,
     p_bind_descriptor_sets_info: &BindDescriptorSetsInfo,
@@ -5490,6 +5701,7 @@ pub unsafe fn cmd_bind_descriptor_sets2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindDescriptorSets2KHR.html>"]
 #[doc(alias = "vkCmdBindDescriptorSets2KHR")]
+#[inline]
 pub unsafe fn cmd_bind_descriptor_sets2_khr(
     command_buffer: &raw::CommandBuffer,
     p_bind_descriptor_sets_info: &BindDescriptorSetsInfo,
@@ -5503,6 +5715,7 @@ pub unsafe fn cmd_bind_descriptor_sets2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushConstants2.html>"]
 #[doc(alias = "vkCmdPushConstants2")]
+#[inline]
 pub unsafe fn cmd_push_constants2(
     command_buffer: &raw::CommandBuffer,
     p_push_constants_info: &PushConstantsInfo,
@@ -5516,6 +5729,7 @@ pub unsafe fn cmd_push_constants2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushConstants2KHR.html>"]
 #[doc(alias = "vkCmdPushConstants2KHR")]
+#[inline]
 pub unsafe fn cmd_push_constants2_khr(
     command_buffer: &raw::CommandBuffer,
     p_push_constants_info: &PushConstantsInfo,
@@ -5529,6 +5743,7 @@ pub unsafe fn cmd_push_constants2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSet2.html>"]
 #[doc(alias = "vkCmdPushDescriptorSet2")]
+#[inline]
 pub unsafe fn cmd_push_descriptor_set2(
     command_buffer: &raw::CommandBuffer,
     p_push_descriptor_set_info: &PushDescriptorSetInfo,
@@ -5542,6 +5757,7 @@ pub unsafe fn cmd_push_descriptor_set2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSet2KHR.html>"]
 #[doc(alias = "vkCmdPushDescriptorSet2KHR")]
+#[inline]
 pub unsafe fn cmd_push_descriptor_set2_khr(
     command_buffer: &raw::CommandBuffer,
     p_push_descriptor_set_info: &PushDescriptorSetInfo,
@@ -5555,6 +5771,7 @@ pub unsafe fn cmd_push_descriptor_set2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplate2.html>"]
 #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2")]
+#[inline]
 pub unsafe fn cmd_push_descriptor_set_with_template2(
     command_buffer: &raw::CommandBuffer,
     p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfo,
@@ -5568,6 +5785,7 @@ pub unsafe fn cmd_push_descriptor_set_with_template2(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html>"]
 #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2KHR")]
+#[inline]
 pub unsafe fn cmd_push_descriptor_set_with_template2_khr(
     command_buffer: &raw::CommandBuffer,
     p_push_descriptor_set_with_template_info: &PushDescriptorSetWithTemplateInfo,
@@ -5581,6 +5799,7 @@ pub unsafe fn cmd_push_descriptor_set_with_template2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyMemoryToImage.html>"]
 #[doc(alias = "vkCopyMemoryToImage")]
+#[inline]
 pub unsafe fn copy_memory_to_image(
     device: &raw::Device,
     p_copy_memory_to_image_info: &CopyMemoryToImageInfo,
@@ -5595,6 +5814,7 @@ pub unsafe fn copy_memory_to_image(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyMemoryToImageEXT.html>"]
 #[doc(alias = "vkCopyMemoryToImageEXT")]
+#[inline]
 pub unsafe fn copy_memory_to_image_ext(
     device: &raw::Device,
     p_copy_memory_to_image_info: &CopyMemoryToImageInfo,
@@ -5609,6 +5829,7 @@ pub unsafe fn copy_memory_to_image_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyImageToMemory.html>"]
 #[doc(alias = "vkCopyImageToMemory")]
+#[inline]
 pub unsafe fn copy_image_to_memory(
     device: &raw::Device,
     p_copy_image_to_memory_info: &CopyImageToMemoryInfo,
@@ -5623,6 +5844,7 @@ pub unsafe fn copy_image_to_memory(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyImageToMemoryEXT.html>"]
 #[doc(alias = "vkCopyImageToMemoryEXT")]
+#[inline]
 pub unsafe fn copy_image_to_memory_ext(
     device: &raw::Device,
     p_copy_image_to_memory_info: &CopyImageToMemoryInfo,
@@ -5637,6 +5859,7 @@ pub unsafe fn copy_image_to_memory_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyImageToImage.html>"]
 #[doc(alias = "vkCopyImageToImage")]
+#[inline]
 pub unsafe fn copy_image_to_image(
     device: &raw::Device,
     p_copy_image_to_image_info: &CopyImageToImageInfo,
@@ -5651,6 +5874,7 @@ pub unsafe fn copy_image_to_image(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyImageToImageEXT.html>"]
 #[doc(alias = "vkCopyImageToImageEXT")]
+#[inline]
 pub unsafe fn copy_image_to_image_ext(
     device: &raw::Device,
     p_copy_image_to_image_info: &CopyImageToImageInfo,
@@ -5665,6 +5889,7 @@ pub unsafe fn copy_image_to_image_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkTransitionImageLayout.html>"]
 #[doc(alias = "vkTransitionImageLayout")]
+#[inline]
 pub unsafe fn transition_image_layout<'a>(
     device: &raw::Device,
     p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfo<'a>>,
@@ -5680,6 +5905,7 @@ pub unsafe fn transition_image_layout<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkTransitionImageLayoutEXT.html>"]
 #[doc(alias = "vkTransitionImageLayoutEXT")]
+#[inline]
 pub unsafe fn transition_image_layout_ext<'a>(
     device: &raw::Device,
     p_transitions: impl AsSlice<'a, HostImageLayoutTransitionInfo<'a>>,
@@ -5695,6 +5921,7 @@ pub unsafe fn transition_image_layout_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySurfaceKHR.html>"]
 #[doc(alias = "vkDestroySurfaceKHR")]
+#[inline]
 pub unsafe fn destroy_surface_khr(
     instance: &raw::Instance,
     surface: Option<&raw::SurfaceKHR>,
@@ -5848,6 +6075,7 @@ pub unsafe fn create_swapchain_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySwapchainKHR.html>"]
 #[doc(alias = "vkDestroySwapchainKHR")]
+#[inline]
 pub unsafe fn destroy_swapchain_khr(
     device: &raw::Device,
     swapchain: Option<&raw::SwapchainKHR>,
@@ -5926,6 +6154,7 @@ pub unsafe fn acquire_next_image_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueuePresentKHR.html>"]
 #[doc(alias = "vkQueuePresentKHR")]
+#[inline]
 pub unsafe fn queue_present_khr(
     queue: &raw::Queue,
     p_present_info: &PresentInfoKHR,
@@ -6291,6 +6520,7 @@ pub unsafe fn create_xlib_surface_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html>"]
 #[doc(alias = "vkGetPhysicalDeviceXlibPresentationSupportKHR")]
+#[inline]
 pub unsafe fn get_physical_device_xlib_presentation_support_khr(
     physical_device: &raw::PhysicalDevice,
     queue_family_index: u32,
@@ -6329,6 +6559,7 @@ pub unsafe fn create_xcb_surface_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html>"]
 #[doc(alias = "vkGetPhysicalDeviceXcbPresentationSupportKHR")]
+#[inline]
 pub unsafe fn get_physical_device_xcb_presentation_support_khr(
     physical_device: &raw::PhysicalDevice,
     queue_family_index: u32,
@@ -6367,6 +6598,7 @@ pub unsafe fn create_wayland_surface_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html>"]
 #[doc(alias = "vkGetPhysicalDeviceWaylandPresentationSupportKHR")]
+#[inline]
 pub unsafe fn get_physical_device_wayland_presentation_support_khr(
     physical_device: &raw::PhysicalDevice,
     queue_family_index: u32,
@@ -6421,6 +6653,7 @@ pub unsafe fn create_win32_surface_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html>"]
 #[doc(alias = "vkGetPhysicalDeviceWin32PresentationSupportKHR")]
+#[inline]
 pub unsafe fn get_physical_device_win32_presentation_support_khr(
     physical_device: &raw::PhysicalDevice,
     queue_family_index: u32,
@@ -6451,6 +6684,7 @@ pub unsafe fn create_debug_report_callback_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDebugReportCallbackEXT.html>"]
 #[doc(alias = "vkDestroyDebugReportCallbackEXT")]
+#[inline]
 pub unsafe fn destroy_debug_report_callback_ext(
     instance: &raw::Instance,
     callback: Option<&raw::DebugReportCallbackEXT>,
@@ -6466,6 +6700,7 @@ pub unsafe fn destroy_debug_report_callback_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDebugReportMessageEXT.html>"]
 #[doc(alias = "vkDebugReportMessageEXT")]
+#[inline]
 pub unsafe fn debug_report_message_ext(
     instance: &raw::Instance,
     flags: DebugReportFlagsEXT,
@@ -6491,6 +6726,7 @@ pub unsafe fn debug_report_message_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDebugMarkerSetObjectTagEXT.html>"]
 #[doc(alias = "vkDebugMarkerSetObjectTagEXT")]
+#[inline]
 pub unsafe fn debug_marker_set_object_tag_ext(
     device: &raw::Device,
     p_tag_info: &DebugMarkerObjectTagInfoEXT,
@@ -6501,6 +6737,7 @@ pub unsafe fn debug_marker_set_object_tag_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDebugMarkerSetObjectNameEXT.html>"]
 #[doc(alias = "vkDebugMarkerSetObjectNameEXT")]
+#[inline]
 pub unsafe fn debug_marker_set_object_name_ext(
     device: &raw::Device,
     p_name_info: &DebugMarkerObjectNameInfoEXT,
@@ -6511,6 +6748,7 @@ pub unsafe fn debug_marker_set_object_name_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDebugMarkerBeginEXT.html>"]
 #[doc(alias = "vkCmdDebugMarkerBeginEXT")]
+#[inline]
 pub unsafe fn cmd_debug_marker_begin_ext(
     command_buffer: &raw::CommandBuffer,
     p_marker_info: &DebugMarkerMarkerInfoEXT,
@@ -6521,6 +6759,7 @@ pub unsafe fn cmd_debug_marker_begin_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDebugMarkerEndEXT.html>"]
 #[doc(alias = "vkCmdDebugMarkerEndEXT")]
+#[inline]
 pub unsafe fn cmd_debug_marker_end_ext(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
@@ -6530,6 +6769,7 @@ pub unsafe fn cmd_debug_marker_end_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDebugMarkerInsertEXT.html>"]
 #[doc(alias = "vkCmdDebugMarkerInsertEXT")]
+#[inline]
 pub unsafe fn cmd_debug_marker_insert_ext(
     command_buffer: &raw::CommandBuffer,
     p_marker_info: &DebugMarkerMarkerInfoEXT,
@@ -6540,6 +6780,7 @@ pub unsafe fn cmd_debug_marker_insert_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindTransformFeedbackBuffersEXT.html>"]
 #[doc(alias = "vkCmdBindTransformFeedbackBuffersEXT")]
+#[inline]
 pub unsafe fn cmd_bind_transform_feedback_buffers_ext<'a, V3: Alias<raw::Buffer> + 'a>(
     command_buffer: &raw::CommandBuffer,
     first_binding: u32,
@@ -6562,6 +6803,7 @@ pub unsafe fn cmd_bind_transform_feedback_buffers_ext<'a, V3: Alias<raw::Buffer>
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginTransformFeedbackEXT.html>"]
 #[doc(alias = "vkCmdBeginTransformFeedbackEXT")]
+#[inline]
 pub unsafe fn cmd_begin_transform_feedback_ext<'a, V3: Alias<raw::Buffer> + 'a>(
     command_buffer: &raw::CommandBuffer,
     first_counter_buffer: u32,
@@ -6582,6 +6824,7 @@ pub unsafe fn cmd_begin_transform_feedback_ext<'a, V3: Alias<raw::Buffer> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndTransformFeedbackEXT.html>"]
 #[doc(alias = "vkCmdEndTransformFeedbackEXT")]
+#[inline]
 pub unsafe fn cmd_end_transform_feedback_ext<'a, V3: Alias<raw::Buffer> + 'a>(
     command_buffer: &raw::CommandBuffer,
     first_counter_buffer: u32,
@@ -6602,6 +6845,7 @@ pub unsafe fn cmd_end_transform_feedback_ext<'a, V3: Alias<raw::Buffer> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginQueryIndexedEXT.html>"]
 #[doc(alias = "vkCmdBeginQueryIndexedEXT")]
+#[inline]
 pub unsafe fn cmd_begin_query_indexed_ext(
     command_buffer: &raw::CommandBuffer,
     query_pool: &raw::QueryPool,
@@ -6621,6 +6865,7 @@ pub unsafe fn cmd_begin_query_indexed_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndQueryIndexedEXT.html>"]
 #[doc(alias = "vkCmdEndQueryIndexedEXT")]
+#[inline]
 pub unsafe fn cmd_end_query_indexed_ext(
     command_buffer: &raw::CommandBuffer,
     query_pool: &raw::QueryPool,
@@ -6638,6 +6883,7 @@ pub unsafe fn cmd_end_query_indexed_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawIndirectByteCountEXT.html>"]
 #[doc(alias = "vkCmdDrawIndirectByteCountEXT")]
+#[inline]
 pub unsafe fn cmd_draw_indirect_byte_count_ext(
     command_buffer: &raw::CommandBuffer,
     instance_count: u32,
@@ -6697,6 +6943,7 @@ pub unsafe fn create_cu_function_nvx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyCuModuleNVX.html>"]
 #[doc(alias = "vkDestroyCuModuleNVX")]
+#[inline]
 pub unsafe fn destroy_cu_module_nvx(
     device: &raw::Device,
     module: &raw::CuModuleNVX,
@@ -6712,6 +6959,7 @@ pub unsafe fn destroy_cu_module_nvx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyCuFunctionNVX.html>"]
 #[doc(alias = "vkDestroyCuFunctionNVX")]
+#[inline]
 pub unsafe fn destroy_cu_function_nvx(
     device: &raw::Device,
     function: &raw::CuFunctionNVX,
@@ -6727,6 +6975,7 @@ pub unsafe fn destroy_cu_function_nvx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCuLaunchKernelNVX.html>"]
 #[doc(alias = "vkCmdCuLaunchKernelNVX")]
+#[inline]
 pub unsafe fn cmd_cu_launch_kernel_nvx(
     command_buffer: &raw::CommandBuffer,
     p_launch_info: &CuLaunchInfoNVX,
@@ -6737,6 +6986,7 @@ pub unsafe fn cmd_cu_launch_kernel_nvx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetImageViewHandleNVX.html>"]
 #[doc(alias = "vkGetImageViewHandleNVX")]
+#[inline]
 pub unsafe fn get_image_view_handle_nvx(
     device: &raw::Device,
     p_info: &ImageViewHandleInfoNVX,
@@ -6747,6 +6997,7 @@ pub unsafe fn get_image_view_handle_nvx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetImageViewHandle64NVX.html>"]
 #[doc(alias = "vkGetImageViewHandle64NVX")]
+#[inline]
 pub unsafe fn get_image_view_handle64_nvx(
     device: &raw::Device,
     p_info: &ImageViewHandleInfoNVX,
@@ -6961,6 +7212,7 @@ pub unsafe fn get_memory_fd_properties_khr<S: StructureChainOut<MemoryFdProperti
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkImportSemaphoreWin32HandleKHR.html>"]
 #[doc(alias = "vkImportSemaphoreWin32HandleKHR")]
+#[inline]
 pub unsafe fn import_semaphore_win32_handle_khr(
     device: &raw::Device,
     p_import_semaphore_win32_handle_info: &ImportSemaphoreWin32HandleInfoKHR,
@@ -6991,6 +7243,7 @@ pub unsafe fn get_semaphore_win32_handle_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkImportSemaphoreFdKHR.html>"]
 #[doc(alias = "vkImportSemaphoreFdKHR")]
+#[inline]
 pub unsafe fn import_semaphore_fd_khr(
     device: &raw::Device,
     p_import_semaphore_fd_info: &ImportSemaphoreFdInfoKHR,
@@ -7021,6 +7274,7 @@ pub unsafe fn get_semaphore_fd_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginConditionalRenderingEXT.html>"]
 #[doc(alias = "vkCmdBeginConditionalRenderingEXT")]
+#[inline]
 pub unsafe fn cmd_begin_conditional_rendering_ext(
     command_buffer: &raw::CommandBuffer,
     p_conditional_rendering_begin: &ConditionalRenderingBeginInfoEXT,
@@ -7034,6 +7288,7 @@ pub unsafe fn cmd_begin_conditional_rendering_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndConditionalRenderingEXT.html>"]
 #[doc(alias = "vkCmdEndConditionalRenderingEXT")]
+#[inline]
 pub unsafe fn cmd_end_conditional_rendering_ext(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
@@ -7043,6 +7298,7 @@ pub unsafe fn cmd_end_conditional_rendering_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportWScalingNV.html>"]
 #[doc(alias = "vkCmdSetViewportWScalingNV")]
+#[inline]
 pub unsafe fn cmd_set_viewport_wscaling_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     first_viewport: u32,
@@ -7059,6 +7315,7 @@ pub unsafe fn cmd_set_viewport_wscaling_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkReleaseDisplayEXT.html>"]
 #[doc(alias = "vkReleaseDisplayEXT")]
+#[inline]
 pub unsafe fn release_display_ext(
     physical_device: &raw::PhysicalDevice,
     display: &raw::DisplayKHR,
@@ -7069,6 +7326,7 @@ pub unsafe fn release_display_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkAcquireXlibDisplayEXT.html>"]
 #[doc(alias = "vkAcquireXlibDisplayEXT")]
+#[inline]
 pub unsafe fn acquire_xlib_display_ext(
     physical_device: &raw::PhysicalDevice,
     dpy: &VoidPtr,
@@ -7127,6 +7385,7 @@ pub unsafe fn get_physical_device_surface_capabilities2_ext<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDisplayPowerControlEXT.html>"]
 #[doc(alias = "vkDisplayPowerControlEXT")]
+#[inline]
 pub unsafe fn display_power_control_ext(
     device: &raw::Device,
     display: &raw::DisplayKHR,
@@ -7256,6 +7515,7 @@ pub unsafe fn get_past_presentation_timing_google<R: DynamicArray<PastPresentati
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDiscardRectangleEXT.html>"]
 #[doc(alias = "vkCmdSetDiscardRectangleEXT")]
+#[inline]
 pub unsafe fn cmd_set_discard_rectangle_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     first_discard_rectangle: u32,
@@ -7272,6 +7532,7 @@ pub unsafe fn cmd_set_discard_rectangle_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDiscardRectangleEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDiscardRectangleEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_discard_rectangle_enable_ext(
     command_buffer: &raw::CommandBuffer,
     discard_rectangle_enable: impl Into<Bool32>,
@@ -7285,6 +7546,7 @@ pub unsafe fn cmd_set_discard_rectangle_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDiscardRectangleModeEXT.html>"]
 #[doc(alias = "vkCmdSetDiscardRectangleModeEXT")]
+#[inline]
 pub unsafe fn cmd_set_discard_rectangle_mode_ext(
     command_buffer: &raw::CommandBuffer,
     discard_rectangle_mode: DiscardRectangleModeEXT,
@@ -7295,6 +7557,7 @@ pub unsafe fn cmd_set_discard_rectangle_mode_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetHdrMetadataEXT.html>"]
 #[doc(alias = "vkSetHdrMetadataEXT")]
+#[inline]
 pub unsafe fn set_hdr_metadata_ext<'a, V2: Alias<raw::SwapchainKHR> + 'a>(
     device: &raw::Device,
     p_swapchains: impl AsSlice<'a, V2>,
@@ -7311,6 +7574,7 @@ pub unsafe fn set_hdr_metadata_ext<'a, V2: Alias<raw::SwapchainKHR> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetSwapchainStatusKHR.html>"]
 #[doc(alias = "vkGetSwapchainStatusKHR")]
+#[inline]
 pub unsafe fn get_swapchain_status_khr(
     device: &raw::Device,
     swapchain: &raw::SwapchainKHR,
@@ -7321,6 +7585,7 @@ pub unsafe fn get_swapchain_status_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkImportFenceWin32HandleKHR.html>"]
 #[doc(alias = "vkImportFenceWin32HandleKHR")]
+#[inline]
 pub unsafe fn import_fence_win32_handle_khr(
     device: &raw::Device,
     p_import_fence_win32_handle_info: &ImportFenceWin32HandleInfoKHR,
@@ -7351,6 +7616,7 @@ pub unsafe fn get_fence_win32_handle_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkImportFenceFdKHR.html>"]
 #[doc(alias = "vkImportFenceFdKHR")]
+#[inline]
 pub unsafe fn import_fence_fd_khr(
     device: &raw::Device,
     p_import_fence_fd_info: &ImportFenceFdInfoKHR,
@@ -7395,6 +7661,7 @@ pub unsafe fn get_physical_device_queue_family_performance_query_passes_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkAcquireProfilingLockKHR.html>"]
 #[doc(alias = "vkAcquireProfilingLockKHR")]
+#[inline]
 pub unsafe fn acquire_profiling_lock_khr(
     device: &raw::Device,
     p_info: &AcquireProfilingLockInfoKHR,
@@ -7405,6 +7672,7 @@ pub unsafe fn acquire_profiling_lock_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkReleaseProfilingLockKHR.html>"]
 #[doc(alias = "vkReleaseProfilingLockKHR")]
+#[inline]
 pub unsafe fn release_profiling_lock_khr(device: &raw::Device, dispatcher: &CommandsDispatcher) {
     let vulkan_command = dispatcher.release_profiling_lock_khr.get();
     vulkan_command(Some(device.borrow()))
@@ -7661,6 +7929,7 @@ pub unsafe fn create_mac_ossurface_mvk(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetDebugUtilsObjectNameEXT.html>"]
 #[doc(alias = "vkSetDebugUtilsObjectNameEXT")]
+#[inline]
 pub unsafe fn set_debug_utils_object_name_ext(
     device: &raw::Device,
     p_name_info: &DebugUtilsObjectNameInfoEXT,
@@ -7671,6 +7940,7 @@ pub unsafe fn set_debug_utils_object_name_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetDebugUtilsObjectTagEXT.html>"]
 #[doc(alias = "vkSetDebugUtilsObjectTagEXT")]
+#[inline]
 pub unsafe fn set_debug_utils_object_tag_ext(
     device: &raw::Device,
     p_tag_info: &DebugUtilsObjectTagInfoEXT,
@@ -7681,6 +7951,7 @@ pub unsafe fn set_debug_utils_object_tag_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueBeginDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkQueueBeginDebugUtilsLabelEXT")]
+#[inline]
 pub unsafe fn queue_begin_debug_utils_label_ext(
     queue: &raw::Queue,
     p_label_info: &DebugUtilsLabelEXT,
@@ -7691,12 +7962,14 @@ pub unsafe fn queue_begin_debug_utils_label_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueEndDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkQueueEndDebugUtilsLabelEXT")]
+#[inline]
 pub unsafe fn queue_end_debug_utils_label_ext(queue: &raw::Queue, dispatcher: &CommandsDispatcher) {
     let vulkan_command = dispatcher.queue_end_debug_utils_label_ext.get();
     vulkan_command(Some(queue.borrow()))
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueInsertDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkQueueInsertDebugUtilsLabelEXT")]
+#[inline]
 pub unsafe fn queue_insert_debug_utils_label_ext(
     queue: &raw::Queue,
     p_label_info: &DebugUtilsLabelEXT,
@@ -7707,6 +7980,7 @@ pub unsafe fn queue_insert_debug_utils_label_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkCmdBeginDebugUtilsLabelEXT")]
+#[inline]
 pub unsafe fn cmd_begin_debug_utils_label_ext(
     command_buffer: &raw::CommandBuffer,
     p_label_info: &DebugUtilsLabelEXT,
@@ -7717,6 +7991,7 @@ pub unsafe fn cmd_begin_debug_utils_label_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkCmdEndDebugUtilsLabelEXT")]
+#[inline]
 pub unsafe fn cmd_end_debug_utils_label_ext(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
@@ -7726,6 +8001,7 @@ pub unsafe fn cmd_end_debug_utils_label_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdInsertDebugUtilsLabelEXT.html>"]
 #[doc(alias = "vkCmdInsertDebugUtilsLabelEXT")]
+#[inline]
 pub unsafe fn cmd_insert_debug_utils_label_ext(
     command_buffer: &raw::CommandBuffer,
     p_label_info: &DebugUtilsLabelEXT,
@@ -7754,6 +8030,7 @@ pub unsafe fn create_debug_utils_messenger_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDebugUtilsMessengerEXT.html>"]
 #[doc(alias = "vkDestroyDebugUtilsMessengerEXT")]
+#[inline]
 pub unsafe fn destroy_debug_utils_messenger_ext(
     instance: &raw::Instance,
     messenger: Option<&raw::DebugUtilsMessengerEXT>,
@@ -7769,6 +8046,7 @@ pub unsafe fn destroy_debug_utils_messenger_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSubmitDebugUtilsMessageEXT.html>"]
 #[doc(alias = "vkSubmitDebugUtilsMessageEXT")]
+#[inline]
 pub unsafe fn submit_debug_utils_message_ext(
     instance: &raw::Instance,
     message_severity: DebugUtilsMessageSeverityFlagsEXT,
@@ -7810,6 +8088,7 @@ pub unsafe fn get_android_hardware_buffer_properties_android<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetMemoryAndroidHardwareBufferANDROID.html>"]
 #[doc(alias = "vkGetMemoryAndroidHardwareBufferANDROID")]
+#[inline]
 pub unsafe fn get_memory_android_hardware_buffer_android(
     device: &raw::Device,
     p_info: &MemoryGetAndroidHardwareBufferInfoANDROID,
@@ -7894,6 +8173,7 @@ pub unsafe fn get_execution_graph_pipeline_node_index_amdx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdInitializeGraphScratchMemoryAMDX.html>"]
 #[doc(alias = "vkCmdInitializeGraphScratchMemoryAMDX")]
+#[inline]
 pub unsafe fn cmd_initialize_graph_scratch_memory_amdx(
     command_buffer: &raw::CommandBuffer,
     execution_graph: &raw::Pipeline,
@@ -7911,6 +8191,7 @@ pub unsafe fn cmd_initialize_graph_scratch_memory_amdx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchGraphAMDX.html>"]
 #[doc(alias = "vkCmdDispatchGraphAMDX")]
+#[inline]
 pub unsafe fn cmd_dispatch_graph_amdx(
     command_buffer: &raw::CommandBuffer,
     scratch: DeviceAddress,
@@ -7928,6 +8209,7 @@ pub unsafe fn cmd_dispatch_graph_amdx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchGraphIndirectAMDX.html>"]
 #[doc(alias = "vkCmdDispatchGraphIndirectAMDX")]
+#[inline]
 pub unsafe fn cmd_dispatch_graph_indirect_amdx(
     command_buffer: &raw::CommandBuffer,
     scratch: DeviceAddress,
@@ -7945,6 +8227,7 @@ pub unsafe fn cmd_dispatch_graph_indirect_amdx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchGraphIndirectCountAMDX.html>"]
 #[doc(alias = "vkCmdDispatchGraphIndirectCountAMDX")]
+#[inline]
 pub unsafe fn cmd_dispatch_graph_indirect_count_amdx(
     command_buffer: &raw::CommandBuffer,
     scratch: DeviceAddress,
@@ -7962,6 +8245,7 @@ pub unsafe fn cmd_dispatch_graph_indirect_count_amdx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetSampleLocationsEXT.html>"]
 #[doc(alias = "vkCmdSetSampleLocationsEXT")]
+#[inline]
 pub unsafe fn cmd_set_sample_locations_ext(
     command_buffer: &raw::CommandBuffer,
     p_sample_locations_info: &SampleLocationsInfoEXT,
@@ -8015,6 +8299,7 @@ pub unsafe fn create_acceleration_structure_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyAccelerationStructureKHR.html>"]
 #[doc(alias = "vkDestroyAccelerationStructureKHR")]
+#[inline]
 pub unsafe fn destroy_acceleration_structure_khr(
     device: &raw::Device,
     acceleration_structure: Option<&raw::AccelerationStructureKHR>,
@@ -8030,6 +8315,7 @@ pub unsafe fn destroy_acceleration_structure_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBuildAccelerationStructuresKHR.html>"]
 #[doc(alias = "vkCmdBuildAccelerationStructuresKHR")]
+#[inline]
 pub unsafe fn cmd_build_acceleration_structures_khr<'a>(
     command_buffer: &raw::CommandBuffer,
     p_infos: impl AsSlice<'a, AccelerationStructureBuildGeometryInfoKHR<'a>>,
@@ -8046,6 +8332,7 @@ pub unsafe fn cmd_build_acceleration_structures_khr<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBuildAccelerationStructuresIndirectKHR.html>"]
 #[doc(alias = "vkCmdBuildAccelerationStructuresIndirectKHR")]
+#[inline]
 pub unsafe fn cmd_build_acceleration_structures_indirect_khr<'a>(
     command_buffer: &raw::CommandBuffer,
     p_infos: impl AsSlice<'a, AccelerationStructureBuildGeometryInfoKHR<'a>>,
@@ -8068,6 +8355,7 @@ pub unsafe fn cmd_build_acceleration_structures_indirect_khr<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBuildAccelerationStructuresKHR.html>"]
 #[doc(alias = "vkBuildAccelerationStructuresKHR")]
+#[inline]
 pub unsafe fn build_acceleration_structures_khr<'a>(
     device: &raw::Device,
     deferred_operation: Option<&raw::DeferredOperationKHR>,
@@ -8087,6 +8375,7 @@ pub unsafe fn build_acceleration_structures_khr<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyAccelerationStructureKHR.html>"]
 #[doc(alias = "vkCopyAccelerationStructureKHR")]
+#[inline]
 pub unsafe fn copy_acceleration_structure_khr(
     device: &raw::Device,
     deferred_operation: Option<&raw::DeferredOperationKHR>,
@@ -8103,6 +8392,7 @@ pub unsafe fn copy_acceleration_structure_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyAccelerationStructureToMemoryKHR.html>"]
 #[doc(alias = "vkCopyAccelerationStructureToMemoryKHR")]
+#[inline]
 pub unsafe fn copy_acceleration_structure_to_memory_khr(
     device: &raw::Device,
     deferred_operation: Option<&raw::DeferredOperationKHR>,
@@ -8119,6 +8409,7 @@ pub unsafe fn copy_acceleration_structure_to_memory_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyMemoryToAccelerationStructureKHR.html>"]
 #[doc(alias = "vkCopyMemoryToAccelerationStructureKHR")]
+#[inline]
 pub unsafe fn copy_memory_to_acceleration_structure_khr(
     device: &raw::Device,
     deferred_operation: Option<&raw::DeferredOperationKHR>,
@@ -8135,6 +8426,7 @@ pub unsafe fn copy_memory_to_acceleration_structure_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkWriteAccelerationStructuresPropertiesKHR.html>"]
 #[doc(alias = "vkWriteAccelerationStructuresPropertiesKHR")]
+#[inline]
 pub unsafe fn write_acceleration_structures_properties_khr<
     'a,
     V2: Alias<raw::AccelerationStructureKHR> + 'a,
@@ -8163,6 +8455,7 @@ pub unsafe fn write_acceleration_structures_properties_khr<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyAccelerationStructureKHR.html>"]
 #[doc(alias = "vkCmdCopyAccelerationStructureKHR")]
+#[inline]
 pub unsafe fn cmd_copy_acceleration_structure_khr(
     command_buffer: &raw::CommandBuffer,
     p_info: &CopyAccelerationStructureInfoKHR,
@@ -8173,6 +8466,7 @@ pub unsafe fn cmd_copy_acceleration_structure_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyAccelerationStructureToMemoryKHR.html>"]
 #[doc(alias = "vkCmdCopyAccelerationStructureToMemoryKHR")]
+#[inline]
 pub unsafe fn cmd_copy_acceleration_structure_to_memory_khr(
     command_buffer: &raw::CommandBuffer,
     p_info: &CopyAccelerationStructureToMemoryInfoKHR,
@@ -8185,6 +8479,7 @@ pub unsafe fn cmd_copy_acceleration_structure_to_memory_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyMemoryToAccelerationStructureKHR.html>"]
 #[doc(alias = "vkCmdCopyMemoryToAccelerationStructureKHR")]
+#[inline]
 pub unsafe fn cmd_copy_memory_to_acceleration_structure_khr(
     command_buffer: &raw::CommandBuffer,
     p_info: &CopyMemoryToAccelerationStructureInfoKHR,
@@ -8197,6 +8492,7 @@ pub unsafe fn cmd_copy_memory_to_acceleration_structure_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetAccelerationStructureDeviceAddressKHR.html>"]
 #[doc(alias = "vkGetAccelerationStructureDeviceAddressKHR")]
+#[inline]
 pub unsafe fn get_acceleration_structure_device_address_khr(
     device: &raw::Device,
     p_info: &AccelerationStructureDeviceAddressInfoKHR,
@@ -8209,6 +8505,7 @@ pub unsafe fn get_acceleration_structure_device_address_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html>"]
 #[doc(alias = "vkCmdWriteAccelerationStructuresPropertiesKHR")]
+#[inline]
 pub unsafe fn cmd_write_acceleration_structures_properties_khr<
     'a,
     V2: Alias<raw::AccelerationStructureKHR> + 'a,
@@ -8279,6 +8576,7 @@ pub unsafe fn get_acceleration_structure_build_sizes_khr<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdTraceRaysKHR.html>"]
 #[doc(alias = "vkCmdTraceRaysKHR")]
+#[inline]
 pub unsafe fn cmd_trace_rays_khr(
     command_buffer: &raw::CommandBuffer,
     p_raygen_shader_binding_table: &StridedDeviceAddressRegionKHR,
@@ -8330,6 +8628,7 @@ pub unsafe fn create_ray_tracing_pipelines_khr<'a, R: DynamicArray<Pipeline>>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>"]
 #[doc(alias = "vkGetRayTracingShaderGroupHandlesKHR")]
+#[inline]
 pub unsafe fn get_ray_tracing_shader_group_handles_khr(
     device: &raw::Device,
     pipeline: &raw::Pipeline,
@@ -8352,6 +8651,7 @@ pub unsafe fn get_ray_tracing_shader_group_handles_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetRayTracingShaderGroupHandlesNV.html>"]
 #[doc(alias = "vkGetRayTracingShaderGroupHandlesNV")]
+#[inline]
 pub unsafe fn get_ray_tracing_shader_group_handles_nv(
     device: &raw::Device,
     pipeline: &raw::Pipeline,
@@ -8374,6 +8674,7 @@ pub unsafe fn get_ray_tracing_shader_group_handles_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>"]
 #[doc(alias = "vkGetRayTracingCaptureReplayShaderGroupHandlesKHR")]
+#[inline]
 pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles_khr(
     device: &raw::Device,
     pipeline: &raw::Pipeline,
@@ -8398,6 +8699,7 @@ pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdTraceRaysIndirectKHR.html>"]
 #[doc(alias = "vkCmdTraceRaysIndirectKHR")]
+#[inline]
 pub unsafe fn cmd_trace_rays_indirect_khr(
     command_buffer: &raw::CommandBuffer,
     p_raygen_shader_binding_table: &StridedDeviceAddressRegionKHR,
@@ -8419,6 +8721,7 @@ pub unsafe fn cmd_trace_rays_indirect_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>"]
 #[doc(alias = "vkGetRayTracingShaderGroupStackSizeKHR")]
+#[inline]
 pub unsafe fn get_ray_tracing_shader_group_stack_size_khr(
     device: &raw::Device,
     pipeline: &raw::Pipeline,
@@ -8436,6 +8739,7 @@ pub unsafe fn get_ray_tracing_shader_group_stack_size_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html>"]
 #[doc(alias = "vkCmdSetRayTracingPipelineStackSizeKHR")]
+#[inline]
 pub unsafe fn cmd_set_ray_tracing_pipeline_stack_size_khr(
     command_buffer: &raw::CommandBuffer,
     pipeline_stack_size: u32,
@@ -8488,6 +8792,7 @@ pub unsafe fn create_validation_cache_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyValidationCacheEXT.html>"]
 #[doc(alias = "vkDestroyValidationCacheEXT")]
+#[inline]
 pub unsafe fn destroy_validation_cache_ext(
     device: &raw::Device,
     validation_cache: Option<&raw::ValidationCacheEXT>,
@@ -8503,6 +8808,7 @@ pub unsafe fn destroy_validation_cache_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkMergeValidationCachesEXT.html>"]
 #[doc(alias = "vkMergeValidationCachesEXT")]
+#[inline]
 pub unsafe fn merge_validation_caches_ext<'a, V3: Alias<raw::ValidationCacheEXT> + 'a>(
     device: &raw::Device,
     dst_cache: &raw::ValidationCacheEXT,
@@ -8538,6 +8844,7 @@ pub unsafe fn get_validation_cache_data_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindShadingRateImageNV.html>"]
 #[doc(alias = "vkCmdBindShadingRateImageNV")]
+#[inline]
 pub unsafe fn cmd_bind_shading_rate_image_nv(
     command_buffer: &raw::CommandBuffer,
     image_view: Option<&raw::ImageView>,
@@ -8553,6 +8860,7 @@ pub unsafe fn cmd_bind_shading_rate_image_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportShadingRatePaletteNV.html>"]
 #[doc(alias = "vkCmdSetViewportShadingRatePaletteNV")]
+#[inline]
 pub unsafe fn cmd_set_viewport_shading_rate_palette_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     first_viewport: u32,
@@ -8569,6 +8877,7 @@ pub unsafe fn cmd_set_viewport_shading_rate_palette_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoarseSampleOrderNV.html>"]
 #[doc(alias = "vkCmdSetCoarseSampleOrderNV")]
+#[inline]
 pub unsafe fn cmd_set_coarse_sample_order_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     sample_order_type: CoarseSampleOrderTypeNV,
@@ -8603,6 +8912,7 @@ pub unsafe fn create_acceleration_structure_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyAccelerationStructureNV.html>"]
 #[doc(alias = "vkDestroyAccelerationStructureNV")]
+#[inline]
 pub unsafe fn destroy_acceleration_structure_nv(
     device: &raw::Device,
     acceleration_structure: Option<&raw::AccelerationStructureNV>,
@@ -8640,6 +8950,7 @@ pub unsafe fn get_acceleration_structure_memory_requirements_nv<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindAccelerationStructureMemoryNV.html>"]
 #[doc(alias = "vkBindAccelerationStructureMemoryNV")]
+#[inline]
 pub unsafe fn bind_acceleration_structure_memory_nv<'a>(
     device: &raw::Device,
     p_bind_infos: impl AsSlice<'a, BindAccelerationStructureMemoryInfoNV<'a>>,
@@ -8655,6 +8966,7 @@ pub unsafe fn bind_acceleration_structure_memory_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBuildAccelerationStructureNV.html>"]
 #[doc(alias = "vkCmdBuildAccelerationStructureNV")]
+#[inline]
 pub unsafe fn cmd_build_acceleration_structure_nv(
     command_buffer: &raw::CommandBuffer,
     p_info: &AccelerationStructureInfoNV,
@@ -8682,6 +8994,7 @@ pub unsafe fn cmd_build_acceleration_structure_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyAccelerationStructureNV.html>"]
 #[doc(alias = "vkCmdCopyAccelerationStructureNV")]
+#[inline]
 pub unsafe fn cmd_copy_acceleration_structure_nv(
     command_buffer: &raw::CommandBuffer,
     dst: &raw::AccelerationStructureNV,
@@ -8699,6 +9012,7 @@ pub unsafe fn cmd_copy_acceleration_structure_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdTraceRaysNV.html>"]
 #[doc(alias = "vkCmdTraceRaysNV")]
+#[inline]
 pub unsafe fn cmd_trace_rays_nv(
     command_buffer: &raw::CommandBuffer,
     raygen_shader_binding_table_buffer: &raw::Buffer,
@@ -8762,6 +9076,7 @@ pub unsafe fn create_ray_tracing_pipelines_nv<'a, R: DynamicArray<Pipeline>>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetAccelerationStructureHandleNV.html>"]
 #[doc(alias = "vkGetAccelerationStructureHandleNV")]
+#[inline]
 pub unsafe fn get_acceleration_structure_handle_nv(
     device: &raw::Device,
     acceleration_structure: &raw::AccelerationStructureNV,
@@ -8780,6 +9095,7 @@ pub unsafe fn get_acceleration_structure_handle_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteAccelerationStructuresPropertiesNV.html>"]
 #[doc(alias = "vkCmdWriteAccelerationStructuresPropertiesNV")]
+#[inline]
 pub unsafe fn cmd_write_acceleration_structures_properties_nv<
     'a,
     V2: Alias<raw::AccelerationStructureNV> + 'a,
@@ -8805,6 +9121,7 @@ pub unsafe fn cmd_write_acceleration_structures_properties_nv<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCompileDeferredNV.html>"]
 #[doc(alias = "vkCompileDeferredNV")]
+#[inline]
 pub unsafe fn compile_deferred_nv(
     device: &raw::Device,
     pipeline: &raw::Pipeline,
@@ -8840,6 +9157,7 @@ pub unsafe fn get_memory_host_pointer_properties_ext<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteBufferMarkerAMD.html>"]
 #[doc(alias = "vkCmdWriteBufferMarkerAMD")]
+#[inline]
 pub unsafe fn cmd_write_buffer_marker_amd(
     command_buffer: &raw::CommandBuffer,
     pipeline_stage: PipelineStageFlags,
@@ -8859,6 +9177,7 @@ pub unsafe fn cmd_write_buffer_marker_amd(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteBufferMarker2AMD.html>"]
 #[doc(alias = "vkCmdWriteBufferMarker2AMD")]
+#[inline]
 pub unsafe fn cmd_write_buffer_marker2_amd(
     command_buffer: &raw::CommandBuffer,
     stage: PipelineStageFlags2,
@@ -8878,6 +9197,7 @@ pub unsafe fn cmd_write_buffer_marker2_amd(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksNV.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksNV")]
+#[inline]
 pub unsafe fn cmd_draw_mesh_tasks_nv(
     command_buffer: &raw::CommandBuffer,
     task_count: u32,
@@ -8889,6 +9209,7 @@ pub unsafe fn cmd_draw_mesh_tasks_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksIndirectNV.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksIndirectNV")]
+#[inline]
 pub unsafe fn cmd_draw_mesh_tasks_indirect_nv(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -8908,6 +9229,7 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksIndirectCountNV")]
+#[inline]
 pub unsafe fn cmd_draw_mesh_tasks_indirect_count_nv(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -8931,6 +9253,7 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_count_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetExclusiveScissorEnableNV.html>"]
 #[doc(alias = "vkCmdSetExclusiveScissorEnableNV")]
+#[inline]
 pub unsafe fn cmd_set_exclusive_scissor_enable_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     first_exclusive_scissor: u32,
@@ -8947,6 +9270,7 @@ pub unsafe fn cmd_set_exclusive_scissor_enable_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetExclusiveScissorNV.html>"]
 #[doc(alias = "vkCmdSetExclusiveScissorNV")]
+#[inline]
 pub unsafe fn cmd_set_exclusive_scissor_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     first_exclusive_scissor: u32,
@@ -8963,6 +9287,7 @@ pub unsafe fn cmd_set_exclusive_scissor_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCheckpointNV.html>"]
 #[doc(alias = "vkCmdSetCheckpointNV")]
+#[inline]
 pub unsafe fn cmd_set_checkpoint_nv(
     command_buffer: &raw::CommandBuffer,
     p_checkpoint_marker: VoidPtr,
@@ -9027,6 +9352,7 @@ pub unsafe fn get_queue_checkpoint_data2_nv<R: DynamicArray<CheckpointData2NV<'s
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkInitializePerformanceApiINTEL.html>"]
 #[doc(alias = "vkInitializePerformanceApiINTEL")]
+#[inline]
 pub unsafe fn initialize_performance_api_intel(
     device: &raw::Device,
     p_initialize_info: &InitializePerformanceApiInfoINTEL,
@@ -9037,6 +9363,7 @@ pub unsafe fn initialize_performance_api_intel(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkUninitializePerformanceApiINTEL.html>"]
 #[doc(alias = "vkUninitializePerformanceApiINTEL")]
+#[inline]
 pub unsafe fn uninitialize_performance_api_intel(
     device: &raw::Device,
     dispatcher: &CommandsDispatcher,
@@ -9046,6 +9373,7 @@ pub unsafe fn uninitialize_performance_api_intel(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetPerformanceMarkerINTEL.html>"]
 #[doc(alias = "vkCmdSetPerformanceMarkerINTEL")]
+#[inline]
 pub unsafe fn cmd_set_performance_marker_intel(
     command_buffer: &raw::CommandBuffer,
     p_marker_info: &PerformanceMarkerInfoINTEL,
@@ -9056,6 +9384,7 @@ pub unsafe fn cmd_set_performance_marker_intel(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetPerformanceStreamMarkerINTEL.html>"]
 #[doc(alias = "vkCmdSetPerformanceStreamMarkerINTEL")]
+#[inline]
 pub unsafe fn cmd_set_performance_stream_marker_intel(
     command_buffer: &raw::CommandBuffer,
     p_marker_info: &PerformanceStreamMarkerInfoINTEL,
@@ -9066,6 +9395,7 @@ pub unsafe fn cmd_set_performance_stream_marker_intel(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetPerformanceOverrideINTEL.html>"]
 #[doc(alias = "vkCmdSetPerformanceOverrideINTEL")]
+#[inline]
 pub unsafe fn cmd_set_performance_override_intel(
     command_buffer: &raw::CommandBuffer,
     p_override_info: &PerformanceOverrideInfoINTEL,
@@ -9096,6 +9426,7 @@ pub unsafe fn acquire_performance_configuration_intel(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkReleasePerformanceConfigurationINTEL.html>"]
 #[doc(alias = "vkReleasePerformanceConfigurationINTEL")]
+#[inline]
 pub unsafe fn release_performance_configuration_intel(
     device: &raw::Device,
     configuration: Option<&raw::PerformanceConfigurationINTEL>,
@@ -9106,6 +9437,7 @@ pub unsafe fn release_performance_configuration_intel(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueSetPerformanceConfigurationINTEL.html>"]
 #[doc(alias = "vkQueueSetPerformanceConfigurationINTEL")]
+#[inline]
 pub unsafe fn queue_set_performance_configuration_intel(
     queue: &raw::Queue,
     configuration: &raw::PerformanceConfigurationINTEL,
@@ -9128,6 +9460,7 @@ pub unsafe fn get_performance_parameter_intel(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetLocalDimmingAMD.html>"]
 #[doc(alias = "vkSetLocalDimmingAMD")]
+#[inline]
 pub unsafe fn set_local_dimming_amd(
     device: &raw::Device,
     swap_chain: &raw::SwapchainKHR,
@@ -9221,6 +9554,7 @@ pub unsafe fn get_physical_device_fragment_shading_rates_khr<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetFragmentShadingRateKHR.html>"]
 #[doc(alias = "vkCmdSetFragmentShadingRateKHR")]
+#[inline]
 pub unsafe fn cmd_set_fragment_shading_rate_khr(
     command_buffer: &raw::CommandBuffer,
     p_fragment_size: &Extent2D,
@@ -9236,6 +9570,7 @@ pub unsafe fn cmd_set_fragment_shading_rate_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkWaitForPresentKHR.html>"]
 #[doc(alias = "vkWaitForPresentKHR")]
+#[inline]
 pub unsafe fn wait_for_present_khr(
     device: &raw::Device,
     swapchain: &raw::SwapchainKHR,
@@ -9381,6 +9716,7 @@ pub unsafe fn get_physical_device_surface_present_modes2_ext<R: DynamicArray<Pre
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkAcquireFullScreenExclusiveModeEXT.html>"]
 #[doc(alias = "vkAcquireFullScreenExclusiveModeEXT")]
+#[inline]
 pub unsafe fn acquire_full_screen_exclusive_mode_ext(
     device: &raw::Device,
     swapchain: &raw::SwapchainKHR,
@@ -9391,6 +9727,7 @@ pub unsafe fn acquire_full_screen_exclusive_mode_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkReleaseFullScreenExclusiveModeEXT.html>"]
 #[doc(alias = "vkReleaseFullScreenExclusiveModeEXT")]
+#[inline]
 pub unsafe fn release_full_screen_exclusive_mode_ext(
     device: &raw::Device,
     swapchain: &raw::SwapchainKHR,
@@ -9451,6 +9788,7 @@ pub unsafe fn create_deferred_operation_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDeferredOperationKHR.html>"]
 #[doc(alias = "vkDestroyDeferredOperationKHR")]
+#[inline]
 pub unsafe fn destroy_deferred_operation_khr(
     device: &raw::Device,
     operation: Option<&raw::DeferredOperationKHR>,
@@ -9466,6 +9804,7 @@ pub unsafe fn destroy_deferred_operation_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html>"]
 #[doc(alias = "vkGetDeferredOperationMaxConcurrencyKHR")]
+#[inline]
 pub unsafe fn get_deferred_operation_max_concurrency_khr(
     device: &raw::Device,
     operation: &raw::DeferredOperationKHR,
@@ -9476,6 +9815,7 @@ pub unsafe fn get_deferred_operation_max_concurrency_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeferredOperationResultKHR.html>"]
 #[doc(alias = "vkGetDeferredOperationResultKHR")]
+#[inline]
 pub unsafe fn get_deferred_operation_result_khr(
     device: &raw::Device,
     operation: &raw::DeferredOperationKHR,
@@ -9486,6 +9826,7 @@ pub unsafe fn get_deferred_operation_result_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDeferredOperationJoinKHR.html>"]
 #[doc(alias = "vkDeferredOperationJoinKHR")]
+#[inline]
 pub unsafe fn deferred_operation_join_khr(
     device: &raw::Device,
     operation: &raw::DeferredOperationKHR,
@@ -9627,6 +9968,7 @@ pub unsafe fn get_pipeline_executable_internal_representations_khr<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkReleaseSwapchainImagesEXT.html>"]
 #[doc(alias = "vkReleaseSwapchainImagesEXT")]
+#[inline]
 pub unsafe fn release_swapchain_images_ext(
     device: &raw::Device,
     p_release_info: &ReleaseSwapchainImagesInfoEXT,
@@ -9659,6 +10001,7 @@ pub unsafe fn get_generated_commands_memory_requirements_nv<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPreprocessGeneratedCommandsNV.html>"]
 #[doc(alias = "vkCmdPreprocessGeneratedCommandsNV")]
+#[inline]
 pub unsafe fn cmd_preprocess_generated_commands_nv(
     command_buffer: &raw::CommandBuffer,
     p_generated_commands_info: &GeneratedCommandsInfoNV,
@@ -9672,6 +10015,7 @@ pub unsafe fn cmd_preprocess_generated_commands_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdExecuteGeneratedCommandsNV.html>"]
 #[doc(alias = "vkCmdExecuteGeneratedCommandsNV")]
+#[inline]
 pub unsafe fn cmd_execute_generated_commands_nv(
     command_buffer: &raw::CommandBuffer,
     is_preprocessed: impl Into<Bool32>,
@@ -9687,6 +10031,7 @@ pub unsafe fn cmd_execute_generated_commands_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindPipelineShaderGroupNV.html>"]
 #[doc(alias = "vkCmdBindPipelineShaderGroupNV")]
+#[inline]
 pub unsafe fn cmd_bind_pipeline_shader_group_nv(
     command_buffer: &raw::CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
@@ -9722,6 +10067,7 @@ pub unsafe fn create_indirect_commands_layout_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyIndirectCommandsLayoutNV.html>"]
 #[doc(alias = "vkDestroyIndirectCommandsLayoutNV")]
+#[inline]
 pub unsafe fn destroy_indirect_commands_layout_nv(
     device: &raw::Device,
     indirect_commands_layout: Option<&raw::IndirectCommandsLayoutNV>,
@@ -9737,6 +10083,7 @@ pub unsafe fn destroy_indirect_commands_layout_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthBias2EXT.html>"]
 #[doc(alias = "vkCmdSetDepthBias2EXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_bias2_ext(
     command_buffer: &raw::CommandBuffer,
     p_depth_bias_info: &DepthBiasInfoEXT,
@@ -9750,6 +10097,7 @@ pub unsafe fn cmd_set_depth_bias2_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkAcquireDrmDisplayEXT.html>"]
 #[doc(alias = "vkAcquireDrmDisplayEXT")]
+#[inline]
 pub unsafe fn acquire_drm_display_ext(
     physical_device: &raw::PhysicalDevice,
     drm_fd: i32,
@@ -9838,6 +10186,7 @@ pub unsafe fn create_cuda_function_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyCudaModuleNV.html>"]
 #[doc(alias = "vkDestroyCudaModuleNV")]
+#[inline]
 pub unsafe fn destroy_cuda_module_nv(
     device: &raw::Device,
     module: &raw::CudaModuleNV,
@@ -9853,6 +10202,7 @@ pub unsafe fn destroy_cuda_module_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyCudaFunctionNV.html>"]
 #[doc(alias = "vkDestroyCudaFunctionNV")]
+#[inline]
 pub unsafe fn destroy_cuda_function_nv(
     device: &raw::Device,
     function: &raw::CudaFunctionNV,
@@ -9868,6 +10218,7 @@ pub unsafe fn destroy_cuda_function_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCudaLaunchKernelNV.html>"]
 #[doc(alias = "vkCmdCudaLaunchKernelNV")]
+#[inline]
 pub unsafe fn cmd_cuda_launch_kernel_nv(
     command_buffer: &raw::CommandBuffer,
     p_launch_info: &CudaLaunchInfoNV,
@@ -9930,6 +10281,7 @@ pub unsafe fn get_descriptor_set_layout_binding_offset_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDescriptorEXT.html>"]
 #[doc(alias = "vkGetDescriptorEXT")]
+#[inline]
 pub unsafe fn get_descriptor_ext(
     device: &raw::Device,
     p_descriptor_info: &DescriptorGetInfoEXT,
@@ -9947,6 +10299,7 @@ pub unsafe fn get_descriptor_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindDescriptorBuffersEXT.html>"]
 #[doc(alias = "vkCmdBindDescriptorBuffersEXT")]
+#[inline]
 pub unsafe fn cmd_bind_descriptor_buffers_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     p_binding_infos: impl AsSlice<'a, DescriptorBufferBindingInfoEXT<'a>>,
@@ -9961,6 +10314,7 @@ pub unsafe fn cmd_bind_descriptor_buffers_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDescriptorBufferOffsetsEXT.html>"]
 #[doc(alias = "vkCmdSetDescriptorBufferOffsetsEXT")]
+#[inline]
 pub unsafe fn cmd_set_descriptor_buffer_offsets_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
@@ -9983,6 +10337,7 @@ pub unsafe fn cmd_set_descriptor_buffer_offsets_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindDescriptorBufferEmbeddedSamplersEXT.html>"]
 #[doc(alias = "vkCmdBindDescriptorBufferEmbeddedSamplersEXT")]
+#[inline]
 pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers_ext(
     command_buffer: &raw::CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
@@ -10002,6 +10357,7 @@ pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetBufferOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetBufferOpaqueCaptureDescriptorDataEXT")]
+#[inline]
 pub unsafe fn get_buffer_opaque_capture_descriptor_data_ext(
     device: &raw::Device,
     p_info: &BufferCaptureDescriptorDataInfoEXT,
@@ -10015,6 +10371,7 @@ pub unsafe fn get_buffer_opaque_capture_descriptor_data_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetImageOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetImageOpaqueCaptureDescriptorDataEXT")]
+#[inline]
 pub unsafe fn get_image_opaque_capture_descriptor_data_ext(
     device: &raw::Device,
     p_info: &ImageCaptureDescriptorDataInfoEXT,
@@ -10028,6 +10385,7 @@ pub unsafe fn get_image_opaque_capture_descriptor_data_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetImageViewOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetImageViewOpaqueCaptureDescriptorDataEXT")]
+#[inline]
 pub unsafe fn get_image_view_opaque_capture_descriptor_data_ext(
     device: &raw::Device,
     p_info: &ImageViewCaptureDescriptorDataInfoEXT,
@@ -10041,6 +10399,7 @@ pub unsafe fn get_image_view_opaque_capture_descriptor_data_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetSamplerOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetSamplerOpaqueCaptureDescriptorDataEXT")]
+#[inline]
 pub unsafe fn get_sampler_opaque_capture_descriptor_data_ext(
     device: &raw::Device,
     p_info: &SamplerCaptureDescriptorDataInfoEXT,
@@ -10054,6 +10413,7 @@ pub unsafe fn get_sampler_opaque_capture_descriptor_data_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT")]
+#[inline]
 pub unsafe fn get_acceleration_structure_opaque_capture_descriptor_data_ext(
     device: &raw::Device,
     p_info: &AccelerationStructureCaptureDescriptorDataInfoEXT,
@@ -10067,6 +10427,7 @@ pub unsafe fn get_acceleration_structure_opaque_capture_descriptor_data_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetFragmentShadingRateEnumNV.html>"]
 #[doc(alias = "vkCmdSetFragmentShadingRateEnumNV")]
+#[inline]
 pub unsafe fn cmd_set_fragment_shading_rate_enum_nv(
     command_buffer: &raw::CommandBuffer,
     shading_rate: FragmentShadingRateNV,
@@ -10078,6 +10439,7 @@ pub unsafe fn cmd_set_fragment_shading_rate_enum_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksEXT.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksEXT")]
+#[inline]
 pub unsafe fn cmd_draw_mesh_tasks_ext(
     command_buffer: &raw::CommandBuffer,
     group_count_x: u32,
@@ -10095,6 +10457,7 @@ pub unsafe fn cmd_draw_mesh_tasks_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksIndirectEXT.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksIndirectEXT")]
+#[inline]
 pub unsafe fn cmd_draw_mesh_tasks_indirect_ext(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -10114,6 +10477,7 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksIndirectCountEXT.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksIndirectCountEXT")]
+#[inline]
 pub unsafe fn cmd_draw_mesh_tasks_indirect_count_ext(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -10137,6 +10501,7 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_count_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkAcquireWinrtDisplayNV.html>"]
 #[doc(alias = "vkAcquireWinrtDisplayNV")]
+#[inline]
 pub unsafe fn acquire_winrt_display_nv(
     physical_device: &raw::PhysicalDevice,
     display: &raw::DisplayKHR,
@@ -10181,6 +10546,7 @@ pub unsafe fn create_direct_fbsurface_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceDirectFBPresentationSupportEXT.html>"]
 #[doc(alias = "vkGetPhysicalDeviceDirectFBPresentationSupportEXT")]
+#[inline]
 pub unsafe fn get_physical_device_direct_fbpresentation_support_ext(
     physical_device: &raw::PhysicalDevice,
     queue_family_index: u32,
@@ -10199,6 +10565,7 @@ pub unsafe fn get_physical_device_direct_fbpresentation_support_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetVertexInputEXT.html>"]
 #[doc(alias = "vkCmdSetVertexInputEXT")]
+#[inline]
 pub unsafe fn cmd_set_vertex_input_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     p_vertex_binding_descriptions: impl AsSlice<'a, VertexInputBindingDescription2EXT<'a>>,
@@ -10256,6 +10623,7 @@ pub unsafe fn get_memory_zircon_handle_properties_fuchsia<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkImportSemaphoreZirconHandleFUCHSIA.html>"]
 #[doc(alias = "vkImportSemaphoreZirconHandleFUCHSIA")]
+#[inline]
 pub unsafe fn import_semaphore_zircon_handle_fuchsia(
     device: &raw::Device,
     p_import_semaphore_zircon_handle_info: &ImportSemaphoreZirconHandleInfoFUCHSIA,
@@ -10304,6 +10672,7 @@ pub unsafe fn create_buffer_collection_fuchsia(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetBufferCollectionImageConstraintsFUCHSIA.html>"]
 #[doc(alias = "vkSetBufferCollectionImageConstraintsFUCHSIA")]
+#[inline]
 pub unsafe fn set_buffer_collection_image_constraints_fuchsia(
     device: &raw::Device,
     collection: &raw::BufferCollectionFUCHSIA,
@@ -10322,6 +10691,7 @@ pub unsafe fn set_buffer_collection_image_constraints_fuchsia(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetBufferCollectionBufferConstraintsFUCHSIA.html>"]
 #[doc(alias = "vkSetBufferCollectionBufferConstraintsFUCHSIA")]
+#[inline]
 pub unsafe fn set_buffer_collection_buffer_constraints_fuchsia(
     device: &raw::Device,
     collection: &raw::BufferCollectionFUCHSIA,
@@ -10340,6 +10710,7 @@ pub unsafe fn set_buffer_collection_buffer_constraints_fuchsia(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyBufferCollectionFUCHSIA.html>"]
 #[doc(alias = "vkDestroyBufferCollectionFUCHSIA")]
+#[inline]
 pub unsafe fn destroy_buffer_collection_fuchsia(
     device: &raw::Device,
     collection: &raw::BufferCollectionFUCHSIA,
@@ -10398,6 +10769,7 @@ pub unsafe fn get_device_subpass_shading_max_workgroup_size_huawei<R: DynamicArr
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSubpassShadingHUAWEI.html>"]
 #[doc(alias = "vkCmdSubpassShadingHUAWEI")]
+#[inline]
 pub unsafe fn cmd_subpass_shading_huawei(
     command_buffer: &raw::CommandBuffer,
     dispatcher: &CommandsDispatcher,
@@ -10407,6 +10779,7 @@ pub unsafe fn cmd_subpass_shading_huawei(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindInvocationMaskHUAWEI.html>"]
 #[doc(alias = "vkCmdBindInvocationMaskHUAWEI")]
+#[inline]
 pub unsafe fn cmd_bind_invocation_mask_huawei(
     command_buffer: &raw::CommandBuffer,
     image_view: Option<&raw::ImageView>,
@@ -10454,6 +10827,7 @@ pub unsafe fn get_pipeline_properties_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetPatchControlPointsEXT.html>"]
 #[doc(alias = "vkCmdSetPatchControlPointsEXT")]
+#[inline]
 pub unsafe fn cmd_set_patch_control_points_ext(
     command_buffer: &raw::CommandBuffer,
     patch_control_points: u32,
@@ -10464,6 +10838,7 @@ pub unsafe fn cmd_set_patch_control_points_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLogicOpEXT.html>"]
 #[doc(alias = "vkCmdSetLogicOpEXT")]
+#[inline]
 pub unsafe fn cmd_set_logic_op_ext(
     command_buffer: &raw::CommandBuffer,
     logic_op: LogicOp,
@@ -10492,6 +10867,7 @@ pub unsafe fn create_screen_surface_qnx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceScreenPresentationSupportQNX.html>"]
 #[doc(alias = "vkGetPhysicalDeviceScreenPresentationSupportQNX")]
+#[inline]
 pub unsafe fn get_physical_device_screen_presentation_support_qnx(
     physical_device: &raw::PhysicalDevice,
     queue_family_index: u32,
@@ -10510,6 +10886,7 @@ pub unsafe fn get_physical_device_screen_presentation_support_qnx(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetColorWriteEnableEXT.html>"]
 #[doc(alias = "vkCmdSetColorWriteEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_color_write_enable_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     p_color_write_enables: impl AsSlice<'a, Bool32>,
@@ -10524,6 +10901,7 @@ pub unsafe fn cmd_set_color_write_enable_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdTraceRaysIndirect2KHR.html>"]
 #[doc(alias = "vkCmdTraceRaysIndirect2KHR")]
+#[inline]
 pub unsafe fn cmd_trace_rays_indirect2_khr(
     command_buffer: &raw::CommandBuffer,
     indirect_device_address: DeviceAddress,
@@ -10534,6 +10912,7 @@ pub unsafe fn cmd_trace_rays_indirect2_khr(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMultiEXT.html>"]
 #[doc(alias = "vkCmdDrawMultiEXT")]
+#[inline]
 pub unsafe fn cmd_draw_multi_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     p_vertex_info: impl AsSlice<'a, MultiDrawInfoEXT>,
@@ -10554,6 +10933,7 @@ pub unsafe fn cmd_draw_multi_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMultiIndexedEXT.html>"]
 #[doc(alias = "vkCmdDrawMultiIndexedEXT")]
+#[inline]
 pub unsafe fn cmd_draw_multi_indexed_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     p_index_info: impl AsSlice<'a, MultiDrawIndexedInfoEXT>,
@@ -10596,6 +10976,7 @@ pub unsafe fn create_micromap_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyMicromapEXT.html>"]
 #[doc(alias = "vkDestroyMicromapEXT")]
+#[inline]
 pub unsafe fn destroy_micromap_ext(
     device: &raw::Device,
     micromap: Option<&raw::MicromapEXT>,
@@ -10611,6 +10992,7 @@ pub unsafe fn destroy_micromap_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBuildMicromapsEXT.html>"]
 #[doc(alias = "vkCmdBuildMicromapsEXT")]
+#[inline]
 pub unsafe fn cmd_build_micromaps_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     p_infos: impl AsSlice<'a, MicromapBuildInfoEXT<'a>>,
@@ -10625,6 +11007,7 @@ pub unsafe fn cmd_build_micromaps_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBuildMicromapsEXT.html>"]
 #[doc(alias = "vkBuildMicromapsEXT")]
+#[inline]
 pub unsafe fn build_micromaps_ext<'a>(
     device: &raw::Device,
     deferred_operation: Option<&raw::DeferredOperationKHR>,
@@ -10642,6 +11025,7 @@ pub unsafe fn build_micromaps_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyMicromapEXT.html>"]
 #[doc(alias = "vkCopyMicromapEXT")]
+#[inline]
 pub unsafe fn copy_micromap_ext(
     device: &raw::Device,
     deferred_operation: Option<&raw::DeferredOperationKHR>,
@@ -10658,6 +11042,7 @@ pub unsafe fn copy_micromap_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyMicromapToMemoryEXT.html>"]
 #[doc(alias = "vkCopyMicromapToMemoryEXT")]
+#[inline]
 pub unsafe fn copy_micromap_to_memory_ext(
     device: &raw::Device,
     deferred_operation: Option<&raw::DeferredOperationKHR>,
@@ -10674,6 +11059,7 @@ pub unsafe fn copy_micromap_to_memory_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCopyMemoryToMicromapEXT.html>"]
 #[doc(alias = "vkCopyMemoryToMicromapEXT")]
+#[inline]
 pub unsafe fn copy_memory_to_micromap_ext(
     device: &raw::Device,
     deferred_operation: Option<&raw::DeferredOperationKHR>,
@@ -10690,6 +11076,7 @@ pub unsafe fn copy_memory_to_micromap_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkWriteMicromapsPropertiesEXT.html>"]
 #[doc(alias = "vkWriteMicromapsPropertiesEXT")]
+#[inline]
 pub unsafe fn write_micromaps_properties_ext<'a, V2: Alias<raw::MicromapEXT> + 'a>(
     device: &raw::Device,
     p_micromaps: impl AsSlice<'a, V2>,
@@ -10713,6 +11100,7 @@ pub unsafe fn write_micromaps_properties_ext<'a, V2: Alias<raw::MicromapEXT> + '
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyMicromapEXT.html>"]
 #[doc(alias = "vkCmdCopyMicromapEXT")]
+#[inline]
 pub unsafe fn cmd_copy_micromap_ext(
     command_buffer: &raw::CommandBuffer,
     p_info: &CopyMicromapInfoEXT,
@@ -10723,6 +11111,7 @@ pub unsafe fn cmd_copy_micromap_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyMicromapToMemoryEXT.html>"]
 #[doc(alias = "vkCmdCopyMicromapToMemoryEXT")]
+#[inline]
 pub unsafe fn cmd_copy_micromap_to_memory_ext(
     command_buffer: &raw::CommandBuffer,
     p_info: &CopyMicromapToMemoryInfoEXT,
@@ -10733,6 +11122,7 @@ pub unsafe fn cmd_copy_micromap_to_memory_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyMemoryToMicromapEXT.html>"]
 #[doc(alias = "vkCmdCopyMemoryToMicromapEXT")]
+#[inline]
 pub unsafe fn cmd_copy_memory_to_micromap_ext(
     command_buffer: &raw::CommandBuffer,
     p_info: &CopyMemoryToMicromapInfoEXT,
@@ -10743,6 +11133,7 @@ pub unsafe fn cmd_copy_memory_to_micromap_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteMicromapsPropertiesEXT.html>"]
 #[doc(alias = "vkCmdWriteMicromapsPropertiesEXT")]
+#[inline]
 pub unsafe fn cmd_write_micromaps_properties_ext<'a, V2: Alias<raw::MicromapEXT> + 'a>(
     command_buffer: &raw::CommandBuffer,
     p_micromaps: impl AsSlice<'a, V2>,
@@ -10801,6 +11192,7 @@ pub unsafe fn get_micromap_build_sizes_ext<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawClusterHUAWEI.html>"]
 #[doc(alias = "vkCmdDrawClusterHUAWEI")]
+#[inline]
 pub unsafe fn cmd_draw_cluster_huawei(
     command_buffer: &raw::CommandBuffer,
     group_count_x: u32,
@@ -10818,6 +11210,7 @@ pub unsafe fn cmd_draw_cluster_huawei(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawClusterIndirectHUAWEI.html>"]
 #[doc(alias = "vkCmdDrawClusterIndirectHUAWEI")]
+#[inline]
 pub unsafe fn cmd_draw_cluster_indirect_huawei(
     command_buffer: &raw::CommandBuffer,
     buffer: &raw::Buffer,
@@ -10829,6 +11222,7 @@ pub unsafe fn cmd_draw_cluster_indirect_huawei(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetDeviceMemoryPriorityEXT.html>"]
 #[doc(alias = "vkSetDeviceMemoryPriorityEXT")]
+#[inline]
 pub unsafe fn set_device_memory_priority_ext(
     device: &raw::Device,
     memory: &raw::DeviceMemory,
@@ -10878,6 +11272,7 @@ pub unsafe fn get_descriptor_set_host_mapping_valve(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyMemoryIndirectNV.html>"]
 #[doc(alias = "vkCmdCopyMemoryIndirectNV")]
+#[inline]
 pub unsafe fn cmd_copy_memory_indirect_nv(
     command_buffer: &raw::CommandBuffer,
     copy_buffer_address: DeviceAddress,
@@ -10895,6 +11290,7 @@ pub unsafe fn cmd_copy_memory_indirect_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyMemoryToImageIndirectNV.html>"]
 #[doc(alias = "vkCmdCopyMemoryToImageIndirectNV")]
+#[inline]
 pub unsafe fn cmd_copy_memory_to_image_indirect_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     copy_buffer_address: DeviceAddress,
@@ -10917,6 +11313,7 @@ pub unsafe fn cmd_copy_memory_to_image_indirect_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDecompressMemoryNV.html>"]
 #[doc(alias = "vkCmdDecompressMemoryNV")]
+#[inline]
 pub unsafe fn cmd_decompress_memory_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     p_decompress_memory_regions: impl AsSlice<'a, DecompressMemoryRegionNV>,
@@ -10931,6 +11328,7 @@ pub unsafe fn cmd_decompress_memory_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDecompressMemoryIndirectCountNV.html>"]
 #[doc(alias = "vkCmdDecompressMemoryIndirectCountNV")]
+#[inline]
 pub unsafe fn cmd_decompress_memory_indirect_count_nv(
     command_buffer: &raw::CommandBuffer,
     indirect_commands_address: DeviceAddress,
@@ -10970,6 +11368,7 @@ pub unsafe fn get_pipeline_indirect_memory_requirements_nv<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdUpdatePipelineIndirectBufferNV.html>"]
 #[doc(alias = "vkCmdUpdatePipelineIndirectBufferNV")]
+#[inline]
 pub unsafe fn cmd_update_pipeline_indirect_buffer_nv(
     command_buffer: &raw::CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
@@ -10985,6 +11384,7 @@ pub unsafe fn cmd_update_pipeline_indirect_buffer_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPipelineIndirectDeviceAddressNV.html>"]
 #[doc(alias = "vkGetPipelineIndirectDeviceAddressNV")]
+#[inline]
 pub unsafe fn get_pipeline_indirect_device_address_nv(
     device: &raw::Device,
     p_info: &PipelineIndirectDeviceAddressInfoNV,
@@ -10995,6 +11395,7 @@ pub unsafe fn get_pipeline_indirect_device_address_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClampEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthClampEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_clamp_enable_ext(
     command_buffer: &raw::CommandBuffer,
     depth_clamp_enable: impl Into<Bool32>,
@@ -11005,6 +11406,7 @@ pub unsafe fn cmd_set_depth_clamp_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetPolygonModeEXT.html>"]
 #[doc(alias = "vkCmdSetPolygonModeEXT")]
+#[inline]
 pub unsafe fn cmd_set_polygon_mode_ext(
     command_buffer: &raw::CommandBuffer,
     polygon_mode: PolygonMode,
@@ -11015,6 +11417,7 @@ pub unsafe fn cmd_set_polygon_mode_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRasterizationSamplesEXT.html>"]
 #[doc(alias = "vkCmdSetRasterizationSamplesEXT")]
+#[inline]
 pub unsafe fn cmd_set_rasterization_samples_ext(
     command_buffer: &raw::CommandBuffer,
     rasterization_samples: SampleCountFlags,
@@ -11025,6 +11428,7 @@ pub unsafe fn cmd_set_rasterization_samples_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetSampleMaskEXT.html>"]
 #[doc(alias = "vkCmdSetSampleMaskEXT")]
+#[inline]
 pub unsafe fn cmd_set_sample_mask_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     samples: SampleCountFlags,
@@ -11040,6 +11444,7 @@ pub unsafe fn cmd_set_sample_mask_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetAlphaToCoverageEnableEXT.html>"]
 #[doc(alias = "vkCmdSetAlphaToCoverageEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_alpha_to_coverage_enable_ext(
     command_buffer: &raw::CommandBuffer,
     alpha_to_coverage_enable: impl Into<Bool32>,
@@ -11053,6 +11458,7 @@ pub unsafe fn cmd_set_alpha_to_coverage_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetAlphaToOneEnableEXT.html>"]
 #[doc(alias = "vkCmdSetAlphaToOneEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_alpha_to_one_enable_ext(
     command_buffer: &raw::CommandBuffer,
     alpha_to_one_enable: impl Into<Bool32>,
@@ -11063,6 +11469,7 @@ pub unsafe fn cmd_set_alpha_to_one_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLogicOpEnableEXT.html>"]
 #[doc(alias = "vkCmdSetLogicOpEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_logic_op_enable_ext(
     command_buffer: &raw::CommandBuffer,
     logic_op_enable: impl Into<Bool32>,
@@ -11073,6 +11480,7 @@ pub unsafe fn cmd_set_logic_op_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetColorBlendEnableEXT.html>"]
 #[doc(alias = "vkCmdSetColorBlendEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_color_blend_enable_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     first_attachment: u32,
@@ -11089,6 +11497,7 @@ pub unsafe fn cmd_set_color_blend_enable_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetColorBlendEquationEXT.html>"]
 #[doc(alias = "vkCmdSetColorBlendEquationEXT")]
+#[inline]
 pub unsafe fn cmd_set_color_blend_equation_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     first_attachment: u32,
@@ -11105,6 +11514,7 @@ pub unsafe fn cmd_set_color_blend_equation_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetColorWriteMaskEXT.html>"]
 #[doc(alias = "vkCmdSetColorWriteMaskEXT")]
+#[inline]
 pub unsafe fn cmd_set_color_write_mask_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     first_attachment: u32,
@@ -11121,6 +11531,7 @@ pub unsafe fn cmd_set_color_write_mask_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetTessellationDomainOriginEXT.html>"]
 #[doc(alias = "vkCmdSetTessellationDomainOriginEXT")]
+#[inline]
 pub unsafe fn cmd_set_tessellation_domain_origin_ext(
     command_buffer: &raw::CommandBuffer,
     domain_origin: TessellationDomainOrigin,
@@ -11131,6 +11542,7 @@ pub unsafe fn cmd_set_tessellation_domain_origin_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRasterizationStreamEXT.html>"]
 #[doc(alias = "vkCmdSetRasterizationStreamEXT")]
+#[inline]
 pub unsafe fn cmd_set_rasterization_stream_ext(
     command_buffer: &raw::CommandBuffer,
     rasterization_stream: u32,
@@ -11141,6 +11553,7 @@ pub unsafe fn cmd_set_rasterization_stream_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetConservativeRasterizationModeEXT.html>"]
 #[doc(alias = "vkCmdSetConservativeRasterizationModeEXT")]
+#[inline]
 pub unsafe fn cmd_set_conservative_rasterization_mode_ext(
     command_buffer: &raw::CommandBuffer,
     conservative_rasterization_mode: ConservativeRasterizationModeEXT,
@@ -11154,6 +11567,7 @@ pub unsafe fn cmd_set_conservative_rasterization_mode_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetExtraPrimitiveOverestimationSizeEXT.html>"]
 #[doc(alias = "vkCmdSetExtraPrimitiveOverestimationSizeEXT")]
+#[inline]
 pub unsafe fn cmd_set_extra_primitive_overestimation_size_ext(
     command_buffer: &raw::CommandBuffer,
     extra_primitive_overestimation_size: f32,
@@ -11169,6 +11583,7 @@ pub unsafe fn cmd_set_extra_primitive_overestimation_size_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClipEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthClipEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_clip_enable_ext(
     command_buffer: &raw::CommandBuffer,
     depth_clip_enable: impl Into<Bool32>,
@@ -11179,6 +11594,7 @@ pub unsafe fn cmd_set_depth_clip_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetSampleLocationsEnableEXT.html>"]
 #[doc(alias = "vkCmdSetSampleLocationsEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_sample_locations_enable_ext(
     command_buffer: &raw::CommandBuffer,
     sample_locations_enable: impl Into<Bool32>,
@@ -11192,6 +11608,7 @@ pub unsafe fn cmd_set_sample_locations_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetColorBlendAdvancedEXT.html>"]
 #[doc(alias = "vkCmdSetColorBlendAdvancedEXT")]
+#[inline]
 pub unsafe fn cmd_set_color_blend_advanced_ext<'a>(
     command_buffer: &raw::CommandBuffer,
     first_attachment: u32,
@@ -11208,6 +11625,7 @@ pub unsafe fn cmd_set_color_blend_advanced_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetProvokingVertexModeEXT.html>"]
 #[doc(alias = "vkCmdSetProvokingVertexModeEXT")]
+#[inline]
 pub unsafe fn cmd_set_provoking_vertex_mode_ext(
     command_buffer: &raw::CommandBuffer,
     provoking_vertex_mode: ProvokingVertexModeEXT,
@@ -11218,6 +11636,7 @@ pub unsafe fn cmd_set_provoking_vertex_mode_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineRasterizationModeEXT.html>"]
 #[doc(alias = "vkCmdSetLineRasterizationModeEXT")]
+#[inline]
 pub unsafe fn cmd_set_line_rasterization_mode_ext(
     command_buffer: &raw::CommandBuffer,
     line_rasterization_mode: LineRasterizationModeEXT,
@@ -11228,6 +11647,7 @@ pub unsafe fn cmd_set_line_rasterization_mode_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineStippleEnableEXT.html>"]
 #[doc(alias = "vkCmdSetLineStippleEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_line_stipple_enable_ext(
     command_buffer: &raw::CommandBuffer,
     stippled_line_enable: impl Into<Bool32>,
@@ -11238,6 +11658,7 @@ pub unsafe fn cmd_set_line_stipple_enable_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClipNegativeOneToOneEXT.html>"]
 #[doc(alias = "vkCmdSetDepthClipNegativeOneToOneEXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_clip_negative_one_to_one_ext(
     command_buffer: &raw::CommandBuffer,
     negative_one_to_one: impl Into<Bool32>,
@@ -11248,6 +11669,7 @@ pub unsafe fn cmd_set_depth_clip_negative_one_to_one_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportWScalingEnableNV.html>"]
 #[doc(alias = "vkCmdSetViewportWScalingEnableNV")]
+#[inline]
 pub unsafe fn cmd_set_viewport_wscaling_enable_nv(
     command_buffer: &raw::CommandBuffer,
     viewport_wscaling_enable: impl Into<Bool32>,
@@ -11261,6 +11683,7 @@ pub unsafe fn cmd_set_viewport_wscaling_enable_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportSwizzleNV.html>"]
 #[doc(alias = "vkCmdSetViewportSwizzleNV")]
+#[inline]
 pub unsafe fn cmd_set_viewport_swizzle_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     first_viewport: u32,
@@ -11277,6 +11700,7 @@ pub unsafe fn cmd_set_viewport_swizzle_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageToColorEnableNV.html>"]
 #[doc(alias = "vkCmdSetCoverageToColorEnableNV")]
+#[inline]
 pub unsafe fn cmd_set_coverage_to_color_enable_nv(
     command_buffer: &raw::CommandBuffer,
     coverage_to_color_enable: impl Into<Bool32>,
@@ -11290,6 +11714,7 @@ pub unsafe fn cmd_set_coverage_to_color_enable_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageToColorLocationNV.html>"]
 #[doc(alias = "vkCmdSetCoverageToColorLocationNV")]
+#[inline]
 pub unsafe fn cmd_set_coverage_to_color_location_nv(
     command_buffer: &raw::CommandBuffer,
     coverage_to_color_location: u32,
@@ -11300,6 +11725,7 @@ pub unsafe fn cmd_set_coverage_to_color_location_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageModulationModeNV.html>"]
 #[doc(alias = "vkCmdSetCoverageModulationModeNV")]
+#[inline]
 pub unsafe fn cmd_set_coverage_modulation_mode_nv(
     command_buffer: &raw::CommandBuffer,
     coverage_modulation_mode: CoverageModulationModeNV,
@@ -11310,6 +11736,7 @@ pub unsafe fn cmd_set_coverage_modulation_mode_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageModulationTableEnableNV.html>"]
 #[doc(alias = "vkCmdSetCoverageModulationTableEnableNV")]
+#[inline]
 pub unsafe fn cmd_set_coverage_modulation_table_enable_nv(
     command_buffer: &raw::CommandBuffer,
     coverage_modulation_table_enable: impl Into<Bool32>,
@@ -11323,6 +11750,7 @@ pub unsafe fn cmd_set_coverage_modulation_table_enable_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageModulationTableNV.html>"]
 #[doc(alias = "vkCmdSetCoverageModulationTableNV")]
+#[inline]
 pub unsafe fn cmd_set_coverage_modulation_table_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     p_coverage_modulation_table: impl AsSlice<'a, f32>,
@@ -11337,6 +11765,7 @@ pub unsafe fn cmd_set_coverage_modulation_table_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetShadingRateImageEnableNV.html>"]
 #[doc(alias = "vkCmdSetShadingRateImageEnableNV")]
+#[inline]
 pub unsafe fn cmd_set_shading_rate_image_enable_nv(
     command_buffer: &raw::CommandBuffer,
     shading_rate_image_enable: impl Into<Bool32>,
@@ -11350,6 +11779,7 @@ pub unsafe fn cmd_set_shading_rate_image_enable_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRepresentativeFragmentTestEnableNV.html>"]
 #[doc(alias = "vkCmdSetRepresentativeFragmentTestEnableNV")]
+#[inline]
 pub unsafe fn cmd_set_representative_fragment_test_enable_nv(
     command_buffer: &raw::CommandBuffer,
     representative_fragment_test_enable: impl Into<Bool32>,
@@ -11365,6 +11795,7 @@ pub unsafe fn cmd_set_representative_fragment_test_enable_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageReductionModeNV.html>"]
 #[doc(alias = "vkCmdSetCoverageReductionModeNV")]
+#[inline]
 pub unsafe fn cmd_set_coverage_reduction_mode_nv(
     command_buffer: &raw::CommandBuffer,
     coverage_reduction_mode: CoverageReductionModeNV,
@@ -11480,6 +11911,7 @@ pub unsafe fn create_optical_flow_session_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyOpticalFlowSessionNV.html>"]
 #[doc(alias = "vkDestroyOpticalFlowSessionNV")]
+#[inline]
 pub unsafe fn destroy_optical_flow_session_nv(
     device: &raw::Device,
     session: &raw::OpticalFlowSessionNV,
@@ -11495,6 +11927,7 @@ pub unsafe fn destroy_optical_flow_session_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindOpticalFlowSessionImageNV.html>"]
 #[doc(alias = "vkBindOpticalFlowSessionImageNV")]
+#[inline]
 pub unsafe fn bind_optical_flow_session_image_nv(
     device: &raw::Device,
     session: &raw::OpticalFlowSessionNV,
@@ -11515,6 +11948,7 @@ pub unsafe fn bind_optical_flow_session_image_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdOpticalFlowExecuteNV.html>"]
 #[doc(alias = "vkCmdOpticalFlowExecuteNV")]
+#[inline]
 pub unsafe fn cmd_optical_flow_execute_nv(
     command_buffer: &raw::CommandBuffer,
     session: &raw::OpticalFlowSessionNV,
@@ -11530,6 +11964,7 @@ pub unsafe fn cmd_optical_flow_execute_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkAntiLagUpdateAMD.html>"]
 #[doc(alias = "vkAntiLagUpdateAMD")]
+#[inline]
 pub unsafe fn anti_lag_update_amd(
     device: &raw::Device,
     p_data: &AntiLagDataAMD,
@@ -11562,6 +11997,7 @@ pub unsafe fn create_shaders_ext<'a, R: DynamicArray<ShaderEXT>>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyShaderEXT.html>"]
 #[doc(alias = "vkDestroyShaderEXT")]
+#[inline]
 pub unsafe fn destroy_shader_ext(
     device: &raw::Device,
     shader: Option<&raw::ShaderEXT>,
@@ -11595,6 +12031,7 @@ pub unsafe fn get_shader_binary_data_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindShadersEXT.html>"]
 #[doc(alias = "vkCmdBindShadersEXT")]
+#[inline]
 pub unsafe fn cmd_bind_shaders_ext<'a, V3: Alias<raw::ShaderEXT> + 'a>(
     command_buffer: &raw::CommandBuffer,
     p_stages: impl AsSlice<'a, ShaderStageFlags>,
@@ -11611,6 +12048,7 @@ pub unsafe fn cmd_bind_shaders_ext<'a, V3: Alias<raw::ShaderEXT> + 'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClampRangeEXT.html>"]
 #[doc(alias = "vkCmdSetDepthClampRangeEXT")]
+#[inline]
 pub unsafe fn cmd_set_depth_clamp_range_ext(
     command_buffer: &raw::CommandBuffer,
     depth_clamp_mode: DepthClampModeEXT,
@@ -11652,6 +12090,7 @@ pub unsafe fn create_pipeline_binaries_khr<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPipelineBinaryKHR.html>"]
 #[doc(alias = "vkDestroyPipelineBinaryKHR")]
+#[inline]
 pub unsafe fn destroy_pipeline_binary_khr(
     device: &raw::Device,
     pipeline_binary: Option<&raw::PipelineBinaryKHR>,
@@ -11689,6 +12128,7 @@ pub unsafe fn get_pipeline_key_khr<S: StructureChainOut<PipelineBinaryKeyKHR<'st
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkReleaseCapturedPipelineDataKHR.html>"]
 #[doc(alias = "vkReleaseCapturedPipelineDataKHR")]
+#[inline]
 pub unsafe fn release_captured_pipeline_data_khr(
     device: &raw::Device,
     p_info: &ReleaseCapturedPipelineDataInfoKHR,
@@ -11810,6 +12250,7 @@ pub unsafe fn get_physical_device_cooperative_vector_properties_nv<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkConvertCooperativeVectorMatrixNV.html>"]
 #[doc(alias = "vkConvertCooperativeVectorMatrixNV")]
+#[inline]
 pub unsafe fn convert_cooperative_vector_matrix_nv(
     device: &raw::Device,
     p_info: &ConvertCooperativeVectorMatrixInfoNV,
@@ -11820,6 +12261,7 @@ pub unsafe fn convert_cooperative_vector_matrix_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdConvertCooperativeVectorMatrixNV.html>"]
 #[doc(alias = "vkCmdConvertCooperativeVectorMatrixNV")]
+#[inline]
 pub unsafe fn cmd_convert_cooperative_vector_matrix_nv<'a>(
     command_buffer: &raw::CommandBuffer,
     p_infos: impl AsSlice<'a, ConvertCooperativeVectorMatrixInfoNV<'a>>,
@@ -11834,6 +12276,7 @@ pub unsafe fn cmd_convert_cooperative_vector_matrix_nv<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetLatencySleepModeNV.html>"]
 #[doc(alias = "vkSetLatencySleepModeNV")]
+#[inline]
 pub unsafe fn set_latency_sleep_mode_nv(
     device: &raw::Device,
     swapchain: &raw::SwapchainKHR,
@@ -11850,6 +12293,7 @@ pub unsafe fn set_latency_sleep_mode_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkLatencySleepNV.html>"]
 #[doc(alias = "vkLatencySleepNV")]
+#[inline]
 pub unsafe fn latency_sleep_nv(
     device: &raw::Device,
     swapchain: &raw::SwapchainKHR,
@@ -11866,6 +12310,7 @@ pub unsafe fn latency_sleep_nv(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkSetLatencyMarkerNV.html>"]
 #[doc(alias = "vkSetLatencyMarkerNV")]
+#[inline]
 pub unsafe fn set_latency_marker_nv(
     device: &raw::Device,
     swapchain: &raw::SwapchainKHR,
@@ -11899,6 +12344,7 @@ pub unsafe fn get_latency_timings_nv<S: StructureChainOut<GetLatencyMarkerInfoNV
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueNotifyOutOfBandNV.html>"]
 #[doc(alias = "vkQueueNotifyOutOfBandNV")]
+#[inline]
 pub unsafe fn queue_notify_out_of_band_nv(
     queue: &raw::Queue,
     p_queue_type_info: &OutOfBandQueueTypeInfoNV,
@@ -11951,6 +12397,7 @@ pub unsafe fn get_physical_device_cooperative_matrix_properties_khr<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetAttachmentFeedbackLoopEnableEXT.html>"]
 #[doc(alias = "vkCmdSetAttachmentFeedbackLoopEnableEXT")]
+#[inline]
 pub unsafe fn cmd_set_attachment_feedback_loop_enable_ext(
     command_buffer: &raw::CommandBuffer,
     aspect_mask: ImageAspectFlags,
@@ -12063,6 +12510,7 @@ pub unsafe fn get_physical_device_calibrateable_time_domains_ext<R: DynamicArray
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDescriptorBufferOffsets2EXT.html>"]
 #[doc(alias = "vkCmdSetDescriptorBufferOffsets2EXT")]
+#[inline]
 pub unsafe fn cmd_set_descriptor_buffer_offsets2_ext(
     command_buffer: &raw::CommandBuffer,
     p_set_descriptor_buffer_offsets_info: &SetDescriptorBufferOffsetsInfoEXT,
@@ -12076,6 +12524,7 @@ pub unsafe fn cmd_set_descriptor_buffer_offsets2_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindDescriptorBufferEmbeddedSamplers2EXT.html>"]
 #[doc(alias = "vkCmdBindDescriptorBufferEmbeddedSamplers2EXT")]
+#[inline]
 pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers2_ext(
     command_buffer: &raw::CommandBuffer,
     p_bind_descriptor_buffer_embedded_samplers_info: &BindDescriptorBufferEmbeddedSamplersInfoEXT,
@@ -12113,6 +12562,7 @@ pub unsafe fn get_cluster_acceleration_structure_build_sizes_nv<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBuildClusterAccelerationStructureIndirectNV.html>"]
 #[doc(alias = "vkCmdBuildClusterAccelerationStructureIndirectNV")]
+#[inline]
 pub unsafe fn cmd_build_cluster_acceleration_structure_indirect_nv(
     command_buffer: &raw::CommandBuffer,
     p_command_infos: &ClusterAccelerationStructureCommandsInfoNV,
@@ -12150,6 +12600,7 @@ pub unsafe fn get_partitioned_acceleration_structures_build_sizes_nv<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBuildPartitionedAccelerationStructuresNV.html>"]
 #[doc(alias = "vkCmdBuildPartitionedAccelerationStructuresNV")]
+#[inline]
 pub unsafe fn cmd_build_partitioned_acceleration_structures_nv(
     command_buffer: &raw::CommandBuffer,
     p_build_info: &BuildPartitionedAccelerationStructureInfoNV,
@@ -12184,6 +12635,7 @@ pub unsafe fn get_generated_commands_memory_requirements_ext<
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPreprocessGeneratedCommandsEXT.html>"]
 #[doc(alias = "vkCmdPreprocessGeneratedCommandsEXT")]
+#[inline]
 pub unsafe fn cmd_preprocess_generated_commands_ext(
     command_buffer: &raw::CommandBuffer,
     p_generated_commands_info: &GeneratedCommandsInfoEXT,
@@ -12199,6 +12651,7 @@ pub unsafe fn cmd_preprocess_generated_commands_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdExecuteGeneratedCommandsEXT.html>"]
 #[doc(alias = "vkCmdExecuteGeneratedCommandsEXT")]
+#[inline]
 pub unsafe fn cmd_execute_generated_commands_ext(
     command_buffer: &raw::CommandBuffer,
     is_preprocessed: impl Into<Bool32>,
@@ -12232,6 +12685,7 @@ pub unsafe fn create_indirect_commands_layout_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyIndirectCommandsLayoutEXT.html>"]
 #[doc(alias = "vkDestroyIndirectCommandsLayoutEXT")]
+#[inline]
 pub unsafe fn destroy_indirect_commands_layout_ext(
     device: &raw::Device,
     indirect_commands_layout: Option<&raw::IndirectCommandsLayoutEXT>,
@@ -12265,6 +12719,7 @@ pub unsafe fn create_indirect_execution_set_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyIndirectExecutionSetEXT.html>"]
 #[doc(alias = "vkDestroyIndirectExecutionSetEXT")]
+#[inline]
 pub unsafe fn destroy_indirect_execution_set_ext(
     device: &raw::Device,
     indirect_execution_set: Option<&raw::IndirectExecutionSetEXT>,
@@ -12280,6 +12735,7 @@ pub unsafe fn destroy_indirect_execution_set_ext(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkUpdateIndirectExecutionSetPipelineEXT.html>"]
 #[doc(alias = "vkUpdateIndirectExecutionSetPipelineEXT")]
+#[inline]
 pub unsafe fn update_indirect_execution_set_pipeline_ext<'a>(
     device: &raw::Device,
     indirect_execution_set: &raw::IndirectExecutionSetEXT,
@@ -12296,6 +12752,7 @@ pub unsafe fn update_indirect_execution_set_pipeline_ext<'a>(
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkUpdateIndirectExecutionSetShaderEXT.html>"]
 #[doc(alias = "vkUpdateIndirectExecutionSetShaderEXT")]
+#[inline]
 pub unsafe fn update_indirect_execution_set_shader_ext<'a>(
     device: &raw::Device,
     indirect_execution_set: &raw::IndirectExecutionSetEXT,
