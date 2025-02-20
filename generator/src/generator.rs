@@ -443,7 +443,7 @@ impl<'a> Generator<'a> {
                         alias_vk_name,
                         MappingEntry {
                             name: alias_name.clone(),
-                            ty: MappingType::AliasedEnum(enum_vk_name)
+                            ty: MappingType::EnumAlias(enum_vk_name)
                         }
                     )
                     .is_none());
@@ -474,7 +474,7 @@ impl<'a> Generator<'a> {
                             vk_name,
                             MappingEntry {
                                 name: name.to_owned(),
-                                ty: MappingType::AliasedEnum(alias.as_str())
+                                ty: MappingType::EnumAlias(alias.as_str())
                             }
                         )
                         .is_none());
@@ -655,7 +655,7 @@ impl<'a> Generator<'a> {
                             alias,
                             MappingEntry {
                                 name: real_name.to_owned(),
-                                ty: MappingType::AliasedStruct(vk_name)
+                                ty: MappingType::StructAlias(vk_name)
                             }
                         )
                         .is_none())
@@ -760,7 +760,7 @@ impl<'a> Generator<'a> {
     fn get_struct(&self, name: &str) -> Option<&StructStandard<'a>> {
         let struct_name = match self.mapping.borrow().get(name)?.ty {
             MappingType::Struct => name,
-            MappingType::AliasedStruct(alias) => alias,
+            MappingType::StructAlias(alias) => alias,
             _ => return None,
         };
         match self.structs.get(struct_name) {
@@ -788,7 +788,7 @@ impl<'a> Generator<'a> {
     fn compute_name_lifetime(&self, name: &str) -> bool {
         let struct_name = match self.mapping.borrow().get(name).map(|mp| mp.ty) {
             Some(MappingType::Struct | MappingType::BaseType) => name,
-            Some(MappingType::AliasedStruct(alias)) => alias,
+            Some(MappingType::StructAlias(alias)) => alias,
             Some(MappingType::Handle | MappingType::HandleAlias(_)) => return true,
             _ => return false,
         };
@@ -837,9 +837,9 @@ impl<'a> Generator<'a> {
             Type::Void => AT::Void,
             Type::VoidPtr => AT::VoidPtr,
             Type::Path(name) => match self.mapping.borrow().get(name).map(|entry| entry.ty) {
-                Some(MappingType::Struct | MappingType::AliasedStruct(_)) => AT::Struct(name),
+                Some(MappingType::Struct | MappingType::StructAlias(_)) => AT::Struct(name),
                 Some(MappingType::Handle | MappingType::HandleAlias(_)) => AT::Handle(name),
-                Some(MappingType::Enum | MappingType::AliasedEnum(_)) => AT::Enum(name),
+                Some(MappingType::Enum | MappingType::EnumAlias(_)) => AT::Enum(name),
                 Some(MappingType::FunctionPtr) => AT::Func(name),
                 Some(MappingType::BaseType) if *name == "VoidPtr" => AT::VoidPtr,
                 Some(MappingType::BaseType) if *name == "VkBool32" => AT::Bool32,
@@ -1489,7 +1489,7 @@ impl<'a> Generator<'a> {
                 // There is no default for regular enums
                 let name = match self.mapping.borrow().get(name).map(|entry| entry.ty) {
                     Some(MappingType::Enum) => name,
-                    Some(MappingType::AliasedEnum(alias_name)) => alias_name,
+                    Some(MappingType::EnumAlias(alias_name)) => alias_name,
                     _ => return Err(anyhow!("Type {name} was not found as an enum")),
                 };
                 Ok(self
@@ -1511,7 +1511,7 @@ impl<'a> Generator<'a> {
                     .borrow()
                     .get(name)
                     .is_some_and(|entry| {
-                        matches!(entry.ty, MappingType::AliasedEnum(_) | MappingType::Enum)
+                        matches!(entry.ty, MappingType::EnumAlias(_) | MappingType::Enum)
                     })
                     .then(|| self.generate_default(&AdvancedType::Enum(name)))
                     .unwrap_or_else(|| Ok(quote!(Default::default())))?;
