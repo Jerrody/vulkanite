@@ -1095,7 +1095,7 @@ where
 
         for (structure, _) in &mut self.content {
             let header = structure.header_mut();
-            if unsafe { (*header).s_type } == H::STRUCTURE_TYPE {
+            if unsafe { (*header).s_type } == T::STRUCTURE_TYPE {
                 return unsafe { mem::transmute(header) };
             }
         }
@@ -1114,7 +1114,7 @@ where
 
         for (structure, _) in &self.content {
             let header = structure.header();
-            if unsafe { (*header).s_type } == H::STRUCTURE_TYPE {
+            if unsafe { (*header).s_type } == T::STRUCTURE_TYPE {
                 return unsafe { mem::transmute(header) };
             }
         }
@@ -1133,7 +1133,7 @@ where
 
         for (structure, is_linked) in &self.content {
             let header = structure.header();
-            if unsafe { (*header).s_type } == H::STRUCTURE_TYPE {
+            if unsafe { (*header).s_type } == T::STRUCTURE_TYPE {
                 is_linked.set(false);
                 return;
             }
@@ -1153,7 +1153,7 @@ where
 
         for (structure, is_linked) in &self.content {
             let header = structure.header();
-            if unsafe { (*header).s_type } == H::STRUCTURE_TYPE {
+            if unsafe { (*header).s_type } == T::STRUCTURE_TYPE {
                 is_linked.set(true);
                 return;
             }
