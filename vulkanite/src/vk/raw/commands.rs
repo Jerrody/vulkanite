@@ -10227,6 +10227,44 @@ pub unsafe fn cmd_cuda_launch_kernel_nv(
     let vulkan_command = dispatcher.cmd_cuda_launch_kernel_nv.get();
     vulkan_command(Some(command_buffer.borrow()), ptr::from_ref(p_launch_info))
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchTileQCOM.html>"]
+#[doc(alias = "vkCmdDispatchTileQCOM")]
+#[inline]
+pub unsafe fn cmd_dispatch_tile_qcom(
+    command_buffer: &raw::CommandBuffer,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher.cmd_dispatch_tile_qcom.get();
+    vulkan_command(Some(command_buffer.borrow()))
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginPerTileExecutionQCOM.html>"]
+#[doc(alias = "vkCmdBeginPerTileExecutionQCOM")]
+#[inline]
+pub unsafe fn cmd_begin_per_tile_execution_qcom(
+    command_buffer: &raw::CommandBuffer,
+    p_per_tile_begin_info: &PerTileBeginInfoQCOM,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher.cmd_begin_per_tile_execution_qcom.get();
+    vulkan_command(
+        Some(command_buffer.borrow()),
+        ptr::from_ref(p_per_tile_begin_info),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndPerTileExecutionQCOM.html>"]
+#[doc(alias = "vkCmdEndPerTileExecutionQCOM")]
+#[inline]
+pub unsafe fn cmd_end_per_tile_execution_qcom(
+    command_buffer: &raw::CommandBuffer,
+    p_per_tile_end_info: &PerTileEndInfoQCOM,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher.cmd_end_per_tile_execution_qcom.get();
+    vulkan_command(
+        Some(command_buffer.borrow()),
+        ptr::from_ref(p_per_tile_end_info),
+    )
+}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkExportMetalObjectsEXT.html>"]
 #[doc(alias = "vkExportMetalObjectsEXT")]
 pub unsafe fn export_metal_objects_ext<S: StructureChainOut<ExportMetalObjectsInfoEXT<'static>>>(
@@ -12538,6 +12576,60 @@ pub unsafe fn cmd_bind_descriptor_buffer_embedded_samplers2_ext(
         ptr::from_ref(p_bind_descriptor_buffer_embedded_samplers_info),
     )
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateExternalComputeQueueNV.html>"]
+#[doc(alias = "vkCreateExternalComputeQueueNV")]
+pub unsafe fn create_external_compute_queue_nv(
+    device: &raw::Device,
+    p_create_info: &ExternalComputeQueueCreateInfoNV,
+    p_allocator: Option<&AllocationCallbacks>,
+    dispatcher: &CommandsDispatcher,
+) -> Result<ExternalComputeQueueNV> {
+    let vulkan_command = dispatcher.create_external_compute_queue_nv.get();
+    let mut p_external_queue = MaybeUninit::uninit();
+    let vk_status = vulkan_command(
+        Some(device.borrow()),
+        ptr::from_ref(p_create_info),
+        p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
+        p_external_queue.as_mut_ptr(),
+    );
+    vk_status.map_success(|| p_external_queue.assume_init())
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyExternalComputeQueueNV.html>"]
+#[doc(alias = "vkDestroyExternalComputeQueueNV")]
+#[inline]
+pub unsafe fn destroy_external_compute_queue_nv(
+    device: &raw::Device,
+    external_queue: &raw::ExternalComputeQueueNV,
+    p_allocator: Option<&AllocationCallbacks>,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher.destroy_external_compute_queue_nv.get();
+    vulkan_command(
+        Some(device.borrow()),
+        Some(external_queue.borrow()),
+        p_allocator.map(|v| ptr::from_ref(v)).unwrap_or(ptr::null()),
+    )
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetExternalComputeQueueDataNV.html>"]
+#[doc(alias = "vkGetExternalComputeQueueDataNV")]
+pub unsafe fn get_external_compute_queue_data_nv<
+    S: StructureChainOut<ExternalComputeQueueDataParamsNV<'static>>,
+>(
+    external_queue: &raw::ExternalComputeQueueNV,
+    p_data: VoidPtr,
+    dispatcher: &CommandsDispatcher,
+) -> S {
+    let vulkan_command = dispatcher.get_external_compute_queue_data_nv.get();
+    let mut params = MaybeUninit::uninit();
+    S::setup_uninit(&mut params);
+    vulkan_command(
+        Some(external_queue.borrow()),
+        S::get_uninit_head_ptr(params.as_mut_ptr()),
+        p_data,
+    );
+    S::setup_cleanup(params.as_mut_ptr());
+    params.assume_init()
+}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetClusterAccelerationStructureBuildSizesNV.html>"]
 #[doc(alias = "vkGetClusterAccelerationStructureBuildSizesNV")]
 pub unsafe fn get_cluster_acceleration_structure_build_sizes_nv<
@@ -12848,4 +12940,20 @@ pub unsafe fn get_memory_metal_handle_properties_ext<
         S::setup_cleanup(p_memory_metal_handle_properties.as_mut_ptr());
         p_memory_metal_handle_properties.assume_init()
     })
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndRendering2EXT.html>"]
+#[doc(alias = "vkCmdEndRendering2EXT")]
+#[inline]
+pub unsafe fn cmd_end_rendering2_ext(
+    command_buffer: &raw::CommandBuffer,
+    p_rendering_end_info: Option<&RenderingEndInfoEXT>,
+    dispatcher: &CommandsDispatcher,
+) {
+    let vulkan_command = dispatcher.cmd_end_rendering2_ext.get();
+    vulkan_command(
+        Some(command_buffer.borrow()),
+        p_rendering_end_info
+            .map(|v| ptr::from_ref(v))
+            .unwrap_or(ptr::null()),
+    )
 }

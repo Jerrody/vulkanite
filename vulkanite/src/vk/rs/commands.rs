@@ -6258,6 +6258,41 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             raw::get_screen_buffer_properties_qnx(self, buffer, self.disp.get_command_dispatcher())
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateExternalComputeQueueNV.html>"]
+    #[doc(alias = "vkCreateExternalComputeQueueNV")]
+    #[inline]
+    pub fn create_external_compute_queue_nv(
+        &self,
+        p_create_info: &ExternalComputeQueueCreateInfoNV,
+    ) -> Result<ExternalComputeQueueNV<D, A>> {
+        let vk_result = unsafe {
+            raw::create_external_compute_queue_nv(
+                self,
+                p_create_info,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        };
+        vk_result.map(|vk_result| unsafe {
+            ExternalComputeQueueNV::from_inner(vk_result, self.disp.clone(), self.alloc.clone())
+        })
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyExternalComputeQueueNV.html>"]
+    #[doc(alias = "vkDestroyExternalComputeQueueNV")]
+    #[inline]
+    pub unsafe fn destroy_external_compute_queue_nv(
+        &self,
+        external_queue: &raw::ExternalComputeQueueNV,
+    ) {
+        unsafe {
+            raw::destroy_external_compute_queue_nv(
+                self,
+                external_queue,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetClusterAccelerationStructureBuildSizesNV.html>"]
     #[doc(alias = "vkGetClusterAccelerationStructureBuildSizesNV")]
     pub fn get_cluster_acceleration_structure_build_sizes_nv<
@@ -10055,6 +10090,36 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             raw::cmd_cuda_launch_kernel_nv(self, p_launch_info, self.disp.get_command_dispatcher())
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchTileQCOM.html>"]
+    #[doc(alias = "vkCmdDispatchTileQCOM")]
+    #[inline]
+    pub fn dispatch_tile_qcom(&self) {
+        unsafe { raw::cmd_dispatch_tile_qcom(self, self.disp.get_command_dispatcher()) }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginPerTileExecutionQCOM.html>"]
+    #[doc(alias = "vkCmdBeginPerTileExecutionQCOM")]
+    #[inline]
+    pub fn begin_per_tile_execution_qcom(&self, p_per_tile_begin_info: &PerTileBeginInfoQCOM) {
+        unsafe {
+            raw::cmd_begin_per_tile_execution_qcom(
+                self,
+                p_per_tile_begin_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndPerTileExecutionQCOM.html>"]
+    #[doc(alias = "vkCmdEndPerTileExecutionQCOM")]
+    #[inline]
+    pub fn end_per_tile_execution_qcom(&self, p_per_tile_end_info: &PerTileEndInfoQCOM) {
+        unsafe {
+            raw::cmd_end_per_tile_execution_qcom(
+                self,
+                p_per_tile_end_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindDescriptorBuffersEXT.html>"]
     #[doc(alias = "vkCmdBindDescriptorBuffersEXT")]
     #[inline]
@@ -11075,6 +11140,18 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdEndRendering2EXT.html>"]
+    #[doc(alias = "vkCmdEndRendering2EXT")]
+    #[inline]
+    pub fn end_rendering2_ext(&self, p_rendering_end_info: Option<&RenderingEndInfoEXT>) {
+        unsafe {
+            raw::cmd_end_rendering2_ext(
+                self,
+                p_rendering_end_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
 }
 #[repr(C)]
 #[derive(Clone, Copy)]
@@ -11586,6 +11663,65 @@ impl PipelineBinaryKHR {
     pub fn from_inner(handle: raw::PipelineBinaryKHR) -> Self {
         Self {
             inner: handle.as_raw(),
+        }
+    }
+}
+#[repr(C)]
+#[derive(Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalComputeQueueNV.html>"]
+#[doc(alias = "VkExternalComputeQueueNV")]
+pub struct ExternalComputeQueueNV<
+    D: Dispatcher = DynamicDispatcher,
+    A: Allocator = DefaultAllocator,
+> {
+    inner: <raw::ExternalComputeQueueNV as Handle>::InnerType,
+    disp: D,
+    alloc: A,
+}
+unsafe impl Alias<raw::ExternalComputeQueueNV> for ExternalComputeQueueNV {}
+impl<D: Dispatcher, A: Allocator> Copy for ExternalComputeQueueNV<D, A>
+where
+    D: Copy,
+    A: Copy,
+{
+}
+impl<D: Dispatcher, A: Allocator> Deref for ExternalComputeQueueNV<D, A> {
+    type Target = raw::ExternalComputeQueueNV;
+    #[inline(always)]
+    fn deref(&self) -> &Self::Target {
+        unsafe { std::mem::transmute(&self.inner) }
+    }
+}
+impl<D: Dispatcher, A: Allocator> ExternalComputeQueueNV<D, A> {
+    pub unsafe fn from_inner(handle: raw::ExternalComputeQueueNV, disp: D, alloc: A) -> Self {
+        Self {
+            inner: handle.as_raw(),
+            disp,
+            alloc,
+        }
+    }
+    #[inline(always)]
+    pub fn get_dispatcher(&self) -> &D {
+        &self.disp
+    }
+    #[inline(always)]
+    pub fn get_allocator(&self) -> &A {
+        &self.alloc
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetExternalComputeQueueDataNV.html>"]
+    #[doc(alias = "vkGetExternalComputeQueueDataNV")]
+    pub fn get_external_compute_queue_data_nv<
+        S: StructureChainOut<ExternalComputeQueueDataParamsNV<'static>>,
+    >(
+        &self,
+        p_data: VoidPtr,
+    ) -> S {
+        unsafe {
+            raw::get_external_compute_queue_data_nv(
+                self,
+                p_data,
+                self.disp.get_command_dispatcher(),
+            )
         }
     }
 }

@@ -1,7 +1,7 @@
 use super::{
     ApiVersion, DeviceExtension, DeviceExtensionName, InstanceExtension, InstanceExtensionName,
 };
-pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 4, 307u32);
+pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 4, 312u32);
 pub const KHR_SURFACE: InstanceExtension = InstanceExtension {
     name: unsafe { InstanceExtensionName::new(c"VK_KHR_surface") },
     spec: 25u32,
@@ -442,6 +442,10 @@ pub const EXT_INLINE_UNIFORM_BLOCK: DeviceExtension = DeviceExtension {
 };
 pub const EXT_SHADER_STENCIL_EXPORT: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_EXT_shader_stencil_export") },
+    spec: 1u32,
+};
+pub const KHR_SHADER_BFLOAT16: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_KHR_shader_bfloat16") },
     spec: 1u32,
 };
 pub const EXT_SAMPLE_LOCATIONS: DeviceExtension = DeviceExtension {
@@ -952,6 +956,10 @@ pub const NV_CUDA_KERNEL_LAUNCH: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_cuda_kernel_launch") },
     spec: 2u32,
 };
+pub const QCOM_TILE_SHADING: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_QCOM_tile_shading") },
+    spec: 1u32,
+};
 pub const NV_LOW_LATENCY: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_low_latency") },
     spec: 1u32,
@@ -1230,7 +1238,7 @@ pub const ARM_RENDER_PASS_STRIPED: DeviceExtension = DeviceExtension {
 };
 pub const QCOM_FRAGMENT_DENSITY_MAP_OFFSET: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_QCOM_fragment_density_map_offset") },
-    spec: 2u32,
+    spec: 3u32,
 };
 pub const NV_COPY_MEMORY_INDIRECT: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_copy_memory_indirect") },
@@ -1472,6 +1480,10 @@ pub const NV_RAW_ACCESS_CHAINS: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_raw_access_chains") },
     spec: 1u32,
 };
+pub const NV_EXTERNAL_COMPUTE_QUEUE: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_NV_external_compute_queue") },
+    spec: 1u32,
+};
 pub const KHR_SHADER_RELAXED_EXTENDED_INSTRUCTION: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_KHR_shader_relaxed_extended_instruction") },
     spec: 1u32,
@@ -1542,5 +1554,13 @@ pub const KHR_DEPTH_CLAMP_ZERO_ONE: DeviceExtension = DeviceExtension {
 };
 pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_EXT_vertex_attribute_robustness") },
+    spec: 1u32,
+};
+pub const NV_PRESENT_METERING: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_NV_present_metering") },
+    spec: 1u32,
+};
+pub const EXT_FRAGMENT_DENSITY_MAP_OFFSET: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_EXT_fragment_density_map_offset") },
     spec: 1u32,
 };

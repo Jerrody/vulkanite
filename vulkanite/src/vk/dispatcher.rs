@@ -3853,6 +3853,20 @@ pub struct CommandsDispatcher {
             *const CudaLaunchInfoNV,
         ),
     >,
+    pub cmd_dispatch_tile_qcom:
+        Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>)>,
+    pub cmd_begin_per_tile_execution_qcom: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, CommandBuffer>>,
+            *const PerTileBeginInfoQCOM,
+        ),
+    >,
+    pub cmd_end_per_tile_execution_qcom: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, CommandBuffer>>,
+            *const PerTileEndInfoQCOM,
+        ),
+    >,
     pub export_metal_objects_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -4728,6 +4742,28 @@ pub struct CommandsDispatcher {
             *const BindDescriptorBufferEmbeddedSamplersInfoEXT,
         ),
     >,
+    pub create_external_compute_queue_nv: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const ExternalComputeQueueCreateInfoNV,
+            *const AllocationCallbacks,
+            *const ExternalComputeQueueNV,
+        ) -> Status,
+    >,
+    pub destroy_external_compute_queue_nv: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            Option<BorrowedHandle<'_, ExternalComputeQueueNV>>,
+            *const AllocationCallbacks,
+        ),
+    >,
+    pub get_external_compute_queue_data_nv: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, ExternalComputeQueueNV>>,
+            *const ExternalComputeQueueDataParamsNV,
+            VoidPtr,
+        ),
+    >,
     pub get_cluster_acceleration_structure_build_sizes_nv: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -4842,6 +4878,12 @@ pub struct CommandsDispatcher {
             VoidPtr,
             *const MemoryMetalHandlePropertiesEXT,
         ) -> Status,
+    >,
+    pub cmd_end_rendering2_ext: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, CommandBuffer>>,
+            *const RenderingEndInfoEXT,
+        ),
     >,
 }
 #[doc = r" SAFETY: This trait is safe to implement assuming setting an aligned pointer-size value is coherent (another thread can see the previous value"]
@@ -9379,6 +9421,31 @@ impl CommandsDispatcher {
             vk_func_ptr = mem::transmute(loaded_ptr);
         }
         self.cmd_cuda_launch_kernel_nv.set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_dispatch_tile_qcom.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkCmdDispatchTileQCOM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_dispatch_tile_qcom.set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_begin_per_tile_execution_qcom.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkCmdBeginPerTileExecutionQCOM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_begin_per_tile_execution_qcom.set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_end_per_tile_execution_qcom.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkCmdEndPerTileExecutionQCOM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_end_per_tile_execution_qcom.set(vk_func_ptr);
         let mut vk_func_ptr = self.export_metal_objects_ext.get();
         let loaded_ptr =
             get_instance_proc_addr(Some(instance.borrow()), c"vkExportMetalObjectsEXT".as_ptr());
@@ -10610,6 +10677,33 @@ impl CommandsDispatcher {
         }
         self.cmd_bind_descriptor_buffer_embedded_samplers2_ext
             .set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_external_compute_queue_nv.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkCreateExternalComputeQueueNV".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_external_compute_queue_nv.set(vk_func_ptr);
+        let mut vk_func_ptr = self.destroy_external_compute_queue_nv.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkDestroyExternalComputeQueueNV".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.destroy_external_compute_queue_nv.set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_external_compute_queue_data_nv.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetExternalComputeQueueDataNV".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_external_compute_queue_data_nv.set(vk_func_ptr);
         let mut vk_func_ptr = self.get_cluster_acceleration_structure_build_sizes_nv.get();
         let loaded_ptr = get_instance_proc_addr(
             Some(instance.borrow()),
@@ -10768,6 +10862,13 @@ impl CommandsDispatcher {
             vk_func_ptr = mem::transmute(loaded_ptr);
         }
         self.get_memory_metal_handle_properties_ext.set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_end_rendering2_ext.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkCmdEndRendering2EXT".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_end_rendering2_ext.set(vk_func_ptr);
     }
     pub unsafe fn load_device(&self, device: &Device) {
         let get_device_proc_addr = self.get_device_proc_addr.get();
@@ -14271,6 +14372,31 @@ impl CommandsDispatcher {
             vk_func_ptr = mem::transmute(loaded_ptr);
         }
         self.cmd_cuda_launch_kernel_nv.set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_dispatch_tile_qcom.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkCmdDispatchTileQCOM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_dispatch_tile_qcom.set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_begin_per_tile_execution_qcom.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkCmdBeginPerTileExecutionQCOM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_begin_per_tile_execution_qcom.set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_end_per_tile_execution_qcom.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkCmdEndPerTileExecutionQCOM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_end_per_tile_execution_qcom.set(vk_func_ptr);
         let mut vk_func_ptr = self.export_metal_objects_ext.get();
         let loaded_ptr =
             get_device_proc_addr(Some(device.borrow()), c"vkExportMetalObjectsEXT".as_ptr());
@@ -15366,6 +15492,33 @@ impl CommandsDispatcher {
         }
         self.cmd_bind_descriptor_buffer_embedded_samplers2_ext
             .set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_external_compute_queue_nv.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkCreateExternalComputeQueueNV".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_external_compute_queue_nv.set(vk_func_ptr);
+        let mut vk_func_ptr = self.destroy_external_compute_queue_nv.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkDestroyExternalComputeQueueNV".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.destroy_external_compute_queue_nv.set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_external_compute_queue_data_nv.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkGetExternalComputeQueueDataNV".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_external_compute_queue_data_nv.set(vk_func_ptr);
         let mut vk_func_ptr = self.get_cluster_acceleration_structure_build_sizes_nv.get();
         let loaded_ptr = get_device_proc_addr(
             Some(device.borrow()),
@@ -15510,6 +15663,13 @@ impl CommandsDispatcher {
             vk_func_ptr = mem::transmute(loaded_ptr);
         }
         self.get_memory_metal_handle_properties_ext.set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_end_rendering2_ext.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkCmdEndRendering2EXT".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_end_rendering2_ext.set(vk_func_ptr);
     }
 }
 impl CommandsDispatcher {
@@ -16189,6 +16349,9 @@ impl CommandsDispatcher {
                 destroy_cuda_module_nv: Cell::new(mem::transmute(unload_cmd)),
                 destroy_cuda_function_nv: Cell::new(mem::transmute(unload_cmd)),
                 cmd_cuda_launch_kernel_nv: Cell::new(mem::transmute(unload_cmd)),
+                cmd_dispatch_tile_qcom: Cell::new(mem::transmute(unload_cmd)),
+                cmd_begin_per_tile_execution_qcom: Cell::new(mem::transmute(unload_cmd)),
+                cmd_end_per_tile_execution_qcom: Cell::new(mem::transmute(unload_cmd)),
                 export_metal_objects_ext: Cell::new(mem::transmute(unload_cmd)),
                 get_descriptor_set_layout_size_ext: Cell::new(mem::transmute(unload_cmd)),
                 get_descriptor_set_layout_binding_offset_ext: Cell::new(mem::transmute(unload_cmd)),
@@ -16365,6 +16528,9 @@ impl CommandsDispatcher {
                 cmd_bind_descriptor_buffer_embedded_samplers2_ext: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
+                create_external_compute_queue_nv: Cell::new(mem::transmute(unload_cmd)),
+                destroy_external_compute_queue_nv: Cell::new(mem::transmute(unload_cmd)),
+                get_external_compute_queue_data_nv: Cell::new(mem::transmute(unload_cmd)),
                 get_cluster_acceleration_structure_build_sizes_nv: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
@@ -16393,6 +16559,7 @@ impl CommandsDispatcher {
                 ),
                 get_memory_metal_handle_ext: Cell::new(mem::transmute(unload_cmd)),
                 get_memory_metal_handle_properties_ext: Cell::new(mem::transmute(unload_cmd)),
+                cmd_end_rendering2_ext: Cell::new(mem::transmute(unload_cmd)),
             }
         }
     }
@@ -19811,6 +19978,21 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
+        extern "system" fn cmd_dispatch_tile_qcom(_: Option<BorrowedHandle<'_, CommandBuffer>>) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn cmd_begin_per_tile_execution_qcom(
+            _: Option<BorrowedHandle<'_, CommandBuffer>>,
+            _: *const PerTileBeginInfoQCOM,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn cmd_end_per_tile_execution_qcom(
+            _: Option<BorrowedHandle<'_, CommandBuffer>>,
+            _: *const PerTileEndInfoQCOM,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
         extern "system" fn export_metal_objects_ext(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const ExportMetalObjectsInfoEXT,
@@ -20784,6 +20966,28 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
+        extern "system" fn create_external_compute_queue_nv(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const ExternalComputeQueueCreateInfoNV,
+            _: *const AllocationCallbacks,
+            _: *const ExternalComputeQueueNV,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn destroy_external_compute_queue_nv(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: Option<BorrowedHandle<'_, ExternalComputeQueueNV>>,
+            _: *const AllocationCallbacks,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_external_compute_queue_data_nv(
+            _: Option<BorrowedHandle<'_, ExternalComputeQueueNV>>,
+            _: *const ExternalComputeQueueDataParamsNV,
+            _: VoidPtr,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
         extern "system" fn get_cluster_acceleration_structure_build_sizes_nv(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const ClusterAccelerationStructureInputInfoNV,
@@ -20897,6 +21101,12 @@ impl CommandsDispatcher {
             _: VoidPtr,
             _: *const MemoryMetalHandlePropertiesEXT,
         ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn cmd_end_rendering2_ext(
+            _: Option<BorrowedHandle<'_, CommandBuffer>>,
+            _: *const RenderingEndInfoEXT,
+        ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
         Self {
@@ -21660,6 +21870,9 @@ impl CommandsDispatcher {
             destroy_cuda_module_nv: Cell::new(destroy_cuda_module_nv),
             destroy_cuda_function_nv: Cell::new(destroy_cuda_function_nv),
             cmd_cuda_launch_kernel_nv: Cell::new(cmd_cuda_launch_kernel_nv),
+            cmd_dispatch_tile_qcom: Cell::new(cmd_dispatch_tile_qcom),
+            cmd_begin_per_tile_execution_qcom: Cell::new(cmd_begin_per_tile_execution_qcom),
+            cmd_end_per_tile_execution_qcom: Cell::new(cmd_end_per_tile_execution_qcom),
             export_metal_objects_ext: Cell::new(export_metal_objects_ext),
             get_descriptor_set_layout_size_ext: Cell::new(get_descriptor_set_layout_size_ext),
             get_descriptor_set_layout_binding_offset_ext: Cell::new(
@@ -21874,6 +22087,9 @@ impl CommandsDispatcher {
             cmd_bind_descriptor_buffer_embedded_samplers2_ext: Cell::new(
                 cmd_bind_descriptor_buffer_embedded_samplers2_ext,
             ),
+            create_external_compute_queue_nv: Cell::new(create_external_compute_queue_nv),
+            destroy_external_compute_queue_nv: Cell::new(destroy_external_compute_queue_nv),
+            get_external_compute_queue_data_nv: Cell::new(get_external_compute_queue_data_nv),
             get_cluster_acceleration_structure_build_sizes_nv: Cell::new(
                 get_cluster_acceleration_structure_build_sizes_nv,
             ),
@@ -21908,6 +22124,7 @@ impl CommandsDispatcher {
             get_memory_metal_handle_properties_ext: Cell::new(
                 get_memory_metal_handle_properties_ext,
             ),
+            cmd_end_rendering2_ext: Cell::new(cmd_end_rendering2_ext),
         }
     }
 }

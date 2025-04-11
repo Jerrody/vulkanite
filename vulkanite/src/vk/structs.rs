@@ -30219,6 +30219,65 @@ impl<'a> AttachmentSampleCountInfoAMD<'a> {
 }
 pub type AttachmentSampleCountInfoNV<'a> = AttachmentSampleCountInfoAMD<'a>;
 #[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderBfloat16FeaturesKHR.html>"]
+#[doc(alias = "VkPhysicalDeviceShaderBfloat16FeaturesKHR")]
+pub struct PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub shader_bfloat16_type: Bool32,
+    pub shader_bfloat16_dot_product: Bool32,
+    pub shader_bfloat16_cooperative_matrix: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PhysicalDeviceShaderBfloat16FeaturesKHR;
+}
+unsafe impl<'a> Send for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDeviceShaderBfloat16FeaturesKHR<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDeviceShaderBfloat16FeaturesKHR<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            shader_bfloat16_type: Default::default(),
+            shader_bfloat16_dot_product: Default::default(),
+            shader_bfloat16_cooperative_matrix: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
+    #[inline]
+    pub fn shader_bfloat16_type(mut self, value: impl Into<Bool32>) -> Self {
+        self.shader_bfloat16_type = value.into();
+        self
+    }
+    #[inline]
+    pub fn shader_bfloat16_dot_product(mut self, value: impl Into<Bool32>) -> Self {
+        self.shader_bfloat16_dot_product = value.into();
+        self
+    }
+    #[inline]
+    pub fn shader_bfloat16_cooperative_matrix(mut self, value: impl Into<Bool32>) -> Self {
+        self.shader_bfloat16_cooperative_matrix = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
 #[derive(Clone, Copy)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSampleLocationEXT.html>"]
 #[doc(alias = "VkSampleLocationEXT")]
@@ -42021,6 +42080,354 @@ impl<'a> PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     }
 }
 #[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTileShadingFeaturesQCOM.html>"]
+#[doc(alias = "VkPhysicalDeviceTileShadingFeaturesQCOM")]
+pub struct PhysicalDeviceTileShadingFeaturesQCOM<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub tile_shading: Bool32,
+    pub tile_shading_fragment_stage: Bool32,
+    pub tile_shading_color_attachments: Bool32,
+    pub tile_shading_depth_attachments: Bool32,
+    pub tile_shading_stencil_attachments: Bool32,
+    pub tile_shading_input_attachments: Bool32,
+    pub tile_shading_sampled_attachments: Bool32,
+    pub tile_shading_per_tile_draw: Bool32,
+    pub tile_shading_per_tile_dispatch: Bool32,
+    pub tile_shading_dispatch_tile: Bool32,
+    pub tile_shading_apron: Bool32,
+    pub tile_shading_anisotropic_apron: Bool32,
+    pub tile_shading_atomic_ops: Bool32,
+    pub tile_shading_image_processing: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTileShadingFeaturesQCOM<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceTileShadingFeaturesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PhysicalDeviceTileShadingFeaturesQCOM;
+}
+unsafe impl<'a> Send for PhysicalDeviceTileShadingFeaturesQCOM<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceTileShadingFeaturesQCOM<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDeviceTileShadingFeaturesQCOM<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDeviceTileShadingFeaturesQCOM<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceTileShadingFeaturesQCOM<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            tile_shading: Default::default(),
+            tile_shading_fragment_stage: Default::default(),
+            tile_shading_color_attachments: Default::default(),
+            tile_shading_depth_attachments: Default::default(),
+            tile_shading_stencil_attachments: Default::default(),
+            tile_shading_input_attachments: Default::default(),
+            tile_shading_sampled_attachments: Default::default(),
+            tile_shading_per_tile_draw: Default::default(),
+            tile_shading_per_tile_dispatch: Default::default(),
+            tile_shading_dispatch_tile: Default::default(),
+            tile_shading_apron: Default::default(),
+            tile_shading_anisotropic_apron: Default::default(),
+            tile_shading_atomic_ops: Default::default(),
+            tile_shading_image_processing: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceTileShadingFeaturesQCOM<'a> {
+    #[inline]
+    pub fn tile_shading(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_fragment_stage(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_fragment_stage = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_color_attachments(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_color_attachments = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_depth_attachments(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_depth_attachments = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_stencil_attachments(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_stencil_attachments = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_input_attachments(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_input_attachments = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_sampled_attachments(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_sampled_attachments = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_per_tile_draw(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_per_tile_draw = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_per_tile_dispatch(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_per_tile_dispatch = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_dispatch_tile(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_dispatch_tile = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_apron(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_apron = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_anisotropic_apron(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_anisotropic_apron = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_atomic_ops(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_atomic_ops = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_shading_image_processing(mut self, value: impl Into<Bool32>) -> Self {
+        self.tile_shading_image_processing = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTileShadingPropertiesQCOM.html>"]
+#[doc(alias = "VkPhysicalDeviceTileShadingPropertiesQCOM")]
+pub struct PhysicalDeviceTileShadingPropertiesQCOM<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub max_apron_size: u32,
+    pub prefer_non_coherent: Bool32,
+    pub tile_granularity: Extent2D,
+    pub max_tile_shading_rate: Extent2D,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTileShadingPropertiesQCOM<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceTileShadingPropertiesQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PhysicalDeviceTileShadingPropertiesQCOM;
+}
+unsafe impl<'a> Send for PhysicalDeviceTileShadingPropertiesQCOM<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceTileShadingPropertiesQCOM<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceProperties2<'b>>
+    for PhysicalDeviceTileShadingPropertiesQCOM<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceTileShadingPropertiesQCOM<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            max_apron_size: Default::default(),
+            prefer_non_coherent: Default::default(),
+            tile_granularity: Default::default(),
+            max_tile_shading_rate: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceTileShadingPropertiesQCOM<'a> {
+    #[inline]
+    pub fn max_apron_size(mut self, value: u32) -> Self {
+        self.max_apron_size = value;
+        self
+    }
+    #[inline]
+    pub fn prefer_non_coherent(mut self, value: impl Into<Bool32>) -> Self {
+        self.prefer_non_coherent = value.into();
+        self
+    }
+    #[inline]
+    pub fn tile_granularity(mut self, value: Extent2D) -> Self {
+        self.tile_granularity = value;
+        self
+    }
+    #[inline]
+    pub fn max_tile_shading_rate(mut self, value: Extent2D) -> Self {
+        self.max_tile_shading_rate = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassTileShadingCreateInfoQCOM.html>"]
+#[doc(alias = "VkRenderPassTileShadingCreateInfoQCOM")]
+pub struct RenderPassTileShadingCreateInfoQCOM<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub flags: TileShadingRenderPassFlagsQCOM,
+    pub tile_apron_size: Extent2D,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for RenderPassTileShadingCreateInfoQCOM<'a> {}
+unsafe impl<'a> ExtendableStructure for RenderPassTileShadingCreateInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RenderPassTileShadingCreateInfoQCOM;
+}
+unsafe impl<'a> Send for RenderPassTileShadingCreateInfoQCOM<'a> {}
+unsafe impl<'a> Sync for RenderPassTileShadingCreateInfoQCOM<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<RenderPassCreateInfo<'b>>
+    for RenderPassTileShadingCreateInfoQCOM<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<RenderPassCreateInfo2<'b>>
+    for RenderPassTileShadingCreateInfoQCOM<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<RenderingInfo<'b>>
+    for RenderPassTileShadingCreateInfoQCOM<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<CommandBufferInheritanceInfo<'b>>
+    for RenderPassTileShadingCreateInfoQCOM<'a>
+{
+}
+impl<'a> Default for RenderPassTileShadingCreateInfoQCOM<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            flags: Default::default(),
+            tile_apron_size: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> RenderPassTileShadingCreateInfoQCOM<'a> {
+    #[inline]
+    pub fn flags(mut self, value: TileShadingRenderPassFlagsQCOM) -> Self {
+        self.flags = value;
+        self
+    }
+    #[inline]
+    pub fn tile_apron_size(mut self, value: Extent2D) -> Self {
+        self.tile_apron_size = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerTileBeginInfoQCOM.html>"]
+#[doc(alias = "VkPerTileBeginInfoQCOM")]
+pub struct PerTileBeginInfoQCOM<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PerTileBeginInfoQCOM<'a> {}
+unsafe impl<'a> ExtendableStructure for PerTileBeginInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PerTileBeginInfoQCOM;
+}
+unsafe impl<'a> Send for PerTileBeginInfoQCOM<'a> {}
+unsafe impl<'a> Sync for PerTileBeginInfoQCOM<'a> {}
+impl<'a> Default for PerTileBeginInfoQCOM<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PerTileBeginInfoQCOM<'a> {
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerTileEndInfoQCOM.html>"]
+#[doc(alias = "VkPerTileEndInfoQCOM")]
+pub struct PerTileEndInfoQCOM<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PerTileEndInfoQCOM<'a> {}
+unsafe impl<'a> ExtendableStructure for PerTileEndInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PerTileEndInfoQCOM;
+}
+unsafe impl<'a> Send for PerTileEndInfoQCOM<'a> {}
+unsafe impl<'a> Sync for PerTileEndInfoQCOM<'a> {}
+impl<'a> Default for PerTileEndInfoQCOM<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PerTileEndInfoQCOM<'a> {
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDispatchTileInfoQCOM.html>"]
+#[doc(alias = "VkDispatchTileInfoQCOM")]
+pub struct DispatchTileInfoQCOM<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for DispatchTileInfoQCOM<'a> {}
+unsafe impl<'a> ExtendableStructure for DispatchTileInfoQCOM<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::DispatchTileInfoQCOM;
+}
+unsafe impl<'a> Send for DispatchTileInfoQCOM<'a> {}
+unsafe impl<'a> Sync for DispatchTileInfoQCOM<'a> {}
+impl<'a> Default for DispatchTileInfoQCOM<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> DispatchTileInfoQCOM<'a> {
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueryLowLatencySupportNV.html>"]
 #[doc(alias = "VkQueryLowLatencySupportNV")]
 pub struct QueryLowLatencySupportNV<'a> {
@@ -50680,155 +51087,6 @@ impl<'a> RenderPassStripeSubmitInfoARM<'a> {
     }
 }
 #[repr(C)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM.html>"]
-#[doc(alias = "VkPhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM")]
-pub struct PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub fragment_density_map_offset: Bool32,
-    phantom: PhantomData<&'a ()>,
-}
-unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {}
-unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
-    const STRUCTURE_TYPE: StructureType =
-        StructureType::PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM;
-}
-unsafe impl<'a> Send for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {}
-unsafe impl<'a> Sync for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {}
-unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
-    for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a>
-{
-}
-unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
-    for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a>
-{
-}
-impl<'a> Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: Cell::new(ptr::null()),
-            fragment_density_map_offset: Default::default(),
-            phantom: PhantomData,
-        }
-    }
-}
-impl<'a> PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> {
-    #[inline]
-    pub fn fragment_density_map_offset(mut self, value: impl Into<Bool32>) -> Self {
-        self.fragment_density_map_offset = value.into();
-        self
-    }
-    #[inline]
-    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
-        unsafe { self.push_next_unchecked(ext) };
-        self
-    }
-}
-#[repr(C)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM.html>"]
-#[doc(alias = "VkPhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM")]
-pub struct PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub fragment_density_offset_granularity: Extent2D,
-    phantom: PhantomData<&'a ()>,
-}
-unsafe impl<'a> ExtendableStructureBase
-    for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a>
-{
-}
-unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
-    const STRUCTURE_TYPE: StructureType =
-        StructureType::PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM;
-}
-unsafe impl<'a> Send for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {}
-unsafe impl<'a> Sync for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {}
-unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceProperties2<'b>>
-    for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a>
-{
-}
-impl<'a> Default for PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: Cell::new(ptr::null()),
-            fragment_density_offset_granularity: Default::default(),
-            phantom: PhantomData,
-        }
-    }
-}
-impl<'a> PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> {
-    #[inline]
-    pub fn fragment_density_offset_granularity(mut self, value: Extent2D) -> Self {
-        self.fragment_density_offset_granularity = value;
-        self
-    }
-    #[inline]
-    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
-        unsafe { self.push_next_unchecked(ext) };
-        self
-    }
-}
-#[repr(C)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubpassFragmentDensityMapOffsetEndInfoQCOM.html>"]
-#[doc(alias = "VkSubpassFragmentDensityMapOffsetEndInfoQCOM")]
-pub struct SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) fragment_density_offset_count: u32,
-    pub(crate) p_fragment_density_offsets: *const Offset2D,
-    phantom: PhantomData<&'a ()>,
-}
-unsafe impl<'a> ExtendableStructureBase for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {}
-unsafe impl<'a> ExtendableStructure for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
-    const STRUCTURE_TYPE: StructureType = StructureType::SubpassFragmentDensityMapOffsetEndInfoQCOM;
-}
-unsafe impl<'a> Send for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {}
-unsafe impl<'a> Sync for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {}
-unsafe impl<'a, 'b> ExtendingStructure<SubpassEndInfo<'b>>
-    for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a>
-{
-}
-impl<'a> Default for SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
-    fn default() -> Self {
-        Self {
-            s_type: Self::STRUCTURE_TYPE,
-            p_next: Cell::new(ptr::null()),
-            fragment_density_offset_count: Default::default(),
-            p_fragment_density_offsets: ptr::null(),
-            phantom: PhantomData,
-        }
-    }
-}
-impl<'a> SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> {
-    #[inline]
-    pub fn fragment_density_offsets(
-        mut self,
-        p_fragment_density_offsets: impl AsSlice<'a, Offset2D>,
-    ) -> Self {
-        self.p_fragment_density_offsets = p_fragment_density_offsets.as_slice().as_ptr().cast();
-        self.fragment_density_offset_count = p_fragment_density_offsets.as_slice().len() as _;
-        self
-    }
-    #[inline]
-    pub fn get_fragment_density_offsets(&self) -> &'a [Offset2D] {
-        (!self.p_fragment_density_offsets.is_null())
-            .then(|| unsafe {
-                slice::from_raw_parts(
-                    self.p_fragment_density_offsets.cast(),
-                    self.fragment_density_offset_count as _,
-                )
-            })
-            .unwrap_or(&[])
-    }
-    #[inline]
-    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
-        unsafe { self.push_next_unchecked(ext) };
-        self
-    }
-}
-#[repr(C)]
 #[derive(Clone, Copy)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyMemoryIndirectCommandNV.html>"]
 #[doc(alias = "VkCopyMemoryIndirectCommandNV")]
@@ -51426,6 +51684,10 @@ unsafe impl<'a> ExtendableStructure for AccelerationStructureGeometryLinearSwept
 }
 unsafe impl<'a> Send for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {}
 unsafe impl<'a> Sync for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<AccelerationStructureGeometryKHR<'b>>
+    for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a>
+{
+}
 impl<'a> Default for AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
     fn default() -> Self {
         Self {
@@ -51531,6 +51793,10 @@ unsafe impl<'a> ExtendableStructure for AccelerationStructureGeometrySpheresData
 }
 unsafe impl<'a> Send for AccelerationStructureGeometrySpheresDataNV<'a> {}
 unsafe impl<'a> Sync for AccelerationStructureGeometrySpheresDataNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<AccelerationStructureGeometryKHR<'b>>
+    for AccelerationStructureGeometrySpheresDataNV<'a>
+{
+}
 impl<'a> Default for AccelerationStructureGeometrySpheresDataNV<'a> {
     fn default() -> Self {
         Self {
@@ -58118,6 +58384,170 @@ impl<'a> PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
     }
 }
 #[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalComputeQueueDeviceCreateInfoNV.html>"]
+#[doc(alias = "VkExternalComputeQueueDeviceCreateInfoNV")]
+pub struct ExternalComputeQueueDeviceCreateInfoNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub reserved_external_queues: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for ExternalComputeQueueDeviceCreateInfoNV<'a> {}
+unsafe impl<'a> ExtendableStructure for ExternalComputeQueueDeviceCreateInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::ExternalComputeQueueDeviceCreateInfoNV;
+}
+unsafe impl<'a> Send for ExternalComputeQueueDeviceCreateInfoNV<'a> {}
+unsafe impl<'a> Sync for ExternalComputeQueueDeviceCreateInfoNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for ExternalComputeQueueDeviceCreateInfoNV<'a>
+{
+}
+impl<'a> Default for ExternalComputeQueueDeviceCreateInfoNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            reserved_external_queues: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ExternalComputeQueueDeviceCreateInfoNV<'a> {
+    #[inline]
+    pub fn reserved_external_queues(mut self, value: u32) -> Self {
+        self.reserved_external_queues = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalComputeQueueCreateInfoNV.html>"]
+#[doc(alias = "VkExternalComputeQueueCreateInfoNV")]
+pub struct ExternalComputeQueueCreateInfoNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub preferred_queue: Option<BorrowedHandle<'a, Queue>>,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for ExternalComputeQueueCreateInfoNV<'a> {}
+unsafe impl<'a> ExtendableStructure for ExternalComputeQueueCreateInfoNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::ExternalComputeQueueCreateInfoNV;
+}
+unsafe impl<'a> Send for ExternalComputeQueueCreateInfoNV<'a> {}
+unsafe impl<'a> Sync for ExternalComputeQueueCreateInfoNV<'a> {}
+impl<'a> Default for ExternalComputeQueueCreateInfoNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            preferred_queue: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ExternalComputeQueueCreateInfoNV<'a> {
+    #[inline]
+    pub fn preferred_queue(mut self, value: &'a raw::Queue) -> Self {
+        self.preferred_queue = Some(value.borrow());
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalComputeQueueDataParamsNV.html>"]
+#[doc(alias = "VkExternalComputeQueueDataParamsNV")]
+pub struct ExternalComputeQueueDataParamsNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub device_index: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for ExternalComputeQueueDataParamsNV<'a> {}
+unsafe impl<'a> ExtendableStructure for ExternalComputeQueueDataParamsNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::ExternalComputeQueueDataParamsNV;
+}
+unsafe impl<'a> Send for ExternalComputeQueueDataParamsNV<'a> {}
+unsafe impl<'a> Sync for ExternalComputeQueueDataParamsNV<'a> {}
+impl<'a> Default for ExternalComputeQueueDataParamsNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            device_index: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> ExternalComputeQueueDataParamsNV<'a> {
+    #[inline]
+    pub fn device_index(mut self, value: u32) -> Self {
+        self.device_index = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalComputeQueuePropertiesNV.html>"]
+#[doc(alias = "VkPhysicalDeviceExternalComputeQueuePropertiesNV")]
+pub struct PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub external_data_size: u32,
+    pub max_external_queues: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDeviceExternalComputeQueuePropertiesNV;
+}
+unsafe impl<'a> Send for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceProperties2<'b>>
+    for PhysicalDeviceExternalComputeQueuePropertiesNV<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            external_data_size: Default::default(),
+            max_external_queues: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
+    #[inline]
+    pub fn external_data_size(mut self, value: u32) -> Self {
+        self.external_data_size = value;
+        self
+    }
+    #[inline]
+    pub fn max_external_queues(mut self, value: u32) -> Self {
+        self.max_external_queues = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR")]
 pub struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
@@ -61421,7 +61851,10 @@ unsafe impl<'a> ExtendableStructure for MemoryBarrierAccessFlags3KHR<'a> {
 }
 unsafe impl<'a> Send for MemoryBarrierAccessFlags3KHR<'a> {}
 unsafe impl<'a> Sync for MemoryBarrierAccessFlags3KHR<'a> {}
-unsafe impl<'a, 'b> ExtendingStructure<MemoryBarrier2<'b>> for MemoryBarrierAccessFlags3KHR<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<SubpassDependency2<'b>>
+    for MemoryBarrierAccessFlags3KHR<'a>
+{
+}
 unsafe impl<'a, 'b> ExtendingStructure<BufferMemoryBarrier2<'b>>
     for MemoryBarrierAccessFlags3KHR<'a>
 {
@@ -62320,3 +62753,283 @@ impl<'a> PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
         self
     }
 }
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSetPresentConfigNV.html>"]
+#[doc(alias = "VkSetPresentConfigNV")]
+pub struct SetPresentConfigNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub num_frames_per_batch: u32,
+    pub present_config_feedback: u32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for SetPresentConfigNV<'a> {}
+unsafe impl<'a> ExtendableStructure for SetPresentConfigNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::SetPresentConfigNV;
+}
+unsafe impl<'a> Send for SetPresentConfigNV<'a> {}
+unsafe impl<'a> Sync for SetPresentConfigNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PresentInfoKHR<'b>> for SetPresentConfigNV<'a> {}
+impl<'a> Default for SetPresentConfigNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            num_frames_per_batch: Default::default(),
+            present_config_feedback: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> SetPresentConfigNV<'a> {
+    #[inline]
+    pub fn num_frames_per_batch(mut self, value: u32) -> Self {
+        self.num_frames_per_batch = value;
+        self
+    }
+    #[inline]
+    pub fn present_config_feedback(mut self, value: u32) -> Self {
+        self.present_config_feedback = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePresentMeteringFeaturesNV.html>"]
+#[doc(alias = "VkPhysicalDevicePresentMeteringFeaturesNV")]
+pub struct PhysicalDevicePresentMeteringFeaturesNV<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub present_metering: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePresentMeteringFeaturesNV<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDevicePresentMeteringFeaturesNV<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::PhysicalDevicePresentMeteringFeaturesNV;
+}
+unsafe impl<'a> Send for PhysicalDevicePresentMeteringFeaturesNV<'a> {}
+unsafe impl<'a> Sync for PhysicalDevicePresentMeteringFeaturesNV<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDevicePresentMeteringFeaturesNV<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDevicePresentMeteringFeaturesNV<'a>
+{
+}
+impl<'a> Default for PhysicalDevicePresentMeteringFeaturesNV<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            present_metering: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDevicePresentMeteringFeaturesNV<'a> {
+    #[inline]
+    pub fn present_metering(mut self, value: impl Into<Bool32>) -> Self {
+        self.present_metering = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingEndInfoEXT.html>"]
+#[doc(alias = "VkRenderingEndInfoEXT")]
+pub struct RenderingEndInfoEXT<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for RenderingEndInfoEXT<'a> {}
+unsafe impl<'a> ExtendableStructure for RenderingEndInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType = StructureType::RenderingEndInfoEXT;
+}
+unsafe impl<'a> Send for RenderingEndInfoEXT<'a> {}
+unsafe impl<'a> Sync for RenderingEndInfoEXT<'a> {}
+impl<'a> Default for RenderingEndInfoEXT<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> RenderingEndInfoEXT<'a> {
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT.html>"]
+#[doc(alias = "VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT")]
+pub struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub fragment_density_map_offset: Bool32,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT;
+}
+unsafe impl<'a> Send for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
+    for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
+    for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            fragment_density_map_offset: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
+    #[inline]
+    pub fn fragment_density_map_offset(mut self, value: impl Into<Bool32>) -> Self {
+        self.fragment_density_map_offset = value.into();
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+pub type PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> =
+    PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a>;
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT.html>"]
+#[doc(alias = "VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT")]
+pub struct PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub fragment_density_offset_granularity: Extent2D,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase
+    for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a>
+{
+}
+unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT;
+}
+unsafe impl<'a> Send for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {}
+unsafe impl<'a> Sync for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceProperties2<'b>>
+    for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a>
+{
+}
+impl<'a> Default for PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            fragment_density_offset_granularity: Default::default(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
+    #[inline]
+    pub fn fragment_density_offset_granularity(mut self, value: Extent2D) -> Self {
+        self.fragment_density_offset_granularity = value;
+        self
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+pub type PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> =
+    PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a>;
+#[repr(C)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassFragmentDensityMapOffsetEndInfoEXT.html>"]
+#[doc(alias = "VkRenderPassFragmentDensityMapOffsetEndInfoEXT")]
+pub struct RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
+    pub(crate) s_type: StructureType,
+    pub(crate) p_next: Cell<*const Header>,
+    pub(crate) fragment_density_offset_count: u32,
+    pub(crate) p_fragment_density_offsets: *const Offset2D,
+    phantom: PhantomData<&'a ()>,
+}
+unsafe impl<'a> ExtendableStructureBase for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {}
+unsafe impl<'a> ExtendableStructure for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
+    const STRUCTURE_TYPE: StructureType =
+        StructureType::RenderPassFragmentDensityMapOffsetEndInfoEXT;
+}
+unsafe impl<'a> Send for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {}
+unsafe impl<'a> Sync for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {}
+unsafe impl<'a, 'b> ExtendingStructure<SubpassEndInfo<'b>>
+    for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a>
+{
+}
+unsafe impl<'a, 'b> ExtendingStructure<RenderingEndInfoEXT<'b>>
+    for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a>
+{
+}
+impl<'a> Default for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
+    fn default() -> Self {
+        Self {
+            s_type: Self::STRUCTURE_TYPE,
+            p_next: Cell::new(ptr::null()),
+            fragment_density_offset_count: Default::default(),
+            p_fragment_density_offsets: ptr::null(),
+            phantom: PhantomData,
+        }
+    }
+}
+impl<'a> RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
+    #[inline]
+    pub fn fragment_density_offsets(
+        mut self,
+        p_fragment_density_offsets: impl AsSlice<'a, Offset2D>,
+    ) -> Self {
+        self.p_fragment_density_offsets = p_fragment_density_offsets.as_slice().as_ptr().cast();
+        self.fragment_density_offset_count = p_fragment_density_offsets.as_slice().len() as _;
+        self
+    }
+    #[inline]
+    pub fn get_fragment_density_offsets(&self) -> &'a [Offset2D] {
+        (!self.p_fragment_density_offsets.is_null())
+            .then(|| unsafe {
+                slice::from_raw_parts(
+                    self.p_fragment_density_offsets.cast(),
+                    self.fragment_density_offset_count as _,
+                )
+            })
+            .unwrap_or(&[])
+    }
+    #[inline]
+    pub fn push_next<T: ExtendingStructure<Self>>(self, ext: &'a mut T) -> Self {
+        unsafe { self.push_next_unchecked(ext) };
+        self
+    }
+}
+pub type SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> =
+    RenderPassFragmentDensityMapOffsetEndInfoEXT<'a>;

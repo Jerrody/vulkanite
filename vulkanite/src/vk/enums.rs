@@ -454,6 +454,7 @@ pub enum StructureType {
     ExecutionGraphPipelineCreateInfoAMDX = 1000134003,
     PipelineShaderStageNodeCreateInfoAMDX = 1000134004,
     AttachmentSampleCountInfoAMD = 1000044008,
+    PhysicalDeviceShaderBfloat16FeaturesKHR = 1000141000,
     SampleLocationsInfoEXT = 1000143000,
     RenderPassSampleLocationsBeginInfoEXT = 1000143001,
     PipelineSampleLocationsStateCreateInfoEXT = 1000143002,
@@ -642,6 +643,12 @@ pub enum StructureType {
     CudaLaunchInfoNV = 1000307002,
     PhysicalDeviceCudaKernelLaunchFeaturesNV = 1000307003,
     PhysicalDeviceCudaKernelLaunchPropertiesNV = 1000307004,
+    PhysicalDeviceTileShadingFeaturesQCOM = 1000309000,
+    PhysicalDeviceTileShadingPropertiesQCOM = 1000309001,
+    RenderPassTileShadingCreateInfoQCOM = 1000309002,
+    PerTileBeginInfoQCOM = 1000309003,
+    PerTileEndInfoQCOM = 1000309004,
+    DispatchTileInfoQCOM = 1000309005,
     QueryLowLatencySupportNV = 1000310000,
     ExportMetalObjectCreateInfoEXT = 1000311000,
     ExportMetalObjectsInfoEXT = 1000311001,
@@ -783,9 +790,6 @@ pub enum StructureType {
     RenderPassStripeBeginInfoARM = 1000424002,
     RenderPassStripeInfoARM = 1000424003,
     RenderPassStripeSubmitInfoARM = 1000424004,
-    PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM = 1000425000,
-    PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM = 1000425001,
-    SubpassFragmentDensityMapOffsetEndInfoQCOM = 1000425002,
     PhysicalDeviceCopyMemoryIndirectFeaturesNV = 1000426000,
     PhysicalDeviceCopyMemoryIndirectPropertiesNV = 1000426001,
     PhysicalDeviceMemoryDecompressionFeaturesNV = 1000427000,
@@ -908,6 +912,10 @@ pub enum StructureType {
     DisplaySurfaceStereoCreateInfoNV = 1000551000,
     DisplayModeStereoPropertiesNV = 1000551001,
     PhysicalDeviceRawAccessChainsFeaturesNV = 1000555000,
+    ExternalComputeQueueDeviceCreateInfoNV = 1000556000,
+    ExternalComputeQueueCreateInfoNV = 1000556001,
+    ExternalComputeQueueDataParamsNV = 1000556002,
+    PhysicalDeviceExternalComputeQueuePropertiesNV = 1000556003,
     PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR = 1000558000,
     PhysicalDeviceCommandBufferInheritanceFeaturesNV = 1000559000,
     PhysicalDeviceMaintenance7FeaturesKHR = 1000562000,
@@ -964,6 +972,12 @@ pub enum StructureType {
     MemoryGetMetalHandleInfoEXT = 1000602002,
     PhysicalDeviceDepthClampZeroOneFeaturesKHR = 1000421000,
     PhysicalDeviceVertexAttributeRobustnessFeaturesEXT = 1000608000,
+    SetPresentConfigNV = 1000613000,
+    PhysicalDevicePresentMeteringFeaturesNV = 1000613001,
+    PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT = 1000425000,
+    PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT = 1000425001,
+    RenderPassFragmentDensityMapOffsetEndInfoEXT = 1000425002,
+    RenderingEndInfoEXT = 1000619003,
 }
 #[allow(non_upper_case_globals)]
 impl StructureType {
@@ -1263,6 +1277,12 @@ impl StructureType {
         Self::PhysicalDeviceShaderSubgroupRotateFeatures;
     pub const PhysicalDeviceDepthClampZeroOneFeaturesEXT: Self =
         Self::PhysicalDeviceDepthClampZeroOneFeaturesKHR;
+    pub const PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM: Self =
+        Self::PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT;
+    pub const PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM: Self =
+        Self::PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT;
+    pub const SubpassFragmentDensityMapOffsetEndInfoQCOM: Self =
+        Self::RenderPassFragmentDensityMapOffsetEndInfoEXT;
     pub const PhysicalDevicePipelineProtectedAccessFeaturesEXT: Self =
         Self::PhysicalDevicePipelineProtectedAccessFeatures;
     pub const PhysicalDeviceMaintenance5FeaturesKHR: Self =
@@ -1406,6 +1426,7 @@ pub enum ObjectType {
     OpticalFlowSessionNV = 1000464000,
     ShaderEXT = 1000482000,
     PipelineBinaryKHR = 1000483000,
+    ExternalComputeQueueNV = 1000556000,
     IndirectCommandsLayoutEXT = 1000572000,
     IndirectExecutionSetEXT = 1000572001,
 }
@@ -1839,7 +1860,8 @@ bitflags! {
         const DescriptorBufferCaptureReplayEXT = 1u32 << 16;
         const MultisampledRenderToSingleSampledEXT = 1u32 << 18;
         const Image2DViewCompatibleEXT = 1u32 << 17;
-        const FragmentDensityMapOffsetQCOM = 1u32 << 15;
+        const FragmentDensityMapOffsetQCOM = Self::FragmentDensityMapOffsetEXT.bits();
+        const FragmentDensityMapOffsetEXT = 1u32 << 15;
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -2022,11 +2044,11 @@ bitflags! {
         const MeshShaderNV = Self::MeshShaderEXT.bits();
         const FragmentDensityProcessEXT = 1u32 << 23;
         const FragmentShadingRateAttachmentKHR = 1u32 << 22;
-        const CommandPreprocessNV = 1u32 << 17;
+        const CommandPreprocessNV = Self::CommandPreprocessEXT.bits();
         const NoneKHR = Self::None.bits();
         const TaskShaderEXT = 1u32 << 19;
         const MeshShaderEXT = 1u32 << 20;
-        const CommandPreprocessEXT = Self::CommandPreprocessNV.bits();
+        const CommandPreprocessEXT = 1u32 << 17;
     }
 }
 bitflags! {
@@ -2866,11 +2888,11 @@ bitflags! {
         const AccelerationStructureWriteNV = Self::AccelerationStructureWriteKHR.bits();
         const FragmentDensityMapReadEXT = 1u32 << 24;
         const FragmentShadingRateAttachmentReadKHR = 1u32 << 23;
-        const CommandPreprocessReadNV = 1u32 << 17;
-        const CommandPreprocessWriteNV = 1u32 << 18;
+        const CommandPreprocessReadNV = Self::CommandPreprocessReadEXT.bits();
+        const CommandPreprocessWriteNV = Self::CommandPreprocessWriteEXT.bits();
         const NoneKHR = Self::None.bits();
-        const CommandPreprocessReadEXT = Self::CommandPreprocessReadNV.bits();
-        const CommandPreprocessWriteEXT = Self::CommandPreprocessWriteNV.bits();
+        const CommandPreprocessReadEXT = 1u32 << 17;
+        const CommandPreprocessWriteEXT = 1u32 << 18;
     }
 }
 bitflags! {
@@ -2976,6 +2998,7 @@ bitflags! {
         const PerViewPositionXOnlyNVX = 1u32 << 1;
         const FragmentRegionQCOM = 1u32 << 2;
         const ShaderResolveQCOM = 1u32 << 3;
+        const TileShadingApronQCOM = 1u32 << 8;
         const RasterizationOrderAttachmentColorAccessARM = Self::RasterizationOrderAttachmentColorAccessEXT.bits();
         const RasterizationOrderAttachmentDepthAccessARM = Self::RasterizationOrderAttachmentDepthAccessEXT.bits();
         const RasterizationOrderAttachmentStencilAccessARM = Self::RasterizationOrderAttachmentStencilAccessEXT.bits();
@@ -3698,8 +3721,8 @@ bitflags! {
         const PreRasterizationShadersKHR = Self::PreRasterizationShaders.bits();
         const TransformFeedbackEXT = 1u64 << 24;
         const ConditionalRenderingEXT = 1u64 << 18;
-        const CommandPreprocessNV = 1u64 << 17;
-        const CommandPreprocessEXT = Self::CommandPreprocessNV.bits();
+        const CommandPreprocessNV = Self::CommandPreprocessEXT.bits();
+        const CommandPreprocessEXT = 1u64 << 17;
         const FragmentShadingRateAttachmentKHR = 1u64 << 22;
         const ShadingRateImageNV = Self::FragmentShadingRateAttachmentKHR.bits();
         const AccelerationStructureBuildKHR = 1u64 << 25;
@@ -3752,6 +3775,8 @@ bitflags! {
         const ShaderSampledRead = 1u64 << 32;
         const ShaderStorageRead = 1u64 << 33;
         const ShaderStorageWrite = 1u64 << 34;
+        const ShaderTileAttachmentReadQCOM = 1u64 << 51;
+        const ShaderTileAttachmentWriteQCOM = 1u64 << 52;
         const NoneKHR = Self::None.bits();
         const IndirectCommandReadKHR = Self::IndirectCommandRead.bits();
         const IndexReadKHR = Self::IndexRead.bits();
@@ -3777,10 +3802,10 @@ bitflags! {
         const TransformFeedbackCounterReadEXT = 1u64 << 26;
         const TransformFeedbackCounterWriteEXT = 1u64 << 27;
         const ConditionalRenderingReadEXT = 1u64 << 20;
-        const CommandPreprocessReadNV = 1u64 << 17;
-        const CommandPreprocessWriteNV = 1u64 << 18;
-        const CommandPreprocessReadEXT = Self::CommandPreprocessReadNV.bits();
-        const CommandPreprocessWriteEXT = Self::CommandPreprocessWriteNV.bits();
+        const CommandPreprocessReadNV = Self::CommandPreprocessReadEXT.bits();
+        const CommandPreprocessWriteNV = Self::CommandPreprocessWriteEXT.bits();
+        const CommandPreprocessReadEXT = 1u64 << 17;
+        const CommandPreprocessWriteEXT = 1u64 << 18;
         const FragmentShadingRateAttachmentReadKHR = 1u64 << 23;
         const ShadingRateImageReadNV = Self::FragmentShadingRateAttachmentReadKHR.bits();
         const AccelerationStructureReadKHR = 1u64 << 21;
@@ -5051,6 +5076,17 @@ bitflags! {
     #[derive(Default)]
     #[repr(transparent)]
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTileShadingRenderPassFlagBitsQCOM.html>"]
+    #[doc(alias = "VkTileShadingRenderPassFlagBitsQCOM")]
+    pub struct TileShadingRenderPassFlagsQCOM : u32 {
+        const Enable = 1u32 << 0;
+        const PerTileExecution = 1u32 << 1;
+    }
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMetalObjectTypeFlagBitsEXT.html>"]
     #[doc(alias = "VkExportMetalObjectTypeFlagBitsEXT")]
     pub struct ExportMetalObjectTypeFlagsEXT : u32 {
@@ -5555,6 +5591,7 @@ pub enum ComponentTypeKHR {
     Uint16 = 8,
     Uint32 = 9,
     Uint64 = 10,
+    Bfloat16 = 1000141000,
     Sint8PackedNV = 1000491000,
     Uint8PackedNV = 1000491001,
     FloatE4M3NV = 1000491002,
