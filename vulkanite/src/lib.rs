@@ -1279,20 +1279,24 @@ pub unsafe trait DynamicArray<T>: IntoIterator<Item = T> {
     /// Returns an array with at least the given capacity available
     /// Calling get_content_mut_ptr on an object allocated with allocate_with_capacity(capacity) should return
     /// A contiguous properly aligned allocated region of memory which can hold capacity elements of T
+    #[doc(hidden)]
     fn create_with_capacity(capacity: usize) -> Self;
 
     /// Called after creation (in the case where a Vulkan command returns VK_INCOMPLETE)
     /// The new capacity should be strictly greater than the current one
     /// You can assume the length of the vector is 0 when calling this function
+    #[doc(hidden)]
     fn update_with_capacity(&mut self, new_capacity: usize);
 
     /// Returns a pointer to the array memory
+    #[doc(hidden)]
     fn get_content_mut_ptr(&mut self) -> *mut T;
 
     /// Set the array length to size len
     /// The array must have been allocated with allocate_with_capacity(capacity)
     /// With capacity >= len and the first len elements of the array
     /// must be well defined
+    #[doc(hidden)]
     unsafe fn resize_with_len(&mut self, len: usize);
 }
 
@@ -1391,6 +1395,7 @@ impl<T, S, const N: usize> AdvancedDynamicArray<T, S> for ArrayVec<T, N> {
 /// With this trait, all of these `from_ref` calls
 /// are avoided. There is also an implementation for [`Option<&T>`]
 pub trait AsSlice<'a, T>: Copy {
+    #[doc(hidden)]
     fn as_slice(self) -> &'a [T];
 }
 
