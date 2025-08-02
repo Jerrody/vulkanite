@@ -29,7 +29,7 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
 
     let feature_handles = gen
         .filtered_features()
-        .flat_map(|feature| &feature.require)
+        .flat_map(|feature| feature.requires())
         .map(|req| generate_group_handle(req))
         .collect::<Result<Vec<_>>>()?;
     let feature_extensions = gen

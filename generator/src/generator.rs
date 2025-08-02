@@ -326,7 +326,7 @@ impl<'a> Generator<'a> {
             .flat_map(|ext| ext.require.iter().map(|req| (Some(ext.number), req)));
         let requires = self
             .filtered_features()
-            .flat_map(|feat| feat.require.iter().map(|req| (None, req)))
+            .flat_map(|feat| feat.requires().map(|req| (None, req)))
             .chain(requires_ext);
 
         let enum_extends = requires

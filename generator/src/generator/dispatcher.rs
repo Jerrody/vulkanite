@@ -29,7 +29,7 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
     let mut instance_loader = Vec::new();
     let mut device_loader = Vec::new();
 
-    let dispatcher_features = gen.filtered_features().flat_map(|feat| &feat.require);
+    let dispatcher_features = gen.filtered_features().flat_map(|feat| feat.requires());
     let dispatcher_extensions = gen
         .filtered_extensions()
         .flat_map(|ext: &xml::Extension| &ext.require);

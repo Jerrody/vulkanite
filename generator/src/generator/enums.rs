@@ -20,13 +20,13 @@ pub fn generate(gen: &Generator) -> Result<String> {
 
     let feature_enums = gen
         .filtered_features()
-        .map(|feature| generate_group_enums(gen, &feature.name, &feature.require, &listed_enums))
+        .map(|feature| generate_group_enums(gen, &feature.name, feature.requires(), &listed_enums))
         .collect::<Result<Vec<_>>>()?;
 
     let extension_enums = gen
         .filtered_extensions()
         .map(|ext: &crate::xml::Extension| {
-            generate_group_enums(gen, &ext.name, &ext.require, &listed_enums)
+            generate_group_enums(gen, &ext.name, ext.require.iter(), &listed_enums)
         })
         .collect::<Result<Vec<_>>>()?;
 
@@ -45,13 +45,10 @@ pub fn generate(gen: &Generator) -> Result<String> {
 fn generate_group_enums<'a>(
     gen: &Generator<'a>,
     _group_name: &str,
-    require: &'a Vec<xml::Require>,
+    require: impl Iterator<Item = &'a xml::Require>,
     listed_enums: &RefCell<HashSet<&'a str>>,
 ) -> Result<TokenStream> {
-    let content = require
-        .iter()
-        .flat_map(|req| &req.content)
-        .collect::<Vec<_>>();
+    let content = require.flat_map(|req| &req.content).collect::<Vec<_>>();
     let group_enums = content
         .into_iter()
         .filter_map(|cnt| match cnt {

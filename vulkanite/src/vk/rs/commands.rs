@@ -550,6 +550,20 @@ impl<D: Dispatcher, A: Allocator> Instance<D, A> {
         };
         vk_result.map(|vk_result| unsafe { SurfaceKHR::from_inner(vk_result) })
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateSurfaceOHOS.html>"]
+    #[doc(alias = "vkCreateSurfaceOHOS")]
+    #[inline]
+    pub fn create_surface_ohos(&self, p_create_info: &SurfaceCreateInfoOHOS) -> Result<SurfaceKHR> {
+        let vk_result = unsafe {
+            raw::create_surface_ohos(
+                self,
+                p_create_info,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        };
+        vk_result.map(|vk_result| unsafe { SurfaceKHR::from_inner(vk_result) })
+    }
 }
 #[repr(C)]
 #[derive(Clone)]
@@ -1530,6 +1544,22 @@ impl<D: Dispatcher, A: Allocator> PhysicalDevice<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceExternalTensorPropertiesARM.html>"]
+    #[doc(alias = "vkGetPhysicalDeviceExternalTensorPropertiesARM")]
+    pub fn get_external_tensor_properties_arm<
+        S: StructureChainOut<ExternalTensorPropertiesARM<'static>>,
+    >(
+        &self,
+        p_external_tensor_info: &PhysicalDeviceExternalTensorInfoARM,
+    ) -> S {
+        unsafe {
+            raw::get_physical_device_external_tensor_properties_arm(
+                self,
+                p_external_tensor_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceOpticalFlowImageFormatsNV.html>"]
     #[doc(alias = "vkGetPhysicalDeviceOpticalFlowImageFormatsNV")]
     pub fn get_optical_flow_image_formats_nv<
@@ -1570,6 +1600,38 @@ impl<D: Dispatcher, A: Allocator> PhysicalDevice<D, A> {
         unsafe {
             raw::get_physical_device_cooperative_matrix_properties_khr(
                 self,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM.html>"]
+    #[doc(alias = "vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM")]
+    pub fn get_queue_family_data_graph_properties_arm<
+        R: DynamicArray<QueueFamilyDataGraphPropertiesARM<'static>>,
+    >(
+        &self,
+        queue_family_index: u32,
+    ) -> Result<R> {
+        unsafe {
+            raw::get_physical_device_queue_family_data_graph_properties_arm(
+                self,
+                queue_family_index,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM.html>"]
+    #[doc(alias = "vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM")]
+    pub fn get_queue_family_data_graph_processing_engine_properties_arm<
+        S: StructureChainOut<QueueFamilyDataGraphProcessingEnginePropertiesARM<'static>>,
+    >(
+        &self,
+        p_queue_family_data_graph_processing_engine_info : & PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM,
+    ) -> S {
+        unsafe {
+            raw::get_physical_device_queue_family_data_graph_processing_engine_properties_arm(
+                self,
+                p_queue_family_data_graph_processing_engine_info,
                 self.disp.get_command_dispatcher(),
             )
         }
@@ -5233,21 +5295,6 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkReleaseSwapchainImagesEXT.html>"]
-    #[doc(alias = "vkReleaseSwapchainImagesEXT")]
-    #[inline]
-    pub fn release_swapchain_images_ext(
-        &self,
-        p_release_info: &ReleaseSwapchainImagesInfoEXT,
-    ) -> Result<()> {
-        unsafe {
-            raw::release_swapchain_images_ext(
-                self,
-                p_release_info,
-                self.disp.get_command_dispatcher(),
-            )
-        }
-    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetGeneratedCommandsMemoryRequirementsNV.html>"]
     #[doc(alias = "vkGetGeneratedCommandsMemoryRequirementsNV")]
     pub fn get_generated_commands_memory_requirements_nv<
@@ -5936,6 +5983,140 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateTensorARM.html>"]
+    #[doc(alias = "vkCreateTensorARM")]
+    #[inline]
+    pub fn create_tensor_arm(&self, p_create_info: &TensorCreateInfoARM) -> Result<TensorARM> {
+        let vk_result = unsafe {
+            raw::create_tensor_arm(
+                self,
+                p_create_info,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        };
+        vk_result.map(|vk_result| unsafe { TensorARM::from_inner(vk_result) })
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyTensorARM.html>"]
+    #[doc(alias = "vkDestroyTensorARM")]
+    #[inline]
+    pub unsafe fn destroy_tensor_arm(&self, tensor: Option<&raw::TensorARM>) {
+        unsafe {
+            raw::destroy_tensor_arm(
+                self,
+                tensor,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateTensorViewARM.html>"]
+    #[doc(alias = "vkCreateTensorViewARM")]
+    #[inline]
+    pub fn create_tensor_view_arm(
+        &self,
+        p_create_info: &TensorViewCreateInfoARM,
+    ) -> Result<TensorViewARM> {
+        let vk_result = unsafe {
+            raw::create_tensor_view_arm(
+                self,
+                p_create_info,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        };
+        vk_result.map(|vk_result| unsafe { TensorViewARM::from_inner(vk_result) })
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyTensorViewARM.html>"]
+    #[doc(alias = "vkDestroyTensorViewARM")]
+    #[inline]
+    pub unsafe fn destroy_tensor_view_arm(&self, tensor_view: Option<&raw::TensorViewARM>) {
+        unsafe {
+            raw::destroy_tensor_view_arm(
+                self,
+                tensor_view,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetTensorMemoryRequirementsARM.html>"]
+    #[doc(alias = "vkGetTensorMemoryRequirementsARM")]
+    pub fn get_tensor_memory_requirements_arm<
+        S: StructureChainOut<MemoryRequirements2<'static>>,
+    >(
+        &self,
+        p_info: &TensorMemoryRequirementsInfoARM,
+    ) -> S {
+        unsafe {
+            raw::get_tensor_memory_requirements_arm(
+                self,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindTensorMemoryARM.html>"]
+    #[doc(alias = "vkBindTensorMemoryARM")]
+    #[inline]
+    pub fn bind_tensor_memory_arm<'a>(
+        &self,
+        p_bind_infos: impl AsSlice<'a, BindTensorMemoryInfoARM<'a>>,
+    ) -> Result<()> {
+        unsafe {
+            raw::bind_tensor_memory_arm(self, p_bind_infos, self.disp.get_command_dispatcher())
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceTensorMemoryRequirementsARM.html>"]
+    #[doc(alias = "vkGetDeviceTensorMemoryRequirementsARM")]
+    pub fn get_tensor_memory_requirements_arm<
+        S: StructureChainOut<MemoryRequirements2<'static>>,
+    >(
+        &self,
+        p_info: &DeviceTensorMemoryRequirementsARM,
+    ) -> S {
+        unsafe {
+            raw::get_device_tensor_memory_requirements_arm(
+                self,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetTensorOpaqueCaptureDescriptorDataARM.html>"]
+    #[doc(alias = "vkGetTensorOpaqueCaptureDescriptorDataARM")]
+    #[inline]
+    pub fn get_tensor_opaque_capture_descriptor_data_arm(
+        &self,
+        p_info: &TensorCaptureDescriptorDataInfoARM,
+        p_data: VoidPtr,
+    ) -> Result<()> {
+        unsafe {
+            raw::get_tensor_opaque_capture_descriptor_data_arm(
+                self,
+                p_info,
+                p_data,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetTensorViewOpaqueCaptureDescriptorDataARM.html>"]
+    #[doc(alias = "vkGetTensorViewOpaqueCaptureDescriptorDataARM")]
+    #[inline]
+    pub fn get_tensor_view_opaque_capture_descriptor_data_arm(
+        &self,
+        p_info: &TensorViewCaptureDescriptorDataInfoARM,
+        p_data: VoidPtr,
+    ) -> Result<()> {
+        unsafe {
+            raw::get_tensor_view_opaque_capture_descriptor_data_arm(
+                self,
+                p_info,
+                p_data,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetShaderModuleIdentifierEXT.html>"]
     #[doc(alias = "vkGetShaderModuleIdentifierEXT")]
     pub fn get_shader_module_identifier_ext<
@@ -6024,6 +6205,23 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn anti_lag_update_amd(&self, p_data: &AntiLagDataAMD) {
         unsafe { raw::anti_lag_update_amd(self, p_data, self.disp.get_command_dispatcher()) }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkWaitForPresent2KHR.html>"]
+    #[doc(alias = "vkWaitForPresent2KHR")]
+    #[inline]
+    pub fn wait_for_present2_khr(
+        &self,
+        swapchain: &raw::SwapchainKHR,
+        p_present_wait2_info: &PresentWait2InfoKHR,
+    ) -> Result<Status> {
+        unsafe {
+            raw::wait_for_present2_khr(
+                self,
+                swapchain,
+                p_present_wait2_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateShadersEXT.html>"]
     #[doc(alias = "vkCreateShadersEXT")]
@@ -6172,6 +6370,36 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkReleaseSwapchainImagesKHR.html>"]
+    #[doc(alias = "vkReleaseSwapchainImagesKHR")]
+    #[inline]
+    pub fn release_swapchain_images_khr(
+        &self,
+        p_release_info: &ReleaseSwapchainImagesInfoKHR,
+    ) -> Result<()> {
+        unsafe {
+            raw::release_swapchain_images_khr(
+                self,
+                p_release_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkReleaseSwapchainImagesEXT.html>"]
+    #[doc(alias = "vkReleaseSwapchainImagesEXT")]
+    #[inline]
+    pub fn release_swapchain_images_ext(
+        &self,
+        p_release_info: &ReleaseSwapchainImagesInfoKHR,
+    ) -> Result<()> {
+        unsafe {
+            raw::release_swapchain_images_ext(
+                self,
+                p_release_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkConvertCooperativeVectorMatrixNV.html>"]
     #[doc(alias = "vkConvertCooperativeVectorMatrixNV")]
     #[inline]
@@ -6245,6 +6473,148 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
         swapchain: &raw::SwapchainKHR,
     ) -> S {
         unsafe { raw::get_latency_timings_nv(self, swapchain, self.disp.get_command_dispatcher()) }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateDataGraphPipelinesARM.html>"]
+    #[doc(alias = "vkCreateDataGraphPipelinesARM")]
+    pub fn create_data_graph_pipelines_arm<'a, R: AdvancedDynamicArray<Pipeline, raw::Pipeline>>(
+        &self,
+        deferred_operation: Option<&raw::DeferredOperationKHR>,
+        pipeline_cache: Option<&raw::PipelineCache>,
+        p_create_infos: impl AsSlice<'a, DataGraphPipelineCreateInfoARM<'a>>,
+    ) -> Result<(Status, R)> {
+        let vk_result: Result<(Status, R::InnerArrayType)> = unsafe {
+            raw::create_data_graph_pipelines_arm(
+                self,
+                deferred_operation,
+                pipeline_cache,
+                p_create_infos,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        };
+        vk_result.map(|(status, vk_result)| {
+            (
+                status,
+                vk_result
+                    .into_iter()
+                    .map(|el| unsafe { Pipeline::from_inner(el) })
+                    .collect(),
+            )
+        })
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateDataGraphPipelineSessionARM.html>"]
+    #[doc(alias = "vkCreateDataGraphPipelineSessionARM")]
+    #[inline]
+    pub fn create_data_graph_pipeline_session_arm(
+        &self,
+        p_create_info: &DataGraphPipelineSessionCreateInfoARM,
+    ) -> Result<DataGraphPipelineSessionARM> {
+        let vk_result = unsafe {
+            raw::create_data_graph_pipeline_session_arm(
+                self,
+                p_create_info,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        };
+        vk_result.map(|vk_result| unsafe { DataGraphPipelineSessionARM::from_inner(vk_result) })
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDataGraphPipelineSessionBindPointRequirementsARM.html>"]
+    #[doc(alias = "vkGetDataGraphPipelineSessionBindPointRequirementsARM")]
+    pub fn get_data_graph_pipeline_session_bind_point_requirements_arm<
+        R: DynamicArray<DataGraphPipelineSessionBindPointRequirementARM<'static>>,
+    >(
+        &self,
+        p_info: &DataGraphPipelineSessionBindPointRequirementsInfoARM,
+    ) -> Result<R> {
+        unsafe {
+            raw::get_data_graph_pipeline_session_bind_point_requirements_arm(
+                self,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDataGraphPipelineSessionMemoryRequirementsARM.html>"]
+    #[doc(alias = "vkGetDataGraphPipelineSessionMemoryRequirementsARM")]
+    pub fn get_data_graph_pipeline_session_memory_requirements_arm<
+        S: StructureChainOut<MemoryRequirements2<'static>>,
+    >(
+        &self,
+        p_info: &DataGraphPipelineSessionMemoryRequirementsInfoARM,
+    ) -> S {
+        unsafe {
+            raw::get_data_graph_pipeline_session_memory_requirements_arm(
+                self,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkBindDataGraphPipelineSessionMemoryARM.html>"]
+    #[doc(alias = "vkBindDataGraphPipelineSessionMemoryARM")]
+    #[inline]
+    pub fn bind_data_graph_pipeline_session_memory_arm<'a>(
+        &self,
+        p_bind_infos: impl AsSlice<'a, BindDataGraphPipelineSessionMemoryInfoARM<'a>>,
+    ) -> Result<()> {
+        unsafe {
+            raw::bind_data_graph_pipeline_session_memory_arm(
+                self,
+                p_bind_infos,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDataGraphPipelineSessionARM.html>"]
+    #[doc(alias = "vkDestroyDataGraphPipelineSessionARM")]
+    #[inline]
+    pub unsafe fn destroy_data_graph_pipeline_session_arm(
+        &self,
+        session: &raw::DataGraphPipelineSessionARM,
+    ) {
+        unsafe {
+            raw::destroy_data_graph_pipeline_session_arm(
+                self,
+                session,
+                self.alloc.get_allocation_callbacks().as_ref(),
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDataGraphPipelineAvailablePropertiesARM.html>"]
+    #[doc(alias = "vkGetDataGraphPipelineAvailablePropertiesARM")]
+    pub fn get_data_graph_pipeline_available_properties_arm<
+        R: DynamicArray<DataGraphPipelinePropertyARM>,
+    >(
+        &self,
+        p_pipeline_info: &DataGraphPipelineInfoARM,
+    ) -> Result<R> {
+        unsafe {
+            raw::get_data_graph_pipeline_available_properties_arm(
+                self,
+                p_pipeline_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDataGraphPipelinePropertiesARM.html>"]
+    #[doc(alias = "vkGetDataGraphPipelinePropertiesARM")]
+    pub fn get_data_graph_pipeline_properties_arm<
+        R: DynamicArray<DataGraphPipelinePropertyQueryResultARM<'static>>,
+    >(
+        &self,
+        p_pipeline_info: &DataGraphPipelineInfoARM,
+        properties_count: u32,
+    ) -> Result<R> {
+        unsafe {
+            raw::get_data_graph_pipeline_properties_arm(
+                self,
+                p_pipeline_info,
+                properties_count,
+                self.disp.get_command_dispatcher(),
+            )
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetScreenBufferPropertiesQNX.html>"]
     #[doc(alias = "vkGetScreenBufferPropertiesQNX")]
@@ -10093,8 +10463,14 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchTileQCOM.html>"]
     #[doc(alias = "vkCmdDispatchTileQCOM")]
     #[inline]
-    pub fn dispatch_tile_qcom(&self) {
-        unsafe { raw::cmd_dispatch_tile_qcom(self, self.disp.get_command_dispatcher()) }
+    pub fn dispatch_tile_qcom(&self, p_dispatch_tile_info: &DispatchTileInfoQCOM) {
+        unsafe {
+            raw::cmd_dispatch_tile_qcom(
+                self,
+                p_dispatch_tile_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBeginPerTileExecutionQCOM.html>"]
     #[doc(alias = "vkCmdBeginPerTileExecutionQCOM")]
@@ -10968,6 +11344,14 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdCopyTensorARM.html>"]
+    #[doc(alias = "vkCmdCopyTensorARM")]
+    #[inline]
+    pub fn copy_tensor_arm(&self, p_copy_tensor_info: &CopyTensorInfoARM) {
+        unsafe {
+            raw::cmd_copy_tensor_arm(self, p_copy_tensor_info, self.disp.get_command_dispatcher())
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdOpticalFlowExecuteNV.html>"]
     #[doc(alias = "vkCmdOpticalFlowExecuteNV")]
     #[inline]
@@ -11034,6 +11418,23 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDispatchDataGraphARM.html>"]
+    #[doc(alias = "vkCmdDispatchDataGraphARM")]
+    #[inline]
+    pub fn dispatch_data_graph_arm(
+        &self,
+        session: &raw::DataGraphPipelineSessionARM,
+        p_info: Option<&DataGraphPipelineDispatchInfoARM>,
+    ) {
+        unsafe {
+            raw::cmd_dispatch_data_graph_arm(
+                self,
+                session,
+                p_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetAttachmentFeedbackLoopEnableEXT.html>"]
     #[doc(alias = "vkCmdSetAttachmentFeedbackLoopEnableEXT")]
     #[inline]
@@ -11072,6 +11473,18 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             raw::cmd_bind_descriptor_buffer_embedded_samplers2_ext(
                 self,
                 p_bind_descriptor_buffer_embedded_samplers_info,
+                self.disp.get_command_dispatcher(),
+            )
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindTileMemoryQCOM.html>"]
+    #[doc(alias = "vkCmdBindTileMemoryQCOM")]
+    #[inline]
+    pub fn bind_tile_memory_qcom(&self, p_tile_memory_bind_info: Option<&TileMemoryBindInfoQCOM>) {
+        unsafe {
+            raw::cmd_bind_tile_memory_qcom(
+                self,
+                p_tile_memory_bind_info,
                 self.disp.get_command_dispatcher(),
             )
         }
@@ -11605,6 +12018,48 @@ impl MicromapEXT {
 }
 #[repr(C)]
 #[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorARM.html>"]
+#[doc(alias = "VkTensorARM")]
+pub struct TensorARM {
+    inner: <raw::TensorARM as Handle>::InnerType,
+}
+unsafe impl Alias<raw::TensorARM> for TensorARM {}
+impl Deref for TensorARM {
+    type Target = raw::TensorARM;
+    fn deref(&self) -> &Self::Target {
+        unsafe { std::mem::transmute(&self.inner) }
+    }
+}
+impl TensorARM {
+    pub fn from_inner(handle: raw::TensorARM) -> Self {
+        Self {
+            inner: handle.as_raw(),
+        }
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorViewARM.html>"]
+#[doc(alias = "VkTensorViewARM")]
+pub struct TensorViewARM {
+    inner: <raw::TensorViewARM as Handle>::InnerType,
+}
+unsafe impl Alias<raw::TensorViewARM> for TensorViewARM {}
+impl Deref for TensorViewARM {
+    type Target = raw::TensorViewARM;
+    fn deref(&self) -> &Self::Target {
+        unsafe { std::mem::transmute(&self.inner) }
+    }
+}
+impl TensorViewARM {
+    pub fn from_inner(handle: raw::TensorViewARM) -> Self {
+        Self {
+            inner: handle.as_raw(),
+        }
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOpticalFlowSessionNV.html>"]
 #[doc(alias = "VkOpticalFlowSessionNV")]
 pub struct OpticalFlowSessionNV {
@@ -11661,6 +12116,27 @@ impl Deref for PipelineBinaryKHR {
 }
 impl PipelineBinaryKHR {
     pub fn from_inner(handle: raw::PipelineBinaryKHR) -> Self {
+        Self {
+            inner: handle.as_raw(),
+        }
+    }
+}
+#[repr(C)]
+#[derive(Clone, Copy)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineSessionARM.html>"]
+#[doc(alias = "VkDataGraphPipelineSessionARM")]
+pub struct DataGraphPipelineSessionARM {
+    inner: <raw::DataGraphPipelineSessionARM as Handle>::InnerType,
+}
+unsafe impl Alias<raw::DataGraphPipelineSessionARM> for DataGraphPipelineSessionARM {}
+impl Deref for DataGraphPipelineSessionARM {
+    type Target = raw::DataGraphPipelineSessionARM;
+    fn deref(&self) -> &Self::Target {
+        unsafe { std::mem::transmute(&self.inner) }
+    }
+}
+impl DataGraphPipelineSessionARM {
+    pub fn from_inner(handle: raw::DataGraphPipelineSessionARM) -> Self {
         Self {
             inner: handle.as_raw(),
         }

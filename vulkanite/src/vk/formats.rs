@@ -255,6 +255,21 @@ impl Format {
             Format::A4R4G4B4UnormPack16 => 4u8,
             Format::A4B4G4R4UnormPack16 => 4u8,
             Format::R16G16Sfixed5NV => 2u8,
+            Format::R10X6UintPack16ARM => 1u8,
+            Format::R10X6G10X6Uint2Pack16ARM => 2u8,
+            Format::R10X6G10X6B10X6A10X6Uint4Pack16ARM => 4u8,
+            Format::R12X4UintPack16ARM => 1u8,
+            Format::R12X4G12X4Uint2Pack16ARM => 2u8,
+            Format::R12X4G12X4B12X4A12X4Uint4Pack16ARM => 4u8,
+            Format::R14X2UintPack16ARM => 1u8,
+            Format::R14X2G14X2Uint2Pack16ARM => 2u8,
+            Format::R14X2G14X2B14X2A14X2Uint4Pack16ARM => 4u8,
+            Format::R14X2UnormPack16ARM => 1u8,
+            Format::R14X2G14X2Unorm2Pack16ARM => 2u8,
+            Format::R14X2G14X2B14X2A14X2Unorm4Pack16ARM => 4u8,
+            Format::G14X2B14X2R14X22Plane420Unorm3Pack16ARM => 3u8,
+            Format::G14X2B14X2R14X22Plane422Unorm3Pack16ARM => 3u8,
+            Format::R8BoolARM => 1u8,
         }
     }
     #[doc = r" Return the texel block size of this format in bytes"]
@@ -510,6 +525,21 @@ impl Format {
             Format::A4R4G4B4UnormPack16 => 2u8,
             Format::A4B4G4R4UnormPack16 => 2u8,
             Format::R16G16Sfixed5NV => 4u8,
+            Format::R10X6UintPack16ARM => 2u8,
+            Format::R10X6G10X6Uint2Pack16ARM => 4u8,
+            Format::R10X6G10X6B10X6A10X6Uint4Pack16ARM => 8u8,
+            Format::R12X4UintPack16ARM => 2u8,
+            Format::R12X4G12X4Uint2Pack16ARM => 4u8,
+            Format::R12X4G12X4B12X4A12X4Uint4Pack16ARM => 8u8,
+            Format::R14X2UintPack16ARM => 2u8,
+            Format::R14X2G14X2Uint2Pack16ARM => 4u8,
+            Format::R14X2G14X2B14X2A14X2Uint4Pack16ARM => 8u8,
+            Format::R14X2UnormPack16ARM => 2u8,
+            Format::R14X2G14X2Unorm2Pack16ARM => 4u8,
+            Format::R14X2G14X2B14X2A14X2Unorm4Pack16ARM => 8u8,
+            Format::G14X2B14X2R14X22Plane420Unorm3Pack16ARM => 6u8,
+            Format::G14X2B14X2R14X22Plane422Unorm3Pack16ARM => 6u8,
+            Format::R8BoolARM => 1u8,
         }
     }
     #[doc = r" Return the number of texels in a texel block"]

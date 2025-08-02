@@ -26,7 +26,7 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
 
     for req_cnt in gen
         .filtered_features()
-        .flat_map(|feat| &feat.require)
+        .flat_map(|feat| feat.requires())
         .flat_map(|cnt| &cnt.content)
         .chain(
             gen.filtered_extensions()

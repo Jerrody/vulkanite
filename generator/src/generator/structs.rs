@@ -55,7 +55,7 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
 
     let struct_features = gen
         .filtered_features()
-        .flat_map(|feature| &feature.require)
+        .flat_map(|feature| feature.requires())
         .map(|req| generate_group_struct(req))
         .collect::<Result<Vec<_>>>()?;
     let struct_extensions = gen

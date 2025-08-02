@@ -275,7 +275,10 @@ impl<'a> TryFrom<&'a xml::Type> for Struct<'a> {
             } if cat == "basetype" => match &content[..] {
                 [xml::TypeContent::Text(decl), xml::TypeContent::Name(name), xml::TypeContent::Text(_)] =>
                 {
-                    let ty = if decl == "struct" || decl.ends_with("typedef void") {
+                    let ty = if decl == "struct"
+                        || decl.starts_with("typedef struct")
+                        || decl.ends_with("typedef void")
+                    {
                         Type::Void
                     } else if decl.ends_with("typedef void*") {
                         Type::VoidPtr

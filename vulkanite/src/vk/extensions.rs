@@ -1,7 +1,7 @@
 use super::{
     ApiVersion, DeviceExtension, DeviceExtensionName, InstanceExtension, InstanceExtensionName,
 };
-pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 4, 312u32);
+pub const HEADER_VERSION: ApiVersion = ApiVersion::new(0, 1, 4, 324u32);
 pub const KHR_SURFACE: InstanceExtension = InstanceExtension {
     name: unsafe { InstanceExtensionName::new(c"VK_KHR_surface") },
     spec: 25u32,
@@ -894,7 +894,7 @@ pub const EXT_TEXEL_BUFFER_ALIGNMENT: DeviceExtension = DeviceExtension {
 };
 pub const QCOM_RENDER_PASS_TRANSFORM: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_QCOM_render_pass_transform") },
-    spec: 4u32,
+    spec: 5u32,
 };
 pub const EXT_DEPTH_BIAS_CONTROL: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_EXT_depth_bias_control") },
@@ -1296,6 +1296,10 @@ pub const LUNARG_DIRECT_DRIVER_LOADING: InstanceExtension = InstanceExtension {
     name: unsafe { InstanceExtensionName::new(c"VK_LUNARG_direct_driver_loading") },
     spec: 1u32,
 };
+pub const ARM_TENSORS: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_ARM_tensors") },
+    spec: 1u32,
+};
 pub const EXT_SHADER_MODULE_IDENTIFIER: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_EXT_shader_module_identifier") },
     spec: 1u32,
@@ -1328,6 +1332,18 @@ pub const AMD_ANTI_LAG: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_AMD_anti_lag") },
     spec: 1u32,
 };
+pub const AMDX_DENSE_GEOMETRY_FORMAT: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_AMDX_dense_geometry_format") },
+    spec: 1u32,
+};
+pub const KHR_PRESENT_ID2: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_KHR_present_id2") },
+    spec: 1u32,
+};
+pub const KHR_PRESENT_WAIT2: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_KHR_present_wait2") },
+    spec: 1u32,
+};
 pub const KHR_RAY_TRACING_POSITION_FETCH: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_KHR_ray_tracing_position_fetch") },
     spec: 1u32,
@@ -1346,6 +1362,14 @@ pub const QCOM_TILE_PROPERTIES: DeviceExtension = DeviceExtension {
 };
 pub const SEC_AMIGO_PROFILING: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_SEC_amigo_profiling") },
+    spec: 1u32,
+};
+pub const KHR_SURFACE_MAINTENANCE1: InstanceExtension = InstanceExtension {
+    name: unsafe { InstanceExtensionName::new(c"VK_KHR_surface_maintenance1") },
+    spec: 1u32,
+};
+pub const KHR_SWAPCHAIN_MAINTENANCE1: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_KHR_swapchain_maintenance1") },
     spec: 1u32,
 };
 pub const QCOM_MULTIVIEW_PER_VIEW_VIEWPORTS: DeviceExtension = DeviceExtension {
@@ -1396,6 +1420,10 @@ pub const KHR_COOPERATIVE_MATRIX: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_KHR_cooperative_matrix") },
     spec: 2u32,
 };
+pub const ARM_DATA_GRAPH: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_ARM_data_graph") },
+    spec: 1u32,
+};
 pub const QCOM_MULTIVIEW_PER_VIEW_RENDER_AREAS: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_QCOM_multiview_per_view_render_areas") },
     spec: 1u32,
@@ -1436,6 +1464,10 @@ pub const KHR_LOAD_STORE_OP_NONE: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_KHR_load_store_op_none") },
     spec: 1u32,
 };
+pub const KHR_UNIFIED_IMAGE_LAYOUTS: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_KHR_unified_image_layouts") },
+    spec: 1u32,
+};
 pub const KHR_SHADER_FLOAT_CONTROLS2: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_KHR_shader_float_controls2") },
     spec: 1u32,
@@ -1472,6 +1504,10 @@ pub const NV_DESCRIPTOR_POOL_OVERALLOCATION: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_descriptor_pool_overallocation") },
     spec: 1u32,
 };
+pub const QCOM_TILE_MEMORY_HEAP: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_QCOM_tile_memory_heap") },
+    spec: 1u32,
+};
 pub const NV_DISPLAY_STEREO: InstanceExtension = InstanceExtension {
     name: unsafe { InstanceExtensionName::new(c"VK_NV_display_stereo") },
     spec: 1u32,
@@ -1504,13 +1540,17 @@ pub const EXT_SHADER_REPLICATED_COMPOSITES: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_EXT_shader_replicated_composites") },
     spec: 1u32,
 };
+pub const EXT_SHADER_FLOAT8: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_EXT_shader_float8") },
+    spec: 1u32,
+};
 pub const NV_RAY_TRACING_VALIDATION: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_ray_tracing_validation") },
     spec: 1u32,
 };
 pub const NV_CLUSTER_ACCELERATION_STRUCTURE: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_cluster_acceleration_structure") },
-    spec: 2u32,
+    spec: 4u32,
 };
 pub const NV_PARTITIONED_ACCELERATION_STRUCTURE: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_partitioned_acceleration_structure") },
@@ -1530,6 +1570,14 @@ pub const MESA_IMAGE_ALIGNMENT_CONTROL: DeviceExtension = DeviceExtension {
 };
 pub const EXT_DEPTH_CLAMP_CONTROL: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_EXT_depth_clamp_control") },
+    spec: 1u32,
+};
+pub const KHR_MAINTENANCE9: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_KHR_maintenance9") },
+    spec: 1u32,
+};
+pub const OHOS_SURFACE: InstanceExtension = InstanceExtension {
+    name: unsafe { InstanceExtensionName::new(c"VK_OHOS_surface") },
     spec: 1u32,
 };
 pub const HUAWEI_HDR_VIVID: DeviceExtension = DeviceExtension {
@@ -1556,11 +1604,35 @@ pub const EXT_VERTEX_ATTRIBUTE_ROBUSTNESS: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_EXT_vertex_attribute_robustness") },
     spec: 1u32,
 };
+pub const ARM_FORMAT_PACK: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_ARM_format_pack") },
+    spec: 1u32,
+};
+pub const VALVE_FRAGMENT_DENSITY_MAP_LAYERED: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_VALVE_fragment_density_map_layered") },
+    spec: 1u32,
+};
+pub const KHR_ROBUSTNESS2: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_KHR_robustness2") },
+    spec: 1u32,
+};
 pub const NV_PRESENT_METERING: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_NV_present_metering") },
     spec: 1u32,
 };
 pub const EXT_FRAGMENT_DENSITY_MAP_OFFSET: DeviceExtension = DeviceExtension {
     name: unsafe { DeviceExtensionName::new(c"VK_EXT_fragment_density_map_offset") },
+    spec: 1u32,
+};
+pub const EXT_ZERO_INITIALIZE_DEVICE_MEMORY: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_EXT_zero_initialize_device_memory") },
+    spec: 1u32,
+};
+pub const KHR_PRESENT_MODE_FIFO_LATEST_READY: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_KHR_present_mode_fifo_latest_ready") },
+    spec: 1u32,
+};
+pub const SEC_PIPELINE_CACHE_INCREMENTAL_MODE: DeviceExtension = DeviceExtension {
+    name: unsafe { DeviceExtensionName::new(c"VK_SEC_pipeline_cache_incremental_mode") },
     spec: 1u32,
 };

@@ -3739,12 +3739,6 @@ pub struct CommandsDispatcher {
             *const PipelineExecutableInternalRepresentationKHR,
         ) -> Status,
     >,
-    pub release_swapchain_images_ext: Cell<
-        unsafe extern "system" fn(
-            Option<BorrowedHandle<'_, Device>>,
-            *const ReleaseSwapchainImagesInfoEXT,
-        ) -> Status,
-    >,
     pub get_generated_commands_memory_requirements_nv: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -3853,8 +3847,12 @@ pub struct CommandsDispatcher {
             *const CudaLaunchInfoNV,
         ),
     >,
-    pub cmd_dispatch_tile_qcom:
-        Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>)>,
+    pub cmd_dispatch_tile_qcom: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, CommandBuffer>>,
+            *const DispatchTileInfoQCOM,
+        ),
+    >,
     pub cmd_begin_per_tile_execution_qcom: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -4480,6 +4478,84 @@ pub struct CommandsDispatcher {
             CoverageReductionModeNV,
         ),
     >,
+    pub create_tensor_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const TensorCreateInfoARM,
+            *const AllocationCallbacks,
+            *const TensorARM,
+        ) -> Status,
+    >,
+    pub destroy_tensor_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            Option<BorrowedHandle<'_, TensorARM>>,
+            *const AllocationCallbacks,
+        ),
+    >,
+    pub create_tensor_view_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const TensorViewCreateInfoARM,
+            *const AllocationCallbacks,
+            *const TensorViewARM,
+        ) -> Status,
+    >,
+    pub destroy_tensor_view_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            Option<BorrowedHandle<'_, TensorViewARM>>,
+            *const AllocationCallbacks,
+        ),
+    >,
+    pub get_tensor_memory_requirements_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const TensorMemoryRequirementsInfoARM,
+            *const MemoryRequirements2,
+        ),
+    >,
+    pub bind_tensor_memory_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            u32,
+            *const BindTensorMemoryInfoARM,
+        ) -> Status,
+    >,
+    pub get_device_tensor_memory_requirements_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const DeviceTensorMemoryRequirementsARM,
+            *const MemoryRequirements2,
+        ),
+    >,
+    pub cmd_copy_tensor_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, CommandBuffer>>,
+            *const CopyTensorInfoARM,
+        ),
+    >,
+    pub get_physical_device_external_tensor_properties_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, PhysicalDevice>>,
+            *const PhysicalDeviceExternalTensorInfoARM,
+            *const ExternalTensorPropertiesARM,
+        ),
+    >,
+    pub get_tensor_opaque_capture_descriptor_data_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const TensorCaptureDescriptorDataInfoARM,
+            VoidPtr,
+        ) -> Status,
+    >,
+    pub get_tensor_view_opaque_capture_descriptor_data_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const TensorViewCaptureDescriptorDataInfoARM,
+            VoidPtr,
+        ) -> Status,
+    >,
     pub get_shader_module_identifier_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -4535,6 +4611,13 @@ pub struct CommandsDispatcher {
     >,
     pub anti_lag_update_amd:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, Device>>, *const AntiLagDataAMD)>,
+    pub wait_for_present2_khr: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            Option<BorrowedHandle<'_, SwapchainKHR>>,
+            *const PresentWait2InfoKHR,
+        ) -> Status,
+    >,
     pub create_shaders_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -4627,6 +4710,18 @@ pub struct CommandsDispatcher {
             *const TilePropertiesQCOM,
         ) -> Status,
     >,
+    pub release_swapchain_images_ext: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const ReleaseSwapchainImagesInfoKHR,
+        ) -> Status,
+    >,
+    pub release_swapchain_images_khr: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const ReleaseSwapchainImagesInfoKHR,
+        ) -> Status,
+    >,
     pub get_physical_device_cooperative_vector_properties_nv: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, PhysicalDevice>>,
@@ -4688,6 +4783,92 @@ pub struct CommandsDispatcher {
             *const CooperativeMatrixPropertiesKHR,
         ) -> Status,
     >,
+    pub create_data_graph_pipelines_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            Option<BorrowedHandle<'_, DeferredOperationKHR>>,
+            Option<BorrowedHandle<'_, PipelineCache>>,
+            u32,
+            *const DataGraphPipelineCreateInfoARM,
+            *const AllocationCallbacks,
+            *const Pipeline,
+        ) -> Status,
+    >,
+    pub create_data_graph_pipeline_session_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const DataGraphPipelineSessionCreateInfoARM,
+            *const AllocationCallbacks,
+            *const DataGraphPipelineSessionARM,
+        ) -> Status,
+    >,
+    pub get_data_graph_pipeline_session_bind_point_requirements_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const DataGraphPipelineSessionBindPointRequirementsInfoARM,
+            *const u32,
+            *const DataGraphPipelineSessionBindPointRequirementARM,
+        ) -> Status,
+    >,
+    pub get_data_graph_pipeline_session_memory_requirements_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const DataGraphPipelineSessionMemoryRequirementsInfoARM,
+            *const MemoryRequirements2,
+        ),
+    >,
+    pub bind_data_graph_pipeline_session_memory_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            u32,
+            *const BindDataGraphPipelineSessionMemoryInfoARM,
+        ) -> Status,
+    >,
+    pub destroy_data_graph_pipeline_session_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            Option<BorrowedHandle<'_, DataGraphPipelineSessionARM>>,
+            *const AllocationCallbacks,
+        ),
+    >,
+    pub cmd_dispatch_data_graph_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, CommandBuffer>>,
+            Option<BorrowedHandle<'_, DataGraphPipelineSessionARM>>,
+            *const DataGraphPipelineDispatchInfoARM,
+        ),
+    >,
+    pub get_data_graph_pipeline_available_properties_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const DataGraphPipelineInfoARM,
+            *const u32,
+            *const DataGraphPipelinePropertyARM,
+        ) -> Status,
+    >,
+    pub get_data_graph_pipeline_properties_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Device>>,
+            *const DataGraphPipelineInfoARM,
+            u32,
+            *const DataGraphPipelinePropertyQueryResultARM,
+        ) -> Status,
+    >,
+    pub get_physical_device_queue_family_data_graph_properties_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, PhysicalDevice>>,
+            u32,
+            *const u32,
+            *const QueueFamilyDataGraphPropertiesARM,
+        ) -> Status,
+    >,
+    pub get_physical_device_queue_family_data_graph_processing_engine_properties_arm: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, PhysicalDevice>>,
+            *const PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM,
+            *const QueueFamilyDataGraphProcessingEnginePropertiesARM,
+        ),
+    >,
     pub cmd_set_attachment_feedback_loop_enable_ext: Cell<
         unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, ImageAspectFlags),
     >,
@@ -4740,6 +4921,12 @@ pub struct CommandsDispatcher {
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             *const BindDescriptorBufferEmbeddedSamplersInfoEXT,
+        ),
+    >,
+    pub cmd_bind_tile_memory_qcom: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, CommandBuffer>>,
+            *const TileMemoryBindInfoQCOM,
         ),
     >,
     pub create_external_compute_queue_nv: Cell<
@@ -4856,6 +5043,14 @@ pub struct CommandsDispatcher {
             u32,
             *const WriteIndirectExecutionSetShaderEXT,
         ),
+    >,
+    pub create_surface_ohos: Cell<
+        unsafe extern "system" fn(
+            Option<BorrowedHandle<'_, Instance>>,
+            *const SurfaceCreateInfoOHOS,
+            *const AllocationCallbacks,
+            *const SurfaceKHR,
+        ) -> Status,
     >,
     pub get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv: Cell<
         unsafe extern "system" fn(
@@ -9294,15 +9489,6 @@ impl CommandsDispatcher {
         }
         self.get_pipeline_executable_internal_representations_khr
             .set(vk_func_ptr);
-        let mut vk_func_ptr = self.release_swapchain_images_ext.get();
-        let loaded_ptr = get_instance_proc_addr(
-            Some(instance.borrow()),
-            c"vkReleaseSwapchainImagesEXT".as_ptr(),
-        );
-        if !loaded_ptr.is_null() {
-            vk_func_ptr = mem::transmute(loaded_ptr);
-        }
-        self.release_swapchain_images_ext.set(vk_func_ptr);
         let mut vk_func_ptr = self.get_generated_commands_memory_requirements_nv.get();
         let loaded_ptr = get_instance_proc_addr(
             Some(instance.borrow()),
@@ -10348,6 +10534,101 @@ impl CommandsDispatcher {
             vk_func_ptr = mem::transmute(loaded_ptr);
         }
         self.cmd_set_coverage_reduction_mode_nv.set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_tensor_arm.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkCreateTensorARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_tensor_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.destroy_tensor_arm.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkDestroyTensorARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.destroy_tensor_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_tensor_view_arm.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkCreateTensorViewARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_tensor_view_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.destroy_tensor_view_arm.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkDestroyTensorViewARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.destroy_tensor_view_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_tensor_memory_requirements_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetTensorMemoryRequirementsARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_tensor_memory_requirements_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.bind_tensor_memory_arm.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkBindTensorMemoryARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.bind_tensor_memory_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_device_tensor_memory_requirements_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetDeviceTensorMemoryRequirementsARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_device_tensor_memory_requirements_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_copy_tensor_arm.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkCmdCopyTensorARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_copy_tensor_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self
+            .get_physical_device_external_tensor_properties_arm
+            .get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetPhysicalDeviceExternalTensorPropertiesARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_physical_device_external_tensor_properties_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_tensor_opaque_capture_descriptor_data_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetTensorOpaqueCaptureDescriptorDataARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_tensor_opaque_capture_descriptor_data_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self
+            .get_tensor_view_opaque_capture_descriptor_data_arm
+            .get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetTensorViewOpaqueCaptureDescriptorDataARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_tensor_view_opaque_capture_descriptor_data_arm
+            .set(vk_func_ptr);
         let mut vk_func_ptr = self.get_shader_module_identifier_ext.get();
         let loaded_ptr = get_instance_proc_addr(
             Some(instance.borrow()),
@@ -10420,6 +10701,13 @@ impl CommandsDispatcher {
             vk_func_ptr = mem::transmute(loaded_ptr);
         }
         self.anti_lag_update_amd.set(vk_func_ptr);
+        let mut vk_func_ptr = self.wait_for_present2_khr.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkWaitForPresent2KHR".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.wait_for_present2_khr.set(vk_func_ptr);
         let mut vk_func_ptr = self.create_shaders_ext.get();
         let loaded_ptr =
             get_instance_proc_addr(Some(instance.borrow()), c"vkCreateShadersEXT".as_ptr());
@@ -10521,6 +10809,23 @@ impl CommandsDispatcher {
         }
         self.get_dynamic_rendering_tile_properties_qcom
             .set(vk_func_ptr);
+        let mut vk_func_ptr = self.release_swapchain_images_khr.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkReleaseSwapchainImagesEXT".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.release_swapchain_images_ext.set(vk_func_ptr);
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkReleaseSwapchainImagesKHR".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.release_swapchain_images_khr.set(vk_func_ptr);
         let mut vk_func_ptr = self
             .get_physical_device_cooperative_vector_properties_nv
             .get();
@@ -10601,6 +10906,120 @@ impl CommandsDispatcher {
         }
         self.get_physical_device_cooperative_matrix_properties_khr
             .set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_data_graph_pipelines_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkCreateDataGraphPipelinesARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_data_graph_pipelines_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_data_graph_pipeline_session_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkCreateDataGraphPipelineSessionARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_data_graph_pipeline_session_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self
+            .get_data_graph_pipeline_session_bind_point_requirements_arm
+            .get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetDataGraphPipelineSessionBindPointRequirementsARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_data_graph_pipeline_session_bind_point_requirements_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self
+            .get_data_graph_pipeline_session_memory_requirements_arm
+            .get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetDataGraphPipelineSessionMemoryRequirementsARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_data_graph_pipeline_session_memory_requirements_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.bind_data_graph_pipeline_session_memory_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkBindDataGraphPipelineSessionMemoryARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.bind_data_graph_pipeline_session_memory_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.destroy_data_graph_pipeline_session_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkDestroyDataGraphPipelineSessionARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.destroy_data_graph_pipeline_session_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_dispatch_data_graph_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkCmdDispatchDataGraphARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_dispatch_data_graph_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_data_graph_pipeline_available_properties_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetDataGraphPipelineAvailablePropertiesARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_data_graph_pipeline_available_properties_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_data_graph_pipeline_properties_arm.get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetDataGraphPipelinePropertiesARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_data_graph_pipeline_properties_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self
+            .get_physical_device_queue_family_data_graph_properties_arm
+            .get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetPhysicalDeviceQueueFamilyDataGraphPropertiesARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_physical_device_queue_family_data_graph_properties_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self
+            .get_physical_device_queue_family_data_graph_processing_engine_properties_arm
+            .get();
+        let loaded_ptr = get_instance_proc_addr(
+            Some(instance.borrow()),
+            c"vkGetPhysicalDeviceQueueFamilyDataGraphProcessingEnginePropertiesARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_physical_device_queue_family_data_graph_processing_engine_properties_arm
+            .set(vk_func_ptr);
         let mut vk_func_ptr = self.cmd_set_attachment_feedback_loop_enable_ext.get();
         let loaded_ptr = get_instance_proc_addr(
             Some(instance.borrow()),
@@ -10677,6 +11096,13 @@ impl CommandsDispatcher {
         }
         self.cmd_bind_descriptor_buffer_embedded_samplers2_ext
             .set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_bind_tile_memory_qcom.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkCmdBindTileMemoryQCOM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_bind_tile_memory_qcom.set(vk_func_ptr);
         let mut vk_func_ptr = self.create_external_compute_queue_nv.get();
         let loaded_ptr = get_instance_proc_addr(
             Some(instance.borrow()),
@@ -10832,6 +11258,13 @@ impl CommandsDispatcher {
         }
         self.update_indirect_execution_set_shader_ext
             .set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_surface_ohos.get();
+        let loaded_ptr =
+            get_instance_proc_addr(Some(instance.borrow()), c"vkCreateSurfaceOHOS".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_surface_ohos.set(vk_func_ptr);
         let mut vk_func_ptr = self
             .get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv
             .get();
@@ -14259,15 +14692,6 @@ impl CommandsDispatcher {
         }
         self.get_pipeline_executable_internal_representations_khr
             .set(vk_func_ptr);
-        let mut vk_func_ptr = self.release_swapchain_images_ext.get();
-        let loaded_ptr = get_device_proc_addr(
-            Some(device.borrow()),
-            c"vkReleaseSwapchainImagesEXT".as_ptr(),
-        );
-        if !loaded_ptr.is_null() {
-            vk_func_ptr = mem::transmute(loaded_ptr);
-        }
-        self.release_swapchain_images_ext.set(vk_func_ptr);
         let mut vk_func_ptr = self.get_generated_commands_memory_requirements_nv.get();
         let loaded_ptr = get_device_proc_addr(
             Some(device.borrow()),
@@ -15225,6 +15649,88 @@ impl CommandsDispatcher {
             vk_func_ptr = mem::transmute(loaded_ptr);
         }
         self.cmd_set_coverage_reduction_mode_nv.set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_tensor_arm.get();
+        let loaded_ptr = get_device_proc_addr(Some(device.borrow()), c"vkCreateTensorARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_tensor_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.destroy_tensor_arm.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkDestroyTensorARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.destroy_tensor_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_tensor_view_arm.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkCreateTensorViewARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_tensor_view_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.destroy_tensor_view_arm.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkDestroyTensorViewARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.destroy_tensor_view_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_tensor_memory_requirements_arm.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkGetTensorMemoryRequirementsARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_tensor_memory_requirements_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.bind_tensor_memory_arm.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkBindTensorMemoryARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.bind_tensor_memory_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_device_tensor_memory_requirements_arm.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkGetDeviceTensorMemoryRequirementsARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_device_tensor_memory_requirements_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_copy_tensor_arm.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkCmdCopyTensorARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_copy_tensor_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_tensor_opaque_capture_descriptor_data_arm.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkGetTensorOpaqueCaptureDescriptorDataARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_tensor_opaque_capture_descriptor_data_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self
+            .get_tensor_view_opaque_capture_descriptor_data_arm
+            .get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkGetTensorViewOpaqueCaptureDescriptorDataARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_tensor_view_opaque_capture_descriptor_data_arm
+            .set(vk_func_ptr);
         let mut vk_func_ptr = self.get_shader_module_identifier_ext.get();
         let loaded_ptr = get_device_proc_addr(
             Some(device.borrow()),
@@ -15285,6 +15791,13 @@ impl CommandsDispatcher {
             vk_func_ptr = mem::transmute(loaded_ptr);
         }
         self.anti_lag_update_amd.set(vk_func_ptr);
+        let mut vk_func_ptr = self.wait_for_present2_khr.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkWaitForPresent2KHR".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.wait_for_present2_khr.set(vk_func_ptr);
         let mut vk_func_ptr = self.create_shaders_ext.get();
         let loaded_ptr =
             get_device_proc_addr(Some(device.borrow()), c"vkCreateShadersEXT".as_ptr());
@@ -15384,6 +15897,23 @@ impl CommandsDispatcher {
         }
         self.get_dynamic_rendering_tile_properties_qcom
             .set(vk_func_ptr);
+        let mut vk_func_ptr = self.release_swapchain_images_khr.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkReleaseSwapchainImagesEXT".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.release_swapchain_images_ext.set(vk_func_ptr);
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkReleaseSwapchainImagesKHR".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.release_swapchain_images_khr.set(vk_func_ptr);
         let mut vk_func_ptr = self.convert_cooperative_vector_matrix_nv.get();
         let loaded_ptr = get_device_proc_addr(
             Some(device.borrow()),
@@ -15437,6 +15967,94 @@ impl CommandsDispatcher {
             vk_func_ptr = mem::transmute(loaded_ptr);
         }
         self.queue_notify_out_of_band_nv.set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_data_graph_pipelines_arm.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkCreateDataGraphPipelinesARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_data_graph_pipelines_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.create_data_graph_pipeline_session_arm.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkCreateDataGraphPipelineSessionARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.create_data_graph_pipeline_session_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self
+            .get_data_graph_pipeline_session_bind_point_requirements_arm
+            .get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkGetDataGraphPipelineSessionBindPointRequirementsARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_data_graph_pipeline_session_bind_point_requirements_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self
+            .get_data_graph_pipeline_session_memory_requirements_arm
+            .get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkGetDataGraphPipelineSessionMemoryRequirementsARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_data_graph_pipeline_session_memory_requirements_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.bind_data_graph_pipeline_session_memory_arm.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkBindDataGraphPipelineSessionMemoryARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.bind_data_graph_pipeline_session_memory_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.destroy_data_graph_pipeline_session_arm.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkDestroyDataGraphPipelineSessionARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.destroy_data_graph_pipeline_session_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_dispatch_data_graph_arm.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkCmdDispatchDataGraphARM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_dispatch_data_graph_arm.set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_data_graph_pipeline_available_properties_arm.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkGetDataGraphPipelineAvailablePropertiesARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_data_graph_pipeline_available_properties_arm
+            .set(vk_func_ptr);
+        let mut vk_func_ptr = self.get_data_graph_pipeline_properties_arm.get();
+        let loaded_ptr = get_device_proc_addr(
+            Some(device.borrow()),
+            c"vkGetDataGraphPipelinePropertiesARM".as_ptr(),
+        );
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.get_data_graph_pipeline_properties_arm.set(vk_func_ptr);
         let mut vk_func_ptr = self.cmd_set_attachment_feedback_loop_enable_ext.get();
         let loaded_ptr = get_device_proc_addr(
             Some(device.borrow()),
@@ -15492,6 +16110,13 @@ impl CommandsDispatcher {
         }
         self.cmd_bind_descriptor_buffer_embedded_samplers2_ext
             .set(vk_func_ptr);
+        let mut vk_func_ptr = self.cmd_bind_tile_memory_qcom.get();
+        let loaded_ptr =
+            get_device_proc_addr(Some(device.borrow()), c"vkCmdBindTileMemoryQCOM".as_ptr());
+        if !loaded_ptr.is_null() {
+            vk_func_ptr = mem::transmute(loaded_ptr);
+        }
+        self.cmd_bind_tile_memory_qcom.set(vk_func_ptr);
         let mut vk_func_ptr = self.create_external_compute_queue_nv.get();
         let loaded_ptr = get_device_proc_addr(
             Some(device.borrow()),
@@ -16331,7 +16956,6 @@ impl CommandsDispatcher {
                 get_pipeline_executable_internal_representations_khr: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
-                release_swapchain_images_ext: Cell::new(mem::transmute(unload_cmd)),
                 get_generated_commands_memory_requirements_nv: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
@@ -16479,6 +17103,23 @@ impl CommandsDispatcher {
                     unload_cmd,
                 )),
                 cmd_set_coverage_reduction_mode_nv: Cell::new(mem::transmute(unload_cmd)),
+                create_tensor_arm: Cell::new(mem::transmute(unload_cmd)),
+                destroy_tensor_arm: Cell::new(mem::transmute(unload_cmd)),
+                create_tensor_view_arm: Cell::new(mem::transmute(unload_cmd)),
+                destroy_tensor_view_arm: Cell::new(mem::transmute(unload_cmd)),
+                get_tensor_memory_requirements_arm: Cell::new(mem::transmute(unload_cmd)),
+                bind_tensor_memory_arm: Cell::new(mem::transmute(unload_cmd)),
+                get_device_tensor_memory_requirements_arm: Cell::new(mem::transmute(unload_cmd)),
+                cmd_copy_tensor_arm: Cell::new(mem::transmute(unload_cmd)),
+                get_physical_device_external_tensor_properties_arm: Cell::new(mem::transmute(
+                    unload_cmd,
+                )),
+                get_tensor_opaque_capture_descriptor_data_arm: Cell::new(mem::transmute(
+                    unload_cmd,
+                )),
+                get_tensor_view_opaque_capture_descriptor_data_arm: Cell::new(mem::transmute(
+                    unload_cmd,
+                )),
                 get_shader_module_identifier_ext: Cell::new(mem::transmute(unload_cmd)),
                 get_shader_module_create_info_identifier_ext: Cell::new(mem::transmute(unload_cmd)),
                 get_physical_device_optical_flow_image_formats_nv: Cell::new(mem::transmute(
@@ -16489,6 +17130,7 @@ impl CommandsDispatcher {
                 bind_optical_flow_session_image_nv: Cell::new(mem::transmute(unload_cmd)),
                 cmd_optical_flow_execute_nv: Cell::new(mem::transmute(unload_cmd)),
                 anti_lag_update_amd: Cell::new(mem::transmute(unload_cmd)),
+                wait_for_present2_khr: Cell::new(mem::transmute(unload_cmd)),
                 create_shaders_ext: Cell::new(mem::transmute(unload_cmd)),
                 destroy_shader_ext: Cell::new(mem::transmute(unload_cmd)),
                 get_shader_binary_data_ext: Cell::new(mem::transmute(unload_cmd)),
@@ -16501,6 +17143,8 @@ impl CommandsDispatcher {
                 release_captured_pipeline_data_khr: Cell::new(mem::transmute(unload_cmd)),
                 get_framebuffer_tile_properties_qcom: Cell::new(mem::transmute(unload_cmd)),
                 get_dynamic_rendering_tile_properties_qcom: Cell::new(mem::transmute(unload_cmd)),
+                release_swapchain_images_ext: Cell::new(mem::transmute(unload_cmd)),
+                release_swapchain_images_khr: Cell::new(mem::transmute(unload_cmd)),
                 get_physical_device_cooperative_vector_properties_nv: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
@@ -16514,6 +17158,26 @@ impl CommandsDispatcher {
                 get_physical_device_cooperative_matrix_properties_khr: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
+                create_data_graph_pipelines_arm: Cell::new(mem::transmute(unload_cmd)),
+                create_data_graph_pipeline_session_arm: Cell::new(mem::transmute(unload_cmd)),
+                get_data_graph_pipeline_session_bind_point_requirements_arm: Cell::new(
+                    mem::transmute(unload_cmd),
+                ),
+                get_data_graph_pipeline_session_memory_requirements_arm: Cell::new(mem::transmute(
+                    unload_cmd,
+                )),
+                bind_data_graph_pipeline_session_memory_arm: Cell::new(mem::transmute(unload_cmd)),
+                destroy_data_graph_pipeline_session_arm: Cell::new(mem::transmute(unload_cmd)),
+                cmd_dispatch_data_graph_arm: Cell::new(mem::transmute(unload_cmd)),
+                get_data_graph_pipeline_available_properties_arm: Cell::new(mem::transmute(
+                    unload_cmd,
+                )),
+                get_data_graph_pipeline_properties_arm: Cell::new(mem::transmute(unload_cmd)),
+                get_physical_device_queue_family_data_graph_properties_arm: Cell::new(
+                    mem::transmute(unload_cmd),
+                ),
+                get_physical_device_queue_family_data_graph_processing_engine_properties_arm:
+                    Cell::new(mem::transmute(unload_cmd)),
                 cmd_set_attachment_feedback_loop_enable_ext: Cell::new(mem::transmute(unload_cmd)),
                 get_screen_buffer_properties_qnx: Cell::new(mem::transmute(unload_cmd)),
                 get_physical_device_calibrateable_time_domains_ext: Cell::new(mem::transmute(
@@ -16528,6 +17192,7 @@ impl CommandsDispatcher {
                 cmd_bind_descriptor_buffer_embedded_samplers2_ext: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
+                cmd_bind_tile_memory_qcom: Cell::new(mem::transmute(unload_cmd)),
                 create_external_compute_queue_nv: Cell::new(mem::transmute(unload_cmd)),
                 destroy_external_compute_queue_nv: Cell::new(mem::transmute(unload_cmd)),
                 get_external_compute_queue_data_nv: Cell::new(mem::transmute(unload_cmd)),
@@ -16554,6 +17219,7 @@ impl CommandsDispatcher {
                 destroy_indirect_execution_set_ext: Cell::new(mem::transmute(unload_cmd)),
                 update_indirect_execution_set_pipeline_ext: Cell::new(mem::transmute(unload_cmd)),
                 update_indirect_execution_set_shader_ext: Cell::new(mem::transmute(unload_cmd)),
+                create_surface_ohos: Cell::new(mem::transmute(unload_cmd)),
                 get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv: Cell::new(
                     mem::transmute(unload_cmd),
                 ),
@@ -19864,12 +20530,6 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        extern "system" fn release_swapchain_images_ext(
-            _: Option<BorrowedHandle<'_, Device>>,
-            _: *const ReleaseSwapchainImagesInfoEXT,
-        ) -> Status {
-            panic!("Trying to call an unloaded Vulkan command");
-        }
         extern "system" fn get_generated_commands_memory_requirements_nv(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const GeneratedCommandsMemoryRequirementsInfoNV,
@@ -19978,7 +20638,10 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        extern "system" fn cmd_dispatch_tile_qcom(_: Option<BorrowedHandle<'_, CommandBuffer>>) {
+        extern "system" fn cmd_dispatch_tile_qcom(
+            _: Option<BorrowedHandle<'_, CommandBuffer>>,
+            _: *const DispatchTileInfoQCOM,
+        ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
         extern "system" fn cmd_begin_per_tile_execution_qcom(
@@ -20713,6 +21376,84 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
+        extern "system" fn create_tensor_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const TensorCreateInfoARM,
+            _: *const AllocationCallbacks,
+            _: *const TensorARM,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn destroy_tensor_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: Option<BorrowedHandle<'_, TensorARM>>,
+            _: *const AllocationCallbacks,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn create_tensor_view_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const TensorViewCreateInfoARM,
+            _: *const AllocationCallbacks,
+            _: *const TensorViewARM,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn destroy_tensor_view_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: Option<BorrowedHandle<'_, TensorViewARM>>,
+            _: *const AllocationCallbacks,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_tensor_memory_requirements_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const TensorMemoryRequirementsInfoARM,
+            _: *const MemoryRequirements2,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn bind_tensor_memory_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: u32,
+            _: *const BindTensorMemoryInfoARM,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_device_tensor_memory_requirements_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const DeviceTensorMemoryRequirementsARM,
+            _: *const MemoryRequirements2,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn cmd_copy_tensor_arm(
+            _: Option<BorrowedHandle<'_, CommandBuffer>>,
+            _: *const CopyTensorInfoARM,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_physical_device_external_tensor_properties_arm(
+            _: Option<BorrowedHandle<'_, PhysicalDevice>>,
+            _: *const PhysicalDeviceExternalTensorInfoARM,
+            _: *const ExternalTensorPropertiesARM,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_tensor_opaque_capture_descriptor_data_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const TensorCaptureDescriptorDataInfoARM,
+            _: VoidPtr,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_tensor_view_opaque_capture_descriptor_data_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const TensorViewCaptureDescriptorDataInfoARM,
+            _: VoidPtr,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
         extern "system" fn get_shader_module_identifier_ext(
             _: Option<BorrowedHandle<'_, Device>>,
             _: Option<BorrowedHandle<'_, ShaderModule>>,
@@ -20770,6 +21511,13 @@ impl CommandsDispatcher {
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const AntiLagDataAMD,
         ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn wait_for_present2_khr(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: Option<BorrowedHandle<'_, SwapchainKHR>>,
+            _: *const PresentWait2InfoKHR,
+        ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
         extern "system" fn create_shaders_ext(
@@ -20864,6 +21612,12 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
+        extern "system" fn release_swapchain_images_khr(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const ReleaseSwapchainImagesInfoKHR,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
         extern "system" fn get_physical_device_cooperative_vector_properties_nv(
             _: Option<BorrowedHandle<'_, PhysicalDevice>>,
             _: *const u32,
@@ -20925,6 +21679,92 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
+        extern "system" fn create_data_graph_pipelines_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: Option<BorrowedHandle<'_, DeferredOperationKHR>>,
+            _: Option<BorrowedHandle<'_, PipelineCache>>,
+            _: u32,
+            _: *const DataGraphPipelineCreateInfoARM,
+            _: *const AllocationCallbacks,
+            _: *const Pipeline,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn create_data_graph_pipeline_session_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const DataGraphPipelineSessionCreateInfoARM,
+            _: *const AllocationCallbacks,
+            _: *const DataGraphPipelineSessionARM,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_data_graph_pipeline_session_bind_point_requirements_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const DataGraphPipelineSessionBindPointRequirementsInfoARM,
+            _: *const u32,
+            _: *const DataGraphPipelineSessionBindPointRequirementARM,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_data_graph_pipeline_session_memory_requirements_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const DataGraphPipelineSessionMemoryRequirementsInfoARM,
+            _: *const MemoryRequirements2,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn bind_data_graph_pipeline_session_memory_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: u32,
+            _: *const BindDataGraphPipelineSessionMemoryInfoARM,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn destroy_data_graph_pipeline_session_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: Option<BorrowedHandle<'_, DataGraphPipelineSessionARM>>,
+            _: *const AllocationCallbacks,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn cmd_dispatch_data_graph_arm(
+            _: Option<BorrowedHandle<'_, CommandBuffer>>,
+            _: Option<BorrowedHandle<'_, DataGraphPipelineSessionARM>>,
+            _: *const DataGraphPipelineDispatchInfoARM,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_data_graph_pipeline_available_properties_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const DataGraphPipelineInfoARM,
+            _: *const u32,
+            _: *const DataGraphPipelinePropertyARM,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_data_graph_pipeline_properties_arm(
+            _: Option<BorrowedHandle<'_, Device>>,
+            _: *const DataGraphPipelineInfoARM,
+            _: u32,
+            _: *const DataGraphPipelinePropertyQueryResultARM,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_physical_device_queue_family_data_graph_properties_arm(
+            _: Option<BorrowedHandle<'_, PhysicalDevice>>,
+            _: u32,
+            _: *const u32,
+            _: *const QueueFamilyDataGraphPropertiesARM,
+        ) -> Status {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn get_physical_device_queue_family_data_graph_processing_engine_properties_arm(
+            _: Option<BorrowedHandle<'_, PhysicalDevice>>,
+            _: *const PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM,
+            _: *const QueueFamilyDataGraphProcessingEnginePropertiesARM,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
         extern "system" fn cmd_set_attachment_feedback_loop_enable_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: ImageAspectFlags,
@@ -20963,6 +21803,12 @@ impl CommandsDispatcher {
         extern "system" fn cmd_bind_descriptor_buffer_embedded_samplers2_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: *const BindDescriptorBufferEmbeddedSamplersInfoEXT,
+        ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn cmd_bind_tile_memory_qcom(
+            _: Option<BorrowedHandle<'_, CommandBuffer>>,
+            _: *const TileMemoryBindInfoQCOM,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
@@ -21079,6 +21925,14 @@ impl CommandsDispatcher {
             _: u32,
             _: *const WriteIndirectExecutionSetShaderEXT,
         ) {
+            panic!("Trying to call an unloaded Vulkan command");
+        }
+        extern "system" fn create_surface_ohos(
+            _: Option<BorrowedHandle<'_, Instance>>,
+            _: *const SurfaceCreateInfoOHOS,
+            _: *const AllocationCallbacks,
+            _: *const SurfaceKHR,
+        ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
         extern "system" fn get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv(
@@ -21852,7 +22706,6 @@ impl CommandsDispatcher {
             get_pipeline_executable_internal_representations_khr: Cell::new(
                 get_pipeline_executable_internal_representations_khr,
             ),
-            release_swapchain_images_ext: Cell::new(release_swapchain_images_ext),
             get_generated_commands_memory_requirements_nv: Cell::new(
                 get_generated_commands_memory_requirements_nv,
             ),
@@ -22028,6 +22881,25 @@ impl CommandsDispatcher {
                 cmd_set_representative_fragment_test_enable_nv,
             ),
             cmd_set_coverage_reduction_mode_nv: Cell::new(cmd_set_coverage_reduction_mode_nv),
+            create_tensor_arm: Cell::new(create_tensor_arm),
+            destroy_tensor_arm: Cell::new(destroy_tensor_arm),
+            create_tensor_view_arm: Cell::new(create_tensor_view_arm),
+            destroy_tensor_view_arm: Cell::new(destroy_tensor_view_arm),
+            get_tensor_memory_requirements_arm: Cell::new(get_tensor_memory_requirements_arm),
+            bind_tensor_memory_arm: Cell::new(bind_tensor_memory_arm),
+            get_device_tensor_memory_requirements_arm: Cell::new(
+                get_device_tensor_memory_requirements_arm,
+            ),
+            cmd_copy_tensor_arm: Cell::new(cmd_copy_tensor_arm),
+            get_physical_device_external_tensor_properties_arm: Cell::new(
+                get_physical_device_external_tensor_properties_arm,
+            ),
+            get_tensor_opaque_capture_descriptor_data_arm: Cell::new(
+                get_tensor_opaque_capture_descriptor_data_arm,
+            ),
+            get_tensor_view_opaque_capture_descriptor_data_arm: Cell::new(
+                get_tensor_view_opaque_capture_descriptor_data_arm,
+            ),
             get_shader_module_identifier_ext: Cell::new(get_shader_module_identifier_ext),
             get_shader_module_create_info_identifier_ext: Cell::new(
                 get_shader_module_create_info_identifier_ext,
@@ -22040,6 +22912,7 @@ impl CommandsDispatcher {
             bind_optical_flow_session_image_nv: Cell::new(bind_optical_flow_session_image_nv),
             cmd_optical_flow_execute_nv: Cell::new(cmd_optical_flow_execute_nv),
             anti_lag_update_amd: Cell::new(anti_lag_update_amd),
+            wait_for_present2_khr: Cell::new(wait_for_present2_khr),
             create_shaders_ext: Cell::new(create_shaders_ext),
             destroy_shader_ext: Cell::new(destroy_shader_ext),
             get_shader_binary_data_ext: Cell::new(get_shader_binary_data_ext),
@@ -22054,6 +22927,8 @@ impl CommandsDispatcher {
             get_dynamic_rendering_tile_properties_qcom: Cell::new(
                 get_dynamic_rendering_tile_properties_qcom,
             ),
+            release_swapchain_images_ext: Cell::new(release_swapchain_images_khr),
+            release_swapchain_images_khr: Cell::new(release_swapchain_images_khr),
             get_physical_device_cooperative_vector_properties_nv: Cell::new(
                 get_physical_device_cooperative_vector_properties_nv,
             ),
@@ -22068,6 +22943,35 @@ impl CommandsDispatcher {
             queue_notify_out_of_band_nv: Cell::new(queue_notify_out_of_band_nv),
             get_physical_device_cooperative_matrix_properties_khr: Cell::new(
                 get_physical_device_cooperative_matrix_properties_khr,
+            ),
+            create_data_graph_pipelines_arm: Cell::new(create_data_graph_pipelines_arm),
+            create_data_graph_pipeline_session_arm: Cell::new(
+                create_data_graph_pipeline_session_arm,
+            ),
+            get_data_graph_pipeline_session_bind_point_requirements_arm: Cell::new(
+                get_data_graph_pipeline_session_bind_point_requirements_arm,
+            ),
+            get_data_graph_pipeline_session_memory_requirements_arm: Cell::new(
+                get_data_graph_pipeline_session_memory_requirements_arm,
+            ),
+            bind_data_graph_pipeline_session_memory_arm: Cell::new(
+                bind_data_graph_pipeline_session_memory_arm,
+            ),
+            destroy_data_graph_pipeline_session_arm: Cell::new(
+                destroy_data_graph_pipeline_session_arm,
+            ),
+            cmd_dispatch_data_graph_arm: Cell::new(cmd_dispatch_data_graph_arm),
+            get_data_graph_pipeline_available_properties_arm: Cell::new(
+                get_data_graph_pipeline_available_properties_arm,
+            ),
+            get_data_graph_pipeline_properties_arm: Cell::new(
+                get_data_graph_pipeline_properties_arm,
+            ),
+            get_physical_device_queue_family_data_graph_properties_arm: Cell::new(
+                get_physical_device_queue_family_data_graph_properties_arm,
+            ),
+            get_physical_device_queue_family_data_graph_processing_engine_properties_arm: Cell::new(
+                get_physical_device_queue_family_data_graph_processing_engine_properties_arm,
             ),
             cmd_set_attachment_feedback_loop_enable_ext: Cell::new(
                 cmd_set_attachment_feedback_loop_enable_ext,
@@ -22087,6 +22991,7 @@ impl CommandsDispatcher {
             cmd_bind_descriptor_buffer_embedded_samplers2_ext: Cell::new(
                 cmd_bind_descriptor_buffer_embedded_samplers2_ext,
             ),
+            cmd_bind_tile_memory_qcom: Cell::new(cmd_bind_tile_memory_qcom),
             create_external_compute_queue_nv: Cell::new(create_external_compute_queue_nv),
             destroy_external_compute_queue_nv: Cell::new(destroy_external_compute_queue_nv),
             get_external_compute_queue_data_nv: Cell::new(get_external_compute_queue_data_nv),
@@ -22117,6 +23022,7 @@ impl CommandsDispatcher {
             update_indirect_execution_set_shader_ext: Cell::new(
                 update_indirect_execution_set_shader_ext,
             ),
+            create_surface_ohos: Cell::new(create_surface_ohos),
             get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv: Cell::new(
                 get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv,
             ),

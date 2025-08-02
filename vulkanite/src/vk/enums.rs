@@ -23,6 +23,7 @@ pub enum Status {
     ErrorFormatNotSupported = -11,
     ErrorFragmentedPool = -12,
     ErrorUnknown = -13,
+    ErrorValidationFailed = -1000011001,
     ErrorOutOfPoolMemory = -1000069000,
     ErrorInvalidExternalHandle = -1000072003,
     ErrorFragmentation = -1000161000,
@@ -34,7 +35,6 @@ pub enum Status {
     SuboptimalKHR = 1000001003,
     ErrorOutOfDateKHR = -1000001004,
     ErrorIncompatibleDisplayKHR = -1000003001,
-    ErrorValidationFailedEXT = -1000011001,
     ErrorInvalidShaderNV = -1000012000,
     ErrorInvalidDrmFormatModifierPlaneLayoutEXT = -1000158000,
     ErrorFullScreenExclusiveModeLostEXT = -1000255000,
@@ -49,6 +49,7 @@ pub enum Status {
 }
 #[allow(non_upper_case_globals)]
 impl Status {
+    pub const ErrorValidationFailedEXT: Self = Self::ErrorValidationFailed;
     pub const ErrorOutOfPoolMemoryKHR: Self = Self::ErrorOutOfPoolMemory;
     pub const ErrorInvalidExternalHandleKHR: Self = Self::ErrorInvalidExternalHandle;
     pub const ErrorFragmentationEXT: Self = Self::ErrorFragmentation;
@@ -597,15 +598,6 @@ pub enum StructureType {
     PhysicalDeviceMapMemoryPlacedPropertiesEXT = 1000272001,
     MemoryMapPlacedInfoEXT = 1000272002,
     PhysicalDeviceShaderAtomicFloat2FeaturesEXT = 1000273000,
-    SurfacePresentModeEXT = 1000274000,
-    SurfacePresentScalingCapabilitiesEXT = 1000274001,
-    SurfacePresentModeCompatibilityEXT = 1000274002,
-    PhysicalDeviceSwapchainMaintenance1FeaturesEXT = 1000275000,
-    SwapchainPresentFenceInfoEXT = 1000275001,
-    SwapchainPresentModesCreateInfoEXT = 1000275002,
-    SwapchainPresentModeInfoEXT = 1000275003,
-    SwapchainPresentScalingCreateInfoEXT = 1000275004,
-    ReleaseSwapchainImagesInfoEXT = 1000275005,
     PhysicalDeviceDeviceGeneratedCommandsPropertiesNV = 1000277000,
     GraphicsShaderGroupCreateInfoNV = 1000277001,
     GraphicsPipelineShaderGroupsCreateInfoNV = 1000277002,
@@ -625,8 +617,6 @@ pub enum StructureType {
     PhysicalDeviceDeviceMemoryReportFeaturesEXT = 1000284000,
     DeviceDeviceMemoryReportCreateInfoEXT = 1000284001,
     DeviceMemoryReportCallbackDataEXT = 1000284002,
-    PhysicalDeviceRobustness2FeaturesEXT = 1000286000,
-    PhysicalDeviceRobustness2PropertiesEXT = 1000286001,
     SamplerCustomBorderColorCreateInfoEXT = 1000287000,
     PhysicalDeviceCustomBorderColorPropertiesEXT = 1000287001,
     PhysicalDeviceCustomBorderColorFeaturesEXT = 1000287002,
@@ -714,7 +704,6 @@ pub enum StructureType {
     PhysicalDeviceDepthClipControlFeaturesEXT = 1000355000,
     PipelineViewportDepthClipControlCreateInfoEXT = 1000355001,
     PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT = 1000356000,
-    PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT = 1000361000,
     ImportMemoryZirconHandleInfoFUCHSIA = 1000364000,
     MemoryZirconHandlePropertiesFUCHSIA = 1000364001,
     MemoryGetZirconHandleInfoFUCHSIA = 1000364002,
@@ -817,6 +806,30 @@ pub enum StructureType {
     RenderPassSubpassFeedbackCreateInfoEXT = 1000458003,
     DirectDriverLoadingInfoLUNARG = 1000459000,
     DirectDriverLoadingListLUNARG = 1000459001,
+    TensorCreateInfoARM = 1000460000,
+    TensorViewCreateInfoARM = 1000460001,
+    BindTensorMemoryInfoARM = 1000460002,
+    WriteDescriptorSetTensorARM = 1000460003,
+    PhysicalDeviceTensorPropertiesARM = 1000460004,
+    TensorFormatPropertiesARM = 1000460005,
+    TensorDescriptionARM = 1000460006,
+    TensorMemoryRequirementsInfoARM = 1000460007,
+    TensorMemoryBarrierARM = 1000460008,
+    PhysicalDeviceTensorFeaturesARM = 1000460009,
+    DeviceTensorMemoryRequirementsARM = 1000460010,
+    CopyTensorInfoARM = 1000460011,
+    TensorCopyARM = 1000460012,
+    TensorDependencyInfoARM = 1000460013,
+    MemoryDedicatedAllocateInfoTensorARM = 1000460014,
+    PhysicalDeviceExternalTensorInfoARM = 1000460015,
+    ExternalTensorPropertiesARM = 1000460016,
+    ExternalMemoryTensorCreateInfoARM = 1000460017,
+    PhysicalDeviceDescriptorBufferTensorFeaturesARM = 1000460018,
+    PhysicalDeviceDescriptorBufferTensorPropertiesARM = 1000460019,
+    DescriptorGetTensorInfoARM = 1000460020,
+    TensorCaptureDescriptorDataInfoARM = 1000460021,
+    TensorViewCaptureDescriptorDataInfoARM = 1000460022,
+    FrameBoundaryTensorsARM = 1000460023,
     PhysicalDeviceShaderModuleIdentifierFeaturesEXT = 1000462000,
     PhysicalDeviceShaderModuleIdentifierPropertiesEXT = 1000462001,
     PipelineShaderStageModuleIdentifierCreateInfoEXT = 1000462002,
@@ -836,6 +849,14 @@ pub enum StructureType {
     PhysicalDeviceAntiLagFeaturesAMD = 1000476000,
     AntiLagDataAMD = 1000476001,
     AntiLagPresentationInfoAMD = 1000476002,
+    PhysicalDeviceDenseGeometryFormatFeaturesAMDX = 1000478000,
+    AccelerationStructureDenseGeometryFormatTrianglesDataAMDX = 1000478001,
+    SurfaceCapabilitiesPresentId2KHR = 1000479000,
+    PresentId2KHR = 1000479001,
+    PhysicalDevicePresentId2FeaturesKHR = 1000479002,
+    SurfaceCapabilitiesPresentWait2KHR = 1000480000,
+    PhysicalDevicePresentWait2FeaturesKHR = 1000480001,
+    PresentWait2InfoKHR = 1000480002,
     PhysicalDeviceRayTracingPositionFetchFeaturesKHR = 1000481000,
     PhysicalDeviceShaderObjectFeaturesEXT = 1000482000,
     PhysicalDeviceShaderObjectPropertiesEXT = 1000482001,
@@ -854,6 +875,15 @@ pub enum StructureType {
     TilePropertiesQCOM = 1000484001,
     PhysicalDeviceAmigoProfilingFeaturesSEC = 1000485000,
     AmigoProfilingSubmitInfoSEC = 1000485001,
+    SurfacePresentModeKHR = 1000274000,
+    SurfacePresentScalingCapabilitiesKHR = 1000274001,
+    SurfacePresentModeCompatibilityKHR = 1000274002,
+    PhysicalDeviceSwapchainMaintenance1FeaturesKHR = 1000275000,
+    SwapchainPresentFenceInfoKHR = 1000275001,
+    SwapchainPresentModesCreateInfoKHR = 1000275002,
+    SwapchainPresentModeInfoKHR = 1000275003,
+    SwapchainPresentScalingCreateInfoKHR = 1000275004,
+    ReleaseSwapchainImagesInfoKHR = 1000275005,
     PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM = 1000488000,
     PhysicalDeviceRayTracingInvocationReorderFeaturesNV = 1000490000,
     PhysicalDeviceRayTracingInvocationReorderPropertiesNV = 1000490001,
@@ -884,6 +914,26 @@ pub enum StructureType {
     PhysicalDeviceCooperativeMatrixFeaturesKHR = 1000506000,
     CooperativeMatrixPropertiesKHR = 1000506001,
     PhysicalDeviceCooperativeMatrixPropertiesKHR = 1000506002,
+    DataGraphPipelineCreateInfoARM = 1000507000,
+    DataGraphPipelineSessionCreateInfoARM = 1000507001,
+    DataGraphPipelineResourceInfoARM = 1000507002,
+    DataGraphPipelineConstantARM = 1000507003,
+    DataGraphPipelineSessionMemoryRequirementsInfoARM = 1000507004,
+    BindDataGraphPipelineSessionMemoryInfoARM = 1000507005,
+    PhysicalDeviceDataGraphFeaturesARM = 1000507006,
+    DataGraphPipelineShaderModuleCreateInfoARM = 1000507007,
+    DataGraphPipelinePropertyQueryResultARM = 1000507008,
+    DataGraphPipelineInfoARM = 1000507009,
+    DataGraphPipelineCompilerControlCreateInfoARM = 1000507010,
+    DataGraphPipelineSessionBindPointRequirementsInfoARM = 1000507011,
+    DataGraphPipelineSessionBindPointRequirementARM = 1000507012,
+    DataGraphPipelineIdentifierCreateInfoARM = 1000507013,
+    DataGraphPipelineDispatchInfoARM = 1000507014,
+    DataGraphProcessingEngineCreateInfoARM = 1000507016,
+    QueueFamilyDataGraphProcessingEnginePropertiesARM = 1000507017,
+    QueueFamilyDataGraphPropertiesARM = 1000507018,
+    PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM = 1000507019,
+    DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM = 1000507015,
     PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM = 1000510000,
     MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM = 1000510001,
     PhysicalDeviceComputeShaderDerivativesFeaturesKHR = 1000201000,
@@ -899,6 +949,8 @@ pub enum StructureType {
     SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM = 1000520001,
     PhysicalDeviceCubicClampFeaturesQCOM = 1000521000,
     PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT = 1000524000,
+    PhysicalDeviceUnifiedImageLayoutsFeaturesKHR = 1000527000,
+    AttachmentFeedbackLoopInfoEXT = 1000527001,
     ScreenBufferPropertiesQNX = 1000529000,
     ScreenBufferFormatPropertiesQNX = 1000529001,
     ImportScreenBufferInfoQNX = 1000529002,
@@ -909,6 +961,11 @@ pub enum StructureType {
     SetDescriptorBufferOffsetsInfoEXT = 1000545007,
     BindDescriptorBufferEmbeddedSamplersInfoEXT = 1000545008,
     PhysicalDeviceDescriptorPoolOverallocationFeaturesNV = 1000546000,
+    PhysicalDeviceTileMemoryHeapFeaturesQCOM = 1000547000,
+    PhysicalDeviceTileMemoryHeapPropertiesQCOM = 1000547001,
+    TileMemoryRequirementsQCOM = 1000547002,
+    TileMemoryBindInfoQCOM = 1000547003,
+    TileMemorySizeInfoQCOM = 1000547004,
     DisplaySurfaceStereoCreateInfoNV = 1000551000,
     DisplayModeStereoPropertiesNV = 1000551001,
     PhysicalDeviceRawAccessChainsFeaturesNV = 1000555000,
@@ -925,6 +982,7 @@ pub enum StructureType {
     PhysicalDeviceLayeredApiVulkanPropertiesKHR = 1000562004,
     PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV = 1000563000,
     PhysicalDeviceShaderReplicatedCompositesFeaturesEXT = 1000564000,
+    PhysicalDeviceShaderFloat8FeaturesEXT = 1000567000,
     PhysicalDeviceRayTracingValidationFeaturesNV = 1000568000,
     PhysicalDeviceClusterAccelerationStructureFeaturesNV = 1000569000,
     PhysicalDeviceClusterAccelerationStructurePropertiesNV = 1000569001,
@@ -961,6 +1019,10 @@ pub enum StructureType {
     ImageAlignmentControlCreateInfoMESA = 1000575002,
     PhysicalDeviceDepthClampControlFeaturesEXT = 1000582000,
     PipelineViewportDepthClampControlCreateInfoEXT = 1000582001,
+    PhysicalDeviceMaintenance9FeaturesKHR = 1000584000,
+    PhysicalDeviceMaintenance9PropertiesKHR = 1000584001,
+    QueueFamilyOwnershipTransferPropertiesKHR = 1000584002,
+    OhSurfaceCreateInfoOHOS = 1000587000,
     PhysicalDeviceHdrVividFeaturesHUAWEI = 1000590000,
     HdrVividDynamicMetadataHUAWEI = 1000590001,
     PhysicalDeviceCooperativeMatrix2FeaturesNV = 1000593000,
@@ -972,12 +1034,21 @@ pub enum StructureType {
     MemoryGetMetalHandleInfoEXT = 1000602002,
     PhysicalDeviceDepthClampZeroOneFeaturesKHR = 1000421000,
     PhysicalDeviceVertexAttributeRobustnessFeaturesEXT = 1000608000,
+    PhysicalDeviceFormatPackFeaturesARM = 1000609000,
+    PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE = 1000611000,
+    PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE = 1000611001,
+    PipelineFragmentDensityMapLayeredCreateInfoVALVE = 1000611002,
+    PhysicalDeviceRobustness2FeaturesKHR = 1000286000,
+    PhysicalDeviceRobustness2PropertiesKHR = 1000286001,
     SetPresentConfigNV = 1000613000,
     PhysicalDevicePresentMeteringFeaturesNV = 1000613001,
     PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT = 1000425000,
     PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT = 1000425001,
     RenderPassFragmentDensityMapOffsetEndInfoEXT = 1000425002,
     RenderingEndInfoEXT = 1000619003,
+    PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT = 1000620000,
+    PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR = 1000361000,
+    PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC = 1000637000,
 }
 #[allow(non_upper_case_globals)]
 impl StructureType {
@@ -1217,6 +1288,18 @@ impl StructureType {
         Self::HostImageCopyDevicePerformanceQuery;
     pub const MemoryMapInfoKHR: Self = Self::MemoryMapInfo;
     pub const MemoryUnmapInfoKHR: Self = Self::MemoryUnmapInfo;
+    pub const SurfacePresentModeEXT: Self = Self::SurfacePresentModeKHR;
+    pub const SurfacePresentScalingCapabilitiesEXT: Self =
+        Self::SurfacePresentScalingCapabilitiesKHR;
+    pub const SurfacePresentModeCompatibilityEXT: Self = Self::SurfacePresentModeCompatibilityKHR;
+    pub const PhysicalDeviceSwapchainMaintenance1FeaturesEXT: Self =
+        Self::PhysicalDeviceSwapchainMaintenance1FeaturesKHR;
+    pub const SwapchainPresentFenceInfoEXT: Self = Self::SwapchainPresentFenceInfoKHR;
+    pub const SwapchainPresentModesCreateInfoEXT: Self = Self::SwapchainPresentModesCreateInfoKHR;
+    pub const SwapchainPresentModeInfoEXT: Self = Self::SwapchainPresentModeInfoKHR;
+    pub const SwapchainPresentScalingCreateInfoEXT: Self =
+        Self::SwapchainPresentScalingCreateInfoKHR;
+    pub const ReleaseSwapchainImagesInfoEXT: Self = Self::ReleaseSwapchainImagesInfoKHR;
     pub const PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT: Self =
         Self::PhysicalDeviceShaderDemoteToHelperInvocationFeatures;
     pub const PhysicalDeviceShaderIntegerDotProductFeaturesKHR: Self =
@@ -1225,6 +1308,10 @@ impl StructureType {
         Self::PhysicalDeviceShaderIntegerDotProductProperties;
     pub const PhysicalDeviceTexelBufferAlignmentPropertiesEXT: Self =
         Self::PhysicalDeviceTexelBufferAlignmentProperties;
+    pub const PhysicalDeviceRobustness2FeaturesEXT: Self =
+        Self::PhysicalDeviceRobustness2FeaturesKHR;
+    pub const PhysicalDeviceRobustness2PropertiesEXT: Self =
+        Self::PhysicalDeviceRobustness2PropertiesKHR;
     pub const PhysicalDevicePrivateDataFeaturesEXT: Self = Self::PhysicalDevicePrivateDataFeatures;
     pub const DevicePrivateDataCreateInfoEXT: Self = Self::DevicePrivateDataCreateInfo;
     pub const PrivateDataSlotCreateInfoEXT: Self = Self::PrivateDataSlotCreateInfo;
@@ -1262,6 +1349,8 @@ impl StructureType {
         Self::PhysicalDeviceMutableDescriptorTypeFeaturesEXT;
     pub const MutableDescriptorTypeCreateInfoVALVE: Self = Self::MutableDescriptorTypeCreateInfoEXT;
     pub const FormatProperties3KHR: Self = Self::FormatProperties3;
+    pub const PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT: Self =
+        Self::PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR;
     pub const PipelineInfoEXT: Self = Self::PipelineInfoKHR;
     pub const PhysicalDeviceGlobalPriorityQueryFeaturesEXT: Self =
         Self::PhysicalDeviceGlobalPriorityQueryFeatures;
@@ -1423,9 +1512,12 @@ pub enum ObjectType {
     CudaFunctionNV = 1000307001,
     BufferCollectionFUCHSIA = 1000366000,
     MicromapEXT = 1000396000,
+    TensorARM = 1000460000,
+    TensorViewARM = 1000460001,
     OpticalFlowSessionNV = 1000464000,
     ShaderEXT = 1000482000,
     PipelineBinaryKHR = 1000483000,
+    DataGraphPipelineSessionARM = 1000507000,
     ExternalComputeQueueNV = 1000556000,
     IndirectCommandsLayoutEXT = 1000572000,
     IndirectExecutionSetEXT = 1000572001,
@@ -1704,7 +1796,22 @@ pub enum Format {
     Pvrtc14BppSrgbBlockIMG = 1000054005,
     Pvrtc22BppSrgbBlockIMG = 1000054006,
     Pvrtc24BppSrgbBlockIMG = 1000054007,
+    R8BoolARM = 1000460000,
     R16G16Sfixed5NV = 1000464000,
+    R10X6UintPack16ARM = 1000609000,
+    R10X6G10X6Uint2Pack16ARM = 1000609001,
+    R10X6G10X6B10X6A10X6Uint4Pack16ARM = 1000609002,
+    R12X4UintPack16ARM = 1000609003,
+    R12X4G12X4Uint2Pack16ARM = 1000609004,
+    R12X4G12X4B12X4A12X4Uint4Pack16ARM = 1000609005,
+    R14X2UintPack16ARM = 1000609006,
+    R14X2G14X2Uint2Pack16ARM = 1000609007,
+    R14X2G14X2B14X2A14X2Uint4Pack16ARM = 1000609008,
+    R14X2UnormPack16ARM = 1000609009,
+    R14X2G14X2Unorm2Pack16ARM = 1000609010,
+    R14X2G14X2B14X2A14X2Unorm4Pack16ARM = 1000609011,
+    G14X2B14X2R14X22Plane420Unorm3Pack16ARM = 1000609012,
+    G14X2B14X2R14X22Plane422Unorm3Pack16ARM = 1000609013,
 }
 #[allow(non_upper_case_globals)]
 impl Format {
@@ -1906,6 +2013,8 @@ bitflags! {
         const InvocationMaskHUAWEI = 1u32 << 18;
         const SampleWeightQCOM = 1u32 << 20;
         const SampleBlockMatchQCOM = 1u32 << 21;
+        const TensorAliasingARM = 1u32 << 23;
+        const TileMemoryQCOM = 1u32 << 27;
     }
 }
 bitflags! {
@@ -1935,6 +2044,7 @@ bitflags! {
         const DeviceLocal = 1u32 << 0;
         const MultiInstance = 1u32 << 1;
         const MultiInstanceKHR = Self::MultiInstance.bits();
+        const TileMemoryQCOM = 1u32 << 3;
     }
 }
 bitflags! {
@@ -1979,6 +2089,7 @@ bitflags! {
         const SparseBinding = 1u32 << 3;
         const Protected = 1u32 << 4;
         const OpticalFlowNV = 1u32 << 8;
+        const DataGraphARM = 1u32 << 10;
     }
 }
 bitflags! {
@@ -2156,6 +2267,16 @@ bitflags! {
     #[derive(Default)]
     #[repr(transparent)]
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueryPoolCreateFlagBits.html>"]
+    #[doc(alias = "VkQueryPoolCreateFlagBits")]
+    pub struct QueryPoolCreateFlags : u32 {
+        const ResetKHR = 1u32 << 0;
+    }
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueryResultFlagBits.html>"]
     #[doc(alias = "VkQueryResultFlagBits")]
     pub struct QueryResultFlags : u32 {
@@ -2235,6 +2356,7 @@ bitflags! {
         const PushDescriptorsDescriptorBufferEXT = 1u32 << 26;
         const MicromapBuildInputReadOnlyEXT = 1u32 << 23;
         const MicromapStorageEXT = 1u32 << 24;
+        const TileMemoryQCOM = 1u32 << 27;
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -2273,6 +2395,8 @@ pub enum ImageLayout {
     FragmentDensityMapOptimalEXT = 1000218000,
     FragmentShadingRateAttachmentOptimalKHR = 1000164003,
     AttachmentFeedbackLoopOptimalEXT = 1000339000,
+    TensorAliasingARM = 1000460000,
+    ZeroInitializedEXT = 1000620000,
 }
 #[allow(non_upper_case_globals)]
 impl ImageLayout {
@@ -2596,6 +2720,7 @@ bitflags! {
         const ProtectedAccessOnly = 1u32 << 30;
         const ViewIndexFromDeviceIndexKHR = Self::ViewIndexFromDeviceIndex.bits();
         const DispatchBaseKHR = Self::DispatchBase.bits();
+        const DispatchBaseKHR = Self::DispatchBase.bits();
         const RayTracingNoNullAnyHitShadersKHR = 1u32 << 14;
         const RayTracingNoNullClosestHitShadersKHR = 1u32 << 15;
         const RayTracingNoNullMissShadersKHR = 1u32 << 16;
@@ -2843,6 +2968,7 @@ pub enum DescriptorType {
     AccelerationStructureNV = 1000165000,
     SampleWeightImageQCOM = 1000440000,
     BlockMatchImageQCOM = 1000440001,
+    TensorARM = 1000460000,
     MutableEXT = 1000351000,
     PartitionedAccelerationStructureNV = 1000570000,
 }
@@ -2949,6 +3075,7 @@ bitflags! {
         const DeviceGroupKHR = Self::DeviceGroup.bits();
         const FeedbackLoopEXT = 1u32 << 3;
         const QueueFamilyOwnershipTransferUseAllStagesKHR = 1u32 << 5;
+        const AsymmetricEventKHR = 1u32 << 6;
     }
 }
 bitflags! {
@@ -2972,6 +3099,7 @@ pub enum PipelineBindPoint {
     ExecutionGraphAMDX = 1000134000,
     RayTracingKHR = 1000165000,
     SubpassShadingHUAWEI = 1000369003,
+    DataGraphARM = 1000507000,
 }
 #[allow(non_upper_case_globals)]
 impl PipelineBindPoint {
@@ -2985,6 +3113,7 @@ bitflags! {
     #[doc(alias = "VkRenderPassCreateFlagBits")]
     pub struct RenderPassCreateFlags : u32 {
         const TransformQCOM = 1u32 << 1;
+        const PerLayerFragmentDensityVALVE = 1u32 << 2;
     }
 }
 bitflags! {
@@ -3167,6 +3296,7 @@ bitflags! {
         const DeviceMaskKHR = Self::DeviceMask.bits();
         const DeviceAddressKHR = Self::DeviceAddress.bits();
         const DeviceAddressCaptureReplayKHR = Self::DeviceAddressCaptureReplay.bits();
+        const ZeroInitializeEXT = 1u32 << 3;
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryAllocateFlagBitsKHR.html>"]
@@ -3664,6 +3794,18 @@ bitflags! {
     #[derive(Default)]
     #[repr(transparent)]
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCacheCreateFlagBits.html>"]
+    #[doc(alias = "VkPipelineCacheCreateFlagBits")]
+    pub struct PipelineCacheCreateFlags : u32 {
+        const ExternallySynchronized = 1u32 << 0;
+        const ExternallySynchronizedEXT = Self::ExternallySynchronized.bits();
+        const InternallySynchronizedMergeKHR = 1u32 << 3;
+    }
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineStageFlagBits2.html>"]
     #[doc(alias = "VkPipelineStageFlagBits2")]
     pub struct PipelineStageFlags2 : u64 {
@@ -3742,6 +3884,7 @@ bitflags! {
         const ClusterCullingShaderHUAWEI = 1u64 << 41;
         const OpticalFlowNV = 1u64 << 29;
         const ConvertCooperativeVectorMatrixNV = 1u64 << 44;
+        const DataGraphARM = 1u64 << 42;
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineStageFlagBits2KHR.html>"]
@@ -3821,6 +3964,8 @@ bitflags! {
         const MicromapWriteEXT = 1u64 << 45;
         const OpticalFlowReadNV = 1u64 << 42;
         const OpticalFlowWriteNV = 1u64 << 43;
+        const DataGraphReadARM = 1u64 << 47;
+        const DataGraphWriteARM = 1u64 << 48;
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccessFlagBits2KHR.html>"]
@@ -3856,6 +4001,7 @@ bitflags! {
         const ContentsInlineEXT = Self::ContentsInlineKHR.bits();
         const EnableLegacyDitheringEXT = 1u32 << 3;
         const ContentsInlineKHR = 1u32 << 4;
+        const PerLayerFragmentDensityVALVE = 1u32 << 5;
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingFlagBitsKHR.html>"]
@@ -3933,9 +4079,12 @@ bitflags! {
         const WeightSampledImageQCOM = 1u64 << 35;
         const BlockMatchingQCOM = 1u64 << 36;
         const BoxFilterSampledQCOM = 1u64 << 37;
+        const TensorShaderARM = 1u64 << 39;
+        const TensorImageAliasingARM = 1u64 << 43;
         const OpticalFlowImageNV = 1u64 << 40;
         const OpticalFlowVectorNV = 1u64 << 41;
         const OpticalFlowCostNV = 1u64 << 42;
+        const TensorDataGraphARM = 1u64 << 48;
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFormatFeatureFlagBits2KHR.html>"]
@@ -4065,6 +4214,7 @@ bitflags! {
         const DisallowOpacityMicromapARM = 1u64 << 37;
         const CaptureDataKHR = 1u64 << 31;
         const IndirectBindableEXT = 1u64 << 38;
+        const PerLayerFragmentDensityVALVE = 1u64 << 40;
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCreateFlagBits2KHR.html>"]
@@ -4114,6 +4264,9 @@ bitflags! {
         const PushDescriptorsDescriptorBufferEXT = 1u64 << 26;
         const MicromapBuildInputReadOnlyEXT = 1u64 << 23;
         const MicromapStorageEXT = 1u64 << 24;
+        const CompressedDataDgf1AMDX = 1u64 << 33;
+        const DataGraphForeignDescriptorARM = 1u64 << 29;
+        const TileMemoryQCOM = 1u64 << 27;
         const PreprocessBufferEXT = 1u64 << 31;
     }
 }
@@ -4169,6 +4322,7 @@ bitflags! {
     pub struct HostImageCopyFlags : u32 {
         const Memcpy = 1u32 << 0;
         const MemcpyEXT = Self::Memcpy.bits();
+        const MemcpyEXT = Self::Memcpy.bits();
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkHostImageCopyFlagBitsEXT.html>"]
@@ -4203,7 +4357,11 @@ pub enum PresentModeKHR {
     FifoRelaxed = 3,
     SharedDemandRefresh = 1000111000,
     SharedContinuousRefresh = 1000111001,
-    FifoLatestReadyEXT = 1000361000,
+    FifoLatestReady = 1000361000,
+}
+#[allow(non_upper_case_globals)]
+impl PresentModeKHR {
+    pub const FifoLatestReadyEXT: Self = Self::FifoLatestReady;
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkColorSpaceKHR.html>"]
@@ -4255,7 +4413,10 @@ bitflags! {
         const SplitInstanceBindRegions = 1u32 << 0;
         const Protected = 1u32 << 1;
         const MutableFormat = 1u32 << 2;
-        const DeferredMemoryAllocationEXT = 1u32 << 3;
+        const DeferredMemoryAllocationEXT = Self::DeferredMemoryAllocation.bits();
+        const PresentId2 = 1u32 << 6;
+        const PresentWait2 = 1u32 << 7;
+        const DeferredMemoryAllocation = 1u32 << 3;
     }
 }
 bitflags! {
@@ -4669,6 +4830,7 @@ bitflags! {
         const AllowOpacityMicromapDataUpdateEXT = 1u32 << 8;
         const AllowDisplacementMicromapUpdateNV = 1u32 << 9;
         const AllowDataAccess = 1u32 << 11;
+        const AllowClusterOpacityMicromapsNV = 1u32 << 12;
     }
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBuildAccelerationStructureFlagBitsNV.html>"]
@@ -4702,6 +4864,7 @@ pub enum GeometryTypeKHR {
     Instances = 2,
     SpheresNV = 1000429004,
     LinearSweptSpheresNV = 1000429005,
+    DenseGeometryFormatTrianglesAMDX = 1000478000,
 }
 #[allow(non_upper_case_globals)]
 impl GeometryTypeKHR {
@@ -4968,30 +5131,6 @@ bitflags! {
     #[derive(Default)]
     #[repr(transparent)]
     #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentScalingFlagBitsEXT.html>"]
-    #[doc(alias = "VkPresentScalingFlagBitsEXT")]
-    pub struct PresentScalingFlagsEXT : u32 {
-        const OneToOne = 1u32 << 0;
-        const AspectRatioStretch = 1u32 << 1;
-        const Stretch = 1u32 << 2;
-    }
-}
-bitflags! {
-    #[derive(Default)]
-    #[repr(transparent)]
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentGravityFlagBitsEXT.html>"]
-    #[doc(alias = "VkPresentGravityFlagBitsEXT")]
-    pub struct PresentGravityFlagsEXT : u32 {
-        const Min = 1u32 << 0;
-        const Max = 1u32 << 1;
-        const Centered = 1u32 << 2;
-    }
-}
-bitflags! {
-    #[derive(Default)]
-    #[repr(transparent)]
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIndirectStateFlagBitsNV.html>"]
     #[doc(alias = "VkIndirectStateFlagBitsNV")]
     pub struct IndirectStateFlagsNV : u32 {
@@ -5046,18 +5185,6 @@ pub enum DeviceMemoryReportEventTypeEXT {
     Import = 2,
     Unimport = 3,
     AllocationFailed = 4,
-}
-bitflags! {
-    #[derive(Default)]
-    #[repr(transparent)]
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCacheCreateFlagBits.html>"]
-    #[doc(alias = "VkPipelineCacheCreateFlagBits")]
-    pub struct PipelineCacheCreateFlags : u32 {
-        const ExternallySynchronized = 1u32 << 0;
-        const ExternallySynchronizedEXT = Self::ExternallySynchronized.bits();
-        const InternallySynchronizedMergeKHR = 1u32 << 3;
-    }
 }
 bitflags! {
     #[derive(Default)]
@@ -5407,6 +5534,50 @@ pub enum DirectDriverLoadingModeLUNARG {
     Exclusive = 0,
     Inclusive = 1,
 }
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorCreateFlagBitsARM.html>"]
+    #[doc(alias = "VkTensorCreateFlagBitsARM")]
+    pub struct TensorCreateFlagsARM : u64 {
+        const MutableFormat = 1u64 << 0;
+        const Protected = 1u64 << 1;
+        const DescriptorBufferCaptureReplay = 1u64 << 2;
+    }
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorViewCreateFlagBitsARM.html>"]
+    #[doc(alias = "VkTensorViewCreateFlagBitsARM")]
+    pub struct TensorViewCreateFlagsARM : u64 {
+        const DescriptorBufferCaptureReplay = 1u64 << 0;
+    }
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorUsageFlagBitsARM.html>"]
+    #[doc(alias = "VkTensorUsageFlagBitsARM")]
+    pub struct TensorUsageFlagsARM : u64 {
+        const Shader = 1u64 << 1;
+        const TransferSrc = 1u64 << 2;
+        const TransferDst = 1u64 << 3;
+        const ImageAliasing = 1u64 << 4;
+        const DataGraph = 1u64 << 5;
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorTilingARM.html>"]
+#[doc(alias = "VkTensorTilingARM")]
+#[repr(u32)]
+pub enum TensorTilingARM {
+    Optimal = 0,
+    Linear = 1,
+}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VK_MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT.html>"]
 #[doc(alias = "VK_MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT")]
 pub const MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT: u32 = 32;
@@ -5529,6 +5700,19 @@ pub enum AntiLagStageAMD {
     Input = 0,
     Present = 1,
 }
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCompressedTriangleFormatAMDX.html>"]
+#[doc(alias = "VkCompressedTriangleFormatAMDX")]
+#[repr(u32)]
+pub enum CompressedTriangleFormatAMDX {
+    Dgf1 = 0,
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VK_COMPRESSED_TRIANGLE_FORMAT_DGF1_BYTE_ALIGNMENT_AMDX.html>"]
+#[doc(alias = "VK_COMPRESSED_TRIANGLE_FORMAT_DGF1_BYTE_ALIGNMENT_AMDX")]
+pub const COMPRESSED_TRIANGLE_FORMAT_DGF1_BYTE_ALIGNMENT_AMDX: u32 = 128;
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VK_COMPRESSED_TRIANGLE_FORMAT_DGF1_BYTE_STRIDE_AMDX.html>"]
+#[doc(alias = "VK_COMPRESSED_TRIANGLE_FORMAT_DGF1_BYTE_STRIDE_AMDX")]
+pub const COMPRESSED_TRIANGLE_FORMAT_DGF1_BYTE_STRIDE_AMDX: u32 = 128;
 bitflags! {
     #[derive(Default)]
     #[repr(transparent)]
@@ -5557,6 +5741,42 @@ pub enum ShaderCodeTypeEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VK_MAX_PIPELINE_BINARY_KEY_SIZE_KHR.html>"]
 #[doc(alias = "VK_MAX_PIPELINE_BINARY_KEY_SIZE_KHR")]
 pub const MAX_PIPELINE_BINARY_KEY_SIZE_KHR: u32 = 32;
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentScalingFlagBitsKHR.html>"]
+    #[doc(alias = "VkPresentScalingFlagBitsKHR")]
+    pub struct PresentScalingFlagsKHR : u32 {
+        const OneToOne = 1u32 << 0;
+        const OneToOneEXT = Self::OneToOne.bits();
+        const AspectRatioStretch = 1u32 << 1;
+        const AspectRatioStretchEXT = Self::AspectRatioStretch.bits();
+        const Stretch = 1u32 << 2;
+        const StretchEXT = Self::Stretch.bits();
+    }
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentScalingFlagBitsEXT.html>"]
+#[doc(alias = "VkPresentScalingFlagBitsEXT")]
+pub type PresentScalingFlagsEXT = PresentScalingFlagsKHR;
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentGravityFlagBitsKHR.html>"]
+    #[doc(alias = "VkPresentGravityFlagBitsKHR")]
+    pub struct PresentGravityFlagsKHR : u32 {
+        const Min = 1u32 << 0;
+        const MinEXT = Self::Min.bits();
+        const Max = 1u32 << 1;
+        const MaxEXT = Self::Max.bits();
+        const Centered = 1u32 << 2;
+        const CenteredEXT = Self::Centered.bits();
+    }
+}
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentGravityFlagBitsEXT.html>"]
+#[doc(alias = "VkPresentGravityFlagBitsEXT")]
+pub type PresentGravityFlagsEXT = PresentGravityFlagsKHR;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRayTracingInvocationReorderModeNV.html>"]
 #[doc(alias = "VkRayTracingInvocationReorderModeNV")]
@@ -5594,8 +5814,8 @@ pub enum ComponentTypeKHR {
     Bfloat16 = 1000141000,
     Sint8PackedNV = 1000491000,
     Uint8PackedNV = 1000491001,
-    FloatE4M3NV = 1000491002,
-    FloatE5M2NV = 1000491003,
+    Float8E4M3EXT = 1000491002,
+    Float8E5M2EXT = 1000491003,
 }
 #[allow(non_upper_case_globals)]
 impl ComponentTypeKHR {
@@ -5610,6 +5830,8 @@ impl ComponentTypeKHR {
     pub const Uint16NV: Self = Self::Uint16;
     pub const Uint32NV: Self = Self::Uint32;
     pub const Uint64NV: Self = Self::Uint64;
+    pub const FloatE4M3NV: Self = Self::Float8E4M3EXT;
+    pub const FloatE5M2NV: Self = Self::Float8E5M2EXT;
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkComponentTypeNV.html>"]
 #[doc(alias = "VkComponentTypeNV")]
@@ -5674,6 +5896,64 @@ impl ScopeKHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkScopeNV.html>"]
 #[doc(alias = "VkScopeNV")]
 pub type ScopeNV = ScopeKHR;
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VK_MAX_PHYSICAL_DEVICE_DATA_GRAPH_OPERATION_SET_NAME_SIZE_ARM.html>"]
+#[doc(alias = "VK_MAX_PHYSICAL_DEVICE_DATA_GRAPH_OPERATION_SET_NAME_SIZE_ARM")]
+pub const MAX_PHYSICAL_DEVICE_DATA_GRAPH_OPERATION_SET_NAME_SIZE_ARM: u32 = 128;
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineSessionBindPointARM.html>"]
+#[doc(alias = "VkDataGraphPipelineSessionBindPointARM")]
+#[repr(u32)]
+pub enum DataGraphPipelineSessionBindPointARM {
+    Transient = 0,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineSessionBindPointTypeARM.html>"]
+#[doc(alias = "VkDataGraphPipelineSessionBindPointTypeARM")]
+#[repr(u32)]
+pub enum DataGraphPipelineSessionBindPointTypeARM {
+    Memory = 0,
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineSessionCreateFlagBitsARM.html>"]
+    #[doc(alias = "VkDataGraphPipelineSessionCreateFlagBitsARM")]
+    pub struct DataGraphPipelineSessionCreateFlagsARM : u64 {
+        const Protected = 1u64 << 0;
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelinePropertyARM.html>"]
+#[doc(alias = "VkDataGraphPipelinePropertyARM")]
+#[repr(u32)]
+pub enum DataGraphPipelinePropertyARM {
+    CreationLog = 0,
+    Identifier = 1,
+}
+bitflags! {
+    #[derive(Default)]
+    #[repr(transparent)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineDispatchFlagBitsARM.html>"]
+    #[doc(alias = "VkDataGraphPipelineDispatchFlagBitsARM")]
+    pub struct DataGraphPipelineDispatchFlagsARM : u64 {
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDataGraphProcessingEngineTypeARM.html>"]
+#[doc(alias = "VkPhysicalDeviceDataGraphProcessingEngineTypeARM")]
+#[repr(u32)]
+pub enum PhysicalDeviceDataGraphProcessingEngineTypeARM {
+    Default = 0,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDataGraphOperationTypeARM.html>"]
+#[doc(alias = "VkPhysicalDeviceDataGraphOperationTypeARM")]
+#[repr(u32)]
+pub enum PhysicalDeviceDataGraphOperationTypeARM {
+    SpirvExtendedInstructionSet = 0,
+}
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBlockMatchWindowCompareModeQCOM.html>"]
 #[doc(alias = "VkBlockMatchWindowCompareModeQCOM")]
@@ -5770,6 +6050,7 @@ bitflags! {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkClusterAccelerationStructureAddressResolutionFlagBitsNV.html>"]
     #[doc(alias = "VkClusterAccelerationStructureAddressResolutionFlagBitsNV")]
     pub struct ClusterAccelerationStructureAddressResolutionFlagsNV : u32 {
+        const None = 0;
         const IndirectedDstImplicitData = 1u32 << 0;
         const IndirectedScratchData = 1u32 << 1;
         const IndirectedDstAddressArray = 1u32 << 2;
@@ -5809,6 +6090,7 @@ pub enum ClusterAccelerationStructureOpTypeNV {
     BuildTriangleCluster = 2,
     BuildTriangleClusterTemplate = 3,
     InstantiateTriangleCluster = 4,
+    GetClusterTemplateIndices = 5,
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkClusterAccelerationStructureOpModeNV.html>"]
@@ -5913,4 +6195,12 @@ bitflags! {
 pub enum DepthClampModeEXT {
     ViewportRange = 0,
     UserDefinedRange = 1,
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDefaultVertexAttributeValueKHR.html>"]
+#[doc(alias = "VkDefaultVertexAttributeValueKHR")]
+#[repr(u32)]
+pub enum DefaultVertexAttributeValueKHR {
+    ZeroZeroZeroZero = 0,
+    ZeroZeroZeroOne = 1,
 }

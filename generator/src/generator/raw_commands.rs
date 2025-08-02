@@ -47,7 +47,7 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
         Ok(quote! (#(#cmds)*))
     };
 
-    let raw_cmd_features = gen.filtered_features().flat_map(|feat| &feat.require);
+    let raw_cmd_features = gen.filtered_features().flat_map(|feat| feat.requires());
     let raw_cmd_extensions = gen
         .filtered_extensions()
         .flat_map(|ext: &xml::Extension| &ext.require);

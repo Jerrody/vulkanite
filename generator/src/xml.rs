@@ -331,6 +331,7 @@ pub enum Queue {
     Opticalflow,
     SparseBinding,
     Transfer,
+    DataGraph,
 }
 
 #[derive(Deserialize, Debug)]
@@ -411,9 +412,25 @@ pub struct Feature {
     pub number: String,
     #[serde(rename = "@comment")]
     pub comment: String,
-    pub require: Vec<Require>,
-    #[serde(default)]
-    pub remove: Vec<Remove>,
+    #[serde(default, rename = "$value")]
+    pub content: Vec<FeatureContent>,
+}
+
+impl Feature {
+    pub fn requires(&self) -> impl Iterator<Item = &Require> {
+        self.content.iter().filter_map(|c| match c {
+            FeatureContent::Require(r) => Some(r),
+            _ => None,
+        })
+    }
+}
+
+#[derive(Deserialize, Debug)]
+#[serde(rename_all = "snake_case")]
+pub enum FeatureContent {
+    Require(Require),
+    Remove(Remove),
+    Deprecate(Deprecate),
 }
 
 #[derive(Deserialize, Debug)]
@@ -490,6 +507,9 @@ pub struct RequireType {
 
 #[derive(Deserialize, Debug)]
 pub struct Remove {}
+
+#[derive(Deserialize, Debug)]
+pub struct Deprecate {}
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "snake_case")]
@@ -635,6 +655,7 @@ pub enum NumericFormat {
     UInt,
     UNorm,
     UScaled,
+    Bool,
 }
 
 #[derive(Deserialize, Debug)]
