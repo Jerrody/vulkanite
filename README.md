@@ -1,5 +1,3 @@
-<!-- cargo-rdme start -->
-
 Unofficial bindings for the Vulkan Graphics API
 
 The goal is to provide a nice and safer way to use Vulkan with Rust
@@ -158,5 +156,3 @@ Note that these bindings are still a Work-In-Process, the public API may see bre
 safety or how nice to use the code is.
 
 Please be aware that this crate should not be considered production ready yet, breaking changes are to be expected in the future versions.
-
-<!-- cargo-rdme end -->
