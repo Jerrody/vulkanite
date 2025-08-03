@@ -2720,7 +2720,6 @@ bitflags! {
         const ProtectedAccessOnly = 1u32 << 30;
         const ViewIndexFromDeviceIndexKHR = Self::ViewIndexFromDeviceIndex.bits();
         const DispatchBaseKHR = Self::DispatchBase.bits();
-        const DispatchBaseKHR = Self::DispatchBase.bits();
         const RayTracingNoNullAnyHitShadersKHR = 1u32 << 14;
         const RayTracingNoNullClosestHitShadersKHR = 1u32 << 15;
         const RayTracingNoNullMissShadersKHR = 1u32 << 16;
@@ -4321,7 +4320,6 @@ bitflags! {
     #[doc(alias = "VkHostImageCopyFlagBits")]
     pub struct HostImageCopyFlags : u32 {
         const Memcpy = 1u32 << 0;
-        const MemcpyEXT = Self::Memcpy.bits();
         const MemcpyEXT = Self::Memcpy.bits();
     }
 }

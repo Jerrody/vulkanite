@@ -297,9 +297,11 @@ where
     // remove the handle name from the function name
     let mut new_name = name.to_string();
     // vkGetDeviceImageMemoryRequirements and vkGetImageMemoryRequirements would resolve to the same name without the last check
-    // this is also the case for vkGetDeviceSparseImageMemoryRequirements, vkGetDeviceBufferMemoryRequirements and vkGetDeviceImageSubresourceLayout
+    // this is also the case for vkGetDeviceSparseImageMemoryRequirements, vkGetDeviceBufferMemoryRequirements, vkGetDeviceImageSubresourceLayout
+    // and vkGetTensorMemoryRequirementsARM
     if !cmd_parsed.handle.is_empty()
         && !new_name.ends_with("memory_requirements")
+        && !new_name.ends_with("memory_requirements_arm")
         && !new_name.ends_with("image_subresource_layout")
     {
         // remove the Vk prefix

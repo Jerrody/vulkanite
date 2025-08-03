@@ -42292,7 +42292,7 @@ impl<'a> Default for ExportMetalIOSurfaceInfoEXT<'a> {
             s_type: Self::STRUCTURE_TYPE,
             p_next: Cell::new(ptr::null()),
             image: Default::default(),
-            io_surface: Default::default(),
+            io_surface: ptr::null(),
             phantom: PhantomData,
         }
     }
@@ -42335,7 +42335,7 @@ impl<'a> Default for ImportMetalIOSurfaceInfoEXT<'a> {
         Self {
             s_type: Self::STRUCTURE_TYPE,
             p_next: Cell::new(ptr::null()),
-            io_surface: Default::default(),
+            io_surface: ptr::null(),
             phantom: PhantomData,
         }
     }
@@ -42460,7 +42460,7 @@ pub type MTLTextureId = VoidPtr;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/MTLSharedEvent_id.html>"]
 pub type MTLSharedEventId = VoidPtr;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/IOSurfaceRef.html>"]
-pub type IOSurfaceRef = c_void;
+pub type IOSurfaceRef = VoidPtr;
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorBufferPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorBufferPropertiesEXT")]

@@ -6069,7 +6069,7 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceTensorMemoryRequirementsARM.html>"]
     #[doc(alias = "vkGetDeviceTensorMemoryRequirementsARM")]
-    pub fn get_tensor_memory_requirements_arm<
+    pub fn get_device_tensor_memory_requirements_arm<
         S: StructureChainOut<MemoryRequirements2<'static>>,
     >(
         &self,

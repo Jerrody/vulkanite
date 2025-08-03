@@ -349,13 +349,9 @@ impl<'a> Generator<'a> {
                 .get(parent_name.as_str())
                 .ok_or_else(|| anyhow!("Parent {parent_name} for {} does not exists", ext.name))?;
 
+            let mut values = parent.values.borrow_mut();
             // in case a same field is redefined by multiple extensions (can happen)
-            if parent
-                .values
-                .borrow()
-                .iter()
-                .any(|(ext_name, _)| ext_name == &ext.name)
-            {
+            if values.iter().any(|(ext_name, _)| ext_name == &ext.name) {
                 continue;
             }
 
@@ -377,7 +373,7 @@ impl<'a> Generator<'a> {
                 } else {
                     value.to_string()
                 };
-                parent.values.borrow_mut().push((
+                values.push((
                     &ext.name,
                     EnumValue::Variant(EnumVariant {
                         name,
@@ -385,7 +381,7 @@ impl<'a> Generator<'a> {
                     }),
                 ));
             } else if let Some(value) = &ext.value {
-                parent.values.borrow_mut().push((
+                values.push((
                     &ext.name,
                     EnumValue::Variant(EnumVariant {
                         name,
@@ -393,15 +389,16 @@ impl<'a> Generator<'a> {
                     }),
                 ));
             } else if let Some(bitpos) = ext.bitpos {
-                parent
-                    .values
-                    .borrow_mut()
-                    .push((&ext.name, EnumValue::Flag(EnumFlag { name, bitpos })))
+                values.push((&ext.name, EnumValue::Flag(EnumFlag { name, bitpos })));
             } else if let Some(alias) = &ext.alias {
-                parent
-                    .values
-                    .borrow_mut()
-                    .push((&ext.name, EnumValue::Aliased(EnumAliased { name, alias })));
+                if values
+                    .iter()
+                    .any(|(_, val)| matches!(val, EnumValue::Aliased(EnumAliased { name: other, .. }) if other == &name))
+                {
+                    continue;
+                }
+
+                values.push((&ext.name, EnumValue::Aliased(EnumAliased { name, alias })));
             }
         }
 
