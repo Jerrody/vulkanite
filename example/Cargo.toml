@@ -4,7 +4,14 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-vulkanite = { path = "../vulkanite/", features = ["loaded", "smallvec", "raw-window-handle"] }
+vulkanite = { path = "../vulkanite/", features = [
+    "loaded", 
+    "smallvec",
+    "version_1_3",
+    "raw-window-handle",
+    "ext_surface",
+    "ext_swapchain",
+    "ext_debug_utils"] }
 smallvec = "1.13"
 raw-window-handle = "0.6"
 winit = "0.30"

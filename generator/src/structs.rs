@@ -4,7 +4,7 @@ use std::{
     collections::HashMap,
 };
 
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, bail, Result};
 use proc_macro2::{Span, TokenStream};
 use syn::Ident;
 
@@ -18,12 +18,25 @@ pub enum Api {
     //VulkanSc
 }
 
+#[derive(Default)]
+pub struct Dependencies<'a>(pub Vec<&'a str>);
+
+impl<'a> Dependencies<'a> {
+    pub fn add(&mut self, dep: &'a str) {
+        // We shouldn't have too many dependencies, so we can afford the linear search
+        if !self.0.contains(&dep) {
+            self.0.push(dep);
+        }
+    }
+}
+
 pub struct Enum<'a> {
     pub name: String,
     pub bitflag: bool,
     pub width_is_64: bool,
     pub values: RefCell<Vec<(&'a str, EnumValue<'a>)>>,
     pub aliases: RefCell<Vec<(&'a str, String)>>,
+    pub dependencies: RefCell<Dependencies<'a>>,
 }
 
 impl<'a> Enum<'a> {
@@ -57,6 +70,7 @@ impl<'a> Enum<'a> {
             width_is_64: value.bitwidth_is_64.is_some(),
             values: RefCell::new(values),
             aliases: RefCell::new(Vec::new()),
+            dependencies: RefCell::new(Dependencies::default()),
         })
     }
 }
@@ -173,6 +187,7 @@ pub struct Handle<'a> {
     pub parent: Option<&'a str>,
     pub object_type: &'a str,
     pub aliases: RefCell<Vec<&'a str>>,
+    pub dependencies: RefCell<Dependencies<'a>>,
 }
 
 impl<'a> TryFrom<&'a xml::Type> for Handle<'a> {
@@ -208,15 +223,13 @@ impl<'a> TryFrom<&'a xml::Type> for Handle<'a> {
                             object_type: object_type.as_str(),
                             parent: parent.as_ref().map(|p| p.as_str()),
                             aliases: RefCell::new(Vec::new()),
+                            dependencies: RefCell::new(Dependencies::default()),
                         })
                     }
-                    _ => Err(anyhow!(
-                        "Failed to parse content as handle from {:?}",
-                        value
-                    )),
+                    _ => bail!("Failed to parse content as handle from {:?}", value),
                 }
             }
-            _ => Err(anyhow!("Failed to extract handle from {:?}", value)),
+            _ => bail!("Failed to extract handle from {:?}", value),
         }
     }
 }
@@ -357,6 +370,7 @@ impl<'a> TryFrom<&'a xml::Type> for Struct<'a> {
                     has_lifetime,
                     extends: &value.struct_extends,
                     aliases: RefCell::new(Vec::new()),
+                    dependencies: RefCell::new(Dependencies::default()),
                 }))
             }
             _ => Err(anyhow!("XML value {:?} is ill-formed for a struct", value)),
@@ -378,6 +392,7 @@ pub struct StructStandard<'a> {
     pub has_lifetime: Cell<Option<bool>>,
     pub extends: &'a Vec<String>,
     pub aliases: RefCell<Vec<&'a str>>,
+    pub dependencies: RefCell<Dependencies<'a>>,
 }
 
 pub struct StructField<'a> {
@@ -507,6 +522,7 @@ pub struct Command<'a> {
     pub params: Vec<CommandParam<'a>>,
     pub handle: Cell<Option<&'a str>>,
     pub aliases: RefCell<Vec<(&'a str, String)>>,
+    pub dependencies: RefCell<Dependencies<'a>>,
 }
 
 impl<'a> TryFrom<&'a xml::Command> for Command<'a> {
@@ -548,6 +564,7 @@ impl<'a> TryFrom<&'a xml::Command> for Command<'a> {
             params,
             handle: Cell::new(None),
             aliases: RefCell::new(Vec::new()),
+            dependencies: RefCell::new(Dependencies::default()),
         })
     }
 }

@@ -114,7 +114,7 @@ fn generate_constant(gen: &Generator, const_name: &str, value: &Constant) -> Res
     }
 }
 
-fn generate_enum(_gen: &Generator, enum_name: &str, value: &Enum) -> Result<TokenStream> {
+fn generate_enum(gen: &Generator, enum_name: &str, value: &Enum) -> Result<TokenStream> {
     let has_negative = value.values.borrow().iter().any(|(_, field)| match field {
         EnumValue::Variant(EnumVariant { value, .. }) => value.starts_with("-"),
         _ => false,
@@ -128,6 +128,8 @@ fn generate_enum(_gen: &Generator, enum_name: &str, value: &Enum) -> Result<Toke
     let ty_token: Ident = (&ty).into();
     let is_bitflag = value.bitflag;
     let enum_fields = value.values.borrow();
+
+    let config_tag = gen.get_config_feature(&value.dependencies.borrow())?;
 
     // Make sure an enum value is not declared twice
     // Can happen with VK_SURFACE_COUNTER_VBLANK_BIT_EXT and VK_SURFACE_COUNTER_VBLANK_EXT both resolving to Vblank
@@ -201,7 +203,7 @@ fn generate_enum(_gen: &Generator, enum_name: &str, value: &Enum) -> Result<Toke
         .map(|(alias_name, alias)| {
             let alias = format_ident!("{alias}");
             let doc_tag = make_doc_link(alias_name);
-            quote! (#doc_tag pub type #alias = #name;)
+            quote! (#config_tag #doc_tag pub type #alias = #name;)
         })
         .collect::<Vec<_>>();
     let doc_tag = make_doc_link(enum_name);
@@ -216,6 +218,7 @@ fn generate_enum(_gen: &Generator, enum_name: &str, value: &Enum) -> Result<Toke
 
     if is_bitflag {
         Ok(quote! {
+            #config_tag
             bitflags! {
                 #[derive(Default)]
                 #[repr(transparent)]
@@ -225,8 +228,10 @@ fn generate_enum(_gen: &Generator, enum_name: &str, value: &Enum) -> Result<Toke
         })
     } else if !in_impls.is_empty() {
         Ok(quote! {
+            #config_tag
             #result
 
+            #config_tag
             #[allow(non_upper_case_globals)]
             impl #name {
                 #(#in_impls)*
@@ -234,6 +239,6 @@ fn generate_enum(_gen: &Generator, enum_name: &str, value: &Enum) -> Result<Toke
             #(#aliases)*
         })
     } else {
-        Ok(result)
+        Ok(quote! {#config_tag #result})
     }
 }

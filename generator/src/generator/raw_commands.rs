@@ -62,6 +62,7 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
         #![allow(unused_unsafe)]
         #![allow(unused_mut)]
 
+        #[allow(unused_imports)]
         use std::ffi::{c_int, CStr};
 
         use crate::*;
@@ -334,7 +335,10 @@ fn generate_raw_command<'a, 'b>(
     // and won't be inlined otherwise because of crate boundaries
     let inline_tag = output_fields.is_empty().then(|| quote! (#[inline]));
 
+    let config_tag = gen.get_config_feature(&cmd.dependencies.borrow())?;
+
     Ok(quote! {
+        #config_tag
         #doc
         #inline_tag
         pub unsafe fn #func_name<#lifetime #ret_template #(#templates),*>(#(#args_outer_name: #args_outer_type,)* dispatcher: &CommandsDispatcher ) #ret_type {

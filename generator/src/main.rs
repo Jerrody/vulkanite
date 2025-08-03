@@ -1,5 +1,6 @@
 use std::{error::Error, fs, io::BufReader, path::PathBuf};
 
+use anyhow::Context;
 use generator::{GeneratedCommandType, Generator};
 use quick_xml::de::from_reader;
 use structs::Api;
@@ -19,6 +20,10 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let main_crate_name = "vulkanite";
     let crate_vk = PathBuf::from(&format!("{main_crate_name}/src/vk"));
+
+    let cargo_path = PathBuf::from(&format!("{main_crate_name}/Cargo.toml"));
+    let cargo_file = fs::read_to_string(&cargo_path).context("Failed to read Cargo.toml file")?;
+    fs::write(cargo_path, generator.generate_features(cargo_file)?)?;
 
     let extensions = generator.generate_extensions()?;
     fs::write(crate_vk.join("extensions.rs"), extensions)?;

@@ -1,11 +1,11 @@
 use std::ffi::CString;
 
-use anyhow::{anyhow, Result};
+use anyhow::{bail, Context, Result};
 use proc_macro2::Span;
 use quote::{format_ident, quote};
 use syn::LitCStr;
 
-use crate::xml;
+use crate::{generator::remove_ext_prefix, xml};
 
 use super::Generator;
 
@@ -29,7 +29,7 @@ pub fn generate(gen: &Generator) -> Result<String> {
         })
         .map(|v| v.parse::<u32>().ok())
         .unwrap_or_default()
-        .ok_or_else(|| anyhow!("Failed to find VK_HEADER_VERSION"))?;
+        .context("Failed to find VK_HEADER_VERSION")?;
 
     let extensions = gen
         .filtered_extensions()
@@ -44,7 +44,7 @@ pub fn generate(gen: &Generator) -> Result<String> {
             let mut req_block = ext
                 .require
                 .first()
-                .ok_or_else(|| anyhow!("Extension {ext:?} should have a require block"))?
+                .with_context(|| format!("Extension {ext:?} should have a require block"))?
                 .content
                 .iter()
                 .filter(|cnt| !matches!(cnt, xml::RequireContent::Comment(_)));
@@ -53,14 +53,14 @@ pub fn generate(gen: &Generator) -> Result<String> {
                 (Some(xml::RequireContent::Enum(spec)), Some(xml::RequireContent::Enum(name))) => {
                     (name, spec)
                 }
-                _ => return Err(anyhow!("Extension {ext:?} should start with two enums")),
+                _ => bail!("Extension {ext:?} should start with two enums"),
             };
 
             if !spec_enum.name.ends_with("_SPEC_VERSION") {
-                return Err(anyhow!("{spec_enum:?} should end with _SPEC_VERSION"));
+                bail!("{spec_enum:?} should end with _SPEC_VERSION");
             }
             if !name_enum.name.ends_with("_EXTENSION_NAME") {
-                return Err(anyhow!("{name_enum:?} should end with _EXTENSION_NAME"));
+                bail!("{name_enum:?} should end with _EXTENSION_NAME");
             }
 
             let spec_version = spec_enum
@@ -68,18 +68,27 @@ pub fn generate(gen: &Generator) -> Result<String> {
                 .as_ref()
                 .map(|v| v.parse::<u32>().ok())
                 .unwrap_or_default()
-                .ok_or_else(|| anyhow!("{:?} should be an integer", spec_enum.value))?;
+                .with_context(|| format!("{:?} should be an integer", spec_enum.value))?;
             let ext_name = name_enum
                 .value
                 .as_ref()
                 .map(|v| (v.len() >= 2).then(|| &v[1..(v.len() - 1)]))
                 .unwrap_or_default()
-                .ok_or_else(|| anyhow!("{:?} should be in quotes", name_enum.value))?;
+                .with_context(|| format!("{:?} should be in quotes", name_enum.value))?;
             let ext_name = LitCStr::new(&CString::new(ext_name).unwrap(), Span::call_site());
 
             let ext_ident = format_ident!("{}", ext.name["VK_".len()..].to_ascii_uppercase());
+            let ext_feature = gen
+                .extensions_features
+                .get(remove_ext_prefix(&ext.name))
+                .context("Failed to find extension")?;
+            let config = ext_feature.is_non_trivial.get().then(|| {
+                let feat_name = &ext_feature.name;
+                quote! { #[cfg(feature = #feat_name)] }
+            });
 
             Ok(quote! {
+                #config
                 pub const #ext_ident :#ext_class = #ext_class{
                     name: unsafe {#name_class::new(#ext_name)},
                     spec: #spec_version

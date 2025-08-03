@@ -20,6 +20,7 @@ jobs:
       run: cargo rdme --check
     - name: Check fmt
       run: cargo fmt --all -- --check
+    - run: cargo check --all-features
     - run: cargo check -p example
 
   check_msrv:
@@ -28,4 +29,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@1.77.0
+    - run: cargo check --all-features
     - run: cargo check -p example

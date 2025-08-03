@@ -68,6 +68,7 @@ fn generate_handle<'a>(
     } else {
         "handle_nondispatchable"
     };
+    let config_tag = gen.get_config_feature(&handle.dependencies.borrow())?;
     let dispatch_macro = format_ident!("{dispatch_macro}");
     let doc_tag = make_doc_link_inner(vk_name);
     let mapping = gen.mapping.borrow();
@@ -83,11 +84,12 @@ fn generate_handle<'a>(
         .map(|alias| {
             let doc_tag = make_doc_link(&format!("Vk{alias}"));
             let alias = format_ident!("{alias}");
-            quote! ( #doc_tag pub type #alias = #name; )
+            quote! ( #config_tag #doc_tag pub type #alias = #name; )
         })
         .collect::<Vec<_>>();
 
     Ok(quote! {
+        #config_tag
         #dispatch_macro !{#name, #object_type, #doc_tag, #vk_name}
         #(#aliases)*
     })

@@ -15,6 +15,8 @@ use super::Generator;
 struct DispEntry {
     /// Main function name (e.g cmd_set_line_stipple)
     name: Ident,
+    /// Config tag for the entry (e.g #[cfg(feature = "ext_line_stipple")])
+    config_tag: Option<TokenStream>,
     /// Main name and all possible aliases (e.g cmd_set_line_stipple, cmd_set_line_stipple_khr, ...)
     names: Vec<Ident>,
     /// All params used by a function (e.g for cmd_set_line_stipple: [ Option<BorrowedHandle<'_, CommandBuffer>>, u32, u16 ])
@@ -59,6 +61,10 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
         .iter()
         .map(|ent| ent.names.as_slice())
         .collect();
+    let ent_tags: Vec<_> = dispatcher_entries
+        .iter()
+        .map(|ent| ent.config_tag.as_ref())
+        .collect();
     let ent_params: Vec<_> = dispatcher_entries
         .iter()
         .map(|ent| ent.params.clone())
@@ -81,12 +87,13 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
 
         use std::mem;
         use std::cell::Cell;
+        #[allow(unused_imports)]
         use std::ffi::{c_char, c_int, c_void};
 
         #[derive(Clone)]
         pub struct CommandsDispatcher {
             #(
-                #(pub #ent_names: Cell<#ent_defs>,)*
+                #(#ent_tags pub #ent_names: Cell<#ent_defs>,)*
             )*
         }
         /// SAFETY: This trait is safe to implement assuming setting an aligned pointer-size value is coherent (another thread can see the previous value
@@ -144,7 +151,7 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
                 unsafe {
                     Self {
                         #(
-                            #(#ent_names: Cell::new(mem::transmute(unload_cmd)),)*
+                            #(#ent_tags #ent_names: Cell::new(mem::transmute(unload_cmd)),)*
                         )*
                     }
                 }
@@ -159,13 +166,13 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
             )))]
             const fn new_inner() -> Self {
                 #(
-                    extern "system" fn #ent_name(#(_: #ent_params),*) #ent_ret_ty {
+                    #ent_tags extern "system" fn #ent_name(#(_: #ent_params),*) #ent_ret_ty {
                         panic!("Trying to call an unloaded Vulkan command");
                     }
                 )*
                 Self {
                     #(
-                        #(#ent_names: Cell::new(#ent_name),)*
+                        #(#ent_tags #ent_names: Cell::new(#ent_name),)*
                     )*
                 }
             }
@@ -197,6 +204,12 @@ fn generate_dispatch_entry<'a>(
     instance_loader: &mut Vec<TokenStream>,
     device_loader: &mut Vec<TokenStream>,
 ) -> Result<DispEntry> {
+    let mut proc_local = vec![];
+    let mut instance_local = vec![];
+    let mut device_local = vec![];
+
+    let config_tag = gen.get_config_feature(&cmd.dependencies.borrow())?;
+
     let ret_ty = match cmd.return_ty {
         ReturnType::Void => quote!(),
         ReturnType::Result { .. } => quote! (-> Status),
@@ -229,26 +242,26 @@ fn generate_dispatch_entry<'a>(
     let mut push_loaders = |instr: TokenStream, is_get_addr: bool| {
         if only_proc {
             if is_get_addr {
-                proc_addr_loader.push(quote! (get_instance_proc_addr(None, #instr.as_ptr())));
+                proc_local.push(quote! (get_instance_proc_addr(None, #instr.as_ptr())));
             } else {
-                proc_addr_loader.push(instr);
+                proc_local.push(instr);
             }
         } else {
             if is_get_addr {
-                instance_loader.push(
+                instance_local.push(
                     quote! (get_instance_proc_addr(Some(instance.borrow()), #instr.as_ptr())),
                 );
             } else {
-                instance_loader.push(instr.clone());
+                instance_local.push(instr.clone());
             }
 
             if !only_instance {
                 if is_get_addr {
-                    device_loader.push(
+                    device_local.push(
                         quote! (get_device_proc_addr(Some(device.borrow()), #instr.as_ptr())),
                     );
                 } else {
-                    device_loader.push(instr);
+                    device_local.push(instr);
                 }
             }
         }
@@ -288,8 +301,24 @@ fn generate_dispatch_entry<'a>(
         fn_names.push(name);
     }
 
+    for (local, global) in [
+        (proc_local, proc_addr_loader),
+        (instance_local, instance_loader),
+        (device_local, device_loader),
+    ] {
+        if !local.is_empty() {
+            global.push(quote! {
+                #config_tag
+                {
+                    #(#local)*
+                }
+            });
+        }
+    }
+
     Ok(DispEntry {
         name: main_fn_name,
+        config_tag,
         names: fn_names,
         params,
         ret_ty,

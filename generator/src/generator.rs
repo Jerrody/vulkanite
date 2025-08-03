@@ -1,11 +1,12 @@
 use std::{
     borrow::{Borrow, Cow},
-    cell::RefCell,
+    cell::{Cell, RefCell},
     collections::HashMap,
     io::Write,
+    ops::Deref,
 };
 
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, bail, Context, Result};
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote, ToTokens};
 use syn::Ident;
@@ -14,8 +15,9 @@ use crate::{
     helpers::camel_case_to_snake_case,
     structs::{
         convert_field_to_snake_case, AdvancedType, Api, CType, Command, CommandParam,
-        CommandParamsParsed, Constant, Enum, EnumAliased, EnumFlag, EnumValue, EnumVariant, Handle,
-        MappingEntry, MappingType, SliceType, Struct, StructBasetype, StructStandard, Type,
+        CommandParamsParsed, Constant, Dependencies, Enum, EnumAliased, EnumFlag, EnumValue,
+        EnumVariant, Handle, MappingEntry, MappingType, SliceType, Struct, StructBasetype,
+        StructStandard, Type,
     },
     xml,
 };
@@ -24,6 +26,7 @@ mod advanced_commands;
 mod dispatcher;
 mod enums;
 mod extensions;
+mod features;
 mod formats;
 mod handles;
 mod raw_commands;
@@ -34,9 +37,15 @@ pub enum GeneratedCommandType {
     Basic,
 }
 
+struct ExtFeature {
+    name: String,
+    is_non_trivial: Cell<bool>,
+}
+
 pub struct Generator<'a> {
     registry: &'a xml::Registry,
-    ext_names: Vec<&'a str>,
+    vendor_names: Vec<&'a str>,
+    extensions_features: HashMap<&'a str, ExtFeature>,
     enums: HashMap<&'a str, Enum<'a>>,
     constants: HashMap<&'a str, Constant<'a>>,
     handles: HashMap<&'a str, Handle<'a>>,
@@ -50,7 +59,7 @@ impl<'a> Generator<'a> {
         if registry
             .enums
             .get(0)
-            .ok_or_else(|| anyhow!("Registry enum is empty"))?
+            .context("Registry enum is empty")?
             .name
             != "API Constants"
         {
@@ -60,7 +69,32 @@ impl<'a> Generator<'a> {
             ));
         }
 
-        let ext_names: Vec<_> = registry
+        let features_list = Self::filter_features(&registry.features).map(|feat| {
+            (
+                feat.name.deref(),
+                ExtFeature {
+                    name: feat
+                        .name
+                        .strip_prefix("VK_")
+                        .unwrap_or("INVALID_FEATURE_NAME")
+                        .to_ascii_lowercase(),
+                    is_non_trivial: false.into(),
+                },
+            )
+        });
+        let extensions_list = Self::filter_extensions(&registry.extensions).map(|ext| {
+            let ext_simplified = remove_ext_prefix(&ext.name);
+            (
+                ext_simplified,
+                ExtFeature {
+                    name: format!("ext_{ext_simplified}"),
+                    is_non_trivial: false.into(),
+                },
+            )
+        });
+        let extensions_features = features_list.chain(extensions_list).collect();
+
+        let vendor_names: Vec<_> = registry
             .tags
             .iter()
             .flat_map(|tags| &tags.tag)
@@ -79,7 +113,7 @@ impl<'a> Generator<'a> {
             // Skip the constants from above
             .skip(1)
             .map(|it| {
-                let mut my_enum = Enum::try_from(it, &ext_names)?;
+                let mut my_enum = Enum::try_from(it, &vendor_names)?;
                 if it.name == "VkResult" {
                     // Rename Result as Status so that vk::Result<A> = std::Result<A, vk::Status>
                     my_enum.name = "Status".to_owned();
@@ -180,7 +214,8 @@ impl<'a> Generator<'a> {
 
         let gen = Generator {
             registry,
-            ext_names,
+            vendor_names,
+            extensions_features,
             enums,
             constants,
             handles,
@@ -193,8 +228,13 @@ impl<'a> Generator<'a> {
         gen.extend_handles()?;
         gen.extend_structs()?;
         gen.extend_commands()?;
+        gen.find_dependencies()?;
 
         Ok(gen)
+    }
+
+    pub fn generate_features(&self, cargo_file: String) -> Result<String> {
+        features::generate(self, cargo_file)
     }
 
     pub fn generate_extensions(&self) -> Result<String> {
@@ -270,9 +310,9 @@ impl<'a> Generator<'a> {
         let result = String::from_utf8(output)?;
         match status.code() {
             Some(0) => Ok(result),
-            Some(2) => Err(anyhow!("Rustfmt parsing error")),
-            Some(3) => Err(anyhow!("Rustfmt could not parse some lines")),
-            _ => Err(anyhow!("Rustfmt internal error")),
+            Some(2) => bail!("Rustfmt parsing error"),
+            Some(3) => bail!("Rustfmt could not parse some lines"),
+            _ => bail!("Rustfmt internal error"),
         }
     }
 
@@ -341,7 +381,7 @@ impl<'a> Generator<'a> {
         for (ext_number, ext) in enum_extends {
             // we checked above that extends.is_some()
             let parent_name = ext.extends.as_ref().unwrap();
-            let name = convert_field_to_snake_case(&parent_name, &ext.name, &self.ext_names)?;
+            let name = convert_field_to_snake_case(&parent_name, &ext.name, &self.vendor_names)?;
 
             let parent = self
                 .enums
@@ -531,7 +571,7 @@ impl<'a> Generator<'a> {
                     xml::TypeContent::Name(name) => Some(name.as_str()),
                     _ => None,
                 })
-                .ok_or_else(|| anyhow!("Failed to find name for funcptr"))?;
+                .context("Failed to find name for funcptr")?;
             assert!(mapping
                 .insert(
                     name,
@@ -557,7 +597,7 @@ impl<'a> Generator<'a> {
             let vk_name = &handle
                 .name_attr
                 .as_ref()
-                .ok_or_else(|| anyhow!("Expected a name for {:?}", handle))?
+                .with_context(|| format!("Expected a name for {:?}", handle))?
                 .as_str();
 
             // Remove the Vk prefix
@@ -661,7 +701,7 @@ impl<'a> Generator<'a> {
         }
 
         // we must drop the mutable reference before the next part
-        std::mem::drop(mapping);
+        drop(mapping);
 
         // register all lifetimes and field aspect
         for (vk_name, my_struct) in &self.structs {
@@ -745,6 +785,127 @@ impl<'a> Generator<'a> {
         Ok(())
     }
 
+    fn find_dependencies(&self) -> Result<()> {
+        let mapping = self.mapping.borrow();
+        let requires = self
+            .filtered_extensions()
+            .flat_map(|ext| {
+                let name = remove_ext_prefix(&ext.name);
+                ext.require.iter().map(move |req| (name, req))
+            })
+            .chain(
+                self.filtered_features()
+                    .flat_map(|feat| feat.requires().map(|req| (feat.name.as_str(), req))),
+            )
+            .flat_map(|(name, req)| req.content.iter().map(move |req| (name, req)));
+
+        for (ext_name, req) in requires {
+            let Some(ext_feat) = self.extensions_features.get(ext_name) else {
+                bail!("Failed to find extension/feature {ext_name}");
+            };
+            let name = match req {
+                xml::RequireContent::Type(req_ty) => &req_ty.name,
+                xml::RequireContent::Command(command) => &command.name,
+                _ => continue,
+            };
+
+            match mapping.get(name.as_str()) {
+                Some(MappingEntry {
+                    ty: MappingType::Struct | MappingType::StructAlias(_),
+                    ..
+                }) => {
+                    let Some(my_struct) = self.get_struct(name) else {
+                        bail!("Failed to find struct {name}")
+                    };
+                    my_struct.dependencies.borrow_mut().add(ext_name);
+                    if !name.contains("Features") && !name.contains("Properties") {
+                        // An extension can be trivial if it only contains a features and properties definition
+                        ext_feat.is_non_trivial.set(true);
+                    }
+                }
+                Some(MappingEntry {
+                    ty: MappingType::Handle | MappingType::HandleAlias(_),
+                    ..
+                }) => {
+                    let Some(handle) = self.get_handle(name) else {
+                        bail!("Failed to find handle {name}")
+                    };
+                    handle.dependencies.borrow_mut().add(ext_name);
+                    ext_feat.is_non_trivial.set(true);
+                }
+                Some(MappingEntry {
+                    ty: MappingType::Enum | MappingType::EnumAlias(_),
+                    ..
+                }) => {
+                    if let Some(my_enum) = self.get_enum(name) {
+                        my_enum.dependencies.borrow_mut().add(ext_name);
+                        ext_feat.is_non_trivial.set(true);
+                    };
+                }
+                Some(MappingEntry {
+                    ty: MappingType::Command | MappingType::CommandAlias(_),
+                    ..
+                }) => {
+                    let Some(command) = self.get_command(name) else {
+                        bail!("Failed to find command {name}")
+                    };
+                    command.dependencies.borrow_mut().add(ext_name);
+                    ext_feat.is_non_trivial.set(true);
+                }
+                _ => (),
+            }
+        }
+
+        // We always have vulkan 1.0 enabled by default
+        // so set this extension as trivial
+        self.extensions_features
+            .get("VK_VERSION_1_0")
+            .context("Failed to find vulkan 1.0")?
+            .is_non_trivial
+            .set(false);
+
+        // Manual fixing of some dependencies for the time being
+        // These flags are used by vulkan 1.0 but all bits are defined in extensions
+        for bitflag in [
+            "VkPipelineColorBlendStateCreateFlagBits",
+            "VkPipelineDepthStencilStateCreateFlagBits",
+            "VkPipelineLayoutCreateFlagBits",
+        ] {
+            self.get_enum(bitflag)
+                .context("Failed to find bitflag")?
+                .dependencies
+                .borrow_mut()
+                .add("VK_VERSION_1_0");
+        }
+
+        // The VK_EXT_global_priority_query extension is trivial, but its properties struct
+        // uses QueueGlobalPriority which is defined by one of its dependencies
+        for struct_name in [
+            "VkPhysicalDeviceGlobalPriorityQueryFeatures",
+            "VkQueueFamilyGlobalPriorityProperties",
+        ] {
+            let mut my_struct = self
+                .get_struct(struct_name)
+                .context("Failed to find struct")?
+                .dependencies
+                .borrow_mut();
+            my_struct.0.clear();
+            my_struct.add("global_priority");
+            my_struct.add("VK_VERSION_1_4");
+        }
+
+        Ok(())
+    }
+
+    fn get_enum(&self, name: &str) -> Option<&Enum<'a>> {
+        let enum_name = match self.mapping.borrow().get(name)?.ty {
+            MappingType::Enum => name,
+            MappingType::EnumAlias(alias) => alias,
+            _ => return None,
+        };
+        self.enums.get(enum_name)
+    }
+
     fn get_handle(&self, name: &str) -> Option<&Handle<'a>> {
         let handle_name = match self.mapping.borrow().get(name)?.ty {
             MappingType::Handle => name,
@@ -764,6 +925,15 @@ impl<'a> Generator<'a> {
             Some(Struct::Standard(my_struct)) => Some(my_struct),
             _ => None,
         }
+    }
+
+    fn get_command(&self, name: &str) -> Option<&Command<'a>> {
+        let command_name = match self.mapping.borrow().get(name)?.ty {
+            MappingType::Command => name,
+            MappingType::CommandAlias(alias) => alias,
+            _ => return None,
+        };
+        self.commands.get(command_name)
     }
 
     /// Return if the type ty needs to have a lifetime parameter
@@ -873,22 +1043,29 @@ impl<'a> Generator<'a> {
     }
 
     // remove VulkanSC only features
-    fn filtered_features(&self) -> impl Iterator<Item = &'a xml::Feature> {
-        self.registry
-            .features
+    fn filter_features(feats: &'a Vec<xml::Feature>) -> impl Iterator<Item = &'a xml::Feature> {
+        feats
             .iter()
             .filter(|feat| feat.api.is_empty() || feat.api.contains(&xml::Api::Vulkan))
     }
 
+    fn filtered_features(&self) -> impl Iterator<Item = &'a xml::Feature> {
+        Self::filter_features(&self.registry.features)
+    }
+
     // remove VulkanSC only extensions
-    fn filtered_extensions(&self) -> impl Iterator<Item = &'a xml::Extension> {
-        self.registry
-            .extensions
-            .iter()
+    fn filter_extensions(
+        exts: &'a Vec<xml::Extensions>,
+    ) -> impl Iterator<Item = &'a xml::Extension> {
+        exts.iter()
             .flat_map(|exts| &exts.extension)
             .filter(|ext| ext.supported.contains(&xml::ExtensionSupported::Vulkan))
             // for the time being, ignore video extensions
             .filter(|ext| !ext.name.starts_with("VK_KHR_video"))
+    }
+
+    fn filtered_extensions(&self) -> impl Iterator<Item = &'a xml::Extension> {
+        Self::filter_extensions(&self.registry.extensions)
     }
 
     fn all_types(&self) -> impl Iterator<Item = &'a xml::Type> {
@@ -1575,6 +1752,46 @@ impl<'a> Generator<'a> {
         self.get_mapping_name(name)
             .map(|name| format_ident!("{name}"))
     }
+
+    fn get_config_feature_inner(&self, dependencies: &Dependencies) -> Result<Option<TokenStream>> {
+        let ext_features = self.extensions_features.borrow();
+        let deps: Vec<_> = dependencies
+            .0
+            .iter()
+            .map(|dep| {
+                ext_features
+                    .get(dep)
+                    .context("Failed to find extension/feature")
+            })
+            .collect::<Result<_>>()?;
+
+        let cnf = if deps.is_empty() || deps.iter().any(|dep| !dep.is_non_trivial.get()) {
+            return Ok(None);
+        } else if deps.len() == 1 {
+            let dep_name = &deps[0].name;
+            quote! {
+                feature = #dep_name
+            }
+        } else {
+            let dep_names = deps.iter().map(|dep| &dep.name);
+            quote! {
+                any(
+                    #(feature = #dep_names),*
+                )
+            }
+        };
+        Ok(Some(cnf))
+    }
+
+    fn get_config_feature(&self, dependencies: &Dependencies) -> Result<Option<TokenStream>> {
+        self.get_config_feature_inner(dependencies)?
+            .map(|cnf| {
+                Ok(quote! {
+                    #[cfg(#cnf)]
+                })
+            })
+            .transpose()
+    }
 }
 
 fn parse_value(value: &str, ty: CType) -> TokenStream {
@@ -1590,6 +1807,13 @@ fn parse_value(value: &str, ty: CType) -> TokenStream {
         rust_value = rust_value[1..(rust_value.len() - 1)].to_owned();
     }
     rust_value.parse().unwrap()
+}
+
+fn remove_ext_prefix(name: &str) -> &str {
+    name.strip_prefix("VK_")
+        .and_then(|n| n.split_once('_'))
+        .map(|(_, s)| s)
+        .unwrap_or("invalid_extension_name")
 }
 
 fn get_doc_url(item_name: &str) -> String {

@@ -131,6 +131,7 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
     });
 
     for (handle_name, handle) in handles_order {
+        let config_tag = gen.get_config_feature(&handle.dependencies.borrow())?;
         if let Some(cmds) = handle_cmds.get(handle_name) {
             if !handle.aliases.borrow().is_empty() {
                 return Err(anyhow!(
@@ -144,11 +145,13 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
             let methods = create_methods(cmds)?;
             let alias_impl = (gen_ty == GeneratedCommandType::Basic).then(|| {
                 quote! {
+                    #config_tag
                     unsafe impl Alias<raw::#id_name> for #id_name {}
                 }
             });
 
             result.push(quote! {
+                #config_tag
                 #[repr(C)]
                 #[derive(Clone)]
                 #doc_tag
@@ -159,12 +162,14 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
                 }
 
                 #alias_impl
+                #config_tag
                 impl<D: Dispatcher, A:Allocator> Copy for #id_name<D,A> where
                 D: Copy,
                 A: Copy,
                 {
                 }
 
+                #config_tag
                 impl<D: Dispatcher, A: Allocator> Deref for #id_name<D,A> {
                     type Target = raw::#id_name;
 
@@ -175,6 +180,7 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
                     }
                 }
 
+                #config_tag
                 impl<D: Dispatcher, A: Allocator> #id_name<D, A> {
                     pub unsafe fn from_inner(handle: raw::#id_name, disp: D, alloc: A) -> Self {
                         Self {
@@ -202,6 +208,7 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
             let doc_tag = make_doc_link(handle_name);
 
             result.push(quote! {
+                #config_tag
                 #[repr(C)]
                 #[derive(Clone, Copy)]
                 #doc_tag
@@ -209,7 +216,9 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
                     inner: <raw::#id_name as Handle>::InnerType,
                 }
 
+                #config_tag
                 unsafe impl Alias<raw::#id_name> for #id_name {}
+                #config_tag
                 impl Deref for #id_name {
                     type Target = raw::#id_name;
 
@@ -219,6 +228,7 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
                     }
                 }
 
+                #config_tag
                 impl #id_name {
                     pub fn from_inner(handle: raw::#id_name) -> Self {
                         Self {
@@ -230,13 +240,15 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
             for alias_name in handle.aliases.borrow().iter() {
                 let doc_tag = make_doc_link(&format!("Vk{alias_name}"));
                 let alias_name = format_ident!("{alias_name}");
-                result.push(quote! (#doc_tag pub type #alias_name = raw::#id_name;))
+                result.push(quote! (#config_tag #doc_tag pub type #alias_name = raw::#id_name;))
             }
         }
     }
 
     let result = quote! {
         #![allow(unused_unsafe)]
+
+        #[allow(unused_imports)]
         use std::{
             ffi::{c_int, CStr},
             ops::Deref,
@@ -473,7 +485,10 @@ where
     // for functions with templates, let the compiler handle whether or not to inline it
     let inline_tag = ret_template.is_none().then(|| quote! (#[inline]));
 
+    let config_tag = gen.get_config_feature(&cmd.dependencies.borrow())?;
+
     Ok(quote! {
+        #config_tag
         #doc_tag
         #inline_tag
         pub #unsafe_tag fn #fn_name<#lifetime #ret_template #(#arg_template),*>(&self, #(#arg_outer_name: #arg_outer_type),*) #ret_type {

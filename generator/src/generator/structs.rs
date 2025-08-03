@@ -3,7 +3,7 @@ use std::{
     collections::{HashMap, HashSet},
 };
 
-use anyhow::{anyhow, Result};
+use anyhow::{anyhow, Context, Result};
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 
@@ -68,6 +68,7 @@ pub fn generate<'a>(gen: &Generator<'a>) -> Result<String> {
         use crate::*;
         use crate::vk::*;
         use crate::vk::raw::*;
+        #[allow(unused_imports)]
         use std::{array, ffi::{c_char, c_int, c_ulong, c_void}, marker::PhantomData, mem::ManuallyDrop, ptr, slice};
 
         #(#struct_features)*
@@ -85,6 +86,11 @@ fn generate_struct<'a>(
     struct_vk_name: &str,
 ) -> Result<TokenStream> {
     let mapping = gen.mapping.borrow();
+    let config_tag_inner = gen.get_config_feature_inner(&my_struct.dependencies.borrow())?;
+    let config_tag = config_tag_inner.as_ref().map(|tag| quote! { #[cfg(#tag)] });
+    // Needed to produce a valid output code
+    let config_tag_inner = config_tag_inner.unwrap_or_else(|| quote! {true});
+
     let all_fields: HashMap<_, _> = my_struct.fields.iter().map(|f| (f.vk_name, f)).collect();
     let mut simple_fields: HashSet<_> = all_fields.keys().cloned().collect();
     let mut char_arr_fields = Vec::new();
@@ -402,7 +408,9 @@ fn generate_struct<'a>(
             .unwrap();
         (
             Some(quote! {
+                #config_tag
                 unsafe impl #lifetime ExtendableStructureBase for #name #lifetime {}
+                #config_tag
                 unsafe impl #lifetime ExtendableStructure for #name #lifetime {
                     const STRUCTURE_TYPE: StructureType = #s_type_value;
                 }
@@ -423,12 +431,15 @@ fn generate_struct<'a>(
         .extends
         .iter()
         .map(|name| {
-            mapping
-                .get(name.as_str())
-                .map(|entry| format_ident!("{}", entry.name))
-                .ok_or_else(|| anyhow!("Failed to find extension {}", name))
+            let extended_struct = gen.get_struct(name).context("Failed to find structure")?;
+            Ok((
+                format_ident!("{}", extended_struct.name),
+                gen.get_config_feature_inner(&extended_struct.dependencies.borrow())?,
+            ))
         })
         .collect::<Result<Vec<_>>>()?;
+    let (extension_names, extension_config): (Vec<_>, Vec<_>) =
+        struct_extensions.into_iter().unzip();
 
     // for the time being, do not implement clone for types with a lifetime
     let derives = (!has_lifetime).then(|| quote! (#[derive(Clone, Copy)]));
@@ -446,6 +457,7 @@ fn generate_struct<'a>(
             first_field_default = quote! (ManuallyDrop::new(#first_field_default))
         }
         return Ok(quote! {
+            #config_tag
             #[repr(C)]
             #derives
             #doc_tag
@@ -453,6 +465,7 @@ fn generate_struct<'a>(
                 #(#fields)*
             }
 
+            #config_tag
             impl #lifetime Default for #name #lifetime {
                 fn default() -> Self {
                     Self {
@@ -461,11 +474,12 @@ fn generate_struct<'a>(
                 }
             }
 
-            #(pub type #aliases #lifetime = #name #lifetime;)*
+            #(#config_tag pub type #aliases #lifetime = #name #lifetime;)*
         });
     }
 
     Ok(quote! {
+        #config_tag
         #[repr(C)]
         #derives
         #doc_tag
@@ -474,10 +488,13 @@ fn generate_struct<'a>(
             #phantom_decl
         }
         #s_type_impl
+        #config_tag
         unsafe impl #lifetime Send for #name #lifetime {}
+        #config_tag
         unsafe impl #lifetime Sync for #name #lifetime {}
-        #(unsafe impl<'a, 'b> ExtendingStructure<#struct_extensions<'b>> for #name<'a> {})*
+        #(#[cfg(all(#config_tag_inner, #extension_config))] unsafe impl<'a, 'b> ExtendingStructure<#extension_names<'b>> for #name<'a> {})*
 
+        #config_tag
         impl #lifetime Default for #name #lifetime {
             fn default() -> Self {
                 Self {
@@ -487,6 +504,7 @@ fn generate_struct<'a>(
             }
         }
 
+        #config_tag
         impl #lifetime #name #lifetime {
             #(#simple_accessors)*
             #(#char_arr_setters)*
@@ -495,6 +513,6 @@ fn generate_struct<'a>(
             #p_next_impl
         }
 
-        #(pub type #aliases #lifetime = #name #lifetime;)*
+        #(#config_tag pub type #aliases #lifetime = #name #lifetime;)*
     })
 }
