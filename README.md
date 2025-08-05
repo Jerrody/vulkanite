@@ -8,7 +8,7 @@ which makes it differ from the popular Vulkan crate ash.
 
 # Features
 ## Safety
-Vulkan handles can be mostly be seen as references to Vulkan object. As such, using this crate, Vulkan handles **cannot be NULL**
+Vulkan handles can mostly be seen as references to Vulkan object. As such, using this crate, Vulkan handles **cannot be NULL**
 (there is no vk::NULL_HANDLE value), being given a handle means you can assume it is not null and valid.
 All vulkan functions taking as parameters handles which can be null now instead take as parameter an [`Option<Handle>`].
 
@@ -16,7 +16,7 @@ Concerning command safety, I decided to take an approach similar to the `cxx` cr
 
 When using the Vulkan API, driver code will be called which is possibly proprietary and on which you have no control. Even if you completely follow the Vulkan Specification and have no validation error, you might still get some surprise segfault when running your program on some GPUs/drivers (I speak from experience). As such the first solution would be to make every vulkan command or function calling a vulkan command unsafe, but this is from my point of view counter-productive. I chose to keep most Vulkan commands safe. The exceptions are destroy commands for which you must ensure everything created by what you are about to destroyed have already been destroyed.
 
-Note that these bindings assume the driver implementation complies, at least minimally, with the Vulkan Specification. In particular if the driver returns a completely unkown `VkStatus` code (which is not allowed by the specification), this
+Note that these bindings assume the driver implementation complies, at least minimally, with the Vulkan Specification. In particular if the driver returns a completely unknown `VkStatus` code (which is not allowed by the specification), this
 will lead to undefined behavior in the rust code.
 
 ## Smart handles
@@ -57,10 +57,13 @@ let (status, image_idx) = self.device.acquire_next_image_khr(
    Some(semaphore),
    None, // not signaling any fence
 )?;
-if status == vk::Status::vk::Status::SuboptimalKHR {
+if status == vk::Status::SuboptimalKHR {
     ...
 }
 ```
+
+## Vulkan versions and extensions
+Similarly to the windows crate, only Vulkan 1.0 structures and functions are available by default as a way to decrease the build time. Support for higher versions and extensions is behind a feature gate. For example, to use Vulkan 1.2 along with the `VK_KHR_SWAPCHAIN` extension, you would need to enable both the `version_1_2` and the `ext_surface` features.
 
 ## Slices
 Every vulkan command or structure that takes as input a length along a raw pointer now takes as input a slice.
@@ -98,18 +101,18 @@ Note that the case of [vk::Status::Incomplete] is handled by the implementation:
 is never returned
 
 ## Structure chain as command outputs
-In case a vulkan command returns a structure that can be extended, a tuple can be used to specify which structure to ieve:
+In case a vulkan command returns a structure that can be extended, a tuple can be used to specify which structure to retrieve:
 ```rust
 let (vk_props, vk11_props) : (_, vk::PhysicalDeviceVulkan11Properties) = physical_device.get_properties2();
 println!("Max supported API is {}, Subgroup size is {}", vk_props.properties.api_version,  vk11_props.subgroup_size);
 ```
-In case you don't want to use a structure chain, you have the 2 following choices (the type cannot be deduced explicitely in the default case):
+In case you don't want to use a structure chain, you have the 2 following choices (the type cannot be deduced explicitly in the default case):
 ```rust
 let vk_props: vk::PhysicalDeviceProperties2 = physical_device.get_properties2();
 let (vk_props,) = physical_device.get_properties2();
 ```
 
-Note that the structure chain integrity is checked as compile time: the following code will lead to a compile error [vk::PhysicalDeviceVulkan11Features] cannot
+Note that the structure chain integrity is checked at compile time: the following code will lead to a compile error [vk::PhysicalDeviceVulkan11Features] cannot
 be used in a structure chain whose head is [vk::PhysicalDeviceProperties2]):
 ```rust
 let (_, _) : (_, vk::PhysicalDeviceVulkan11Features) = physical_device.get_properties2();
@@ -142,7 +145,7 @@ let device = physical_device.create_device(device_info.as_ref())?;
 
 # Features
 
-The following features are available:
+Vulkan versions and extensions are available using the `version_***` and the `ext_***` features. The following features, which provide interoperability with other crates, are also available:
 - `loaded`: Allow the crate to dynamically load the vulkan library using the `libloading` crate, see [Dispatcher::new_loaded]
 - `smallvec`: Add support for the smallvec crate to minimize heap allocations, enabling this feature allows the following: `let physical_devices: SmallVec<[_; 3]> = instance.enumerate_physical_devices()?;`.
 - `arrayvec`: Add support for the arrayvec crate to minimize heap allocations, enabling this feature allows the following: `let pipeline: ArrayVec<_; 1> = device.create_compute_pipelines(None, &create_info)?;`.
@@ -152,7 +155,7 @@ The following features are available:
 The current MSRV for this crate is Rust 1.77 (C-String literals are heavily used). It is not planned to increase
 this version anytime soon and if this happens a reasonable (at least 6 months old) MSRV will be chosen.
 
-Note that these bindings are still a Work-In-Process, the public API may see breaking changes if this improves
+Note that these bindings are still a Work-In-Progress, the public API may see breaking changes if this improves
 safety or how nice to use the code is.
 
 Please be aware that this crate should not be considered production ready yet, breaking changes are to be expected in the future versions.
