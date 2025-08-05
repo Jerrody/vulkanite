@@ -89,7 +89,7 @@ fn generate_struct<'a>(
     let config_tag_inner = gen.get_config_feature_inner(&my_struct.dependencies.borrow())?;
     let config_tag = config_tag_inner.as_ref().map(|tag| quote! { #[cfg(#tag)] });
     // Needed to produce a valid output code
-    let config_tag_inner = config_tag_inner.unwrap_or_else(|| quote! {true});
+    let config_tag_inner = config_tag_inner.unwrap_or_else(|| quote! {all()});
 
     let all_fields: HashMap<_, _> = my_struct.fields.iter().map(|f| (f.vk_name, f)).collect();
     let mut simple_fields: HashSet<_> = all_fields.keys().cloned().collect();

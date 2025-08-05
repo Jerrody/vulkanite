@@ -4074,12 +4074,12 @@ unsafe impl<'a> ExtendableStructure for ShaderModuleCreateInfo<'a> {
 }
 unsafe impl<'a> Send for ShaderModuleCreateInfo<'a> {}
 unsafe impl<'a> Sync for ShaderModuleCreateInfo<'a> {}
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<PipelineShaderStageCreateInfo<'b>>
     for ShaderModuleCreateInfo<'a>
 {
 }
-#[cfg(all(true, feature = "ext_data_graph"))]
+#[cfg(all(all(), feature = "ext_data_graph"))]
 unsafe impl<'a, 'b> ExtendingStructure<DataGraphPipelineShaderModuleCreateInfoARM<'b>>
     for ShaderModuleCreateInfo<'a>
 {
@@ -5564,31 +5564,31 @@ unsafe impl<'a> ExtendableStructure for PipelineLayoutCreateInfo<'a> {
 }
 unsafe impl<'a> Send for PipelineLayoutCreateInfo<'a> {}
 unsafe impl<'a> Sync for PipelineLayoutCreateInfo<'a> {}
-#[cfg(all(true, any(feature = "ext_maintenance6", feature = "version_1_4")))]
+#[cfg(all(all(), any(feature = "ext_maintenance6", feature = "version_1_4")))]
 unsafe impl<'a, 'b> ExtendingStructure<BindDescriptorSetsInfo<'b>>
     for PipelineLayoutCreateInfo<'a>
 {
 }
-#[cfg(all(true, any(feature = "ext_maintenance6", feature = "version_1_4")))]
+#[cfg(all(all(), any(feature = "ext_maintenance6", feature = "version_1_4")))]
 unsafe impl<'a, 'b> ExtendingStructure<PushConstantsInfo<'b>> for PipelineLayoutCreateInfo<'a> {}
-#[cfg(all(true, any(feature = "ext_maintenance6", feature = "version_1_4")))]
+#[cfg(all(all(), any(feature = "ext_maintenance6", feature = "version_1_4")))]
 unsafe impl<'a, 'b> ExtendingStructure<PushDescriptorSetInfo<'b>> for PipelineLayoutCreateInfo<'a> {}
-#[cfg(all(true, any(feature = "ext_maintenance6", feature = "version_1_4")))]
+#[cfg(all(all(), any(feature = "ext_maintenance6", feature = "version_1_4")))]
 unsafe impl<'a, 'b> ExtendingStructure<PushDescriptorSetWithTemplateInfo<'b>>
     for PipelineLayoutCreateInfo<'a>
 {
 }
-#[cfg(all(true, feature = "ext_maintenance6"))]
+#[cfg(all(all(), feature = "ext_maintenance6"))]
 unsafe impl<'a, 'b> ExtendingStructure<SetDescriptorBufferOffsetsInfoEXT<'b>>
     for PipelineLayoutCreateInfo<'a>
 {
 }
-#[cfg(all(true, feature = "ext_maintenance6"))]
+#[cfg(all(all(), feature = "ext_maintenance6"))]
 unsafe impl<'a, 'b> ExtendingStructure<BindDescriptorBufferEmbeddedSamplersInfoEXT<'b>>
     for PipelineLayoutCreateInfo<'a>
 {
 }
-#[cfg(all(true, feature = "ext_device_generated_commands"))]
+#[cfg(all(all(), feature = "ext_device_generated_commands"))]
 unsafe impl<'a, 'b> ExtendingStructure<IndirectCommandsLayoutCreateInfoEXT<'b>>
     for PipelineLayoutCreateInfo<'a>
 {
@@ -7781,7 +7781,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevice16BitStorageFeatures<'a> {
 unsafe impl<'a> Send for PhysicalDevice16BitStorageFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDevice16BitStorageFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -7791,7 +7791,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevice16BitStorageFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevice16BitStorageFeatures<'a>
 {
@@ -10072,7 +10072,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceVariablePointersFeatures<'
 unsafe impl<'a> Send for PhysicalDeviceVariablePointersFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceVariablePointersFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -10082,7 +10082,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceVariablePointersFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceVariablePointersFeatures<'a>
 {
@@ -13852,7 +13852,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevice8BitStorageFeatures<'a> {
 unsafe impl<'a> Send for PhysicalDevice8BitStorageFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDevice8BitStorageFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -13862,7 +13862,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevice8BitStorageFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevice8BitStorageFeatures<'a>
 {
@@ -14052,7 +14052,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderAtomicInt64Features<
 unsafe impl<'a> Send for PhysicalDeviceShaderAtomicInt64Features<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderAtomicInt64Features<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -14062,7 +14062,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderAtomicInt64Features<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderAtomicInt64Features<'a>
 {
@@ -14114,7 +14114,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderFloat16Int8Features<
 unsafe impl<'a> Send for PhysicalDeviceShaderFloat16Int8Features<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderFloat16Int8Features<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -14124,7 +14124,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderFloat16Int8Features<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderFloat16Int8Features<'a>
 {
@@ -15183,7 +15183,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceScalarBlockLayoutFeatures<
 unsafe impl<'a> Send for PhysicalDeviceScalarBlockLayoutFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceScalarBlockLayoutFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -15193,7 +15193,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceScalarBlockLayoutFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceScalarBlockLayoutFeatures<'a>
 {
@@ -15416,7 +15416,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceVulkanMemoryModelFeatures<
 unsafe impl<'a> Send for PhysicalDeviceVulkanMemoryModelFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceVulkanMemoryModelFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -15426,7 +15426,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceVulkanMemoryModelFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceVulkanMemoryModelFeatures<'a>
 {
@@ -15775,7 +15775,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceUniformBufferStandardLayou
 unsafe impl<'a> Send for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -15785,7 +15785,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a>
 {
@@ -15831,7 +15831,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderSubgroupExtendedType
 unsafe impl<'a> Send for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -15841,7 +15841,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a>
 {
@@ -17639,7 +17639,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderTerminateInvocationF
 unsafe impl<'a> Send for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -17649,7 +17649,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderTerminateInvocationFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderTerminateInvocationFeatures<'a>
 {
@@ -17780,7 +17780,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderDemoteToHelperInvoca
 unsafe impl<'a> Send for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -17790,7 +17790,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a>
 {
@@ -18790,7 +18790,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceZeroInitializeWorkgroupMem
 unsafe impl<'a> Send for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -18800,7 +18800,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a>
 {
@@ -18845,7 +18845,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceImageRobustnessFeatures<'a
 unsafe impl<'a> Send for PhysicalDeviceImageRobustnessFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceImageRobustnessFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -18855,7 +18855,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceImageRobustnessFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceImageRobustnessFeatures<'a>
 {
@@ -20282,7 +20282,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceTextureCompressionASTCHDRF
 unsafe impl<'a> Send for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -20292,7 +20292,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a>
 {
@@ -20829,7 +20829,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderIntegerDotProductFea
 unsafe impl<'a> Send for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -20839,7 +20839,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderIntegerDotProductFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderIntegerDotProductFeatures<'a>
 {
@@ -20915,7 +20915,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderIntegerDotProductPro
 unsafe impl<'a> Send for PhysicalDeviceShaderIntegerDotProductProperties<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderIntegerDotProductProperties<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -21202,7 +21202,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceTexelBufferAlignmentProper
 unsafe impl<'a> Send for PhysicalDeviceTexelBufferAlignmentProperties<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceTexelBufferAlignmentProperties<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -22201,7 +22201,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderSubgroupRotateFeatur
 unsafe impl<'a> Send for PhysicalDeviceShaderSubgroupRotateFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderSubgroupRotateFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -22211,7 +22211,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderSubgroupRotateFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderSubgroupRotateFeatures<'a>
 {
@@ -22262,7 +22262,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderFloatControls2Featur
 unsafe impl<'a> Send for PhysicalDeviceShaderFloatControls2Features<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderFloatControls2Features<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -22272,7 +22272,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderFloatControls2Features<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderFloatControls2Features<'a>
 {
@@ -22317,7 +22317,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderExpectAssumeFeatures
 unsafe impl<'a> Send for PhysicalDeviceShaderExpectAssumeFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderExpectAssumeFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -22327,7 +22327,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderExpectAssumeFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderExpectAssumeFeatures<'a>
 {
@@ -22861,7 +22861,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceIndexTypeUint8Features<'a>
 unsafe impl<'a> Send for PhysicalDeviceIndexTypeUint8Features<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceIndexTypeUint8Features<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -22871,7 +22871,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceIndexTypeUint8Features<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceIndexTypeUint8Features<'a>
 {
@@ -24491,7 +24491,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePipelineProtectedAccessFea
 unsafe impl<'a> Send for PhysicalDevicePipelineProtectedAccessFeatures<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePipelineProtectedAccessFeatures<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -24501,7 +24501,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevicePipelineProtectedAccessFeatures<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevicePipelineProtectedAccessFeatures<'a>
 {
@@ -28142,7 +28142,7 @@ unsafe impl<'a> ExtendableStructure for TextureLODGatherFormatPropertiesAMD<'a> 
 unsafe impl<'a> Send for TextureLODGatherFormatPropertiesAMD<'a> {}
 unsafe impl<'a> Sync for TextureLODGatherFormatPropertiesAMD<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -28367,7 +28367,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceCornerSampledImageFeatures
 unsafe impl<'a> Send for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -28377,7 +28377,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceCornerSampledImageFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceCornerSampledImageFeaturesNV<'a>
 {
@@ -31661,7 +31661,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceRelaxedLineRasterizationFe
 unsafe impl<'a> Send for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -31671,7 +31671,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a>
 {
@@ -34485,7 +34485,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderBfloat16FeaturesKHR<
 unsafe impl<'a> Send for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -34495,7 +34495,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderBfloat16FeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderBfloat16FeaturesKHR<'a>
 {
@@ -37167,7 +37167,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceRayQueryFeaturesKHR<'a> {
 unsafe impl<'a> Send for PhysicalDeviceRayQueryFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceRayQueryFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -37177,7 +37177,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceRayQueryFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceRayQueryFeaturesKHR<'a>
 {
@@ -37314,7 +37314,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderSMBuiltinsProperties
 unsafe impl<'a> Send for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -37368,7 +37368,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderSMBuiltinsFeaturesNV
 unsafe impl<'a> Send for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -37378,7 +37378,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a>
 {
@@ -38041,7 +38041,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePortabilitySubsetFeaturesK
 unsafe impl<'a> Send for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -38051,7 +38051,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevicePortabilitySubsetFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevicePortabilitySubsetFeaturesKHR<'a>
 {
@@ -38179,7 +38179,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePortabilitySubsetPropertie
 unsafe impl<'a> Send for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -39939,7 +39939,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderClockFeaturesKHR<'a>
 unsafe impl<'a> Send for PhysicalDeviceShaderClockFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderClockFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -39949,7 +39949,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderClockFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderClockFeaturesKHR<'a>
 {
@@ -40073,7 +40073,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderCorePropertiesAMD<'a
 unsafe impl<'a> Send for PhysicalDeviceShaderCorePropertiesAMD<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderCorePropertiesAMD<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -40592,7 +40592,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderImageFootprintFeatur
 unsafe impl<'a> Send for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -40602,7 +40602,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderImageFootprintFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderImageFootprintFeaturesNV<'a>
 {
@@ -40987,7 +40987,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderIntegerFunctions2Fea
 unsafe impl<'a> Send for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -40997,7 +40997,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a>
 {
@@ -41383,7 +41383,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePCIBusInfoPropertiesEXT<'a
 unsafe impl<'a> Send for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -42497,7 +42497,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceCoherentMemoryFeaturesAMD<
 unsafe impl<'a> Send for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -42507,7 +42507,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceCoherentMemoryFeaturesAMD<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceCoherentMemoryFeaturesAMD<'a>
 {
@@ -42552,7 +42552,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderImageAtomicInt64Feat
 unsafe impl<'a> Send for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -42562,7 +42562,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a>
 {
@@ -42611,7 +42611,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderQuadControlFeaturesK
 unsafe impl<'a> Send for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -42621,7 +42621,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderQuadControlFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderQuadControlFeaturesKHR<'a>
 {
@@ -42665,7 +42665,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceMemoryBudgetPropertiesEXT<
 unsafe impl<'a> Send for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -42886,7 +42886,7 @@ unsafe impl<'a> ExtendableStructure
 unsafe impl<'a> Send for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -42896,7 +42896,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
 {
@@ -43621,7 +43621,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentShaderInterlockFea
 unsafe impl<'a> Send for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -43631,7 +43631,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a>
 {
@@ -43686,7 +43686,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceYcbcrImageArraysFeaturesEX
 unsafe impl<'a> Send for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -43696,7 +43696,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a>
 {
@@ -44148,7 +44148,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderAtomicFloatFeaturesE
 unsafe impl<'a> Send for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -44158,7 +44158,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a>
 {
@@ -44937,7 +44937,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderAtomicFloat2Features
 unsafe impl<'a> Send for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -44947,7 +44947,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a>
 {
@@ -46108,7 +46108,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceTexelBufferAlignmentFeatur
 unsafe impl<'a> Send for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -46118,7 +46118,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a>
 {
@@ -49989,7 +49989,7 @@ unsafe impl<'a> ExtendableStructure
 unsafe impl<'a> Send for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -49999,7 +49999,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a>
 {
@@ -50043,7 +50043,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentShaderBarycentricF
 unsafe impl<'a> Send for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -50053,7 +50053,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a>
 {
@@ -50102,7 +50102,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentShaderBarycentricP
 unsafe impl<'a> Send for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -50159,7 +50159,7 @@ unsafe impl<'a> ExtendableStructure
 unsafe impl<'a> Send for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -50169,7 +50169,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
 {
@@ -51300,7 +51300,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceYcbcr2Plane444FormatsFeatu
 unsafe impl<'a> Send for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -51310,7 +51310,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a>
 {
@@ -51354,7 +51354,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentDensityMap2Feature
 unsafe impl<'a> Send for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -51364,7 +51364,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a>
 {
@@ -51411,7 +51411,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentDensityMap2Propert
 unsafe impl<'a> Send for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -51541,7 +51541,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceWorkgroupMemoryExplicitLay
 unsafe impl<'a> Send for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -51551,7 +51551,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a>
 {
@@ -51863,7 +51863,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceAttachmentFeedbackLoopLayo
 unsafe impl<'a> Send for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -51873,7 +51873,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a>
 {
@@ -51917,7 +51917,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevice4444FormatsFeaturesEXT<'a>
 unsafe impl<'a> Send for PhysicalDevice4444FormatsFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDevice4444FormatsFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -51927,7 +51927,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevice4444FormatsFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevice4444FormatsFeaturesEXT<'a>
 {
@@ -52352,7 +52352,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceRGBA10X6FormatsFeaturesEXT
 unsafe impl<'a> Send for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -52362,7 +52362,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a>
 {
@@ -52701,7 +52701,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceDrmPropertiesEXT<'a> {
 unsafe impl<'a> Send for PhysicalDeviceDrmPropertiesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceDrmPropertiesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -53028,7 +53028,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePrimitiveTopologyListResta
 unsafe impl<'a> Send for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -53038,7 +53038,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a>
 {
@@ -55125,7 +55125,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePrimitivesGeneratedQueryFe
 unsafe impl<'a> Send for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -55135,7 +55135,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a>
 {
@@ -55685,7 +55685,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceImage2DViewOf3DFeaturesEXT
 unsafe impl<'a> Send for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -55695,7 +55695,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a>
 {
@@ -55746,7 +55746,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderTileImageFeaturesEXT
 unsafe impl<'a> Send for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -55756,7 +55756,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderTileImageFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderTileImageFeaturesEXT<'a>
 {
@@ -55813,7 +55813,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderTileImagePropertiesE
 unsafe impl<'a> Send for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -57421,7 +57421,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderCorePropertiesARM<'a
 unsafe impl<'a> Send for PhysicalDeviceShaderCorePropertiesARM<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderCorePropertiesARM<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -57939,7 +57939,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceNonSeamlessCubeMapFeatures
 unsafe impl<'a> Send for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -57949,7 +57949,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a>
 {
@@ -59227,7 +59227,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceLinearColorAttachmentFeatu
 unsafe impl<'a> Send for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -59237,7 +59237,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a>
 {
@@ -59284,7 +59284,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderMaximalReconvergence
 unsafe impl<'a> Send for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -59294,7 +59294,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a>
 {
@@ -59343,7 +59343,7 @@ unsafe impl<'a> ExtendableStructure
 unsafe impl<'a> Send for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -59353,7 +59353,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a>
 {
@@ -59613,7 +59613,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceNestedCommandBufferFeature
 unsafe impl<'a> Send for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -59623,7 +59623,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a>
 {
@@ -59679,7 +59679,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceNestedCommandBufferPropert
 unsafe impl<'a> Send for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -63149,7 +63149,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceLegacyDitheringFeaturesEXT
 unsafe impl<'a> Send for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -63159,7 +63159,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceLegacyDitheringFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceLegacyDitheringFeaturesEXT<'a>
 {
@@ -63203,7 +63203,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceExternalFormatResolveFeatu
 unsafe impl<'a> Send for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -63213,7 +63213,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a>
 {
@@ -63262,7 +63262,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceExternalFormatResolvePrope
 unsafe impl<'a> Send for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -63328,7 +63328,7 @@ unsafe impl<'a> ExtendableStructure for AndroidHardwareBufferFormatResolveProper
 }
 unsafe impl<'a> Send for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {}
 unsafe impl<'a> Sync for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {}
-#[cfg(all(true, feature = "ext_external_memory_android_hardware_buffer"))]
+#[cfg(all(all(), feature = "ext_external_memory_android_hardware_buffer"))]
 unsafe impl<'a, 'b> ExtendingStructure<AndroidHardwareBufferPropertiesANDROID<'b>>
     for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a>
 {
@@ -64036,7 +64036,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceRayTracingPositionFetchFea
 unsafe impl<'a> Send for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -64046,7 +64046,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a>
 {
@@ -65846,7 +65846,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceMultiviewPerViewViewportsF
 unsafe impl<'a> Send for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -65856,7 +65856,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a>
 {
@@ -66376,7 +66376,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceExtendedSparseAddressSpace
 unsafe impl<'a> Send for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -66386,7 +66386,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a>
 {
@@ -66435,7 +66435,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceExtendedSparseAddressSpace
 unsafe impl<'a> Send for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -66683,7 +66683,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceLegacyVertexAttributesFeat
 unsafe impl<'a> Send for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -66693,7 +66693,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a>
 {
@@ -66737,7 +66737,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceLegacyVertexAttributesProp
 unsafe impl<'a> Send for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -66909,7 +66909,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderCoreBuiltinsFeatures
 unsafe impl<'a> Send for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -66919,7 +66919,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a>
 {
@@ -66965,7 +66965,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderCoreBuiltinsProperti
 unsafe impl<'a> Send for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -67029,7 +67029,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePipelineLibraryGroupHandle
 unsafe impl<'a> Send for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -67039,7 +67039,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a>
 {
@@ -67088,7 +67088,7 @@ unsafe impl<'a> ExtendableStructure
 unsafe impl<'a> Send for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -67098,7 +67098,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a>
 {
@@ -69387,7 +69387,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceComputeShaderDerivativesFe
 unsafe impl<'a> Send for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -69397,7 +69397,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a>
 {
@@ -69452,7 +69452,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceComputeShaderDerivativesPr
 unsafe impl<'a> Send for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -69502,7 +69502,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePerStageDescriptorSetFeatu
 unsafe impl<'a> Send for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -69512,7 +69512,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a>
 {
@@ -70011,7 +70011,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceCubicClampFeaturesQCOM<'a>
 unsafe impl<'a> Send for PhysicalDeviceCubicClampFeaturesQCOM<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceCubicClampFeaturesQCOM<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -70021,7 +70021,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceCubicClampFeaturesQCOM<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceCubicClampFeaturesQCOM<'a>
 {
@@ -70826,7 +70826,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceDescriptorPoolOverallocati
 unsafe impl<'a> Send for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -70836,7 +70836,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a>
 {
@@ -71271,7 +71271,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceRawAccessChainsFeaturesNV<
 unsafe impl<'a> Send for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -71281,7 +71281,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceRawAccessChainsFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceRawAccessChainsFeaturesNV<'a>
 {
@@ -71530,7 +71530,7 @@ unsafe impl<'a> ExtendableStructure
 unsafe impl<'a> Send for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -71540,7 +71540,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a>
 {
@@ -71584,7 +71584,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceCommandBufferInheritanceFe
 unsafe impl<'a> Send for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -71594,7 +71594,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a>
 {
@@ -72003,7 +72003,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderAtomicFloat16VectorF
 unsafe impl<'a> Send for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -72013,7 +72013,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a>
 {
@@ -72060,7 +72060,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderReplicatedComposites
 unsafe impl<'a> Send for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -72070,7 +72070,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a>
 {
@@ -72114,7 +72114,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderFloat8FeaturesEXT<'a
 unsafe impl<'a> Send for PhysicalDeviceShaderFloat8FeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceShaderFloat8FeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -72124,7 +72124,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceShaderFloat8FeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceShaderFloat8FeaturesEXT<'a>
 {
@@ -72174,7 +72174,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceRayTracingValidationFeatur
 unsafe impl<'a> Send for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -72184,7 +72184,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceRayTracingValidationFeaturesNV<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceRayTracingValidationFeaturesNV<'a>
 {
@@ -76401,7 +76401,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePipelineOpacityMicromapFea
 unsafe impl<'a> Send for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -76411,7 +76411,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a>
 {
@@ -76605,7 +76605,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceDepthClampZeroOneFeaturesK
 unsafe impl<'a> Send for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -76615,7 +76615,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a>
 {
@@ -76661,7 +76661,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceVertexAttributeRobustnessF
 unsafe impl<'a> Send for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -76671,7 +76671,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a>
 {
@@ -76714,7 +76714,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceFormatPackFeaturesARM<'a> 
 unsafe impl<'a> Send for PhysicalDeviceFormatPackFeaturesARM<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceFormatPackFeaturesARM<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -76724,7 +76724,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceFormatPackFeaturesARM<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceFormatPackFeaturesARM<'a>
 {
@@ -76942,7 +76942,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceRobustness2FeaturesKHR<'a>
 unsafe impl<'a> Send for PhysicalDeviceRobustness2FeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceRobustness2FeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -76952,7 +76952,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceRobustness2FeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceRobustness2FeaturesKHR<'a>
 {
@@ -77009,7 +77009,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceRobustness2PropertiesKHR<'
 unsafe impl<'a> Send for PhysicalDeviceRobustness2PropertiesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceRobustness2PropertiesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -77425,7 +77425,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDeviceZeroInitializeDeviceMemory
 unsafe impl<'a> Send for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {}
 unsafe impl<'a> Sync for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -77435,7 +77435,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a>
 {
@@ -77482,7 +77482,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePresentModeFifoLatestReady
 unsafe impl<'a> Send for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -77492,7 +77492,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a>
 {
@@ -77541,7 +77541,7 @@ unsafe impl<'a> ExtendableStructure for PhysicalDevicePipelineCacheIncrementalMo
 unsafe impl<'a> Send for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {}
 unsafe impl<'a> Sync for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {}
 #[cfg(all(
-    true,
+    all(),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -77551,7 +77551,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a>
 {
 }
-#[cfg(all(true,))]
+#[cfg(all(all(),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a>
 {
