@@ -253,7 +253,9 @@ pub fn generate<'a, 'b>(gen: &'b Generator<'a>, gen_ty: GeneratedCommandType) ->
             ffi::{c_int, CStr},
             ops::Deref,
         };
-        use crate::{vk::*, Alias, Allocator, AdvancedDynamicArray, AsSlice, DefaultAllocator, Dispatcher, DynamicArray, DynamicDispatcher, Handle, StructureChainOut};
+        use crate::{vk::*, Alias, Allocator, AdvancedDynamicArray, AsSlice, DefaultAllocator, Dispatcher, DynamicArray, DynamicDispatcher, Handle};
+        #[allow(unused_imports)]
+        use crate::StructureChainOut;
 
         #(#result)*
     }

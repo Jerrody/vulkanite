@@ -837,10 +837,13 @@ impl<'a> Generator<'a> {
                     ty: MappingType::Enum | MappingType::EnumAlias(_),
                     ..
                 }) => {
-                    if let Some(my_enum) = self.get_enum(name) {
-                        my_enum.dependencies.borrow_mut().add(ext_name);
-                        ext_feat.is_non_trivial.set(true);
-                    };
+                    let my_enum = self
+                        .get_enum(name)
+                        .or_else(|| self.get_enum(&name.replace("Flags", "FlagBits")))
+                        .with_context(|| format!("Failed to find enum {name}"))?;
+
+                    my_enum.dependencies.borrow_mut().add(ext_name);
+                    ext_feat.is_non_trivial.set(true);
                 }
                 Some(MappingEntry {
                     ty: MappingType::Command | MappingType::CommandAlias(_),
@@ -864,19 +867,13 @@ impl<'a> Generator<'a> {
             .is_non_trivial
             .set(false);
 
-        // Manual fixing of some dependencies for the time being
-        // These flags are used by vulkan 1.0 but all bits are defined in extensions
-        for bitflag in [
-            "VkPipelineColorBlendStateCreateFlagBits",
-            "VkPipelineDepthStencilStateCreateFlagBits",
-            "VkPipelineLayoutCreateFlagBits",
-        ] {
-            self.get_enum(bitflag)
-                .context("Failed to find bitflag")?
+        let get_dep = |struct_name: &str| -> Result<_> {
+            Ok(self
+                .get_struct(struct_name)
+                .context("Failed to find struct")?
                 .dependencies
-                .borrow_mut()
-                .add("VK_VERSION_1_0");
-        }
+                .borrow_mut())
+        };
 
         // The VK_EXT_global_priority_query extension is trivial, but its properties struct
         // uses QueueGlobalPriority which is defined by one of its dependencies
@@ -884,14 +881,21 @@ impl<'a> Generator<'a> {
             "VkPhysicalDeviceGlobalPriorityQueryFeatures",
             "VkQueueFamilyGlobalPriorityProperties",
         ] {
-            let mut my_struct = self
-                .get_struct(struct_name)
-                .context("Failed to find struct")?
-                .dependencies
-                .borrow_mut();
+            let mut my_struct = get_dep(struct_name)?;
             my_struct.0.clear();
             my_struct.add("global_priority");
             my_struct.add("VK_VERSION_1_4");
+        }
+
+        // Same for VkChromaLocation and VK_ANDROID_external_format_resolve
+        for struct_name in [
+            "VkPhysicalDeviceExternalFormatResolveFeaturesANDROID",
+            "VkPhysicalDeviceExternalFormatResolvePropertiesANDROID",
+        ] {
+            let mut my_struct = get_dep(struct_name)?;
+            my_struct.0.clear();
+            my_struct.add("sampler_ycbcr_conversion");
+            my_struct.add("VK_VERSION_1_1");
         }
 
         Ok(())

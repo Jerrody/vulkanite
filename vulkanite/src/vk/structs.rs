@@ -63186,6 +63186,7 @@ impl<'a> PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
         self
     }
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalFormatResolveFeaturesANDROID.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalFormatResolveFeaturesANDROID")]
@@ -63195,15 +63196,19 @@ pub struct PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     pub external_format_resolve: Bool32,
     phantom: PhantomData<&'a ()>,
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {}
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PhysicalDeviceExternalFormatResolveFeaturesANDROID;
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> Send for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {}
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> Sync for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {}
 #[cfg(all(
-    all(),
+    any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -63213,11 +63218,12 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a>
 {
 }
-#[cfg(all(all(),))]
+#[cfg(all(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a>
 {
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 impl<'a> Default for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     fn default() -> Self {
         Self {
@@ -63228,6 +63234,7 @@ impl<'a> Default for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
         }
     }
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 impl<'a> PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     #[inline]
     pub fn external_format_resolve(mut self, value: impl Into<Bool32>) -> Self {
@@ -63240,6 +63247,7 @@ impl<'a> PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
         self
     }
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalFormatResolvePropertiesANDROID.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalFormatResolvePropertiesANDROID")]
@@ -63251,18 +63259,22 @@ pub struct PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     pub external_format_resolve_chroma_offset_y: ChromaLocation,
     phantom: PhantomData<&'a ()>,
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a>
 {
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PhysicalDeviceExternalFormatResolvePropertiesANDROID;
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> Send for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {}
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> Sync for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {}
 #[cfg(all(
-    all(),
+    any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -63272,6 +63284,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceProperties2<'b>>
     for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a>
 {
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 impl<'a> Default for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     fn default() -> Self {
         Self {
@@ -63284,6 +63297,7 @@ impl<'a> Default for PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
         }
     }
 }
+#[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 impl<'a> PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     #[inline]
     pub fn null_color_attachment_with_external_format_resolve(

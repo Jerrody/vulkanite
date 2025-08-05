@@ -3347,7 +3347,6 @@ impl TessellationDomainOrigin {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTessellationDomainOriginKHR.html>"]
 #[doc(alias = "VkTessellationDomainOriginKHR")]
 pub type TessellationDomainOriginKHR = TessellationDomainOrigin;
-#[cfg(feature = "version_1_1")]
 bitflags! {
     #[derive(Default)]
     #[repr(transparent)]
@@ -3863,11 +3862,6 @@ bitflags! {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkToolPurposeFlagBitsEXT.html>"]
 #[doc(alias = "VkToolPurposeFlagBitsEXT")]
 pub type ToolPurposeFlagsEXT = ToolPurposeFlags;
-#[cfg(any(
-    feature = "ext_pipeline_creation_cache_control",
-    feature = "ext_maintenance8",
-    feature = "version_1_3"
-))]
 bitflags! {
     #[derive(Default)]
     #[repr(transparent)]
@@ -4437,7 +4431,7 @@ bitflags! {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkHostImageCopyFlagBitsEXT.html>"]
 #[doc(alias = "VkHostImageCopyFlagBitsEXT")]
 pub type HostImageCopyFlagsEXT = HostImageCopyFlags;
-#[cfg(feature = "ext_surface")]
+#[cfg(any(feature = "ext_surface", feature = "ext_display"))]
 bitflags! {
     #[derive(Default)]
     #[repr(transparent)]

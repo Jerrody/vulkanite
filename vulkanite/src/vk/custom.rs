@@ -2,8 +2,6 @@
 use std::ffi::c_char;
 use std::ffi::{c_void, CStr};
 
-use crate::vk;
-
 // to remove
 pub(crate) type VoidPtr = *const c_void;
 pub(crate) type FuncPtr = *const ();
@@ -91,9 +89,13 @@ impl ApiVersion {
 }
 
 pub const API_VERSION_1_0: ApiVersion = ApiVersion::new(0, 1, 0, 0);
+#[cfg(feature = "version_1_1")]
 pub const API_VERSION_1_1: ApiVersion = ApiVersion::new(0, 1, 1, 0);
+#[cfg(feature = "version_1_2")]
 pub const API_VERSION_1_2: ApiVersion = ApiVersion::new(0, 1, 2, 0);
+#[cfg(feature = "version_1_3")]
 pub const API_VERSION_1_3: ApiVersion = ApiVersion::new(0, 1, 3, 0);
+#[cfg(feature = "version_1_4")]
 pub const API_VERSION_1_4: ApiVersion = ApiVersion::new(0, 1, 4, 0);
 
 impl Default for ApiVersion {
@@ -190,11 +192,12 @@ pub struct DeviceExtension {
 /// Replacement for PFN_vkDebugUtilsMessengerCallbackEXT (<https://registry.khronos.org/vulkan/specs/1.3-extensions/man/html/PFN_vkDebugUtilsMessengerCallbackEXT.html>)
 ///
 /// Used by [vk::DebugUtilsMessengerCreateInfoEXT]
+#[cfg(feature = "ext_debug_utils")]
 pub type DebugUtilsMessengerCallbackEXT = Option<
     extern "system" fn(
-        vk::DebugUtilsMessageSeverityFlagsEXT,
-        vk::DebugUtilsMessageTypeFlagsEXT,
-        &vk::DebugUtilsMessengerCallbackDataEXT,
+        crate::vk::DebugUtilsMessageSeverityFlagsEXT,
+        crate::vk::DebugUtilsMessageTypeFlagsEXT,
+        &crate::vk::DebugUtilsMessengerCallbackDataEXT,
         *const (),
     ) -> Bool32,
 >;

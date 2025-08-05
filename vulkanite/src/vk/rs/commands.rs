@@ -1,7 +1,9 @@
 #![allow(unused_unsafe)]
+#[allow(unused_imports)]
+use crate::StructureChainOut;
 use crate::{
     vk::*, AdvancedDynamicArray, Alias, Allocator, AsSlice, DefaultAllocator, Dispatcher,
-    DynamicArray, DynamicDispatcher, Handle, StructureChainOut,
+    DynamicArray, DynamicDispatcher, Handle,
 };
 #[allow(unused_imports)]
 use std::{
