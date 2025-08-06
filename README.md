@@ -63,7 +63,7 @@ if status == vk::Status::SuboptimalKHR {
 ```
 
 ## Vulkan versions and extensions
-Similarly to the windows crate, only Vulkan 1.0 structures and functions are available by default as a way to decrease the build time. Support for higher versions and extensions is behind a feature gate. For example, to use Vulkan 1.2 along with the `VK_KHR_SWAPCHAIN` extension, you would need to enable both the `version_1_2` and the `ext_surface` features.
+Similarly to the windows crate, only Vulkan 1.0 structures and functions are available by default as a way to decrease the build time. Support for higher versions and extensions is behind a feature gate. For example, to use Vulkan 1.2 along with the `VK_KHR_SURFACE` extension, you would need to enable both the `version_1_2` and the `ext_surface` features.
 
 ## Slices
 Every vulkan command or structure that takes as input a length along a raw pointer now takes as input a slice.
