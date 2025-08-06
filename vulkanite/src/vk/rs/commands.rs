@@ -1165,7 +1165,10 @@ impl<D: Dispatcher, A: Allocator> PhysicalDevice<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+    #[cfg(any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_surface")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>"]
     #[doc(alias = "vkGetPhysicalDevicePresentRectanglesKHR")]
     pub fn get_present_rectangles_khr<R: DynamicArray<Rect2D>>(
@@ -4125,7 +4128,10 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+    #[cfg(any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_surface")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>"]
     #[doc(alias = "vkGetDeviceGroupPresentCapabilitiesKHR")]
     pub fn get_group_present_capabilities_khr<
@@ -4137,7 +4143,10 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             raw::get_device_group_present_capabilities_khr(self, self.disp.get_command_dispatcher())
         }
     }
-    #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+    #[cfg(any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_surface")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html>"]
     #[doc(alias = "vkGetDeviceGroupSurfacePresentModesKHR")]
     #[inline]
@@ -4153,7 +4162,10 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+    #[cfg(any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_swapchain")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkAcquireNextImage2KHR.html>"]
     #[doc(alias = "vkAcquireNextImage2KHR")]
     #[inline]
@@ -5485,7 +5497,10 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_full_screen_exclusive")]
+    #[cfg(all(
+        feature = "ext_full_screen_exclusive",
+        any(feature = "ext_device_group", feature = "version_1_1")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceGroupSurfacePresentModes2EXT.html>"]
     #[doc(alias = "vkGetDeviceGroupSurfacePresentModes2EXT")]
     #[inline]
@@ -5895,7 +5910,10 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_descriptor_buffer")]
+    #[cfg(all(
+        feature = "ext_descriptor_buffer",
+        any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT.html>"]
     #[doc(alias = "vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT")]
     #[inline]
@@ -6465,7 +6483,7 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_tensors")]
+    #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetTensorOpaqueCaptureDescriptorDataARM.html>"]
     #[doc(alias = "vkGetTensorOpaqueCaptureDescriptorDataARM")]
     #[inline]
@@ -6483,7 +6501,7 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_tensors")]
+    #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetTensorViewOpaqueCaptureDescriptorDataARM.html>"]
     #[doc(alias = "vkGetTensorViewOpaqueCaptureDescriptorDataARM")]
     #[inline]
@@ -7411,7 +7429,10 @@ impl<D: Dispatcher, A: Allocator> Queue<D, A> {
     pub fn get_checkpoint_data_nv<R: DynamicArray<CheckpointDataNV<'static>>>(&self) -> R {
         unsafe { raw::get_queue_checkpoint_data_nv(self, self.disp.get_command_dispatcher()) }
     }
-    #[cfg(feature = "ext_device_diagnostic_checkpoints")]
+    #[cfg(all(
+        feature = "ext_device_diagnostic_checkpoints",
+        any(feature = "version_1_3", feature = "ext_synchronization2")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetQueueCheckpointData2NV.html>"]
     #[doc(alias = "vkGetQueueCheckpointData2NV")]
     pub fn get_checkpoint_data2_nv<R: DynamicArray<CheckpointData2NV<'static>>>(&self) -> R {
@@ -9935,8 +9956,14 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
         }
     }
     #[cfg(any(
-        feature = "ext_push_descriptor",
-        feature = "ext_descriptor_update_template",
+        all(
+            feature = "ext_push_descriptor",
+            any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+        ),
+        all(
+            feature = "ext_descriptor_update_template",
+            feature = "ext_push_descriptor"
+        ),
         feature = "version_1_4"
     ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplate.html>"]
@@ -9961,8 +9988,14 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
         }
     }
     #[cfg(any(
-        feature = "ext_push_descriptor",
-        feature = "ext_descriptor_update_template",
+        all(
+            feature = "ext_push_descriptor",
+            any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+        ),
+        all(
+            feature = "ext_descriptor_update_template",
+            feature = "ext_push_descriptor"
+        ),
         feature = "version_1_4"
     ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
@@ -10102,7 +10135,10 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+    #[cfg(any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSet2.html>"]
     #[doc(alias = "vkCmdPushDescriptorSet2")]
     #[inline]
@@ -10115,7 +10151,10 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+    #[cfg(any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSet2KHR.html>"]
     #[doc(alias = "vkCmdPushDescriptorSet2KHR")]
     #[inline]
@@ -10128,7 +10167,10 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+    #[cfg(any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplate2.html>"]
     #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2")]
     #[inline]
@@ -10144,7 +10186,10 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+    #[cfg(any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html>"]
     #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2KHR")]
     #[inline]
@@ -10902,7 +10947,10 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_buffer_marker")]
+    #[cfg(all(
+        feature = "ext_buffer_marker",
+        any(feature = "version_1_3", feature = "ext_synchronization2")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteBufferMarker2AMD.html>"]
     #[doc(alias = "vkCmdWriteBufferMarker2AMD")]
     #[inline]
@@ -10960,7 +11008,10 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_mesh_shader")]
+    #[cfg(all(
+        feature = "ext_mesh_shader",
+        any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>"]
     #[doc(alias = "vkCmdDrawMeshTasksIndirectCountNV")]
     #[inline]
@@ -11331,7 +11382,10 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_mesh_shader")]
+    #[cfg(all(
+        feature = "ext_mesh_shader",
+        any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksIndirectCountEXT.html>"]
     #[doc(alias = "vkCmdDrawMeshTasksIndirectCountEXT")]
     #[inline]
@@ -11436,7 +11490,10 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_ray_tracing_maintenance1")]
+    #[cfg(all(
+        feature = "ext_ray_tracing_maintenance1",
+        feature = "ext_ray_tracing_pipeline"
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdTraceRaysIndirect2KHR.html>"]
     #[doc(alias = "vkCmdTraceRaysIndirect2KHR")]
     #[inline]
@@ -11822,7 +11879,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            any(feature = "ext_maintenance2", feature = "version_1_1")
+        ),
+        feature = "ext_shader_object"
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetTessellationDomainOriginEXT.html>"]
     #[doc(alias = "vkCmdSetTessellationDomainOriginEXT")]
     #[inline]
@@ -11835,7 +11898,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_transform_feedback"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_transform_feedback")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRasterizationStreamEXT.html>"]
     #[doc(alias = "vkCmdSetRasterizationStreamEXT")]
     #[inline]
@@ -11848,7 +11917,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_conservative_rasterization"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_conservative_rasterization"
+        )
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetConservativeRasterizationModeEXT.html>"]
     #[doc(alias = "vkCmdSetConservativeRasterizationModeEXT")]
     #[inline]
@@ -11864,7 +11942,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_conservative_rasterization"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_conservative_rasterization"
+        )
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetExtraPrimitiveOverestimationSizeEXT.html>"]
     #[doc(alias = "vkCmdSetExtraPrimitiveOverestimationSizeEXT")]
     #[inline]
@@ -11880,7 +11967,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_depth_clip_enable"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_depth_clip_enable")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClipEnableEXT.html>"]
     #[doc(alias = "vkCmdSetDepthClipEnableEXT")]
     #[inline]
@@ -11893,7 +11986,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_sample_locations"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_sample_locations")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetSampleLocationsEnableEXT.html>"]
     #[doc(alias = "vkCmdSetSampleLocationsEnableEXT")]
     #[inline]
@@ -11906,7 +12005,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_blend_operation_advanced"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_blend_operation_advanced"
+        )
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetColorBlendAdvancedEXT.html>"]
     #[doc(alias = "vkCmdSetColorBlendAdvancedEXT")]
     #[inline]
@@ -11924,7 +12032,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_provoking_vertex"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_provoking_vertex")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetProvokingVertexModeEXT.html>"]
     #[doc(alias = "vkCmdSetProvokingVertexModeEXT")]
     #[inline]
@@ -11937,7 +12051,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_line_rasterization"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineRasterizationModeEXT.html>"]
     #[doc(alias = "vkCmdSetLineRasterizationModeEXT")]
     #[inline]
@@ -11953,7 +12073,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_line_rasterization"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineStippleEnableEXT.html>"]
     #[doc(alias = "vkCmdSetLineStippleEnableEXT")]
     #[inline]
@@ -11966,7 +12092,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_depth_clip_control"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_depth_clip_control")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClipNegativeOneToOneEXT.html>"]
     #[doc(alias = "vkCmdSetDepthClipNegativeOneToOneEXT")]
     #[inline]
@@ -11979,7 +12111,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_clip_space_w_scaling"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_clip_space_w_scaling")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportWScalingEnableNV.html>"]
     #[doc(alias = "vkCmdSetViewportWScalingEnableNV")]
     #[inline]
@@ -11992,7 +12130,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_viewport_swizzle"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_viewport_swizzle")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportSwizzleNV.html>"]
     #[doc(alias = "vkCmdSetViewportSwizzleNV")]
     #[inline]
@@ -12010,7 +12154,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_fragment_coverage_to_color"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_fragment_coverage_to_color"
+        )
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageToColorEnableNV.html>"]
     #[doc(alias = "vkCmdSetCoverageToColorEnableNV")]
     #[inline]
@@ -12023,7 +12176,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_fragment_coverage_to_color"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_fragment_coverage_to_color"
+        )
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageToColorLocationNV.html>"]
     #[doc(alias = "vkCmdSetCoverageToColorLocationNV")]
     #[inline]
@@ -12036,7 +12198,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_framebuffer_mixed_samples"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_framebuffer_mixed_samples"
+        )
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageModulationModeNV.html>"]
     #[doc(alias = "vkCmdSetCoverageModulationModeNV")]
     #[inline]
@@ -12052,7 +12223,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_framebuffer_mixed_samples"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_framebuffer_mixed_samples"
+        )
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageModulationTableEnableNV.html>"]
     #[doc(alias = "vkCmdSetCoverageModulationTableEnableNV")]
     #[inline]
@@ -12068,7 +12248,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_framebuffer_mixed_samples"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_framebuffer_mixed_samples"
+        )
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageModulationTableNV.html>"]
     #[doc(alias = "vkCmdSetCoverageModulationTableNV")]
     #[inline]
@@ -12084,7 +12273,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_shading_rate_image"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_shading_rate_image")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetShadingRateImageEnableNV.html>"]
     #[doc(alias = "vkCmdSetShadingRateImageEnableNV")]
     #[inline]
@@ -12097,7 +12292,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_representative_fragment_test"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_representative_fragment_test"
+        )
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRepresentativeFragmentTestEnableNV.html>"]
     #[doc(alias = "vkCmdSetRepresentativeFragmentTestEnableNV")]
     #[inline]
@@ -12113,7 +12317,13 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_coverage_reduction_mode"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_coverage_reduction_mode")
+    ))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageReductionModeNV.html>"]
     #[doc(alias = "vkCmdSetCoverageReductionModeNV")]
     #[inline]
@@ -12171,7 +12381,7 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(any(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
+    #[cfg(all(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClampRangeEXT.html>"]
     #[doc(alias = "vkCmdSetDepthClampRangeEXT")]
     #[inline]
@@ -12236,7 +12446,7 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_maintenance6")]
+    #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDescriptorBufferOffsets2EXT.html>"]
     #[doc(alias = "vkCmdSetDescriptorBufferOffsets2EXT")]
     #[inline]
@@ -12252,7 +12462,7 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_maintenance6")]
+    #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindDescriptorBufferEmbeddedSamplers2EXT.html>"]
     #[doc(alias = "vkCmdBindDescriptorBufferEmbeddedSamplers2EXT")]
     #[inline]

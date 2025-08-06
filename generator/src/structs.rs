@@ -2,6 +2,7 @@ use std::{
     borrow::Cow,
     cell::{Cell, RefCell},
     collections::HashMap,
+    rc::Rc,
 };
 
 use anyhow::{anyhow, bail, Result};
@@ -16,18 +17,6 @@ use crate::{
 pub enum Api {
     Vulkan,
     //VulkanSc
-}
-
-#[derive(Default)]
-pub struct Dependencies<'a>(pub Vec<&'a str>);
-
-impl<'a> Dependencies<'a> {
-    pub fn add(&mut self, dep: &'a str) {
-        // We shouldn't have too many dependencies, so we can afford the linear search
-        if !self.0.contains(&dep) {
-            self.0.push(dep);
-        }
-    }
 }
 
 pub struct Enum<'a> {
@@ -779,6 +768,160 @@ pub struct SliceType {
     pub output_ty: TokenStream,
     /// unsafe { slices::from_raw_parts(..) }
     pub access: TokenStream,
+}
+
+#[derive(Clone, Default, PartialEq, Eq)]
+pub enum Dependencies<'a> {
+    #[default]
+    None,
+    Single(&'a str),
+    And(Rc<Vec<Dependencies<'a>>>),
+    Or(Rc<Vec<Dependencies<'a>>>),
+}
+
+// Note: A lot of these functions are really inefficient (quadratic complexity) but as long as the generator
+// is somewhat fast (a few seconds in debug mode), it is not a problem.
+impl<'a> Dependencies<'a> {
+    pub fn clear(&mut self) {
+        *self = Dependencies::None;
+    }
+
+    pub fn add_or(&mut self, dep: Dependencies<'a>) {
+        if matches!(dep, Dependencies::None) || self == &dep {
+            return;
+        }
+
+        match self {
+            // Be careful, this is not what one would expect
+            Dependencies::None => *self = dep,
+            Dependencies::Single(existing) => {
+                *self = Dependencies::Or(Rc::new(vec![Dependencies::Single(existing), dep]));
+            }
+            Dependencies::And(deps) => {
+                if deps.iter().any(|d| d == &dep) {
+                    return;
+                }
+                *self = Dependencies::Or(Rc::new(vec![Dependencies::And(deps.clone()), dep]));
+            }
+            Dependencies::Or(deps) => {
+                if deps.iter().any(|d| d == &dep) {
+                    return;
+                }
+                Rc::make_mut(deps).push(dep);
+            }
+        }
+    }
+
+    pub fn add_and(&mut self, dep: Dependencies<'a>) {
+        if matches!(dep, Dependencies::None) || self == &dep {
+            return;
+        }
+
+        match self {
+            Dependencies::None => *self = dep,
+            Dependencies::Single(existing) => {
+                *self = Dependencies::And(Rc::new(vec![Dependencies::Single(existing), dep]));
+            }
+            Dependencies::And(deps) => {
+                if deps.iter().any(|d| d == &dep) {
+                    return;
+                }
+                Rc::make_mut(deps).push(dep);
+            }
+            Dependencies::Or(deps) => {
+                if deps.iter().any(|d| d == &dep) {
+                    return;
+                }
+                *self = Dependencies::And(Rc::new(vec![Dependencies::Or(deps.clone()), dep]));
+            }
+        }
+    }
+
+    fn parse_inner(dep: &'a str, position: usize) -> Result<(usize, Dependencies<'a>)> {
+        struct ParseState<'a> {
+            pos: usize,
+            dep_start: usize,
+            res: Dependencies<'a>,
+            is_or: bool,
+        }
+        let mut state = ParseState {
+            pos: position,
+            dep_start: position,
+            res: Dependencies::None,
+            is_or: false,
+        };
+
+        let get_dep_name = |name: &'a str| -> Option<_> {
+            if name.starts_with("VK_VERSION_") {
+                Some(Dependencies::Single(name))
+            } else if name.starts_with("VK_") {
+                Some(Dependencies::Single(remove_ext_prefix(name)))
+            } else {
+                None
+            }
+        };
+        let add_last_dep = |state: &mut ParseState<'a>| {
+            let dep_name = &dep[state.dep_start..state.pos];
+            if let Some(feat_name) = get_dep_name(dep_name) {
+                if state.is_or {
+                    state.res.add_or(feat_name);
+                } else {
+                    state.res.add_and(feat_name);
+                }
+            }
+            state.pos += 1;
+            state.dep_start = state.pos;
+        };
+        loop {
+            let Some(car) = dep.as_bytes().get(state.pos) else {
+                add_last_dep(&mut state);
+                return Ok((state.pos - 1, state.res));
+            };
+
+            match car {
+                b',' | b'+' => {
+                    state.is_or = matches!(car, b',');
+
+                    add_last_dep(&mut state);
+                }
+                b'(' => {
+                    let (dep_end, inner_dep) = Self::parse_inner(dep, state.pos + 1)?;
+                    if state.is_or {
+                        state.res.add_or(inner_dep);
+                    } else {
+                        state.res.add_and(inner_dep);
+                    }
+
+                    state.pos = dep_end;
+                    state.dep_start = state.pos;
+                }
+                b')' => {
+                    add_last_dep(&mut state);
+                    return Ok((state.pos, state.res));
+                }
+                c if c.is_ascii_alphanumeric() || matches!(*c, b'_' | b':') => {
+                    // continue to the next character
+                    state.pos += 1;
+                }
+                _ => bail!("Unexpected character '{car}' in dependency string {dep}"),
+            }
+        }
+    }
+
+    pub fn parse(dep: &'a str) -> Result<Self> {
+        if dep.is_empty() {
+            return Ok(Dependencies::None);
+        }
+
+        Self::parse_inner(dep, 0).map(|(_, dep)| dep)
+    }
+}
+
+pub fn remove_ext_prefix(name: &str) -> &str {
+    name.strip_prefix("VK_")
+        .and_then(|n| n.split_once('_'))
+        .map(|(_, s)| s)
+        .unwrap_or("invalid_extension_name")
 }
 
 /// Performs screaming snake case to pascal case conversion

@@ -2443,8 +2443,14 @@ pub struct CommandsDispatcher {
         ),
     >,
     #[cfg(any(
-        feature = "ext_push_descriptor",
-        feature = "ext_descriptor_update_template",
+        all(
+            feature = "ext_push_descriptor",
+            any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+        ),
+        all(
+            feature = "ext_descriptor_update_template",
+            feature = "ext_push_descriptor"
+        ),
         feature = "version_1_4"
     ))]
     pub cmd_push_descriptor_set_with_template_khr: Cell<
@@ -2457,8 +2463,14 @@ pub struct CommandsDispatcher {
         ),
     >,
     #[cfg(any(
-        feature = "ext_push_descriptor",
-        feature = "ext_descriptor_update_template",
+        all(
+            feature = "ext_push_descriptor",
+            any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+        ),
+        all(
+            feature = "ext_descriptor_update_template",
+            feature = "ext_push_descriptor"
+        ),
         feature = "version_1_4"
     ))]
     pub cmd_push_descriptor_set_with_template: Cell<
@@ -2526,28 +2538,40 @@ pub struct CommandsDispatcher {
             *const PushConstantsInfo,
         ),
     >,
-    #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+    #[cfg(any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    ))]
     pub cmd_push_descriptor_set2_khr: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             *const PushDescriptorSetInfo,
         ),
     >,
-    #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+    #[cfg(any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    ))]
     pub cmd_push_descriptor_set2: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             *const PushDescriptorSetInfo,
         ),
     >,
-    #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+    #[cfg(any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    ))]
     pub cmd_push_descriptor_set_with_template2_khr: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             *const PushDescriptorSetWithTemplateInfo,
         ),
     >,
-    #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+    #[cfg(any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    ))]
     pub cmd_push_descriptor_set_with_template2: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -2699,14 +2723,20 @@ pub struct CommandsDispatcher {
             *const PresentInfoKHR,
         ) -> Status,
     >,
-    #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+    #[cfg(any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_surface")
+    ))]
     pub get_device_group_present_capabilities_khr: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
             *const DeviceGroupPresentCapabilitiesKHR,
         ) -> Status,
     >,
-    #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+    #[cfg(any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_surface")
+    ))]
     pub get_device_group_surface_present_modes_khr: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -2714,7 +2744,10 @@ pub struct CommandsDispatcher {
             *const DeviceGroupPresentModeFlagsKHR,
         ) -> Status,
     >,
-    #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+    #[cfg(any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_surface")
+    ))]
     pub get_physical_device_present_rectangles_khr: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, PhysicalDevice>>,
@@ -2723,7 +2756,10 @@ pub struct CommandsDispatcher {
             *const Rect2D,
         ) -> Status,
     >,
-    #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+    #[cfg(any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_swapchain")
+    ))]
     pub acquire_next_image2_khr: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -4030,7 +4066,10 @@ pub struct CommandsDispatcher {
             u32,
         ),
     >,
-    #[cfg(feature = "ext_buffer_marker")]
+    #[cfg(all(
+        feature = "ext_buffer_marker",
+        any(feature = "version_1_3", feature = "ext_synchronization2")
+    ))]
     pub cmd_write_buffer_marker2_amd: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -4053,7 +4092,10 @@ pub struct CommandsDispatcher {
             u32,
         ),
     >,
-    #[cfg(feature = "ext_mesh_shader")]
+    #[cfg(all(
+        feature = "ext_mesh_shader",
+        any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+    ))]
     pub cmd_draw_mesh_tasks_indirect_count_nv: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -4094,7 +4136,10 @@ pub struct CommandsDispatcher {
             *const CheckpointDataNV,
         ),
     >,
-    #[cfg(feature = "ext_device_diagnostic_checkpoints")]
+    #[cfg(all(
+        feature = "ext_device_diagnostic_checkpoints",
+        any(feature = "version_1_3", feature = "ext_synchronization2")
+    ))]
     pub get_queue_checkpoint_data2_nv: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Queue>>,
@@ -4253,7 +4298,10 @@ pub struct CommandsDispatcher {
             Option<BorrowedHandle<'_, SwapchainKHR>>,
         ) -> Status,
     >,
-    #[cfg(feature = "ext_full_screen_exclusive")]
+    #[cfg(all(
+        feature = "ext_full_screen_exclusive",
+        any(feature = "ext_device_group", feature = "version_1_1")
+    ))]
     pub get_device_group_surface_present_modes2_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -4572,7 +4620,10 @@ pub struct CommandsDispatcher {
             VoidPtr,
         ) -> Status,
     >,
-    #[cfg(feature = "ext_descriptor_buffer")]
+    #[cfg(all(
+        feature = "ext_descriptor_buffer",
+        any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+    ))]
     pub get_acceleration_structure_opaque_capture_descriptor_data_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -4601,7 +4652,10 @@ pub struct CommandsDispatcher {
             u32,
         ),
     >,
-    #[cfg(feature = "ext_mesh_shader")]
+    #[cfg(all(
+        feature = "ext_mesh_shader",
+        any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+    ))]
     pub cmd_draw_mesh_tasks_indirect_count_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -4801,7 +4855,10 @@ pub struct CommandsDispatcher {
     pub cmd_set_color_write_enable_ext: Cell<
         unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, u32, *const Bool32),
     >,
-    #[cfg(feature = "ext_ray_tracing_maintenance1")]
+    #[cfg(all(
+        feature = "ext_ray_tracing_maintenance1",
+        feature = "ext_ray_tracing_pipeline"
+    ))]
     pub cmd_trace_rays_indirect2_khr:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, DeviceAddress)>,
     #[cfg(feature = "ext_multi_draw")]
@@ -5096,33 +5153,84 @@ pub struct CommandsDispatcher {
             *const ColorComponentFlags,
         ),
     >,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            any(feature = "ext_maintenance2", feature = "version_1_1")
+        ),
+        feature = "ext_shader_object"
+    ))]
     pub cmd_set_tessellation_domain_origin_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             TessellationDomainOrigin,
         ),
     >,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_transform_feedback"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_transform_feedback")
+    ))]
     pub cmd_set_rasterization_stream_ext:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, u32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_conservative_rasterization"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_conservative_rasterization"
+        )
+    ))]
     pub cmd_set_conservative_rasterization_mode_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             ConservativeRasterizationModeEXT,
         ),
     >,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_conservative_rasterization"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_conservative_rasterization"
+        )
+    ))]
     pub cmd_set_extra_primitive_overestimation_size_ext:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, f32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_depth_clip_enable"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_depth_clip_enable")
+    ))]
     pub cmd_set_depth_clip_enable_ext:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, Bool32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_sample_locations"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_sample_locations")
+    ))]
     pub cmd_set_sample_locations_enable_ext:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, Bool32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_blend_operation_advanced"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_blend_operation_advanced"
+        )
+    ))]
     pub cmd_set_color_blend_advanced_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -5131,30 +5239,66 @@ pub struct CommandsDispatcher {
             *const ColorBlendAdvancedEXT,
         ),
     >,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_provoking_vertex"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_provoking_vertex")
+    ))]
     pub cmd_set_provoking_vertex_mode_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             ProvokingVertexModeEXT,
         ),
     >,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_line_rasterization"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+    ))]
     pub cmd_set_line_rasterization_mode_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             LineRasterizationModeEXT,
         ),
     >,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_line_rasterization"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+    ))]
     pub cmd_set_line_stipple_enable_ext:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, Bool32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_depth_clip_control"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_depth_clip_control")
+    ))]
     pub cmd_set_depth_clip_negative_one_to_one_ext:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, Bool32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_clip_space_w_scaling"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_clip_space_w_scaling")
+    ))]
     pub cmd_set_viewport_wscaling_enable_nv:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, Bool32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_viewport_swizzle"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_viewport_swizzle")
+    ))]
     pub cmd_set_viewport_swizzle_nv: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -5163,32 +5307,98 @@ pub struct CommandsDispatcher {
             *const ViewportSwizzleNV,
         ),
     >,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_fragment_coverage_to_color"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_fragment_coverage_to_color"
+        )
+    ))]
     pub cmd_set_coverage_to_color_enable_nv:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, Bool32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_fragment_coverage_to_color"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_fragment_coverage_to_color"
+        )
+    ))]
     pub cmd_set_coverage_to_color_location_nv:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, u32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_framebuffer_mixed_samples"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_framebuffer_mixed_samples"
+        )
+    ))]
     pub cmd_set_coverage_modulation_mode_nv: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             CoverageModulationModeNV,
         ),
     >,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_framebuffer_mixed_samples"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_framebuffer_mixed_samples"
+        )
+    ))]
     pub cmd_set_coverage_modulation_table_enable_nv:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, Bool32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_framebuffer_mixed_samples"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_framebuffer_mixed_samples"
+        )
+    ))]
     pub cmd_set_coverage_modulation_table_nv:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, u32, *const f32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_shading_rate_image"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_shading_rate_image")
+    ))]
     pub cmd_set_shading_rate_image_enable_nv:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, Bool32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_representative_fragment_test"
+        ),
+        all(
+            feature = "ext_shader_object",
+            feature = "ext_representative_fragment_test"
+        )
+    ))]
     pub cmd_set_representative_fragment_test_enable_nv:
         Cell<unsafe extern "system" fn(Option<BorrowedHandle<'_, CommandBuffer>>, Bool32)>,
-    #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+    #[cfg(any(
+        all(
+            feature = "ext_extended_dynamic_state3",
+            feature = "ext_coverage_reduction_mode"
+        ),
+        all(feature = "ext_shader_object", feature = "ext_coverage_reduction_mode")
+    ))]
     pub cmd_set_coverage_reduction_mode_nv: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -5268,7 +5478,7 @@ pub struct CommandsDispatcher {
             *const ExternalTensorPropertiesARM,
         ),
     >,
-    #[cfg(feature = "ext_tensors")]
+    #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
     pub get_tensor_opaque_capture_descriptor_data_arm: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -5276,7 +5486,7 @@ pub struct CommandsDispatcher {
             VoidPtr,
         ) -> Status,
     >,
-    #[cfg(feature = "ext_tensors")]
+    #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
     pub get_tensor_view_opaque_capture_descriptor_data_arm: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -5391,7 +5601,7 @@ pub struct CommandsDispatcher {
             *const ShaderEXT,
         ),
     >,
-    #[cfg(any(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
+    #[cfg(all(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
     pub cmd_set_depth_clamp_range_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -5688,14 +5898,14 @@ pub struct CommandsDispatcher {
             *const u64,
         ) -> Status,
     >,
-    #[cfg(feature = "ext_maintenance6")]
+    #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
     pub cmd_set_descriptor_buffer_offsets2_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
             *const SetDescriptorBufferOffsetsInfoEXT,
         ),
     >,
-    #[cfg(feature = "ext_maintenance6")]
+    #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
     pub cmd_bind_descriptor_buffer_embedded_samplers2_ext: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, CommandBuffer>>,
@@ -8926,8 +9136,14 @@ impl CommandsDispatcher {
             self.cmd_push_descriptor_set.set(vk_func_ptr);
         }
         #[cfg(any(
-            feature = "ext_push_descriptor",
-            feature = "ext_descriptor_update_template",
+            all(
+                feature = "ext_push_descriptor",
+                any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+            ),
+            all(
+                feature = "ext_descriptor_update_template",
+                feature = "ext_push_descriptor"
+            ),
             feature = "version_1_4"
         ))]
         {
@@ -9029,7 +9245,10 @@ impl CommandsDispatcher {
             }
             self.cmd_push_constants2.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+        #[cfg(any(
+            all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+            feature = "version_1_4"
+        ))]
         {
             let mut vk_func_ptr = self.cmd_push_descriptor_set2.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -9049,7 +9268,10 @@ impl CommandsDispatcher {
             }
             self.cmd_push_descriptor_set2.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+        #[cfg(any(
+            all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+            feature = "version_1_4"
+        ))]
         {
             let mut vk_func_ptr = self.cmd_push_descriptor_set_with_template2.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -9252,7 +9474,10 @@ impl CommandsDispatcher {
             }
             self.queue_present_khr.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_surface")
+        ))]
         {
             let mut vk_func_ptr = self.get_device_group_present_capabilities_khr.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -9265,7 +9490,10 @@ impl CommandsDispatcher {
             self.get_device_group_present_capabilities_khr
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_surface")
+        ))]
         {
             let mut vk_func_ptr = self.get_device_group_surface_present_modes_khr.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -9278,7 +9506,10 @@ impl CommandsDispatcher {
             self.get_device_group_surface_present_modes_khr
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_surface")
+        ))]
         {
             let mut vk_func_ptr = self.get_physical_device_present_rectangles_khr.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -9291,7 +9522,10 @@ impl CommandsDispatcher {
             self.get_physical_device_present_rectangles_khr
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_swapchain")
+        ))]
         {
             let mut vk_func_ptr = self.acquire_next_image2_khr.get();
             let loaded_ptr =
@@ -11142,7 +11376,10 @@ impl CommandsDispatcher {
             }
             self.cmd_write_buffer_marker_amd.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_buffer_marker")]
+        #[cfg(all(
+            feature = "ext_buffer_marker",
+            any(feature = "version_1_3", feature = "ext_synchronization2")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_write_buffer_marker2_amd.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -11176,7 +11413,10 @@ impl CommandsDispatcher {
             }
             self.cmd_draw_mesh_tasks_indirect_nv.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_mesh_shader")]
+        #[cfg(all(
+            feature = "ext_mesh_shader",
+            any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_draw_mesh_tasks_indirect_count_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -11234,7 +11474,10 @@ impl CommandsDispatcher {
             }
             self.get_queue_checkpoint_data_nv.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_device_diagnostic_checkpoints")]
+        #[cfg(all(
+            feature = "ext_device_diagnostic_checkpoints",
+            any(feature = "version_1_3", feature = "ext_synchronization2")
+        ))]
         {
             let mut vk_func_ptr = self.get_queue_checkpoint_data2_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -11494,7 +11737,10 @@ impl CommandsDispatcher {
             }
             self.release_full_screen_exclusive_mode_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_full_screen_exclusive")]
+        #[cfg(all(
+            feature = "ext_full_screen_exclusive",
+            any(feature = "ext_device_group", feature = "version_1_1")
+        ))]
         {
             let mut vk_func_ptr = self.get_device_group_surface_present_modes2_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -11956,7 +12202,10 @@ impl CommandsDispatcher {
             self.get_sampler_opaque_capture_descriptor_data_ext
                 .set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_descriptor_buffer")]
+        #[cfg(all(
+            feature = "ext_descriptor_buffer",
+            any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+        ))]
         {
             let mut vk_func_ptr = self
                 .get_acceleration_structure_opaque_capture_descriptor_data_ext
@@ -12005,7 +12254,10 @@ impl CommandsDispatcher {
             }
             self.cmd_draw_mesh_tasks_indirect_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_mesh_shader")]
+        #[cfg(all(
+            feature = "ext_mesh_shader",
+            any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_draw_mesh_tasks_indirect_count_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12327,7 +12579,10 @@ impl CommandsDispatcher {
             }
             self.cmd_set_color_write_enable_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_ray_tracing_maintenance1")]
+        #[cfg(all(
+            feature = "ext_ray_tracing_maintenance1",
+            feature = "ext_ray_tracing_pipeline"
+        ))]
         {
             let mut vk_func_ptr = self.cmd_trace_rays_indirect2_khr.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12779,7 +13034,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_color_write_mask_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                any(feature = "ext_maintenance2", feature = "version_1_1")
+            ),
+            feature = "ext_shader_object"
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_tessellation_domain_origin_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12791,7 +13052,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_tessellation_domain_origin_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_transform_feedback"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_transform_feedback")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_rasterization_stream_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12803,7 +13070,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_rasterization_stream_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_conservative_rasterization"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_conservative_rasterization"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_conservative_rasterization_mode_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12816,7 +13092,16 @@ impl CommandsDispatcher {
             self.cmd_set_conservative_rasterization_mode_ext
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_conservative_rasterization"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_conservative_rasterization"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_extra_primitive_overestimation_size_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12829,7 +13114,13 @@ impl CommandsDispatcher {
             self.cmd_set_extra_primitive_overestimation_size_ext
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_depth_clip_enable"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_depth_clip_enable")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_depth_clip_enable_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12841,7 +13132,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_depth_clip_enable_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_sample_locations"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_sample_locations")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_sample_locations_enable_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12853,7 +13150,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_sample_locations_enable_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_blend_operation_advanced"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_blend_operation_advanced"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_color_blend_advanced_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12865,7 +13171,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_color_blend_advanced_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_provoking_vertex"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_provoking_vertex")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_provoking_vertex_mode_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12877,7 +13189,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_provoking_vertex_mode_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_line_rasterization"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_line_rasterization_mode_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12889,7 +13207,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_line_rasterization_mode_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_line_rasterization"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_line_stipple_enable_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12901,7 +13225,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_line_stipple_enable_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_depth_clip_control"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_depth_clip_control")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_depth_clip_negative_one_to_one_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12914,7 +13244,13 @@ impl CommandsDispatcher {
             self.cmd_set_depth_clip_negative_one_to_one_ext
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_clip_space_w_scaling"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_clip_space_w_scaling")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_viewport_wscaling_enable_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12926,7 +13262,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_viewport_wscaling_enable_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_viewport_swizzle"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_viewport_swizzle")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_viewport_swizzle_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12938,7 +13280,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_viewport_swizzle_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_fragment_coverage_to_color"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_fragment_coverage_to_color"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_to_color_enable_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12950,7 +13301,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_coverage_to_color_enable_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_fragment_coverage_to_color"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_fragment_coverage_to_color"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_to_color_location_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12962,7 +13322,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_coverage_to_color_location_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_framebuffer_mixed_samples"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_framebuffer_mixed_samples"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_modulation_mode_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12974,7 +13343,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_coverage_modulation_mode_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_framebuffer_mixed_samples"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_framebuffer_mixed_samples"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_modulation_table_enable_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12987,7 +13365,16 @@ impl CommandsDispatcher {
             self.cmd_set_coverage_modulation_table_enable_nv
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_framebuffer_mixed_samples"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_framebuffer_mixed_samples"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_modulation_table_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12999,7 +13386,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_coverage_modulation_table_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_shading_rate_image"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_shading_rate_image")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_shading_rate_image_enable_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -13011,7 +13404,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_shading_rate_image_enable_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_representative_fragment_test"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_representative_fragment_test"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_representative_fragment_test_enable_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -13024,7 +13426,13 @@ impl CommandsDispatcher {
             self.cmd_set_representative_fragment_test_enable_nv
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_coverage_reduction_mode"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_coverage_reduction_mode")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_reduction_mode_nv.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -13136,7 +13544,7 @@ impl CommandsDispatcher {
             self.get_physical_device_external_tensor_properties_arm
                 .set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_tensors")]
+        #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
         {
             let mut vk_func_ptr = self.get_tensor_opaque_capture_descriptor_data_arm.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -13149,7 +13557,7 @@ impl CommandsDispatcher {
             self.get_tensor_opaque_capture_descriptor_data_arm
                 .set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_tensors")]
+        #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
         {
             let mut vk_func_ptr = self
                 .get_tensor_view_opaque_capture_descriptor_data_arm
@@ -13312,7 +13720,7 @@ impl CommandsDispatcher {
             }
             self.cmd_bind_shaders_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
+        #[cfg(all(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
         {
             let mut vk_func_ptr = self.cmd_set_depth_clamp_range_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -13752,7 +14160,7 @@ impl CommandsDispatcher {
             }
             self.get_calibrated_timestamps_khr.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_maintenance6")]
+        #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
         {
             let mut vk_func_ptr = self.cmd_set_descriptor_buffer_offsets2_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -13764,7 +14172,7 @@ impl CommandsDispatcher {
             }
             self.cmd_set_descriptor_buffer_offsets2_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_maintenance6")]
+        #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
         {
             let mut vk_func_ptr = self.cmd_bind_descriptor_buffer_embedded_samplers2_ext.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -16542,8 +16950,14 @@ impl CommandsDispatcher {
             self.cmd_push_descriptor_set.set(vk_func_ptr);
         }
         #[cfg(any(
-            feature = "ext_push_descriptor",
-            feature = "ext_descriptor_update_template",
+            all(
+                feature = "ext_push_descriptor",
+                any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+            ),
+            all(
+                feature = "ext_descriptor_update_template",
+                feature = "ext_push_descriptor"
+            ),
             feature = "version_1_4"
         ))]
         {
@@ -16643,7 +17057,10 @@ impl CommandsDispatcher {
             }
             self.cmd_push_constants2.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+        #[cfg(any(
+            all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+            feature = "version_1_4"
+        ))]
         {
             let mut vk_func_ptr = self.cmd_push_descriptor_set2.get();
             let loaded_ptr = get_device_proc_addr(
@@ -16661,7 +17078,10 @@ impl CommandsDispatcher {
             }
             self.cmd_push_descriptor_set2.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+        #[cfg(any(
+            all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+            feature = "version_1_4"
+        ))]
         {
             let mut vk_func_ptr = self.cmd_push_descriptor_set_with_template2.get();
             let loaded_ptr = get_device_proc_addr(
@@ -16798,7 +17218,10 @@ impl CommandsDispatcher {
             }
             self.queue_present_khr.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_surface")
+        ))]
         {
             let mut vk_func_ptr = self.get_device_group_present_capabilities_khr.get();
             let loaded_ptr = get_device_proc_addr(
@@ -16811,7 +17234,10 @@ impl CommandsDispatcher {
             self.get_device_group_present_capabilities_khr
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_surface")
+        ))]
         {
             let mut vk_func_ptr = self.get_device_group_surface_present_modes_khr.get();
             let loaded_ptr = get_device_proc_addr(
@@ -16824,7 +17250,10 @@ impl CommandsDispatcher {
             self.get_device_group_surface_present_modes_khr
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_swapchain")
+        ))]
         {
             let mut vk_func_ptr = self.acquire_next_image2_khr.get();
             let loaded_ptr =
@@ -18143,7 +18572,10 @@ impl CommandsDispatcher {
             }
             self.cmd_write_buffer_marker_amd.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_buffer_marker")]
+        #[cfg(all(
+            feature = "ext_buffer_marker",
+            any(feature = "version_1_3", feature = "ext_synchronization2")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_write_buffer_marker2_amd.get();
             let loaded_ptr = get_device_proc_addr(
@@ -18177,7 +18609,10 @@ impl CommandsDispatcher {
             }
             self.cmd_draw_mesh_tasks_indirect_nv.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_mesh_shader")]
+        #[cfg(all(
+            feature = "ext_mesh_shader",
+            any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_draw_mesh_tasks_indirect_count_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -18235,7 +18670,10 @@ impl CommandsDispatcher {
             }
             self.get_queue_checkpoint_data_nv.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_device_diagnostic_checkpoints")]
+        #[cfg(all(
+            feature = "ext_device_diagnostic_checkpoints",
+            any(feature = "version_1_3", feature = "ext_synchronization2")
+        ))]
         {
             let mut vk_func_ptr = self.get_queue_checkpoint_data2_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -18415,7 +18853,10 @@ impl CommandsDispatcher {
             }
             self.release_full_screen_exclusive_mode_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_full_screen_exclusive")]
+        #[cfg(all(
+            feature = "ext_full_screen_exclusive",
+            any(feature = "ext_device_group", feature = "version_1_1")
+        ))]
         {
             let mut vk_func_ptr = self.get_device_group_surface_present_modes2_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -18839,7 +19280,10 @@ impl CommandsDispatcher {
             self.get_sampler_opaque_capture_descriptor_data_ext
                 .set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_descriptor_buffer")]
+        #[cfg(all(
+            feature = "ext_descriptor_buffer",
+            any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+        ))]
         {
             let mut vk_func_ptr = self
                 .get_acceleration_structure_opaque_capture_descriptor_data_ext
@@ -18888,7 +19332,10 @@ impl CommandsDispatcher {
             }
             self.cmd_draw_mesh_tasks_indirect_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_mesh_shader")]
+        #[cfg(all(
+            feature = "ext_mesh_shader",
+            any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_draw_mesh_tasks_indirect_count_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19130,7 +19577,10 @@ impl CommandsDispatcher {
             }
             self.cmd_set_color_write_enable_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_ray_tracing_maintenance1")]
+        #[cfg(all(
+            feature = "ext_ray_tracing_maintenance1",
+            feature = "ext_ray_tracing_pipeline"
+        ))]
         {
             let mut vk_func_ptr = self.cmd_trace_rays_indirect2_khr.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19568,7 +20018,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_color_write_mask_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                any(feature = "ext_maintenance2", feature = "version_1_1")
+            ),
+            feature = "ext_shader_object"
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_tessellation_domain_origin_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19580,7 +20036,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_tessellation_domain_origin_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_transform_feedback"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_transform_feedback")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_rasterization_stream_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19592,7 +20054,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_rasterization_stream_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_conservative_rasterization"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_conservative_rasterization"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_conservative_rasterization_mode_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19605,7 +20076,16 @@ impl CommandsDispatcher {
             self.cmd_set_conservative_rasterization_mode_ext
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_conservative_rasterization"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_conservative_rasterization"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_extra_primitive_overestimation_size_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19618,7 +20098,13 @@ impl CommandsDispatcher {
             self.cmd_set_extra_primitive_overestimation_size_ext
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_depth_clip_enable"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_depth_clip_enable")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_depth_clip_enable_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19630,7 +20116,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_depth_clip_enable_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_sample_locations"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_sample_locations")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_sample_locations_enable_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19642,7 +20134,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_sample_locations_enable_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_blend_operation_advanced"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_blend_operation_advanced"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_color_blend_advanced_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19654,7 +20155,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_color_blend_advanced_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_provoking_vertex"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_provoking_vertex")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_provoking_vertex_mode_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19666,7 +20173,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_provoking_vertex_mode_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_line_rasterization"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_line_rasterization_mode_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19678,7 +20191,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_line_rasterization_mode_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_line_rasterization"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_line_stipple_enable_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19690,7 +20209,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_line_stipple_enable_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_depth_clip_control"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_depth_clip_control")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_depth_clip_negative_one_to_one_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19703,7 +20228,13 @@ impl CommandsDispatcher {
             self.cmd_set_depth_clip_negative_one_to_one_ext
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_clip_space_w_scaling"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_clip_space_w_scaling")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_viewport_wscaling_enable_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19715,7 +20246,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_viewport_wscaling_enable_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_viewport_swizzle"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_viewport_swizzle")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_viewport_swizzle_nv.get();
             let loaded_ptr =
@@ -19725,7 +20262,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_viewport_swizzle_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_fragment_coverage_to_color"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_fragment_coverage_to_color"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_to_color_enable_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19737,7 +20283,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_coverage_to_color_enable_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_fragment_coverage_to_color"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_fragment_coverage_to_color"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_to_color_location_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19749,7 +20304,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_coverage_to_color_location_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_framebuffer_mixed_samples"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_framebuffer_mixed_samples"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_modulation_mode_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19761,7 +20325,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_coverage_modulation_mode_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_framebuffer_mixed_samples"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_framebuffer_mixed_samples"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_modulation_table_enable_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19774,7 +20347,16 @@ impl CommandsDispatcher {
             self.cmd_set_coverage_modulation_table_enable_nv
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_framebuffer_mixed_samples"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_framebuffer_mixed_samples"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_modulation_table_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19786,7 +20368,13 @@ impl CommandsDispatcher {
             }
             self.cmd_set_coverage_modulation_table_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_shading_rate_image"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_shading_rate_image")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_shading_rate_image_enable_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19798,7 +20386,16 @@ impl CommandsDispatcher {
             }
             self.cmd_set_shading_rate_image_enable_nv.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_representative_fragment_test"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_representative_fragment_test"
+            )
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_representative_fragment_test_enable_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19811,7 +20408,13 @@ impl CommandsDispatcher {
             self.cmd_set_representative_fragment_test_enable_nv
                 .set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_coverage_reduction_mode"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_coverage_reduction_mode")
+        ))]
         {
             let mut vk_func_ptr = self.cmd_set_coverage_reduction_mode_nv.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19908,7 +20511,7 @@ impl CommandsDispatcher {
             }
             self.cmd_copy_tensor_arm.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_tensors")]
+        #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
         {
             let mut vk_func_ptr = self.get_tensor_opaque_capture_descriptor_data_arm.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19921,7 +20524,7 @@ impl CommandsDispatcher {
             self.get_tensor_opaque_capture_descriptor_data_arm
                 .set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_tensors")]
+        #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
         {
             let mut vk_func_ptr = self
                 .get_tensor_view_opaque_capture_descriptor_data_arm
@@ -20067,7 +20670,7 @@ impl CommandsDispatcher {
             }
             self.cmd_bind_shaders_ext.set(vk_func_ptr);
         }
-        #[cfg(any(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
+        #[cfg(all(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
         {
             let mut vk_func_ptr = self.cmd_set_depth_clamp_range_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -20417,7 +21020,7 @@ impl CommandsDispatcher {
             }
             self.get_calibrated_timestamps_khr.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_maintenance6")]
+        #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
         {
             let mut vk_func_ptr = self.cmd_set_descriptor_buffer_offsets2_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -20429,7 +21032,7 @@ impl CommandsDispatcher {
             }
             self.cmd_set_descriptor_buffer_offsets2_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_maintenance6")]
+        #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
         {
             let mut vk_func_ptr = self.cmd_bind_descriptor_buffer_embedded_samplers2_ext.get();
             let loaded_ptr = get_device_proc_addr(
@@ -21419,14 +22022,26 @@ impl CommandsDispatcher {
                 #[cfg(any(feature = "ext_push_descriptor", feature = "version_1_4"))]
                 cmd_push_descriptor_set: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_push_descriptor",
-                    feature = "ext_descriptor_update_template",
+                    all(
+                        feature = "ext_push_descriptor",
+                        any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+                    ),
+                    all(
+                        feature = "ext_descriptor_update_template",
+                        feature = "ext_push_descriptor"
+                    ),
                     feature = "version_1_4"
                 ))]
                 cmd_push_descriptor_set_with_template_khr: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_push_descriptor",
-                    feature = "ext_descriptor_update_template",
+                    all(
+                        feature = "ext_push_descriptor",
+                        any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+                    ),
+                    all(
+                        feature = "ext_descriptor_update_template",
+                        feature = "ext_push_descriptor"
+                    ),
                     feature = "version_1_4"
                 ))]
                 cmd_push_descriptor_set_with_template: Cell::new(mem::transmute(unload_cmd)),
@@ -21448,13 +22063,25 @@ impl CommandsDispatcher {
                 cmd_push_constants2_khr: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
                 cmd_push_constants2: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+                #[cfg(any(
+                    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+                    feature = "version_1_4"
+                ))]
                 cmd_push_descriptor_set2_khr: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+                #[cfg(any(
+                    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+                    feature = "version_1_4"
+                ))]
                 cmd_push_descriptor_set2: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+                #[cfg(any(
+                    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+                    feature = "version_1_4"
+                ))]
                 cmd_push_descriptor_set_with_template2_khr: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+                #[cfg(any(
+                    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+                    feature = "version_1_4"
+                ))]
                 cmd_push_descriptor_set_with_template2: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
                 copy_memory_to_image_ext: Cell::new(mem::transmute(unload_cmd)),
@@ -21494,13 +22121,25 @@ impl CommandsDispatcher {
                 acquire_next_image_khr: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_swapchain")]
                 queue_present_khr: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+                #[cfg(any(
+                    all(feature = "ext_swapchain", feature = "version_1_1"),
+                    all(feature = "ext_device_group", feature = "ext_surface")
+                ))]
                 get_device_group_present_capabilities_khr: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+                #[cfg(any(
+                    all(feature = "ext_swapchain", feature = "version_1_1"),
+                    all(feature = "ext_device_group", feature = "ext_surface")
+                ))]
                 get_device_group_surface_present_modes_khr: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+                #[cfg(any(
+                    all(feature = "ext_swapchain", feature = "version_1_1"),
+                    all(feature = "ext_device_group", feature = "ext_surface")
+                ))]
                 get_physical_device_present_rectangles_khr: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+                #[cfg(any(
+                    all(feature = "ext_swapchain", feature = "version_1_1"),
+                    all(feature = "ext_device_group", feature = "ext_swapchain")
+                ))]
                 acquire_next_image2_khr: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_display")]
                 get_physical_device_display_properties_khr: Cell::new(mem::transmute(unload_cmd)),
@@ -21854,13 +22493,19 @@ impl CommandsDispatcher {
                 get_memory_host_pointer_properties_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_buffer_marker")]
                 cmd_write_buffer_marker_amd: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_buffer_marker")]
+                #[cfg(all(
+                    feature = "ext_buffer_marker",
+                    any(feature = "version_1_3", feature = "ext_synchronization2")
+                ))]
                 cmd_write_buffer_marker2_amd: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_mesh_shader")]
                 cmd_draw_mesh_tasks_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_mesh_shader")]
                 cmd_draw_mesh_tasks_indirect_nv: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_mesh_shader")]
+                #[cfg(all(
+                    feature = "ext_mesh_shader",
+                    any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+                ))]
                 cmd_draw_mesh_tasks_indirect_count_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_scissor_exclusive")]
                 cmd_set_exclusive_scissor_enable_nv: Cell::new(mem::transmute(unload_cmd)),
@@ -21870,7 +22515,10 @@ impl CommandsDispatcher {
                 cmd_set_checkpoint_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_device_diagnostic_checkpoints")]
                 get_queue_checkpoint_data_nv: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_device_diagnostic_checkpoints")]
+                #[cfg(all(
+                    feature = "ext_device_diagnostic_checkpoints",
+                    any(feature = "version_1_3", feature = "ext_synchronization2")
+                ))]
                 get_queue_checkpoint_data2_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_performance_query")]
                 initialize_performance_api_intel: Cell::new(mem::transmute(unload_cmd)),
@@ -21920,7 +22568,10 @@ impl CommandsDispatcher {
                 acquire_full_screen_exclusive_mode_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_full_screen_exclusive")]
                 release_full_screen_exclusive_mode_ext: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_full_screen_exclusive")]
+                #[cfg(all(
+                    feature = "ext_full_screen_exclusive",
+                    any(feature = "ext_device_group", feature = "version_1_1")
+                ))]
                 get_device_group_surface_present_modes2_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_headless_surface")]
                 create_headless_surface_ext: Cell::new(mem::transmute(unload_cmd)),
@@ -22010,7 +22661,10 @@ impl CommandsDispatcher {
                 get_sampler_opaque_capture_descriptor_data_ext: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
-                #[cfg(feature = "ext_descriptor_buffer")]
+                #[cfg(all(
+                    feature = "ext_descriptor_buffer",
+                    any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+                ))]
                 get_acceleration_structure_opaque_capture_descriptor_data_ext: Cell::new(
                     mem::transmute(unload_cmd),
                 ),
@@ -22020,7 +22674,10 @@ impl CommandsDispatcher {
                 cmd_draw_mesh_tasks_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_mesh_shader")]
                 cmd_draw_mesh_tasks_indirect_ext: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_mesh_shader")]
+                #[cfg(all(
+                    feature = "ext_mesh_shader",
+                    any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+                ))]
                 cmd_draw_mesh_tasks_indirect_count_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_device_fault")]
                 get_device_fault_info_ext: Cell::new(mem::transmute(unload_cmd)),
@@ -22091,7 +22748,10 @@ impl CommandsDispatcher {
                 )),
                 #[cfg(feature = "ext_color_write_enable")]
                 cmd_set_color_write_enable_ext: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_ray_tracing_maintenance1")]
+                #[cfg(all(
+                    feature = "ext_ray_tracing_maintenance1",
+                    feature = "ext_ray_tracing_pipeline"
+                ))]
                 cmd_trace_rays_indirect2_khr: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_multi_draw")]
                 cmd_draw_multi_ext: Cell::new(mem::transmute(unload_cmd)),
@@ -22202,112 +22862,202 @@ impl CommandsDispatcher {
                 ))]
                 cmd_set_color_write_mask_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        any(feature = "ext_maintenance2", feature = "version_1_1")
+                    ),
                     feature = "ext_shader_object"
                 ))]
                 cmd_set_tessellation_domain_origin_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_transform_feedback"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_transform_feedback")
                 ))]
                 cmd_set_rasterization_stream_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_conservative_rasterization"
+                    ),
+                    all(
+                        feature = "ext_shader_object",
+                        feature = "ext_conservative_rasterization"
+                    )
                 ))]
                 cmd_set_conservative_rasterization_mode_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_conservative_rasterization"
+                    ),
+                    all(
+                        feature = "ext_shader_object",
+                        feature = "ext_conservative_rasterization"
+                    )
                 ))]
                 cmd_set_extra_primitive_overestimation_size_ext: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_depth_clip_enable"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_depth_clip_enable")
                 ))]
                 cmd_set_depth_clip_enable_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_sample_locations"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_sample_locations")
                 ))]
                 cmd_set_sample_locations_enable_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_blend_operation_advanced"
+                    ),
+                    all(
+                        feature = "ext_shader_object",
+                        feature = "ext_blend_operation_advanced"
+                    )
                 ))]
                 cmd_set_color_blend_advanced_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_provoking_vertex"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_provoking_vertex")
                 ))]
                 cmd_set_provoking_vertex_mode_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_line_rasterization"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_line_rasterization")
                 ))]
                 cmd_set_line_rasterization_mode_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_line_rasterization"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_line_rasterization")
                 ))]
                 cmd_set_line_stipple_enable_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_depth_clip_control"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_depth_clip_control")
                 ))]
                 cmd_set_depth_clip_negative_one_to_one_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_clip_space_w_scaling"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_clip_space_w_scaling")
                 ))]
                 cmd_set_viewport_wscaling_enable_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_viewport_swizzle"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_viewport_swizzle")
                 ))]
                 cmd_set_viewport_swizzle_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_fragment_coverage_to_color"
+                    ),
+                    all(
+                        feature = "ext_shader_object",
+                        feature = "ext_fragment_coverage_to_color"
+                    )
                 ))]
                 cmd_set_coverage_to_color_enable_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_fragment_coverage_to_color"
+                    ),
+                    all(
+                        feature = "ext_shader_object",
+                        feature = "ext_fragment_coverage_to_color"
+                    )
                 ))]
                 cmd_set_coverage_to_color_location_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_framebuffer_mixed_samples"
+                    ),
+                    all(
+                        feature = "ext_shader_object",
+                        feature = "ext_framebuffer_mixed_samples"
+                    )
                 ))]
                 cmd_set_coverage_modulation_mode_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_framebuffer_mixed_samples"
+                    ),
+                    all(
+                        feature = "ext_shader_object",
+                        feature = "ext_framebuffer_mixed_samples"
+                    )
                 ))]
                 cmd_set_coverage_modulation_table_enable_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_framebuffer_mixed_samples"
+                    ),
+                    all(
+                        feature = "ext_shader_object",
+                        feature = "ext_framebuffer_mixed_samples"
+                    )
                 ))]
                 cmd_set_coverage_modulation_table_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_shading_rate_image"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_shading_rate_image")
                 ))]
                 cmd_set_shading_rate_image_enable_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_representative_fragment_test"
+                    ),
+                    all(
+                        feature = "ext_shader_object",
+                        feature = "ext_representative_fragment_test"
+                    )
                 ))]
                 cmd_set_representative_fragment_test_enable_nv: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
                 #[cfg(any(
-                    feature = "ext_extended_dynamic_state3",
-                    feature = "ext_shader_object"
+                    all(
+                        feature = "ext_extended_dynamic_state3",
+                        feature = "ext_coverage_reduction_mode"
+                    ),
+                    all(feature = "ext_shader_object", feature = "ext_coverage_reduction_mode")
                 ))]
                 cmd_set_coverage_reduction_mode_nv: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_tensors")]
@@ -22330,11 +23080,11 @@ impl CommandsDispatcher {
                 get_physical_device_external_tensor_properties_arm: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
-                #[cfg(feature = "ext_tensors")]
+                #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
                 get_tensor_opaque_capture_descriptor_data_arm: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
-                #[cfg(feature = "ext_tensors")]
+                #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
                 get_tensor_view_opaque_capture_descriptor_data_arm: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
@@ -22366,7 +23116,7 @@ impl CommandsDispatcher {
                 get_shader_binary_data_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_shader_object")]
                 cmd_bind_shaders_ext: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(any(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
+                #[cfg(all(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
                 cmd_set_depth_clamp_range_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_pipeline_binary")]
                 create_pipeline_binaries_khr: Cell::new(mem::transmute(unload_cmd)),
@@ -22455,9 +23205,9 @@ impl CommandsDispatcher {
                 get_calibrated_timestamps_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_calibrated_timestamps")]
                 get_calibrated_timestamps_khr: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_maintenance6")]
+                #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
                 cmd_set_descriptor_buffer_offsets2_ext: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_maintenance6")]
+                #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
                 cmd_bind_descriptor_buffer_embedded_samplers2_ext: Cell::new(mem::transmute(
                     unload_cmd,
                 )),
@@ -24382,8 +25132,14 @@ impl CommandsDispatcher {
             panic!("Trying to call an unloaded Vulkan command");
         }
         #[cfg(any(
-            feature = "ext_push_descriptor",
-            feature = "ext_descriptor_update_template",
+            all(
+                feature = "ext_push_descriptor",
+                any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+            ),
+            all(
+                feature = "ext_descriptor_update_template",
+                feature = "ext_push_descriptor"
+            ),
             feature = "version_1_4"
         ))]
         extern "system" fn cmd_push_descriptor_set_with_template(
@@ -24423,14 +25179,20 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+        #[cfg(any(
+            all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+            feature = "version_1_4"
+        ))]
         extern "system" fn cmd_push_descriptor_set2(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: *const PushDescriptorSetInfo,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+        #[cfg(any(
+            all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+            feature = "version_1_4"
+        ))]
         extern "system" fn cmd_push_descriptor_set_with_template2(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: *const PushDescriptorSetWithTemplateInfo,
@@ -24553,14 +25315,20 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_surface")
+        ))]
         extern "system" fn get_device_group_present_capabilities_khr(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const DeviceGroupPresentCapabilitiesKHR,
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_surface")
+        ))]
         extern "system" fn get_device_group_surface_present_modes_khr(
             _: Option<BorrowedHandle<'_, Device>>,
             _: Option<BorrowedHandle<'_, SurfaceKHR>>,
@@ -24568,7 +25336,10 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_surface")
+        ))]
         extern "system" fn get_physical_device_present_rectangles_khr(
             _: Option<BorrowedHandle<'_, PhysicalDevice>>,
             _: Option<BorrowedHandle<'_, SurfaceKHR>>,
@@ -24577,7 +25348,10 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+        #[cfg(any(
+            all(feature = "ext_swapchain", feature = "version_1_1"),
+            all(feature = "ext_device_group", feature = "ext_swapchain")
+        ))]
         extern "system" fn acquire_next_image2_khr(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const AcquireNextImageInfoKHR,
@@ -25900,7 +26674,10 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_buffer_marker")]
+        #[cfg(all(
+            feature = "ext_buffer_marker",
+            any(feature = "version_1_3", feature = "ext_synchronization2")
+        ))]
         extern "system" fn cmd_write_buffer_marker2_amd(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: PipelineStageFlags2,
@@ -25928,7 +26705,10 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_mesh_shader")]
+        #[cfg(all(
+            feature = "ext_mesh_shader",
+            any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+        ))]
         extern "system" fn cmd_draw_mesh_tasks_indirect_count_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Option<BorrowedHandle<'_, Buffer>>,
@@ -25973,7 +26753,10 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_device_diagnostic_checkpoints")]
+        #[cfg(all(
+            feature = "ext_device_diagnostic_checkpoints",
+            any(feature = "version_1_3", feature = "ext_synchronization2")
+        ))]
         extern "system" fn get_queue_checkpoint_data2_nv(
             _: Option<BorrowedHandle<'_, Queue>>,
             _: *const u32,
@@ -26135,7 +26918,10 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_full_screen_exclusive")]
+        #[cfg(all(
+            feature = "ext_full_screen_exclusive",
+            any(feature = "ext_device_group", feature = "version_1_1")
+        ))]
         extern "system" fn get_device_group_surface_present_modes2_ext(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const PhysicalDeviceSurfaceInfo2KHR,
@@ -26454,7 +27240,10 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_descriptor_buffer")]
+        #[cfg(all(
+            feature = "ext_descriptor_buffer",
+            any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+        ))]
         extern "system" fn get_acceleration_structure_opaque_capture_descriptor_data_ext(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const AccelerationStructureCaptureDescriptorDataInfoEXT,
@@ -26489,7 +27278,10 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_mesh_shader")]
+        #[cfg(all(
+            feature = "ext_mesh_shader",
+            any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+        ))]
         extern "system" fn cmd_draw_mesh_tasks_indirect_count_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Option<BorrowedHandle<'_, Buffer>>,
@@ -26704,7 +27496,10 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_ray_tracing_maintenance1")]
+        #[cfg(all(
+            feature = "ext_ray_tracing_maintenance1",
+            feature = "ext_ray_tracing_pipeline"
+        ))]
         extern "system" fn cmd_trace_rays_indirect2_khr(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: DeviceAddress,
@@ -27032,49 +27827,100 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                any(feature = "ext_maintenance2", feature = "version_1_1")
+            ),
+            feature = "ext_shader_object"
+        ))]
         extern "system" fn cmd_set_tessellation_domain_origin_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: TessellationDomainOrigin,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_transform_feedback"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_transform_feedback")
+        ))]
         extern "system" fn cmd_set_rasterization_stream_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: u32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_conservative_rasterization"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_conservative_rasterization"
+            )
+        ))]
         extern "system" fn cmd_set_conservative_rasterization_mode_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: ConservativeRasterizationModeEXT,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_conservative_rasterization"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_conservative_rasterization"
+            )
+        ))]
         extern "system" fn cmd_set_extra_primitive_overestimation_size_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: f32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_depth_clip_enable"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_depth_clip_enable")
+        ))]
         extern "system" fn cmd_set_depth_clip_enable_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Bool32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_sample_locations"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_sample_locations")
+        ))]
         extern "system" fn cmd_set_sample_locations_enable_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Bool32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_blend_operation_advanced"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_blend_operation_advanced"
+            )
+        ))]
         extern "system" fn cmd_set_color_blend_advanced_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: u32,
@@ -27083,42 +27929,78 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_provoking_vertex"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_provoking_vertex")
+        ))]
         extern "system" fn cmd_set_provoking_vertex_mode_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: ProvokingVertexModeEXT,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_line_rasterization"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+        ))]
         extern "system" fn cmd_set_line_rasterization_mode_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: LineRasterizationModeEXT,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_line_rasterization"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+        ))]
         extern "system" fn cmd_set_line_stipple_enable_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Bool32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_depth_clip_control"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_depth_clip_control")
+        ))]
         extern "system" fn cmd_set_depth_clip_negative_one_to_one_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Bool32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_clip_space_w_scaling"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_clip_space_w_scaling")
+        ))]
         extern "system" fn cmd_set_viewport_wscaling_enable_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Bool32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_viewport_swizzle"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_viewport_swizzle")
+        ))]
         extern "system" fn cmd_set_viewport_swizzle_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: u32,
@@ -27127,35 +28009,80 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_fragment_coverage_to_color"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_fragment_coverage_to_color"
+            )
+        ))]
         extern "system" fn cmd_set_coverage_to_color_enable_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Bool32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_fragment_coverage_to_color"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_fragment_coverage_to_color"
+            )
+        ))]
         extern "system" fn cmd_set_coverage_to_color_location_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: u32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_framebuffer_mixed_samples"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_framebuffer_mixed_samples"
+            )
+        ))]
         extern "system" fn cmd_set_coverage_modulation_mode_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: CoverageModulationModeNV,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_framebuffer_mixed_samples"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_framebuffer_mixed_samples"
+            )
+        ))]
         extern "system" fn cmd_set_coverage_modulation_table_enable_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Bool32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_framebuffer_mixed_samples"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_framebuffer_mixed_samples"
+            )
+        ))]
         extern "system" fn cmd_set_coverage_modulation_table_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: u32,
@@ -27163,21 +28090,42 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_shading_rate_image"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_shading_rate_image")
+        ))]
         extern "system" fn cmd_set_shading_rate_image_enable_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Bool32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_representative_fragment_test"
+            ),
+            all(
+                feature = "ext_shader_object",
+                feature = "ext_representative_fragment_test"
+            )
+        ))]
         extern "system" fn cmd_set_representative_fragment_test_enable_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: Bool32,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+        #[cfg(any(
+            all(
+                feature = "ext_extended_dynamic_state3",
+                feature = "ext_coverage_reduction_mode"
+            ),
+            all(feature = "ext_shader_object", feature = "ext_coverage_reduction_mode")
+        ))]
         extern "system" fn cmd_set_coverage_reduction_mode_nv(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: CoverageReductionModeNV,
@@ -27257,7 +28205,7 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_tensors")]
+        #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
         extern "system" fn get_tensor_opaque_capture_descriptor_data_arm(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const TensorCaptureDescriptorDataInfoARM,
@@ -27265,7 +28213,7 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_tensors")]
+        #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
         extern "system" fn get_tensor_view_opaque_capture_descriptor_data_arm(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const TensorViewCaptureDescriptorDataInfoARM,
@@ -27384,7 +28332,7 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(any(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
+        #[cfg(all(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
         extern "system" fn cmd_set_depth_clamp_range_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: DepthClampModeEXT,
@@ -27659,14 +28607,14 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_maintenance6")]
+        #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
         extern "system" fn cmd_set_descriptor_buffer_offsets2_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: *const SetDescriptorBufferOffsetsInfoEXT,
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_maintenance6")]
+        #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
         extern "system" fn cmd_bind_descriptor_buffer_embedded_samplers2_ext(
             _: Option<BorrowedHandle<'_, CommandBuffer>>,
             _: *const BindDescriptorBufferEmbeddedSamplersInfoEXT,
@@ -28580,16 +29528,28 @@ impl CommandsDispatcher {
             #[cfg(any(feature = "ext_push_descriptor", feature = "version_1_4"))]
             cmd_push_descriptor_set: Cell::new(cmd_push_descriptor_set),
             #[cfg(any(
-                feature = "ext_push_descriptor",
-                feature = "ext_descriptor_update_template",
+                all(
+                    feature = "ext_push_descriptor",
+                    any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+                ),
+                all(
+                    feature = "ext_descriptor_update_template",
+                    feature = "ext_push_descriptor"
+                ),
                 feature = "version_1_4"
             ))]
             cmd_push_descriptor_set_with_template_khr: Cell::new(
                 cmd_push_descriptor_set_with_template,
             ),
             #[cfg(any(
-                feature = "ext_push_descriptor",
-                feature = "ext_descriptor_update_template",
+                all(
+                    feature = "ext_push_descriptor",
+                    any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+                ),
+                all(
+                    feature = "ext_descriptor_update_template",
+                    feature = "ext_push_descriptor"
+                ),
                 feature = "version_1_4"
             ))]
             cmd_push_descriptor_set_with_template: Cell::new(cmd_push_descriptor_set_with_template),
@@ -28617,15 +29577,27 @@ impl CommandsDispatcher {
             cmd_push_constants2_khr: Cell::new(cmd_push_constants2),
             #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
             cmd_push_constants2: Cell::new(cmd_push_constants2),
-            #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+            #[cfg(any(
+                all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+                feature = "version_1_4"
+            ))]
             cmd_push_descriptor_set2_khr: Cell::new(cmd_push_descriptor_set2),
-            #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+            #[cfg(any(
+                all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+                feature = "version_1_4"
+            ))]
             cmd_push_descriptor_set2: Cell::new(cmd_push_descriptor_set2),
-            #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+            #[cfg(any(
+                all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+                feature = "version_1_4"
+            ))]
             cmd_push_descriptor_set_with_template2_khr: Cell::new(
                 cmd_push_descriptor_set_with_template2,
             ),
-            #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+            #[cfg(any(
+                all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+                feature = "version_1_4"
+            ))]
             cmd_push_descriptor_set_with_template2: Cell::new(
                 cmd_push_descriptor_set_with_template2,
             ),
@@ -28673,19 +29645,31 @@ impl CommandsDispatcher {
             acquire_next_image_khr: Cell::new(acquire_next_image_khr),
             #[cfg(feature = "ext_swapchain")]
             queue_present_khr: Cell::new(queue_present_khr),
-            #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+            #[cfg(any(
+                all(feature = "ext_swapchain", feature = "version_1_1"),
+                all(feature = "ext_device_group", feature = "ext_surface")
+            ))]
             get_device_group_present_capabilities_khr: Cell::new(
                 get_device_group_present_capabilities_khr,
             ),
-            #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+            #[cfg(any(
+                all(feature = "ext_swapchain", feature = "version_1_1"),
+                all(feature = "ext_device_group", feature = "ext_surface")
+            ))]
             get_device_group_surface_present_modes_khr: Cell::new(
                 get_device_group_surface_present_modes_khr,
             ),
-            #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+            #[cfg(any(
+                all(feature = "ext_swapchain", feature = "version_1_1"),
+                all(feature = "ext_device_group", feature = "ext_surface")
+            ))]
             get_physical_device_present_rectangles_khr: Cell::new(
                 get_physical_device_present_rectangles_khr,
             ),
-            #[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+            #[cfg(any(
+                all(feature = "ext_swapchain", feature = "version_1_1"),
+                all(feature = "ext_device_group", feature = "ext_swapchain")
+            ))]
             acquire_next_image2_khr: Cell::new(acquire_next_image2_khr),
             #[cfg(feature = "ext_display")]
             get_physical_device_display_properties_khr: Cell::new(
@@ -29081,13 +30065,19 @@ impl CommandsDispatcher {
             ),
             #[cfg(feature = "ext_buffer_marker")]
             cmd_write_buffer_marker_amd: Cell::new(cmd_write_buffer_marker_amd),
-            #[cfg(feature = "ext_buffer_marker")]
+            #[cfg(all(
+                feature = "ext_buffer_marker",
+                any(feature = "version_1_3", feature = "ext_synchronization2")
+            ))]
             cmd_write_buffer_marker2_amd: Cell::new(cmd_write_buffer_marker2_amd),
             #[cfg(feature = "ext_mesh_shader")]
             cmd_draw_mesh_tasks_nv: Cell::new(cmd_draw_mesh_tasks_nv),
             #[cfg(feature = "ext_mesh_shader")]
             cmd_draw_mesh_tasks_indirect_nv: Cell::new(cmd_draw_mesh_tasks_indirect_nv),
-            #[cfg(feature = "ext_mesh_shader")]
+            #[cfg(all(
+                feature = "ext_mesh_shader",
+                any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+            ))]
             cmd_draw_mesh_tasks_indirect_count_nv: Cell::new(cmd_draw_mesh_tasks_indirect_count_nv),
             #[cfg(feature = "ext_scissor_exclusive")]
             cmd_set_exclusive_scissor_enable_nv: Cell::new(cmd_set_exclusive_scissor_enable_nv),
@@ -29097,7 +30087,10 @@ impl CommandsDispatcher {
             cmd_set_checkpoint_nv: Cell::new(cmd_set_checkpoint_nv),
             #[cfg(feature = "ext_device_diagnostic_checkpoints")]
             get_queue_checkpoint_data_nv: Cell::new(get_queue_checkpoint_data_nv),
-            #[cfg(feature = "ext_device_diagnostic_checkpoints")]
+            #[cfg(all(
+                feature = "ext_device_diagnostic_checkpoints",
+                any(feature = "version_1_3", feature = "ext_synchronization2")
+            ))]
             get_queue_checkpoint_data2_nv: Cell::new(get_queue_checkpoint_data2_nv),
             #[cfg(feature = "ext_performance_query")]
             initialize_performance_api_intel: Cell::new(initialize_performance_api_intel),
@@ -29159,7 +30152,10 @@ impl CommandsDispatcher {
             release_full_screen_exclusive_mode_ext: Cell::new(
                 release_full_screen_exclusive_mode_ext,
             ),
-            #[cfg(feature = "ext_full_screen_exclusive")]
+            #[cfg(all(
+                feature = "ext_full_screen_exclusive",
+                any(feature = "ext_device_group", feature = "version_1_1")
+            ))]
             get_device_group_surface_present_modes2_ext: Cell::new(
                 get_device_group_surface_present_modes2_ext,
             ),
@@ -29261,7 +30257,10 @@ impl CommandsDispatcher {
             get_sampler_opaque_capture_descriptor_data_ext: Cell::new(
                 get_sampler_opaque_capture_descriptor_data_ext,
             ),
-            #[cfg(feature = "ext_descriptor_buffer")]
+            #[cfg(all(
+                feature = "ext_descriptor_buffer",
+                any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+            ))]
             get_acceleration_structure_opaque_capture_descriptor_data_ext: Cell::new(
                 get_acceleration_structure_opaque_capture_descriptor_data_ext,
             ),
@@ -29271,7 +30270,10 @@ impl CommandsDispatcher {
             cmd_draw_mesh_tasks_ext: Cell::new(cmd_draw_mesh_tasks_ext),
             #[cfg(feature = "ext_mesh_shader")]
             cmd_draw_mesh_tasks_indirect_ext: Cell::new(cmd_draw_mesh_tasks_indirect_ext),
-            #[cfg(feature = "ext_mesh_shader")]
+            #[cfg(all(
+                feature = "ext_mesh_shader",
+                any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+            ))]
             cmd_draw_mesh_tasks_indirect_count_ext: Cell::new(
                 cmd_draw_mesh_tasks_indirect_count_ext,
             ),
@@ -29344,7 +30346,10 @@ impl CommandsDispatcher {
             ),
             #[cfg(feature = "ext_color_write_enable")]
             cmd_set_color_write_enable_ext: Cell::new(cmd_set_color_write_enable_ext),
-            #[cfg(feature = "ext_ray_tracing_maintenance1")]
+            #[cfg(all(
+                feature = "ext_ray_tracing_maintenance1",
+                feature = "ext_ray_tracing_pipeline"
+            ))]
             cmd_trace_rays_indirect2_khr: Cell::new(cmd_trace_rays_indirect2_khr),
             #[cfg(feature = "ext_multi_draw")]
             cmd_draw_multi_ext: Cell::new(cmd_draw_multi_ext),
@@ -29432,59 +30437,212 @@ impl CommandsDispatcher {
             cmd_set_color_blend_equation_ext: Cell::new(cmd_set_color_blend_equation_ext),
             #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
             cmd_set_color_write_mask_ext: Cell::new(cmd_set_color_write_mask_ext),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    any(feature = "ext_maintenance2", feature = "version_1_1")
+                ),
+                feature = "ext_shader_object"
+            ))]
             cmd_set_tessellation_domain_origin_ext: Cell::new(
                 cmd_set_tessellation_domain_origin_ext,
             ),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_transform_feedback"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_transform_feedback")
+            ))]
             cmd_set_rasterization_stream_ext: Cell::new(cmd_set_rasterization_stream_ext),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_conservative_rasterization"
+                ),
+                all(
+                    feature = "ext_shader_object",
+                    feature = "ext_conservative_rasterization"
+                )
+            ))]
             cmd_set_conservative_rasterization_mode_ext: Cell::new(
                 cmd_set_conservative_rasterization_mode_ext,
             ),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_conservative_rasterization"
+                ),
+                all(
+                    feature = "ext_shader_object",
+                    feature = "ext_conservative_rasterization"
+                )
+            ))]
             cmd_set_extra_primitive_overestimation_size_ext: Cell::new(
                 cmd_set_extra_primitive_overestimation_size_ext,
             ),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_depth_clip_enable"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_depth_clip_enable")
+            ))]
             cmd_set_depth_clip_enable_ext: Cell::new(cmd_set_depth_clip_enable_ext),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_sample_locations"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_sample_locations")
+            ))]
             cmd_set_sample_locations_enable_ext: Cell::new(cmd_set_sample_locations_enable_ext),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_blend_operation_advanced"
+                ),
+                all(
+                    feature = "ext_shader_object",
+                    feature = "ext_blend_operation_advanced"
+                )
+            ))]
             cmd_set_color_blend_advanced_ext: Cell::new(cmd_set_color_blend_advanced_ext),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_provoking_vertex"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_provoking_vertex")
+            ))]
             cmd_set_provoking_vertex_mode_ext: Cell::new(cmd_set_provoking_vertex_mode_ext),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_line_rasterization"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+            ))]
             cmd_set_line_rasterization_mode_ext: Cell::new(cmd_set_line_rasterization_mode_ext),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_line_rasterization"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+            ))]
             cmd_set_line_stipple_enable_ext: Cell::new(cmd_set_line_stipple_enable_ext),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_depth_clip_control"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_depth_clip_control")
+            ))]
             cmd_set_depth_clip_negative_one_to_one_ext: Cell::new(
                 cmd_set_depth_clip_negative_one_to_one_ext,
             ),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_clip_space_w_scaling"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_clip_space_w_scaling")
+            ))]
             cmd_set_viewport_wscaling_enable_nv: Cell::new(cmd_set_viewport_wscaling_enable_nv),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_viewport_swizzle"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_viewport_swizzle")
+            ))]
             cmd_set_viewport_swizzle_nv: Cell::new(cmd_set_viewport_swizzle_nv),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_fragment_coverage_to_color"
+                ),
+                all(
+                    feature = "ext_shader_object",
+                    feature = "ext_fragment_coverage_to_color"
+                )
+            ))]
             cmd_set_coverage_to_color_enable_nv: Cell::new(cmd_set_coverage_to_color_enable_nv),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_fragment_coverage_to_color"
+                ),
+                all(
+                    feature = "ext_shader_object",
+                    feature = "ext_fragment_coverage_to_color"
+                )
+            ))]
             cmd_set_coverage_to_color_location_nv: Cell::new(cmd_set_coverage_to_color_location_nv),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_framebuffer_mixed_samples"
+                ),
+                all(
+                    feature = "ext_shader_object",
+                    feature = "ext_framebuffer_mixed_samples"
+                )
+            ))]
             cmd_set_coverage_modulation_mode_nv: Cell::new(cmd_set_coverage_modulation_mode_nv),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_framebuffer_mixed_samples"
+                ),
+                all(
+                    feature = "ext_shader_object",
+                    feature = "ext_framebuffer_mixed_samples"
+                )
+            ))]
             cmd_set_coverage_modulation_table_enable_nv: Cell::new(
                 cmd_set_coverage_modulation_table_enable_nv,
             ),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_framebuffer_mixed_samples"
+                ),
+                all(
+                    feature = "ext_shader_object",
+                    feature = "ext_framebuffer_mixed_samples"
+                )
+            ))]
             cmd_set_coverage_modulation_table_nv: Cell::new(cmd_set_coverage_modulation_table_nv),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_shading_rate_image"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_shading_rate_image")
+            ))]
             cmd_set_shading_rate_image_enable_nv: Cell::new(cmd_set_shading_rate_image_enable_nv),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_representative_fragment_test"
+                ),
+                all(
+                    feature = "ext_shader_object",
+                    feature = "ext_representative_fragment_test"
+                )
+            ))]
             cmd_set_representative_fragment_test_enable_nv: Cell::new(
                 cmd_set_representative_fragment_test_enable_nv,
             ),
-            #[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+            #[cfg(any(
+                all(
+                    feature = "ext_extended_dynamic_state3",
+                    feature = "ext_coverage_reduction_mode"
+                ),
+                all(feature = "ext_shader_object", feature = "ext_coverage_reduction_mode")
+            ))]
             cmd_set_coverage_reduction_mode_nv: Cell::new(cmd_set_coverage_reduction_mode_nv),
             #[cfg(feature = "ext_tensors")]
             create_tensor_arm: Cell::new(create_tensor_arm),
@@ -29508,11 +30666,11 @@ impl CommandsDispatcher {
             get_physical_device_external_tensor_properties_arm: Cell::new(
                 get_physical_device_external_tensor_properties_arm,
             ),
-            #[cfg(feature = "ext_tensors")]
+            #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
             get_tensor_opaque_capture_descriptor_data_arm: Cell::new(
                 get_tensor_opaque_capture_descriptor_data_arm,
             ),
-            #[cfg(feature = "ext_tensors")]
+            #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
             get_tensor_view_opaque_capture_descriptor_data_arm: Cell::new(
                 get_tensor_view_opaque_capture_descriptor_data_arm,
             ),
@@ -29546,7 +30704,7 @@ impl CommandsDispatcher {
             get_shader_binary_data_ext: Cell::new(get_shader_binary_data_ext),
             #[cfg(feature = "ext_shader_object")]
             cmd_bind_shaders_ext: Cell::new(cmd_bind_shaders_ext),
-            #[cfg(any(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
+            #[cfg(all(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
             cmd_set_depth_clamp_range_ext: Cell::new(cmd_set_depth_clamp_range_ext),
             #[cfg(feature = "ext_pipeline_binary")]
             create_pipeline_binaries_khr: Cell::new(create_pipeline_binaries_khr),
@@ -29650,11 +30808,11 @@ impl CommandsDispatcher {
             get_calibrated_timestamps_ext: Cell::new(get_calibrated_timestamps_khr),
             #[cfg(feature = "ext_calibrated_timestamps")]
             get_calibrated_timestamps_khr: Cell::new(get_calibrated_timestamps_khr),
-            #[cfg(feature = "ext_maintenance6")]
+            #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
             cmd_set_descriptor_buffer_offsets2_ext: Cell::new(
                 cmd_set_descriptor_buffer_offsets2_ext,
             ),
-            #[cfg(feature = "ext_maintenance6")]
+            #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
             cmd_bind_descriptor_buffer_embedded_samplers2_ext: Cell::new(
                 cmd_bind_descriptor_buffer_embedded_samplers2_ext,
             ),

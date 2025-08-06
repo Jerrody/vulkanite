@@ -437,6 +437,8 @@ pub enum FeatureContent {
 pub struct Require {
     #[serde(rename = "@comment")]
     pub comment: Option<String>,
+    #[serde(rename = "@depends")]
+    pub depends: Option<String>,
     #[serde(default, rename = "$value")]
     pub content: Vec<RequireContent>,
 }

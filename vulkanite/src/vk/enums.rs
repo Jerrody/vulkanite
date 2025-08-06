@@ -4529,7 +4529,10 @@ bitflags! {
         const DeferredMemoryAllocation = 1u32 << 3;
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 bitflags! {
     #[derive(Default)]
     #[repr(transparent)]

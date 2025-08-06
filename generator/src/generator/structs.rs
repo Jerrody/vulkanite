@@ -86,7 +86,7 @@ fn generate_struct<'a>(
     struct_vk_name: &str,
 ) -> Result<TokenStream> {
     let mapping = gen.mapping.borrow();
-    let config_tag_inner = gen.get_config_feature_inner(&my_struct.dependencies.borrow())?;
+    let config_tag_inner = gen.get_config_feature_inner(&my_struct.dependencies.borrow());
     let config_tag = config_tag_inner.as_ref().map(|tag| quote! { #[cfg(#tag)] });
     // Needed to produce a valid output code
     let config_tag_inner = config_tag_inner.unwrap_or_else(|| quote! {all()});
@@ -434,7 +434,7 @@ fn generate_struct<'a>(
             let extended_struct = gen.get_struct(name).context("Failed to find structure")?;
             Ok((
                 format_ident!("{}", extended_struct.name),
-                gen.get_config_feature_inner(&extended_struct.dependencies.borrow())?,
+                gen.get_config_feature_inner(&extended_struct.dependencies.borrow()),
             ))
         })
         .collect::<Result<Vec<_>>>()?;

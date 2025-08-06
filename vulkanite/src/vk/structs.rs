@@ -5571,19 +5571,37 @@ unsafe impl<'a, 'b> ExtendingStructure<BindDescriptorSetsInfo<'b>>
 }
 #[cfg(all(all(), any(feature = "ext_maintenance6", feature = "version_1_4")))]
 unsafe impl<'a, 'b> ExtendingStructure<PushConstantsInfo<'b>> for PipelineLayoutCreateInfo<'a> {}
-#[cfg(all(all(), any(feature = "ext_maintenance6", feature = "version_1_4")))]
+#[cfg(all(
+    all(),
+    any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    )
+))]
 unsafe impl<'a, 'b> ExtendingStructure<PushDescriptorSetInfo<'b>> for PipelineLayoutCreateInfo<'a> {}
-#[cfg(all(all(), any(feature = "ext_maintenance6", feature = "version_1_4")))]
+#[cfg(all(
+    all(),
+    any(
+        all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+        feature = "version_1_4"
+    )
+))]
 unsafe impl<'a, 'b> ExtendingStructure<PushDescriptorSetWithTemplateInfo<'b>>
     for PipelineLayoutCreateInfo<'a>
 {
 }
-#[cfg(all(all(), feature = "ext_maintenance6"))]
+#[cfg(all(
+    all(),
+    all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer")
+))]
 unsafe impl<'a, 'b> ExtendingStructure<SetDescriptorBufferOffsetsInfoEXT<'b>>
     for PipelineLayoutCreateInfo<'a>
 {
 }
-#[cfg(all(all(), feature = "ext_maintenance6"))]
+#[cfg(all(
+    all(),
+    all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer")
+))]
 unsafe impl<'a, 'b> ExtendingStructure<BindDescriptorBufferEmbeddedSamplersInfoEXT<'b>>
     for PipelineLayoutCreateInfo<'a>
 {
@@ -7862,7 +7880,10 @@ unsafe impl<'a> Sync for MemoryDedicatedRequirements<'a> {}
     any(feature = "ext_dedicated_allocation", feature = "version_1_1"),
     any(
         feature = "ext_get_memory_requirements2",
-        feature = "ext_ray_tracing",
+        all(
+            feature = "ext_ray_tracing",
+            any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+        ),
         feature = "version_1_1"
     )
 ))]
@@ -8043,7 +8064,10 @@ unsafe impl<'a, 'b> ExtendingStructure<RenderPassBeginInfo<'b>>
     any(feature = "ext_device_group", feature = "version_1_1"),
     any(
         feature = "ext_dynamic_rendering",
-        feature = "ext_tile_properties",
+        all(
+            feature = "ext_tile_properties",
+            any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+        ),
         feature = "version_1_3"
     )
 ))]
@@ -8315,7 +8339,10 @@ impl<'a> DeviceGroupBindSparseInfo<'a> {
 }
 #[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
 pub type DeviceGroupBindSparseInfoKHR<'a> = DeviceGroupBindSparseInfo<'a>;
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindBufferMemoryDeviceGroupInfo.html>"]
 #[doc(alias = "VkBindBufferMemoryDeviceGroupInfo")]
@@ -8326,25 +8353,43 @@ pub struct BindBufferMemoryDeviceGroupInfo<'a> {
     pub(crate) p_device_indices: *const u32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 unsafe impl<'a> ExtendableStructureBase for BindBufferMemoryDeviceGroupInfo<'a> {}
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 unsafe impl<'a> ExtendableStructure for BindBufferMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BindBufferMemoryDeviceGroupInfo;
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 unsafe impl<'a> Send for BindBufferMemoryDeviceGroupInfo<'a> {}
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 unsafe impl<'a> Sync for BindBufferMemoryDeviceGroupInfo<'a> {}
 #[cfg(all(
-    any(feature = "ext_device_group", feature = "version_1_1"),
+    any(
+        all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+        feature = "version_1_1"
+    ),
     any(feature = "ext_bind_memory2", feature = "version_1_1")
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<BindBufferMemoryInfo<'b>>
     for BindBufferMemoryDeviceGroupInfo<'a>
 {
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 impl<'a> Default for BindBufferMemoryDeviceGroupInfo<'a> {
     fn default() -> Self {
         Self {
@@ -8356,7 +8401,10 @@ impl<'a> Default for BindBufferMemoryDeviceGroupInfo<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 impl<'a> BindBufferMemoryDeviceGroupInfo<'a> {
     #[inline]
     pub fn device_indices(mut self, p_device_indices: impl AsSlice<'a, u32>) -> Self {
@@ -8378,9 +8426,15 @@ impl<'a> BindBufferMemoryDeviceGroupInfo<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 pub type BindBufferMemoryDeviceGroupInfoKHR<'a> = BindBufferMemoryDeviceGroupInfo<'a>;
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindImageMemoryDeviceGroupInfo.html>"]
 #[doc(alias = "VkBindImageMemoryDeviceGroupInfo")]
@@ -8393,25 +8447,43 @@ pub struct BindImageMemoryDeviceGroupInfo<'a> {
     pub(crate) p_split_instance_bind_regions: *const Rect2D,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 unsafe impl<'a> ExtendableStructureBase for BindImageMemoryDeviceGroupInfo<'a> {}
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 unsafe impl<'a> ExtendableStructure for BindImageMemoryDeviceGroupInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BindImageMemoryDeviceGroupInfo;
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 unsafe impl<'a> Send for BindImageMemoryDeviceGroupInfo<'a> {}
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 unsafe impl<'a> Sync for BindImageMemoryDeviceGroupInfo<'a> {}
 #[cfg(all(
-    any(feature = "ext_device_group", feature = "version_1_1"),
+    any(
+        all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+        feature = "version_1_1"
+    ),
     any(feature = "ext_bind_memory2", feature = "version_1_1")
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<BindImageMemoryInfo<'b>>
     for BindImageMemoryDeviceGroupInfo<'a>
 {
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 impl<'a> Default for BindImageMemoryDeviceGroupInfo<'a> {
     fn default() -> Self {
         Self {
@@ -8425,7 +8497,10 @@ impl<'a> Default for BindImageMemoryDeviceGroupInfo<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 impl<'a> BindImageMemoryDeviceGroupInfo<'a> {
     #[inline]
     pub fn device_indices(mut self, p_device_indices: impl AsSlice<'a, u32>) -> Self {
@@ -8468,7 +8543,10 @@ impl<'a> BindImageMemoryDeviceGroupInfo<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
+#[cfg(any(
+    all(feature = "ext_device_group", feature = "ext_bind_memory2"),
+    feature = "version_1_1"
+))]
 pub type BindImageMemoryDeviceGroupInfoKHR<'a> = BindImageMemoryDeviceGroupInfo<'a>;
 #[cfg(any(feature = "ext_device_group_creation", feature = "version_1_1"))]
 #[repr(C)]
@@ -8730,7 +8808,10 @@ impl<'a> ImageSparseMemoryRequirementsInfo2<'a> {
 pub type ImageSparseMemoryRequirementsInfo2KHR<'a> = ImageSparseMemoryRequirementsInfo2<'a>;
 #[cfg(any(
     feature = "ext_get_memory_requirements2",
-    feature = "ext_ray_tracing",
+    all(
+        feature = "ext_ray_tracing",
+        any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+    ),
     feature = "version_1_1"
 ))]
 #[repr(C)]
@@ -8744,13 +8825,19 @@ pub struct MemoryRequirements2<'a> {
 }
 #[cfg(any(
     feature = "ext_get_memory_requirements2",
-    feature = "ext_ray_tracing",
+    all(
+        feature = "ext_ray_tracing",
+        any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+    ),
     feature = "version_1_1"
 ))]
 unsafe impl<'a> ExtendableStructureBase for MemoryRequirements2<'a> {}
 #[cfg(any(
     feature = "ext_get_memory_requirements2",
-    feature = "ext_ray_tracing",
+    all(
+        feature = "ext_ray_tracing",
+        any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+    ),
     feature = "version_1_1"
 ))]
 unsafe impl<'a> ExtendableStructure for MemoryRequirements2<'a> {
@@ -8758,19 +8845,28 @@ unsafe impl<'a> ExtendableStructure for MemoryRequirements2<'a> {
 }
 #[cfg(any(
     feature = "ext_get_memory_requirements2",
-    feature = "ext_ray_tracing",
+    all(
+        feature = "ext_ray_tracing",
+        any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+    ),
     feature = "version_1_1"
 ))]
 unsafe impl<'a> Send for MemoryRequirements2<'a> {}
 #[cfg(any(
     feature = "ext_get_memory_requirements2",
-    feature = "ext_ray_tracing",
+    all(
+        feature = "ext_ray_tracing",
+        any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+    ),
     feature = "version_1_1"
 ))]
 unsafe impl<'a> Sync for MemoryRequirements2<'a> {}
 #[cfg(any(
     feature = "ext_get_memory_requirements2",
-    feature = "ext_ray_tracing",
+    all(
+        feature = "ext_ray_tracing",
+        any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+    ),
     feature = "version_1_1"
 ))]
 impl<'a> Default for MemoryRequirements2<'a> {
@@ -8785,7 +8881,10 @@ impl<'a> Default for MemoryRequirements2<'a> {
 }
 #[cfg(any(
     feature = "ext_get_memory_requirements2",
-    feature = "ext_ray_tracing",
+    all(
+        feature = "ext_ray_tracing",
+        any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+    ),
     feature = "version_1_1"
 ))]
 impl<'a> MemoryRequirements2<'a> {
@@ -8802,7 +8901,10 @@ impl<'a> MemoryRequirements2<'a> {
 }
 #[cfg(any(
     feature = "ext_get_memory_requirements2",
-    feature = "ext_ray_tracing",
+    all(
+        feature = "ext_ray_tracing",
+        any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+    ),
     feature = "version_1_1"
 ))]
 pub type MemoryRequirements2KHR<'a> = MemoryRequirements2<'a>;
@@ -20323,7 +20425,10 @@ pub type PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT<'a> =
     PhysicalDeviceTextureCompressionASTCHDRFeatures<'a>;
 #[cfg(any(
     feature = "ext_dynamic_rendering",
-    feature = "ext_tile_properties",
+    all(
+        feature = "ext_tile_properties",
+        any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+    ),
     feature = "version_1_3"
 ))]
 #[repr(C)]
@@ -20344,13 +20449,19 @@ pub struct RenderingInfo<'a> {
 }
 #[cfg(any(
     feature = "ext_dynamic_rendering",
-    feature = "ext_tile_properties",
+    all(
+        feature = "ext_tile_properties",
+        any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+    ),
     feature = "version_1_3"
 ))]
 unsafe impl<'a> ExtendableStructureBase for RenderingInfo<'a> {}
 #[cfg(any(
     feature = "ext_dynamic_rendering",
-    feature = "ext_tile_properties",
+    all(
+        feature = "ext_tile_properties",
+        any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+    ),
     feature = "version_1_3"
 ))]
 unsafe impl<'a> ExtendableStructure for RenderingInfo<'a> {
@@ -20358,19 +20469,28 @@ unsafe impl<'a> ExtendableStructure for RenderingInfo<'a> {
 }
 #[cfg(any(
     feature = "ext_dynamic_rendering",
-    feature = "ext_tile_properties",
+    all(
+        feature = "ext_tile_properties",
+        any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+    ),
     feature = "version_1_3"
 ))]
 unsafe impl<'a> Send for RenderingInfo<'a> {}
 #[cfg(any(
     feature = "ext_dynamic_rendering",
-    feature = "ext_tile_properties",
+    all(
+        feature = "ext_tile_properties",
+        any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+    ),
     feature = "version_1_3"
 ))]
 unsafe impl<'a> Sync for RenderingInfo<'a> {}
 #[cfg(any(
     feature = "ext_dynamic_rendering",
-    feature = "ext_tile_properties",
+    all(
+        feature = "ext_tile_properties",
+        any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+    ),
     feature = "version_1_3"
 ))]
 impl<'a> Default for RenderingInfo<'a> {
@@ -20392,7 +20512,10 @@ impl<'a> Default for RenderingInfo<'a> {
 }
 #[cfg(any(
     feature = "ext_dynamic_rendering",
-    feature = "ext_tile_properties",
+    all(
+        feature = "ext_tile_properties",
+        any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+    ),
     feature = "version_1_3"
 ))]
 impl<'a> RenderingInfo<'a> {
@@ -20454,7 +20577,10 @@ impl<'a> RenderingInfo<'a> {
 }
 #[cfg(any(
     feature = "ext_dynamic_rendering",
-    feature = "ext_tile_properties",
+    all(
+        feature = "ext_tile_properties",
+        any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+    ),
     feature = "version_1_3"
 ))]
 pub type RenderingInfoKHR<'a> = RenderingInfo<'a>;
@@ -24323,7 +24449,10 @@ impl<'a> PushConstantsInfo<'a> {
 }
 #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
 pub type PushConstantsInfoKHR<'a> = PushConstantsInfo<'a>;
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPushDescriptorSetInfo.html>"]
 #[doc(alias = "VkPushDescriptorSetInfo")]
@@ -24337,17 +24466,32 @@ pub struct PushDescriptorSetInfo<'a> {
     pub(crate) p_descriptor_writes: *const WriteDescriptorSet<'a>,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 unsafe impl<'a> ExtendableStructureBase for PushDescriptorSetInfo<'a> {}
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 unsafe impl<'a> ExtendableStructure for PushDescriptorSetInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PushDescriptorSetInfo;
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 unsafe impl<'a> Send for PushDescriptorSetInfo<'a> {}
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 unsafe impl<'a> Sync for PushDescriptorSetInfo<'a> {}
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 impl<'a> Default for PushDescriptorSetInfo<'a> {
     fn default() -> Self {
         Self {
@@ -24362,7 +24506,10 @@ impl<'a> Default for PushDescriptorSetInfo<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 impl<'a> PushDescriptorSetInfo<'a> {
     #[inline]
     pub fn stage_flags(mut self, value: ShaderStageFlags) -> Self {
@@ -24405,9 +24552,15 @@ impl<'a> PushDescriptorSetInfo<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 pub type PushDescriptorSetInfoKHR<'a> = PushDescriptorSetInfo<'a>;
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPushDescriptorSetWithTemplateInfo.html>"]
 #[doc(alias = "VkPushDescriptorSetWithTemplateInfo")]
@@ -24420,17 +24573,32 @@ pub struct PushDescriptorSetWithTemplateInfo<'a> {
     pub p_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 unsafe impl<'a> ExtendableStructureBase for PushDescriptorSetWithTemplateInfo<'a> {}
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 unsafe impl<'a> ExtendableStructure for PushDescriptorSetWithTemplateInfo<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::PushDescriptorSetWithTemplateInfo;
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 unsafe impl<'a> Send for PushDescriptorSetWithTemplateInfo<'a> {}
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 unsafe impl<'a> Sync for PushDescriptorSetWithTemplateInfo<'a> {}
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 impl<'a> Default for PushDescriptorSetWithTemplateInfo<'a> {
     fn default() -> Self {
         Self {
@@ -24444,7 +24612,10 @@ impl<'a> Default for PushDescriptorSetWithTemplateInfo<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 impl<'a> PushDescriptorSetWithTemplateInfo<'a> {
     #[inline]
     pub fn descriptor_update_template(mut self, value: &'a raw::DescriptorUpdateTemplate) -> Self {
@@ -24472,7 +24643,10 @@ impl<'a> PushDescriptorSetWithTemplateInfo<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 pub type PushDescriptorSetWithTemplateInfoKHR<'a> = PushDescriptorSetWithTemplateInfo<'a>;
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineProtectedAccessFeatures.html>"]
@@ -25941,7 +26115,10 @@ impl<'a> PresentInfoKHR<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageSwapchainCreateInfoKHR.html>"]
 #[doc(alias = "VkImageSwapchainCreateInfoKHR")]
@@ -25951,19 +26128,37 @@ pub struct ImageSwapchainCreateInfoKHR<'a> {
     pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructureBase for ImageSwapchainCreateInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructure for ImageSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ImageSwapchainCreateInfoKHR;
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Send for ImageSwapchainCreateInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Sync for ImageSwapchainCreateInfoKHR<'a> {}
-#[cfg(all(any(feature = "ext_swapchain", feature = "ext_device_group"),))]
+#[cfg(all(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+),))]
 unsafe impl<'a, 'b> ExtendingStructure<ImageCreateInfo<'b>> for ImageSwapchainCreateInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> Default for ImageSwapchainCreateInfoKHR<'a> {
     fn default() -> Self {
         Self {
@@ -25974,7 +26169,10 @@ impl<'a> Default for ImageSwapchainCreateInfoKHR<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> ImageSwapchainCreateInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, value: Option<&'a raw::SwapchainKHR>) -> Self {
@@ -25987,7 +26185,10 @@ impl<'a> ImageSwapchainCreateInfoKHR<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindImageMemorySwapchainInfoKHR.html>"]
 #[doc(alias = "VkBindImageMemorySwapchainInfoKHR")]
@@ -25998,25 +26199,43 @@ pub struct BindImageMemorySwapchainInfoKHR<'a> {
     pub image_index: u32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructureBase for BindImageMemorySwapchainInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructure for BindImageMemorySwapchainInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::BindImageMemorySwapchainInfoKHR;
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Send for BindImageMemorySwapchainInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Sync for BindImageMemorySwapchainInfoKHR<'a> {}
 #[cfg(all(
-    any(feature = "ext_swapchain", feature = "ext_device_group"),
+    any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_swapchain")
+    ),
     any(feature = "ext_bind_memory2", feature = "version_1_1")
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<BindImageMemoryInfo<'b>>
     for BindImageMemorySwapchainInfoKHR<'a>
 {
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> Default for BindImageMemorySwapchainInfoKHR<'a> {
     fn default() -> Self {
         Self {
@@ -26028,7 +26247,10 @@ impl<'a> Default for BindImageMemorySwapchainInfoKHR<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, value: &'a raw::SwapchainKHR) -> Self {
@@ -26046,7 +26268,10 @@ impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAcquireNextImageInfoKHR.html>"]
 #[doc(alias = "VkAcquireNextImageInfoKHR")]
@@ -26060,17 +26285,32 @@ pub struct AcquireNextImageInfoKHR<'a> {
     pub device_mask: u32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructureBase for AcquireNextImageInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructure for AcquireNextImageInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::AcquireNextImageInfoKHR;
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Send for AcquireNextImageInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Sync for AcquireNextImageInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> Default for AcquireNextImageInfoKHR<'a> {
     fn default() -> Self {
         Self {
@@ -26085,7 +26325,10 @@ impl<'a> Default for AcquireNextImageInfoKHR<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> AcquireNextImageInfoKHR<'a> {
     #[inline]
     pub fn swapchain(mut self, value: &'a raw::SwapchainKHR) -> Self {
@@ -26118,7 +26361,10 @@ impl<'a> AcquireNextImageInfoKHR<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupPresentCapabilitiesKHR.html>"]
 #[doc(alias = "VkDeviceGroupPresentCapabilitiesKHR")]
@@ -26129,17 +26375,32 @@ pub struct DeviceGroupPresentCapabilitiesKHR<'a> {
     pub modes: DeviceGroupPresentModeFlagsKHR,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 unsafe impl<'a> ExtendableStructureBase for DeviceGroupPresentCapabilitiesKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 unsafe impl<'a> ExtendableStructure for DeviceGroupPresentCapabilitiesKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DeviceGroupPresentCapabilitiesKHR;
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 unsafe impl<'a> Send for DeviceGroupPresentCapabilitiesKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 unsafe impl<'a> Sync for DeviceGroupPresentCapabilitiesKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 impl<'a> Default for DeviceGroupPresentCapabilitiesKHR<'a> {
     fn default() -> Self {
         Self {
@@ -26151,7 +26412,10 @@ impl<'a> Default for DeviceGroupPresentCapabilitiesKHR<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {
     #[inline]
     pub fn present_mask(mut self, value: [u32; MAX_DEVICE_GROUP_SIZE as _]) -> Self {
@@ -26169,7 +26433,10 @@ impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupPresentInfoKHR.html>"]
 #[doc(alias = "VkDeviceGroupPresentInfoKHR")]
@@ -26181,22 +26448,40 @@ pub struct DeviceGroupPresentInfoKHR<'a> {
     pub mode: DeviceGroupPresentModeFlagsKHR,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructureBase for DeviceGroupPresentInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructure for DeviceGroupPresentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DeviceGroupPresentInfoKHR;
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Send for DeviceGroupPresentInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Sync for DeviceGroupPresentInfoKHR<'a> {}
 #[cfg(all(
-    any(feature = "ext_swapchain", feature = "ext_device_group"),
+    any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_swapchain")
+    ),
     feature = "ext_swapchain"
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<PresentInfoKHR<'b>> for DeviceGroupPresentInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> Default for DeviceGroupPresentInfoKHR<'a> {
     fn default() -> Self {
         Self {
@@ -26209,7 +26494,10 @@ impl<'a> Default for DeviceGroupPresentInfoKHR<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> DeviceGroupPresentInfoKHR<'a> {
     #[inline]
     pub fn mode(mut self, value: DeviceGroupPresentModeFlagsKHR) -> Self {
@@ -26236,7 +26524,10 @@ impl<'a> DeviceGroupPresentInfoKHR<'a> {
         self
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupSwapchainCreateInfoKHR.html>"]
 #[doc(alias = "VkDeviceGroupSwapchainCreateInfoKHR")]
@@ -26246,25 +26537,43 @@ pub struct DeviceGroupSwapchainCreateInfoKHR<'a> {
     pub modes: DeviceGroupPresentModeFlagsKHR,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructureBase for DeviceGroupSwapchainCreateInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> ExtendableStructure for DeviceGroupSwapchainCreateInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DeviceGroupSwapchainCreateInfoKHR;
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Send for DeviceGroupSwapchainCreateInfoKHR<'a> {}
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 unsafe impl<'a> Sync for DeviceGroupSwapchainCreateInfoKHR<'a> {}
 #[cfg(all(
-    any(feature = "ext_swapchain", feature = "ext_device_group"),
+    any(
+        all(feature = "ext_swapchain", feature = "version_1_1"),
+        all(feature = "ext_device_group", feature = "ext_swapchain")
+    ),
     feature = "ext_swapchain"
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<SwapchainCreateInfoKHR<'b>>
     for DeviceGroupSwapchainCreateInfoKHR<'a>
 {
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> Default for DeviceGroupSwapchainCreateInfoKHR<'a> {
     fn default() -> Self {
         Self {
@@ -26275,7 +26584,10 @@ impl<'a> Default for DeviceGroupSwapchainCreateInfoKHR<'a> {
         }
     }
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 impl<'a> DeviceGroupSwapchainCreateInfoKHR<'a> {
     #[inline]
     pub fn modes(mut self, value: DeviceGroupPresentModeFlagsKHR) -> Self {
@@ -30878,7 +31190,10 @@ impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
         self
     }
 }
-#[cfg(feature = "ext_multiview_per_view_attributes")]
+#[cfg(all(
+    feature = "ext_multiview_per_view_attributes",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMultiviewPerViewAttributesInfoNVX.html>"]
 #[doc(alias = "VkMultiviewPerViewAttributesInfoNVX")]
@@ -30889,31 +31204,55 @@ pub struct MultiviewPerViewAttributesInfoNVX<'a> {
     pub per_view_attributes_position_xonly: Bool32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_multiview_per_view_attributes")]
+#[cfg(all(
+    feature = "ext_multiview_per_view_attributes",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 unsafe impl<'a> ExtendableStructureBase for MultiviewPerViewAttributesInfoNVX<'a> {}
-#[cfg(feature = "ext_multiview_per_view_attributes")]
+#[cfg(all(
+    feature = "ext_multiview_per_view_attributes",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 unsafe impl<'a> ExtendableStructure for MultiviewPerViewAttributesInfoNVX<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MultiviewPerViewAttributesInfoNVX;
 }
-#[cfg(feature = "ext_multiview_per_view_attributes")]
+#[cfg(all(
+    feature = "ext_multiview_per_view_attributes",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 unsafe impl<'a> Send for MultiviewPerViewAttributesInfoNVX<'a> {}
-#[cfg(feature = "ext_multiview_per_view_attributes")]
+#[cfg(all(
+    feature = "ext_multiview_per_view_attributes",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 unsafe impl<'a> Sync for MultiviewPerViewAttributesInfoNVX<'a> {}
-#[cfg(all(feature = "ext_multiview_per_view_attributes",))]
+#[cfg(all(all(
+    feature = "ext_multiview_per_view_attributes",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+),))]
 unsafe impl<'a, 'b> ExtendingStructure<CommandBufferInheritanceInfo<'b>>
     for MultiviewPerViewAttributesInfoNVX<'a>
 {
 }
-#[cfg(all(feature = "ext_multiview_per_view_attributes",))]
+#[cfg(all(all(
+    feature = "ext_multiview_per_view_attributes",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+),))]
 unsafe impl<'a, 'b> ExtendingStructure<GraphicsPipelineCreateInfo<'b>>
     for MultiviewPerViewAttributesInfoNVX<'a>
 {
 }
 #[cfg(all(
-    feature = "ext_multiview_per_view_attributes",
+    all(
+        feature = "ext_multiview_per_view_attributes",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
     any(
         feature = "ext_dynamic_rendering",
-        feature = "ext_tile_properties",
+        all(
+            feature = "ext_tile_properties",
+            any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+        ),
         feature = "version_1_3"
     )
 ))]
@@ -30921,7 +31260,10 @@ unsafe impl<'a, 'b> ExtendingStructure<RenderingInfo<'b>>
     for MultiviewPerViewAttributesInfoNVX<'a>
 {
 }
-#[cfg(feature = "ext_multiview_per_view_attributes")]
+#[cfg(all(
+    feature = "ext_multiview_per_view_attributes",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 impl<'a> Default for MultiviewPerViewAttributesInfoNVX<'a> {
     fn default() -> Self {
         Self {
@@ -30933,7 +31275,10 @@ impl<'a> Default for MultiviewPerViewAttributesInfoNVX<'a> {
         }
     }
 }
-#[cfg(feature = "ext_multiview_per_view_attributes")]
+#[cfg(all(
+    feature = "ext_multiview_per_view_attributes",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 impl<'a> MultiviewPerViewAttributesInfoNVX<'a> {
     #[inline]
     pub fn per_view_attributes(mut self, value: impl Into<Bool32>) -> Self {
@@ -33771,7 +34116,10 @@ impl<'a> ExternalFormatANDROID<'a> {
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/AHardwareBuffer.html>"]
 pub type AHardwareBuffer = c_void;
-#[cfg(feature = "ext_external_memory_android_hardware_buffer")]
+#[cfg(all(
+    feature = "ext_external_memory_android_hardware_buffer",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAndroidHardwareBufferFormatProperties2ANDROID.html>"]
 #[doc(alias = "VkAndroidHardwareBufferFormatProperties2ANDROID")]
@@ -33788,26 +34136,44 @@ pub struct AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     pub suggested_ychroma_offset: ChromaLocation,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_external_memory_android_hardware_buffer")]
+#[cfg(all(
+    feature = "ext_external_memory_android_hardware_buffer",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 unsafe impl<'a> ExtendableStructureBase for AndroidHardwareBufferFormatProperties2ANDROID<'a> {}
-#[cfg(feature = "ext_external_memory_android_hardware_buffer")]
+#[cfg(all(
+    feature = "ext_external_memory_android_hardware_buffer",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 unsafe impl<'a> ExtendableStructure for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::AndroidHardwareBufferFormatProperties2ANDROID;
 }
-#[cfg(feature = "ext_external_memory_android_hardware_buffer")]
-unsafe impl<'a> Send for AndroidHardwareBufferFormatProperties2ANDROID<'a> {}
-#[cfg(feature = "ext_external_memory_android_hardware_buffer")]
-unsafe impl<'a> Sync for AndroidHardwareBufferFormatProperties2ANDROID<'a> {}
 #[cfg(all(
     feature = "ext_external_memory_android_hardware_buffer",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
+unsafe impl<'a> Send for AndroidHardwareBufferFormatProperties2ANDROID<'a> {}
+#[cfg(all(
+    feature = "ext_external_memory_android_hardware_buffer",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
+unsafe impl<'a> Sync for AndroidHardwareBufferFormatProperties2ANDROID<'a> {}
+#[cfg(all(
+    all(
+        feature = "ext_external_memory_android_hardware_buffer",
+        any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+    ),
     feature = "ext_external_memory_android_hardware_buffer"
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<AndroidHardwareBufferPropertiesANDROID<'b>>
     for AndroidHardwareBufferFormatProperties2ANDROID<'a>
 {
 }
-#[cfg(feature = "ext_external_memory_android_hardware_buffer")]
+#[cfg(all(
+    feature = "ext_external_memory_android_hardware_buffer",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 impl<'a> Default for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     fn default() -> Self {
         Self {
@@ -33825,7 +34191,10 @@ impl<'a> Default for AndroidHardwareBufferFormatProperties2ANDROID<'a> {
         }
     }
 }
-#[cfg(feature = "ext_external_memory_android_hardware_buffer")]
+#[cfg(all(
+    feature = "ext_external_memory_android_hardware_buffer",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     #[inline]
     pub fn format(mut self, value: Format) -> Self {
@@ -34353,8 +34722,14 @@ impl Default for DeviceOrHostAddressConstAMDX {
     }
 }
 #[cfg(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAttachmentSampleCountInfoAMD.html>"]
@@ -34368,46 +34743,88 @@ pub struct AttachmentSampleCountInfoAMD<'a> {
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ))]
 unsafe impl<'a> ExtendableStructureBase for AttachmentSampleCountInfoAMD<'a> {}
 #[cfg(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ))]
 unsafe impl<'a> ExtendableStructure for AttachmentSampleCountInfoAMD<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::AttachmentSampleCountInfoAMD;
 }
 #[cfg(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ))]
 unsafe impl<'a> Send for AttachmentSampleCountInfoAMD<'a> {}
 #[cfg(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ))]
 unsafe impl<'a> Sync for AttachmentSampleCountInfoAMD<'a> {}
 #[cfg(all(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ),))]
 unsafe impl<'a, 'b> ExtendingStructure<CommandBufferInheritanceInfo<'b>>
     for AttachmentSampleCountInfoAMD<'a>
 {
 }
 #[cfg(all(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ),))]
 unsafe impl<'a, 'b> ExtendingStructure<GraphicsPipelineCreateInfo<'b>>
     for AttachmentSampleCountInfoAMD<'a>
 {
 }
 #[cfg(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ))]
 impl<'a> Default for AttachmentSampleCountInfoAMD<'a> {
     fn default() -> Self {
@@ -34422,8 +34839,14 @@ impl<'a> Default for AttachmentSampleCountInfoAMD<'a> {
     }
 }
 #[cfg(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ))]
 impl<'a> AttachmentSampleCountInfoAMD<'a> {
     #[inline]
@@ -34463,8 +34886,14 @@ impl<'a> AttachmentSampleCountInfoAMD<'a> {
     }
 }
 #[cfg(any(
-    feature = "ext_mixed_attachment_samples",
-    feature = "ext_framebuffer_mixed_samples"
+    all(
+        feature = "ext_mixed_attachment_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
+    all(
+        feature = "ext_framebuffer_mixed_samples",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    )
 ))]
 pub type AttachmentSampleCountInfoNV<'a> = AttachmentSampleCountInfoAMD<'a>;
 #[repr(C)]
@@ -37782,7 +38211,10 @@ impl<'a> ImageDrmFormatModifierPropertiesEXT<'a> {
         self
     }
 }
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDrmFormatModifierPropertiesList2EXT.html>"]
 #[doc(alias = "VkDrmFormatModifierPropertiesList2EXT")]
@@ -37793,18 +38225,33 @@ pub struct DrmFormatModifierPropertiesList2EXT<'a> {
     pub(crate) p_drm_format_modifier_properties: *const DrmFormatModifierProperties2EXT,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 unsafe impl<'a> ExtendableStructureBase for DrmFormatModifierPropertiesList2EXT<'a> {}
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 unsafe impl<'a> ExtendableStructure for DrmFormatModifierPropertiesList2EXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DrmFormatModifierPropertiesList2EXT;
 }
-#[cfg(feature = "ext_image_drm_format_modifier")]
-unsafe impl<'a> Send for DrmFormatModifierPropertiesList2EXT<'a> {}
-#[cfg(feature = "ext_image_drm_format_modifier")]
-unsafe impl<'a> Sync for DrmFormatModifierPropertiesList2EXT<'a> {}
 #[cfg(all(
     feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
+unsafe impl<'a> Send for DrmFormatModifierPropertiesList2EXT<'a> {}
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
+unsafe impl<'a> Sync for DrmFormatModifierPropertiesList2EXT<'a> {}
+#[cfg(all(
+    all(
+        feature = "ext_image_drm_format_modifier",
+        any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+    ),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -37814,7 +38261,10 @@ unsafe impl<'a, 'b> ExtendingStructure<FormatProperties2<'b>>
     for DrmFormatModifierPropertiesList2EXT<'a>
 {
 }
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 impl<'a> Default for DrmFormatModifierPropertiesList2EXT<'a> {
     fn default() -> Self {
         Self {
@@ -37826,7 +38276,10 @@ impl<'a> Default for DrmFormatModifierPropertiesList2EXT<'a> {
         }
     }
 }
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {
     #[inline]
     pub fn drm_format_modifier_count(mut self, value: u32) -> Self {
@@ -37850,7 +38303,10 @@ impl<'a> DrmFormatModifierPropertiesList2EXT<'a> {
         self
     }
 }
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDrmFormatModifierProperties2EXT.html>"]
@@ -37860,11 +38316,20 @@ pub struct DrmFormatModifierProperties2EXT {
     pub drm_format_modifier_plane_count: u32,
     pub drm_format_modifier_tiling_features: FormatFeatureFlags2,
 }
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 unsafe impl Send for DrmFormatModifierProperties2EXT {}
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 unsafe impl Sync for DrmFormatModifierProperties2EXT {}
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 impl Default for DrmFormatModifierProperties2EXT {
     fn default() -> Self {
         Self {
@@ -37874,7 +38339,10 @@ impl Default for DrmFormatModifierProperties2EXT {
         }
     }
 }
-#[cfg(feature = "ext_image_drm_format_modifier")]
+#[cfg(all(
+    feature = "ext_image_drm_format_modifier",
+    any(feature = "ext_format_feature_flags2", feature = "version_1_3")
+))]
 impl DrmFormatModifierProperties2EXT {
     #[inline]
     pub fn drm_format_modifier(mut self, value: u64) -> Self {
@@ -40864,7 +41332,10 @@ impl<'a> CheckpointDataNV<'a> {
         self
     }
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueueFamilyCheckpointProperties2NV.html>"]
 #[doc(alias = "VkQueueFamilyCheckpointProperties2NV")]
@@ -40874,18 +41345,33 @@ pub struct QueueFamilyCheckpointProperties2NV<'a> {
     pub checkpoint_execution_stage_mask: PipelineStageFlags2,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 unsafe impl<'a> ExtendableStructureBase for QueueFamilyCheckpointProperties2NV<'a> {}
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 unsafe impl<'a> ExtendableStructure for QueueFamilyCheckpointProperties2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::QueueFamilyCheckpointProperties2NV;
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
-unsafe impl<'a> Send for QueueFamilyCheckpointProperties2NV<'a> {}
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
-unsafe impl<'a> Sync for QueueFamilyCheckpointProperties2NV<'a> {}
 #[cfg(all(
     feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
+unsafe impl<'a> Send for QueueFamilyCheckpointProperties2NV<'a> {}
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
+unsafe impl<'a> Sync for QueueFamilyCheckpointProperties2NV<'a> {}
+#[cfg(all(
+    all(
+        feature = "ext_device_diagnostic_checkpoints",
+        any(feature = "version_1_3", feature = "ext_synchronization2")
+    ),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -40895,7 +41381,10 @@ unsafe impl<'a, 'b> ExtendingStructure<QueueFamilyProperties2<'b>>
     for QueueFamilyCheckpointProperties2NV<'a>
 {
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 impl<'a> Default for QueueFamilyCheckpointProperties2NV<'a> {
     fn default() -> Self {
         Self {
@@ -40906,7 +41395,10 @@ impl<'a> Default for QueueFamilyCheckpointProperties2NV<'a> {
         }
     }
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 impl<'a> QueueFamilyCheckpointProperties2NV<'a> {
     #[inline]
     pub fn checkpoint_execution_stage_mask(mut self, value: PipelineStageFlags2) -> Self {
@@ -40919,7 +41411,10 @@ impl<'a> QueueFamilyCheckpointProperties2NV<'a> {
         self
     }
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCheckpointData2NV.html>"]
 #[doc(alias = "VkCheckpointData2NV")]
@@ -40930,17 +41425,32 @@ pub struct CheckpointData2NV<'a> {
     pub p_checkpoint_marker: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 unsafe impl<'a> ExtendableStructureBase for CheckpointData2NV<'a> {}
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 unsafe impl<'a> ExtendableStructure for CheckpointData2NV<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::CheckpointData2NV;
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 unsafe impl<'a> Send for CheckpointData2NV<'a> {}
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 unsafe impl<'a> Sync for CheckpointData2NV<'a> {}
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 impl<'a> Default for CheckpointData2NV<'a> {
     fn default() -> Self {
         Self {
@@ -40952,7 +41462,10 @@ impl<'a> Default for CheckpointData2NV<'a> {
         }
     }
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 impl<'a> CheckpointData2NV<'a> {
     #[inline]
     pub fn stage(mut self, value: PipelineStageFlags2) -> Self {
@@ -41840,7 +42353,10 @@ impl<'a> RenderPassFragmentDensityMapCreateInfoEXT<'a> {
         self
     }
 }
-#[cfg(feature = "ext_fragment_density_map")]
+#[cfg(all(
+    feature = "ext_fragment_density_map",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingFragmentDensityMapAttachmentInfoEXT.html>"]
 #[doc(alias = "VkRenderingFragmentDensityMapAttachmentInfoEXT")]
@@ -41851,22 +42367,40 @@ pub struct RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     pub image_layout: ImageLayout,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_fragment_density_map")]
+#[cfg(all(
+    feature = "ext_fragment_density_map",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 unsafe impl<'a> ExtendableStructureBase for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {}
-#[cfg(feature = "ext_fragment_density_map")]
+#[cfg(all(
+    feature = "ext_fragment_density_map",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 unsafe impl<'a> ExtendableStructure for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RenderingFragmentDensityMapAttachmentInfoEXT;
 }
-#[cfg(feature = "ext_fragment_density_map")]
-unsafe impl<'a> Send for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {}
-#[cfg(feature = "ext_fragment_density_map")]
-unsafe impl<'a> Sync for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {}
 #[cfg(all(
     feature = "ext_fragment_density_map",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
+unsafe impl<'a> Send for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {}
+#[cfg(all(
+    feature = "ext_fragment_density_map",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
+unsafe impl<'a> Sync for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {}
+#[cfg(all(
+    all(
+        feature = "ext_fragment_density_map",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
     any(
         feature = "ext_dynamic_rendering",
-        feature = "ext_tile_properties",
+        all(
+            feature = "ext_tile_properties",
+            any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+        ),
         feature = "version_1_3"
     )
 ))]
@@ -41874,7 +42408,10 @@ unsafe impl<'a, 'b> ExtendingStructure<RenderingInfo<'b>>
     for RenderingFragmentDensityMapAttachmentInfoEXT<'a>
 {
 }
-#[cfg(feature = "ext_fragment_density_map")]
+#[cfg(all(
+    feature = "ext_fragment_density_map",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 impl<'a> Default for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     fn default() -> Self {
         Self {
@@ -41886,7 +42423,10 @@ impl<'a> Default for RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
         }
     }
 }
-#[cfg(feature = "ext_fragment_density_map")]
+#[cfg(all(
+    feature = "ext_fragment_density_map",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 impl<'a> RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     #[inline]
     pub fn image_view(mut self, value: &'a raw::ImageView) -> Self {
@@ -42348,7 +42888,10 @@ impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {
         self
     }
 }
-#[cfg(feature = "ext_fragment_shading_rate")]
+#[cfg(all(
+    feature = "ext_fragment_shading_rate",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingFragmentShadingRateAttachmentInfoKHR.html>"]
 #[doc(alias = "VkRenderingFragmentShadingRateAttachmentInfoKHR")]
@@ -42360,22 +42903,40 @@ pub struct RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     pub shading_rate_attachment_texel_size: Extent2D,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_fragment_shading_rate")]
+#[cfg(all(
+    feature = "ext_fragment_shading_rate",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 unsafe impl<'a> ExtendableStructureBase for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {}
-#[cfg(feature = "ext_fragment_shading_rate")]
+#[cfg(all(
+    feature = "ext_fragment_shading_rate",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 unsafe impl<'a> ExtendableStructure for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RenderingFragmentShadingRateAttachmentInfoKHR;
 }
-#[cfg(feature = "ext_fragment_shading_rate")]
-unsafe impl<'a> Send for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {}
-#[cfg(feature = "ext_fragment_shading_rate")]
-unsafe impl<'a> Sync for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {}
 #[cfg(all(
     feature = "ext_fragment_shading_rate",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
+unsafe impl<'a> Send for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {}
+#[cfg(all(
+    feature = "ext_fragment_shading_rate",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
+unsafe impl<'a> Sync for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {}
+#[cfg(all(
+    all(
+        feature = "ext_fragment_shading_rate",
+        any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+    ),
     any(
         feature = "ext_dynamic_rendering",
-        feature = "ext_tile_properties",
+        all(
+            feature = "ext_tile_properties",
+            any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+        ),
         feature = "version_1_3"
     )
 ))]
@@ -42383,7 +42944,10 @@ unsafe impl<'a, 'b> ExtendingStructure<RenderingInfo<'b>>
     for RenderingFragmentShadingRateAttachmentInfoKHR<'a>
 {
 }
-#[cfg(feature = "ext_fragment_shading_rate")]
+#[cfg(all(
+    feature = "ext_fragment_shading_rate",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 impl<'a> Default for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     fn default() -> Self {
         Self {
@@ -42396,7 +42960,10 @@ impl<'a> Default for RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
         }
     }
 }
-#[cfg(feature = "ext_fragment_shading_rate")]
+#[cfg(all(
+    feature = "ext_fragment_shading_rate",
+    any(feature = "version_1_3", feature = "ext_dynamic_rendering")
+))]
 impl<'a> RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     #[inline]
     pub fn image_view(mut self, value: Option<&'a raw::ImageView>) -> Self {
@@ -44020,7 +44587,7 @@ impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
         self
     }
 }
-#[cfg(feature = "ext_full_screen_exclusive")]
+#[cfg(all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceFullScreenExclusiveWin32InfoEXT.html>"]
 #[doc(alias = "VkSurfaceFullScreenExclusiveWin32InfoEXT")]
@@ -44030,30 +44597,33 @@ pub struct SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     pub hmonitor: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_full_screen_exclusive")]
+#[cfg(all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"))]
 unsafe impl<'a> ExtendableStructureBase for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {}
-#[cfg(feature = "ext_full_screen_exclusive")]
+#[cfg(all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"))]
 unsafe impl<'a> ExtendableStructure for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SurfaceFullScreenExclusiveWin32InfoEXT;
 }
-#[cfg(feature = "ext_full_screen_exclusive")]
+#[cfg(all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"))]
 unsafe impl<'a> Send for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {}
-#[cfg(feature = "ext_full_screen_exclusive")]
+#[cfg(all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"))]
 unsafe impl<'a> Sync for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {}
 #[cfg(all(
-    feature = "ext_full_screen_exclusive",
+    all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"),
     feature = "ext_get_surface_capabilities2"
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceSurfaceInfo2KHR<'b>>
     for SurfaceFullScreenExclusiveWin32InfoEXT<'a>
 {
 }
-#[cfg(all(feature = "ext_full_screen_exclusive", feature = "ext_swapchain"))]
+#[cfg(all(
+    all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"),
+    feature = "ext_swapchain"
+))]
 unsafe impl<'a, 'b> ExtendingStructure<SwapchainCreateInfoKHR<'b>>
     for SurfaceFullScreenExclusiveWin32InfoEXT<'a>
 {
 }
-#[cfg(feature = "ext_full_screen_exclusive")]
+#[cfg(all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"))]
 impl<'a> Default for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     fn default() -> Self {
         Self {
@@ -44064,7 +44634,7 @@ impl<'a> Default for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
         }
     }
 }
-#[cfg(feature = "ext_full_screen_exclusive")]
+#[cfg(all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"))]
 impl<'a> SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     #[inline]
     pub fn hmonitor(mut self, value: VoidPtr) -> Self {
@@ -47929,7 +48499,10 @@ unsafe impl<'a, 'b> ExtendingStructure<RenderPassCreateInfo2<'b>>
     feature = "ext_tile_shading",
     any(
         feature = "ext_dynamic_rendering",
-        feature = "ext_tile_properties",
+        all(
+            feature = "ext_tile_properties",
+            any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+        ),
         feature = "version_1_3"
     )
 ))]
@@ -49733,7 +50306,10 @@ impl<'a> OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
         self
     }
 }
-#[cfg(feature = "ext_descriptor_buffer")]
+#[cfg(all(
+    feature = "ext_descriptor_buffer",
+    any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureCaptureDescriptorDataInfoEXT.html>"]
 #[doc(alias = "VkAccelerationStructureCaptureDescriptorDataInfoEXT")]
@@ -49744,18 +50320,33 @@ pub struct AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     pub acceleration_structure_nv: Option<BorrowedHandle<'a, AccelerationStructureNV>>,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_descriptor_buffer")]
+#[cfg(all(
+    feature = "ext_descriptor_buffer",
+    any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+))]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {}
-#[cfg(feature = "ext_descriptor_buffer")]
+#[cfg(all(
+    feature = "ext_descriptor_buffer",
+    any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+))]
 unsafe impl<'a> ExtendableStructure for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::AccelerationStructureCaptureDescriptorDataInfoEXT;
 }
-#[cfg(feature = "ext_descriptor_buffer")]
+#[cfg(all(
+    feature = "ext_descriptor_buffer",
+    any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+))]
 unsafe impl<'a> Send for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {}
-#[cfg(feature = "ext_descriptor_buffer")]
+#[cfg(all(
+    feature = "ext_descriptor_buffer",
+    any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+))]
 unsafe impl<'a> Sync for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {}
-#[cfg(feature = "ext_descriptor_buffer")]
+#[cfg(all(
+    feature = "ext_descriptor_buffer",
+    any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+))]
 impl<'a> Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     fn default() -> Self {
         Self {
@@ -49767,7 +50358,10 @@ impl<'a> Default for AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
         }
     }
 }
-#[cfg(feature = "ext_descriptor_buffer")]
+#[cfg(all(
+    feature = "ext_descriptor_buffer",
+    any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+))]
 impl<'a> AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     #[inline]
     pub fn acceleration_structure(
@@ -54806,7 +55400,10 @@ unsafe impl<'a, 'b> ExtendingStructure<SubpassDescription2<'b>>
     feature = "ext_multisampled_render_to_single_sampled",
     any(
         feature = "ext_dynamic_rendering",
-        feature = "ext_tile_properties",
+        all(
+            feature = "ext_tile_properties",
+            any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+        ),
         feature = "version_1_3"
     )
 ))]
@@ -55248,7 +55845,10 @@ impl<'a> PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
         self
     }
 }
-#[cfg(feature = "ext_ray_tracing_maintenance1")]
+#[cfg(all(
+    feature = "ext_ray_tracing_maintenance1",
+    feature = "ext_ray_tracing_pipeline"
+))]
 #[repr(C)]
 #[derive(Clone, Copy)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTraceRaysIndirectCommand2KHR.html>"]
@@ -55269,11 +55869,20 @@ pub struct TraceRaysIndirectCommand2KHR {
     pub height: u32,
     pub depth: u32,
 }
-#[cfg(feature = "ext_ray_tracing_maintenance1")]
+#[cfg(all(
+    feature = "ext_ray_tracing_maintenance1",
+    feature = "ext_ray_tracing_pipeline"
+))]
 unsafe impl Send for TraceRaysIndirectCommand2KHR {}
-#[cfg(feature = "ext_ray_tracing_maintenance1")]
+#[cfg(all(
+    feature = "ext_ray_tracing_maintenance1",
+    feature = "ext_ray_tracing_pipeline"
+))]
 unsafe impl Sync for TraceRaysIndirectCommand2KHR {}
-#[cfg(feature = "ext_ray_tracing_maintenance1")]
+#[cfg(all(
+    feature = "ext_ray_tracing_maintenance1",
+    feature = "ext_ray_tracing_pipeline"
+))]
 impl Default for TraceRaysIndirectCommand2KHR {
     fn default() -> Self {
         Self {
@@ -55294,7 +55903,10 @@ impl Default for TraceRaysIndirectCommand2KHR {
         }
     }
 }
-#[cfg(feature = "ext_ray_tracing_maintenance1")]
+#[cfg(all(
+    feature = "ext_ray_tracing_maintenance1",
+    feature = "ext_ray_tracing_pipeline"
+))]
 impl TraceRaysIndirectCommand2KHR {
     #[inline]
     pub fn raygen_shader_record_address(mut self, value: DeviceAddress) -> Self {
@@ -58124,7 +58736,10 @@ unsafe impl<'a> Sync for RenderPassStripeBeginInfoARM<'a> {}
     feature = "ext_render_pass_striped",
     any(
         feature = "ext_dynamic_rendering",
-        feature = "ext_tile_properties",
+        all(
+            feature = "ext_tile_properties",
+            any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+        ),
         feature = "version_1_3"
     )
 ))]
@@ -61976,7 +62591,7 @@ impl<'a> ExternalMemoryTensorCreateInfoARM<'a> {
         self
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorBufferTensorFeaturesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorBufferTensorFeaturesARM")]
@@ -61986,19 +62601,19 @@ pub struct PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
     pub descriptor_buffer_tensor_descriptors: Bool32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PhysicalDeviceDescriptorBufferTensorFeaturesARM;
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Send for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Sync for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {}
 #[cfg(all(
-    feature = "ext_tensors",
+    all(feature = "ext_tensors", feature = "ext_descriptor_buffer"),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -62008,12 +62623,12 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceFeatures2<'b>>
     for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a>
 {
 }
-#[cfg(all(feature = "ext_tensors",))]
+#[cfg(all(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"),))]
 unsafe impl<'a, 'b> ExtendingStructure<DeviceCreateInfo<'b>>
     for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a>
 {
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> Default for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
     fn default() -> Self {
         Self {
@@ -62024,7 +62639,7 @@ impl<'a> Default for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
         }
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
     #[inline]
     pub fn descriptor_buffer_tensor_descriptors(mut self, value: impl Into<Bool32>) -> Self {
@@ -62037,7 +62652,7 @@ impl<'a> PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
         self
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorBufferTensorPropertiesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorBufferTensorPropertiesARM")]
@@ -62049,19 +62664,19 @@ pub struct PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
     pub tensor_descriptor_size: usize,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::PhysicalDeviceDescriptorBufferTensorPropertiesARM;
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Send for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Sync for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {}
 #[cfg(all(
-    feature = "ext_tensors",
+    all(feature = "ext_tensors", feature = "ext_descriptor_buffer"),
     any(
         feature = "ext_get_physical_device_properties2",
         feature = "version_1_1"
@@ -62071,7 +62686,7 @@ unsafe impl<'a, 'b> ExtendingStructure<PhysicalDeviceProperties2<'b>>
     for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a>
 {
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> Default for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
     fn default() -> Self {
         Self {
@@ -62084,7 +62699,7 @@ impl<'a> Default for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
         }
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
     #[inline]
     pub fn tensor_capture_replay_descriptor_data_size(mut self, value: usize) -> Self {
@@ -62107,7 +62722,7 @@ impl<'a> PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
         self
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorGetTensorInfoARM.html>"]
 #[doc(alias = "VkDescriptorGetTensorInfoARM")]
@@ -62117,22 +62732,25 @@ pub struct DescriptorGetTensorInfoARM<'a> {
     pub tensor_view: Option<BorrowedHandle<'a, TensorViewARM>>,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for DescriptorGetTensorInfoARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructure for DescriptorGetTensorInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::DescriptorGetTensorInfoARM;
 }
-#[cfg(feature = "ext_tensors")]
-unsafe impl<'a> Send for DescriptorGetTensorInfoARM<'a> {}
-#[cfg(feature = "ext_tensors")]
-unsafe impl<'a> Sync for DescriptorGetTensorInfoARM<'a> {}
 #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
+unsafe impl<'a> Send for DescriptorGetTensorInfoARM<'a> {}
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
+unsafe impl<'a> Sync for DescriptorGetTensorInfoARM<'a> {}
+#[cfg(all(
+    all(feature = "ext_tensors", feature = "ext_descriptor_buffer"),
+    feature = "ext_descriptor_buffer"
+))]
 unsafe impl<'a, 'b> ExtendingStructure<DescriptorGetInfoEXT<'b>>
     for DescriptorGetTensorInfoARM<'a>
 {
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> Default for DescriptorGetTensorInfoARM<'a> {
     fn default() -> Self {
         Self {
@@ -62143,7 +62761,7 @@ impl<'a> Default for DescriptorGetTensorInfoARM<'a> {
         }
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> DescriptorGetTensorInfoARM<'a> {
     #[inline]
     pub fn tensor_view(mut self, value: &'a raw::TensorViewARM) -> Self {
@@ -62156,7 +62774,7 @@ impl<'a> DescriptorGetTensorInfoARM<'a> {
         self
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorCaptureDescriptorDataInfoARM.html>"]
 #[doc(alias = "VkTensorCaptureDescriptorDataInfoARM")]
@@ -62166,17 +62784,17 @@ pub struct TensorCaptureDescriptorDataInfoARM<'a> {
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for TensorCaptureDescriptorDataInfoARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructure for TensorCaptureDescriptorDataInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TensorCaptureDescriptorDataInfoARM;
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Send for TensorCaptureDescriptorDataInfoARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Sync for TensorCaptureDescriptorDataInfoARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> Default for TensorCaptureDescriptorDataInfoARM<'a> {
     fn default() -> Self {
         Self {
@@ -62187,7 +62805,7 @@ impl<'a> Default for TensorCaptureDescriptorDataInfoARM<'a> {
         }
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> TensorCaptureDescriptorDataInfoARM<'a> {
     #[inline]
     pub fn tensor(mut self, value: &'a raw::TensorARM) -> Self {
@@ -62200,7 +62818,7 @@ impl<'a> TensorCaptureDescriptorDataInfoARM<'a> {
         self
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorViewCaptureDescriptorDataInfoARM.html>"]
 #[doc(alias = "VkTensorViewCaptureDescriptorDataInfoARM")]
@@ -62210,17 +62828,17 @@ pub struct TensorViewCaptureDescriptorDataInfoARM<'a> {
     pub tensor_view: Option<BorrowedHandle<'a, TensorViewARM>>,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for TensorViewCaptureDescriptorDataInfoARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructure for TensorViewCaptureDescriptorDataInfoARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TensorViewCaptureDescriptorDataInfoARM;
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Send for TensorViewCaptureDescriptorDataInfoARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Sync for TensorViewCaptureDescriptorDataInfoARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> Default for TensorViewCaptureDescriptorDataInfoARM<'a> {
     fn default() -> Self {
         Self {
@@ -62231,7 +62849,7 @@ impl<'a> Default for TensorViewCaptureDescriptorDataInfoARM<'a> {
         }
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 impl<'a> TensorViewCaptureDescriptorDataInfoARM<'a> {
     #[inline]
     pub fn tensor_view(mut self, value: &'a raw::TensorViewARM) -> Self {
@@ -62244,7 +62862,7 @@ impl<'a> TensorViewCaptureDescriptorDataInfoARM<'a> {
         self
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_frame_boundary"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFrameBoundaryTensorsARM.html>"]
 #[doc(alias = "VkFrameBoundaryTensorsARM")]
@@ -62255,28 +62873,31 @@ pub struct FrameBoundaryTensorsARM<'a> {
     pub(crate) p_tensors: *const TensorARM,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_frame_boundary"))]
 unsafe impl<'a> ExtendableStructureBase for FrameBoundaryTensorsARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_frame_boundary"))]
 unsafe impl<'a> ExtendableStructure for FrameBoundaryTensorsARM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::FrameBoundaryTensorsARM;
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_frame_boundary"))]
 unsafe impl<'a> Send for FrameBoundaryTensorsARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_frame_boundary"))]
 unsafe impl<'a> Sync for FrameBoundaryTensorsARM<'a> {}
-#[cfg(all(feature = "ext_tensors",))]
+#[cfg(all(all(feature = "ext_tensors", feature = "ext_frame_boundary"),))]
 unsafe impl<'a, 'b> ExtendingStructure<SubmitInfo<'b>> for FrameBoundaryTensorsARM<'a> {}
 #[cfg(all(
-    feature = "ext_tensors",
+    all(feature = "ext_tensors", feature = "ext_frame_boundary"),
     any(feature = "ext_synchronization2", feature = "version_1_3")
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<SubmitInfo2<'b>> for FrameBoundaryTensorsARM<'a> {}
-#[cfg(all(feature = "ext_tensors", feature = "ext_swapchain"))]
+#[cfg(all(
+    all(feature = "ext_tensors", feature = "ext_frame_boundary"),
+    feature = "ext_swapchain"
+))]
 unsafe impl<'a, 'b> ExtendingStructure<PresentInfoKHR<'b>> for FrameBoundaryTensorsARM<'a> {}
-#[cfg(all(feature = "ext_tensors",))]
+#[cfg(all(all(feature = "ext_tensors", feature = "ext_frame_boundary"),))]
 unsafe impl<'a, 'b> ExtendingStructure<BindSparseInfo<'b>> for FrameBoundaryTensorsARM<'a> {}
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_frame_boundary"))]
 impl<'a> Default for FrameBoundaryTensorsARM<'a> {
     fn default() -> Self {
         Self {
@@ -62288,7 +62909,7 @@ impl<'a> Default for FrameBoundaryTensorsARM<'a> {
         }
     }
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_frame_boundary"))]
 impl<'a> FrameBoundaryTensorsARM<'a> {
     #[inline]
     pub fn tensors<V0: Alias<raw::TensorARM> + 'a>(
@@ -69171,7 +69792,7 @@ impl PhysicalDeviceDataGraphOperationSupportARM {
         .unwrap()
     }
 }
-#[cfg(feature = "ext_data_graph")]
+#[cfg(all(feature = "ext_data_graph", feature = "ext_tensors"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM")]
@@ -69183,28 +69804,31 @@ pub struct DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {
     pub group_size: u32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_data_graph")]
+#[cfg(all(feature = "ext_data_graph", feature = "ext_tensors"))]
 unsafe impl<'a> ExtendableStructureBase
     for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a>
 {
 }
-#[cfg(feature = "ext_data_graph")]
+#[cfg(all(feature = "ext_data_graph", feature = "ext_tensors"))]
 unsafe impl<'a> ExtendableStructure
     for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a>
 {
     const STRUCTURE_TYPE: StructureType =
         StructureType::DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM;
 }
-#[cfg(feature = "ext_data_graph")]
+#[cfg(all(feature = "ext_data_graph", feature = "ext_tensors"))]
 unsafe impl<'a> Send for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {}
-#[cfg(feature = "ext_data_graph")]
+#[cfg(all(feature = "ext_data_graph", feature = "ext_tensors"))]
 unsafe impl<'a> Sync for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {}
-#[cfg(all(feature = "ext_data_graph", feature = "ext_data_graph"))]
+#[cfg(all(
+    all(feature = "ext_data_graph", feature = "ext_tensors"),
+    feature = "ext_data_graph"
+))]
 unsafe impl<'a, 'b> ExtendingStructure<DataGraphPipelineConstantARM<'b>>
     for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a>
 {
 }
-#[cfg(feature = "ext_data_graph")]
+#[cfg(all(feature = "ext_data_graph", feature = "ext_tensors"))]
 impl<'a> Default for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {
     fn default() -> Self {
         Self {
@@ -69217,7 +69841,7 @@ impl<'a> Default for DataGraphPipelineConstantTensorSemiStructuredSparsityInfoAR
         }
     }
 }
-#[cfg(feature = "ext_data_graph")]
+#[cfg(all(feature = "ext_data_graph", feature = "ext_tensors"))]
 impl<'a> DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {
     #[inline]
     pub fn dimension(mut self, value: u32) -> Self {
@@ -69335,7 +69959,10 @@ unsafe impl<'a, 'b> ExtendingStructure<RenderPassBeginInfo<'b>>
     feature = "ext_multiview_per_view_render_areas",
     any(
         feature = "ext_dynamic_rendering",
-        feature = "ext_tile_properties",
+        all(
+            feature = "ext_tile_properties",
+            any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+        ),
         feature = "version_1_3"
     )
 ))]
@@ -70196,7 +70823,7 @@ impl<'a> PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
         self
     }
 }
-#[cfg(feature = "ext_unified_image_layouts")]
+# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAttachmentFeedbackLoopInfoEXT.html>"]
 #[doc(alias = "VkAttachmentFeedbackLoopInfoEXT")]
@@ -70206,25 +70833,22 @@ pub struct AttachmentFeedbackLoopInfoEXT<'a> {
     pub feedback_loop_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_unified_image_layouts")]
+# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
 unsafe impl<'a> ExtendableStructureBase for AttachmentFeedbackLoopInfoEXT<'a> {}
-#[cfg(feature = "ext_unified_image_layouts")]
+# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
 unsafe impl<'a> ExtendableStructure for AttachmentFeedbackLoopInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::AttachmentFeedbackLoopInfoEXT;
 }
-#[cfg(feature = "ext_unified_image_layouts")]
+# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
 unsafe impl<'a> Send for AttachmentFeedbackLoopInfoEXT<'a> {}
-#[cfg(feature = "ext_unified_image_layouts")]
+# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
 unsafe impl<'a> Sync for AttachmentFeedbackLoopInfoEXT<'a> {}
-#[cfg(all(
-    feature = "ext_unified_image_layouts",
-    any(feature = "ext_dynamic_rendering", feature = "version_1_3")
-))]
+# [cfg (all (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))) , any (feature = "ext_dynamic_rendering" , feature = "version_1_3")))]
 unsafe impl<'a, 'b> ExtendingStructure<RenderingAttachmentInfo<'b>>
     for AttachmentFeedbackLoopInfoEXT<'a>
 {
 }
-#[cfg(feature = "ext_unified_image_layouts")]
+# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
 impl<'a> Default for AttachmentFeedbackLoopInfoEXT<'a> {
     fn default() -> Self {
         Self {
@@ -70235,7 +70859,7 @@ impl<'a> Default for AttachmentFeedbackLoopInfoEXT<'a> {
         }
     }
 }
-#[cfg(feature = "ext_unified_image_layouts")]
+# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
 impl<'a> AttachmentFeedbackLoopInfoEXT<'a> {
     #[inline]
     pub fn feedback_loop_enable(mut self, value: impl Into<Bool32>) -> Self {
@@ -70672,7 +71296,7 @@ impl<'a> CalibratedTimestampInfoKHR<'a> {
 }
 #[cfg(feature = "ext_calibrated_timestamps")]
 pub type CalibratedTimestampInfoEXT<'a> = CalibratedTimestampInfoKHR<'a>;
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSetDescriptorBufferOffsetsInfoEXT.html>"]
 #[doc(alias = "VkSetDescriptorBufferOffsetsInfoEXT")]
@@ -70687,17 +71311,17 @@ pub struct SetDescriptorBufferOffsetsInfoEXT<'a> {
     pub(crate) p_offsets: *const DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for SetDescriptorBufferOffsetsInfoEXT<'a> {}
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructure for SetDescriptorBufferOffsetsInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SetDescriptorBufferOffsetsInfoEXT;
 }
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Send for SetDescriptorBufferOffsetsInfoEXT<'a> {}
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Sync for SetDescriptorBufferOffsetsInfoEXT<'a> {}
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 impl<'a> Default for SetDescriptorBufferOffsetsInfoEXT<'a> {
     fn default() -> Self {
         Self {
@@ -70713,7 +71337,7 @@ impl<'a> Default for SetDescriptorBufferOffsetsInfoEXT<'a> {
         }
     }
 }
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
     #[inline]
     pub fn stage_flags(mut self, value: ShaderStageFlags) -> Self {
@@ -70761,7 +71385,7 @@ impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
         self
     }
 }
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindDescriptorBufferEmbeddedSamplersInfoEXT.html>"]
 #[doc(alias = "VkBindDescriptorBufferEmbeddedSamplersInfoEXT")]
@@ -70773,18 +71397,18 @@ pub struct BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     pub set: u32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {}
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructure for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType =
         StructureType::BindDescriptorBufferEmbeddedSamplersInfoEXT;
 }
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Send for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {}
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> Sync for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {}
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 impl<'a> Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     fn default() -> Self {
         Self {
@@ -70797,7 +71421,7 @@ impl<'a> Default for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
         }
     }
 }
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     #[inline]
     pub fn stage_flags(mut self, value: ShaderStageFlags) -> Self {
@@ -71024,7 +71648,10 @@ unsafe impl<'a> Sync for TileMemoryRequirementsQCOM<'a> {}
     feature = "ext_tile_memory_heap",
     any(
         feature = "ext_get_memory_requirements2",
-        feature = "ext_ray_tracing",
+        all(
+            feature = "ext_ray_tracing",
+            any(feature = "ext_get_memory_requirements2", feature = "version_1_1")
+        ),
         feature = "version_1_1"
     )
 ))]
@@ -71108,7 +71735,7 @@ impl<'a> TileMemoryBindInfoQCOM<'a> {
         self
     }
 }
-#[cfg(feature = "ext_tile_memory_heap")]
+#[cfg(all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTileMemorySizeInfoQCOM.html>"]
 #[doc(alias = "VkTileMemorySizeInfoQCOM")]
@@ -71118,33 +71745,36 @@ pub struct TileMemorySizeInfoQCOM<'a> {
     pub size: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_tile_memory_heap")]
+#[cfg(all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"))]
 unsafe impl<'a> ExtendableStructureBase for TileMemorySizeInfoQCOM<'a> {}
-#[cfg(feature = "ext_tile_memory_heap")]
+#[cfg(all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"))]
 unsafe impl<'a> ExtendableStructure for TileMemorySizeInfoQCOM<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::TileMemorySizeInfoQCOM;
 }
-#[cfg(feature = "ext_tile_memory_heap")]
+#[cfg(all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"))]
 unsafe impl<'a> Send for TileMemorySizeInfoQCOM<'a> {}
-#[cfg(feature = "ext_tile_memory_heap")]
+#[cfg(all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"))]
 unsafe impl<'a> Sync for TileMemorySizeInfoQCOM<'a> {}
-#[cfg(all(feature = "ext_tile_memory_heap",))]
+#[cfg(all(all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"),))]
 unsafe impl<'a, 'b> ExtendingStructure<RenderPassCreateInfo<'b>> for TileMemorySizeInfoQCOM<'a> {}
 #[cfg(all(
-    feature = "ext_tile_memory_heap",
+    all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"),
     any(feature = "ext_create_renderpass2", feature = "version_1_2")
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<RenderPassCreateInfo2<'b>> for TileMemorySizeInfoQCOM<'a> {}
 #[cfg(all(
-    feature = "ext_tile_memory_heap",
+    all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"),
     any(
         feature = "ext_dynamic_rendering",
-        feature = "ext_tile_properties",
+        all(
+            feature = "ext_tile_properties",
+            any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+        ),
         feature = "version_1_3"
     )
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<RenderingInfo<'b>> for TileMemorySizeInfoQCOM<'a> {}
-#[cfg(feature = "ext_tile_memory_heap")]
+#[cfg(all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"))]
 impl<'a> Default for TileMemorySizeInfoQCOM<'a> {
     fn default() -> Self {
         Self {
@@ -71155,7 +71785,7 @@ impl<'a> Default for TileMemorySizeInfoQCOM<'a> {
         }
     }
 }
-#[cfg(feature = "ext_tile_memory_heap")]
+#[cfg(all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"))]
 impl<'a> TileMemorySizeInfoQCOM<'a> {
     #[inline]
     pub fn size(mut self, value: DeviceSize) -> Self {
@@ -73322,7 +73952,10 @@ impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
         self
     }
 }
-#[cfg(feature = "ext_cluster_acceleration_structure")]
+#[cfg(all(
+    feature = "ext_cluster_acceleration_structure",
+    feature = "ext_ray_tracing_pipeline"
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV.html>"]
 #[doc(alias = "VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV")]
@@ -73332,31 +73965,49 @@ pub struct RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
     pub allow_cluster_acceleration_structure: Bool32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_cluster_acceleration_structure")]
+#[cfg(all(
+    feature = "ext_cluster_acceleration_structure",
+    feature = "ext_ray_tracing_pipeline"
+))]
 unsafe impl<'a> ExtendableStructureBase
     for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a>
 {
 }
-#[cfg(feature = "ext_cluster_acceleration_structure")]
+#[cfg(all(
+    feature = "ext_cluster_acceleration_structure",
+    feature = "ext_ray_tracing_pipeline"
+))]
 unsafe impl<'a> ExtendableStructure
     for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a>
 {
     const STRUCTURE_TYPE: StructureType =
         StructureType::RayTracingPipelineClusterAccelerationStructureCreateInfoNV;
 }
-#[cfg(feature = "ext_cluster_acceleration_structure")]
-unsafe impl<'a> Send for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {}
-#[cfg(feature = "ext_cluster_acceleration_structure")]
-unsafe impl<'a> Sync for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {}
 #[cfg(all(
     feature = "ext_cluster_acceleration_structure",
+    feature = "ext_ray_tracing_pipeline"
+))]
+unsafe impl<'a> Send for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {}
+#[cfg(all(
+    feature = "ext_cluster_acceleration_structure",
+    feature = "ext_ray_tracing_pipeline"
+))]
+unsafe impl<'a> Sync for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {}
+#[cfg(all(
+    all(
+        feature = "ext_cluster_acceleration_structure",
+        feature = "ext_ray_tracing_pipeline"
+    ),
     feature = "ext_ray_tracing_pipeline"
 ))]
 unsafe impl<'a, 'b> ExtendingStructure<RayTracingPipelineCreateInfoKHR<'b>>
     for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a>
 {
 }
-#[cfg(feature = "ext_cluster_acceleration_structure")]
+#[cfg(all(
+    feature = "ext_cluster_acceleration_structure",
+    feature = "ext_ray_tracing_pipeline"
+))]
 impl<'a> Default for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
     fn default() -> Self {
         Self {
@@ -73367,7 +74018,10 @@ impl<'a> Default for RayTracingPipelineClusterAccelerationStructureCreateInfoNV<
         }
     }
 }
-#[cfg(feature = "ext_cluster_acceleration_structure")]
+#[cfg(all(
+    feature = "ext_cluster_acceleration_structure",
+    feature = "ext_ray_tracing_pipeline"
+))]
 impl<'a> RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
     #[inline]
     pub fn allow_cluster_acceleration_structure(mut self, value: impl Into<Bool32>) -> Self {
@@ -75262,7 +75916,10 @@ impl<'a> GeneratedCommandsShaderInfoEXT<'a> {
         self
     }
 }
-#[cfg(feature = "ext_device_generated_commands")]
+#[cfg(all(
+    feature = "ext_device_generated_commands",
+    feature = "ext_shader_object"
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWriteIndirectExecutionSetShaderEXT.html>"]
 #[doc(alias = "VkWriteIndirectExecutionSetShaderEXT")]
@@ -75273,17 +75930,32 @@ pub struct WriteIndirectExecutionSetShaderEXT<'a> {
     pub shader: Option<BorrowedHandle<'a, ShaderEXT>>,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_device_generated_commands")]
+#[cfg(all(
+    feature = "ext_device_generated_commands",
+    feature = "ext_shader_object"
+))]
 unsafe impl<'a> ExtendableStructureBase for WriteIndirectExecutionSetShaderEXT<'a> {}
-#[cfg(feature = "ext_device_generated_commands")]
+#[cfg(all(
+    feature = "ext_device_generated_commands",
+    feature = "ext_shader_object"
+))]
 unsafe impl<'a> ExtendableStructure for WriteIndirectExecutionSetShaderEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::WriteIndirectExecutionSetShaderEXT;
 }
-#[cfg(feature = "ext_device_generated_commands")]
+#[cfg(all(
+    feature = "ext_device_generated_commands",
+    feature = "ext_shader_object"
+))]
 unsafe impl<'a> Send for WriteIndirectExecutionSetShaderEXT<'a> {}
-#[cfg(feature = "ext_device_generated_commands")]
+#[cfg(all(
+    feature = "ext_device_generated_commands",
+    feature = "ext_shader_object"
+))]
 unsafe impl<'a> Sync for WriteIndirectExecutionSetShaderEXT<'a> {}
-#[cfg(feature = "ext_device_generated_commands")]
+#[cfg(all(
+    feature = "ext_device_generated_commands",
+    feature = "ext_shader_object"
+))]
 impl<'a> Default for WriteIndirectExecutionSetShaderEXT<'a> {
     fn default() -> Self {
         Self {
@@ -75295,7 +75967,10 @@ impl<'a> Default for WriteIndirectExecutionSetShaderEXT<'a> {
         }
     }
 }
-#[cfg(feature = "ext_device_generated_commands")]
+#[cfg(all(
+    feature = "ext_device_generated_commands",
+    feature = "ext_shader_object"
+))]
 impl<'a> WriteIndirectExecutionSetShaderEXT<'a> {
     #[inline]
     pub fn index(mut self, value: u32) -> Self {

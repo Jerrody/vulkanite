@@ -14,10 +14,10 @@ use syn::Ident;
 use crate::{
     helpers::camel_case_to_snake_case,
     structs::{
-        convert_field_to_snake_case, AdvancedType, Api, CType, Command, CommandParam,
-        CommandParamsParsed, Constant, Dependencies, Enum, EnumAliased, EnumFlag, EnumValue,
-        EnumVariant, Handle, MappingEntry, MappingType, SliceType, Struct, StructBasetype,
-        StructStandard, Type,
+        convert_field_to_snake_case, remove_ext_prefix, AdvancedType, Api, CType, Command,
+        CommandParam, CommandParamsParsed, Constant, Dependencies, Enum, EnumAliased, EnumFlag,
+        EnumValue, EnumVariant, Handle, MappingEntry, MappingType, SliceType, Struct,
+        StructBasetype, StructStandard, Type,
     },
     xml,
 };
@@ -797,9 +797,18 @@ impl<'a> Generator<'a> {
                 self.filtered_features()
                     .flat_map(|feat| feat.requires().map(|req| (feat.name.as_str(), req))),
             )
-            .flat_map(|(name, req)| req.content.iter().map(move |req| (name, req)));
+            .flat_map(|(name, req)| {
+                let mut deps = Dependencies::Single(name);
+                if let Some(depends) = &req.depends {
+                    // TODO: don't use expect
+                    let additional_deps =
+                        Dependencies::parse(&depends).expect("Failed to parse dependencies");
+                    deps.add_and(additional_deps);
+                };
+                req.content.iter().map(move |req| (name, deps.clone(), req))
+            });
 
-        for (ext_name, req) in requires {
+        for (ext_name, deps, req) in requires {
             let Some(ext_feat) = self.extensions_features.get(ext_name) else {
                 bail!("Failed to find extension/feature {ext_name}");
             };
@@ -817,7 +826,7 @@ impl<'a> Generator<'a> {
                     let Some(my_struct) = self.get_struct(name) else {
                         bail!("Failed to find struct {name}")
                     };
-                    my_struct.dependencies.borrow_mut().add(ext_name);
+                    my_struct.dependencies.borrow_mut().add_or(deps.clone());
                     if !name.contains("Features") && !name.contains("Properties") {
                         // An extension can be trivial if it only contains a features and properties definition
                         ext_feat.is_non_trivial.set(true);
@@ -830,7 +839,7 @@ impl<'a> Generator<'a> {
                     let Some(handle) = self.get_handle(name) else {
                         bail!("Failed to find handle {name}")
                     };
-                    handle.dependencies.borrow_mut().add(ext_name);
+                    handle.dependencies.borrow_mut().add_or(deps.clone());
                     ext_feat.is_non_trivial.set(true);
                 }
                 Some(MappingEntry {
@@ -842,7 +851,7 @@ impl<'a> Generator<'a> {
                         .or_else(|| self.get_enum(&name.replace("Flags", "FlagBits")))
                         .with_context(|| format!("Failed to find enum {name}"))?;
 
-                    my_enum.dependencies.borrow_mut().add(ext_name);
+                    my_enum.dependencies.borrow_mut().add_or(deps.clone());
                     ext_feat.is_non_trivial.set(true);
                 }
                 Some(MappingEntry {
@@ -852,7 +861,7 @@ impl<'a> Generator<'a> {
                     let Some(command) = self.get_command(name) else {
                         bail!("Failed to find command {name}")
                     };
-                    command.dependencies.borrow_mut().add(ext_name);
+                    command.dependencies.borrow_mut().add_or(deps.clone());
                     ext_feat.is_non_trivial.set(true);
                 }
                 _ => (),
@@ -882,9 +891,9 @@ impl<'a> Generator<'a> {
             "VkQueueFamilyGlobalPriorityProperties",
         ] {
             let mut my_struct = get_dep(struct_name)?;
-            my_struct.0.clear();
-            my_struct.add("global_priority");
-            my_struct.add("VK_VERSION_1_4");
+            my_struct.clear();
+            my_struct.add_or(Dependencies::Single("global_priority"));
+            my_struct.add_or(Dependencies::Single("VK_VERSION_1_4"));
         }
 
         // Same for VkChromaLocation and VK_ANDROID_external_format_resolve
@@ -893,9 +902,9 @@ impl<'a> Generator<'a> {
             "VkPhysicalDeviceExternalFormatResolvePropertiesANDROID",
         ] {
             let mut my_struct = get_dep(struct_name)?;
-            my_struct.0.clear();
-            my_struct.add("sampler_ycbcr_conversion");
-            my_struct.add("VK_VERSION_1_1");
+            my_struct.clear();
+            my_struct.add_or(Dependencies::Single("sampler_ycbcr_conversion"));
+            my_struct.add_or(Dependencies::Single("VK_VERSION_1_1"));
         }
 
         Ok(())
@@ -1757,38 +1766,54 @@ impl<'a> Generator<'a> {
             .map(|name| format_ident!("{name}"))
     }
 
-    fn get_config_feature_inner(&self, dependencies: &Dependencies) -> Result<Option<TokenStream>> {
-        let ext_features = self.extensions_features.borrow();
-        let deps: Vec<_> = dependencies
-            .0
-            .iter()
-            .map(|dep| {
-                ext_features
-                    .get(dep)
-                    .context("Failed to find extension/feature")
-            })
-            .collect::<Result<_>>()?;
+    fn has_trivial_dep(&self, deps: &Dependencies) -> bool {
+        match deps {
+            Dependencies::None => true,
+            Dependencies::Single(dep) => self
+                .extensions_features
+                .borrow()
+                .get(dep)
+                .map_or(false, |f| !f.is_non_trivial.get()),
+            Dependencies::Or(deps) => deps.iter().any(|dep| self.has_trivial_dep(dep)),
+            Dependencies::And(deps) => deps.iter().all(|dep| self.has_trivial_dep(dep)),
+        }
+    }
 
-        let cnf = if deps.is_empty() || deps.iter().any(|dep| !dep.is_non_trivial.get()) {
-            return Ok(None);
-        } else if deps.len() == 1 {
-            let dep_name = &deps[0].name;
-            quote! {
-                feature = #dep_name
+    fn get_config_feature_inner(&self, dependencies: &Dependencies) -> Option<TokenStream> {
+        // Note: This is really inefficient (quadratic complexity)
+        if self.has_trivial_dep(dependencies) {
+            return None;
+        }
+
+        match dependencies {
+            Dependencies::None => None,
+            Dependencies::Single(dep) => self.extensions_features.borrow().get(dep).map(|feat| {
+                let name = feat.name.as_str();
+                quote! {
+                    feature = #name
+                }
+            }),
+            Dependencies::Or(deps) => {
+                let deps_cnf = deps.iter().map(|dep| self.get_config_feature_inner(dep));
+                Some(quote! {
+                    any(
+                        #(#deps_cnf),*
+                    )
+                })
             }
-        } else {
-            let dep_names = deps.iter().map(|dep| &dep.name);
-            quote! {
-                any(
-                    #(feature = #dep_names),*
-                )
+            Dependencies::And(deps) => {
+                let deps_cnf = deps.iter().map(|dep| self.get_config_feature_inner(dep));
+                Some(quote! {
+                    all(
+                        #(#deps_cnf),*
+                    )
+                })
             }
-        };
-        Ok(Some(cnf))
+        }
     }
 
     fn get_config_feature(&self, dependencies: &Dependencies) -> Result<Option<TokenStream>> {
-        self.get_config_feature_inner(dependencies)?
+        self.get_config_feature_inner(dependencies)
             .map(|cnf| {
                 Ok(quote! {
                     #[cfg(#cnf)]
@@ -1811,13 +1836,6 @@ fn parse_value(value: &str, ty: CType) -> TokenStream {
         rust_value = rust_value[1..(rust_value.len() - 1)].to_owned();
     }
     rust_value.parse().unwrap()
-}
-
-fn remove_ext_prefix(name: &str) -> &str {
-    name.strip_prefix("VK_")
-        .and_then(|n| n.split_once('_'))
-        .map(|(_, s)| s)
-        .unwrap_or("invalid_extension_name")
 }
 
 fn get_doc_url(item_name: &str) -> String {

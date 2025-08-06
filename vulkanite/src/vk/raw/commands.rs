@@ -5947,8 +5947,14 @@ pub unsafe fn cmd_push_descriptor_set_khr<'a>(
     )
 }
 #[cfg(any(
-    feature = "ext_push_descriptor",
-    feature = "ext_descriptor_update_template",
+    all(
+        feature = "ext_push_descriptor",
+        any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+    ),
+    all(
+        feature = "ext_descriptor_update_template",
+        feature = "ext_push_descriptor"
+    ),
     feature = "version_1_4"
 ))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplate.html>"]
@@ -5972,8 +5978,14 @@ pub unsafe fn cmd_push_descriptor_set_with_template(
     )
 }
 #[cfg(any(
-    feature = "ext_push_descriptor",
-    feature = "ext_descriptor_update_template",
+    all(
+        feature = "ext_push_descriptor",
+        any(feature = "version_1_1", feature = "ext_descriptor_update_template")
+    ),
+    all(
+        feature = "ext_descriptor_update_template",
+        feature = "ext_push_descriptor"
+    ),
     feature = "version_1_4"
 ))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
@@ -6118,7 +6130,10 @@ pub unsafe fn cmd_push_constants2_khr(
         ptr::from_ref(p_push_constants_info),
     )
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSet2.html>"]
 #[doc(alias = "vkCmdPushDescriptorSet2")]
 #[inline]
@@ -6133,7 +6148,10 @@ pub unsafe fn cmd_push_descriptor_set2(
         ptr::from_ref(p_push_descriptor_set_info),
     )
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSet2KHR.html>"]
 #[doc(alias = "vkCmdPushDescriptorSet2KHR")]
 #[inline]
@@ -6148,7 +6166,10 @@ pub unsafe fn cmd_push_descriptor_set2_khr(
         ptr::from_ref(p_push_descriptor_set_info),
     )
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplate2.html>"]
 #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2")]
 #[inline]
@@ -6163,7 +6184,10 @@ pub unsafe fn cmd_push_descriptor_set_with_template2(
         ptr::from_ref(p_push_descriptor_set_with_template_info),
     )
 }
-#[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
+#[cfg(any(
+    all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
+    feature = "version_1_4"
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdPushDescriptorSetWithTemplate2KHR.html>"]
 #[doc(alias = "vkCmdPushDescriptorSetWithTemplate2KHR")]
 #[inline]
@@ -6562,7 +6586,10 @@ pub unsafe fn queue_present_khr(
     let vulkan_command = dispatcher.queue_present_khr.get();
     vulkan_command(Some(queue.borrow()), ptr::from_ref(p_present_info)).into_result()
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>"]
 #[doc(alias = "vkGetDeviceGroupPresentCapabilitiesKHR")]
 pub unsafe fn get_device_group_present_capabilities_khr<
@@ -6583,7 +6610,10 @@ pub unsafe fn get_device_group_present_capabilities_khr<
         p_device_group_present_capabilities.assume_init()
     })
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html>"]
 #[doc(alias = "vkGetDeviceGroupSurfacePresentModesKHR")]
 pub unsafe fn get_device_group_surface_present_modes_khr(
@@ -6600,7 +6630,10 @@ pub unsafe fn get_device_group_surface_present_modes_khr(
     );
     vk_status.map_success(|| p_modes.assume_init())
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_surface")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>"]
 #[doc(alias = "vkGetPhysicalDevicePresentRectanglesKHR")]
 pub unsafe fn get_physical_device_present_rectangles_khr<R: DynamicArray<Rect2D>>(
@@ -6642,7 +6675,10 @@ pub unsafe fn get_physical_device_present_rectangles_khr<R: DynamicArray<Rect2D>
         vk_vec
     })
 }
-#[cfg(any(feature = "ext_swapchain", feature = "ext_device_group"))]
+#[cfg(any(
+    all(feature = "ext_swapchain", feature = "version_1_1"),
+    all(feature = "ext_device_group", feature = "ext_swapchain")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkAcquireNextImage2KHR.html>"]
 #[doc(alias = "vkAcquireNextImage2KHR")]
 pub unsafe fn acquire_next_image2_khr(
@@ -9730,7 +9766,10 @@ pub unsafe fn cmd_write_buffer_marker_amd(
         marker,
     )
 }
-#[cfg(feature = "ext_buffer_marker")]
+#[cfg(all(
+    feature = "ext_buffer_marker",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdWriteBufferMarker2AMD.html>"]
 #[doc(alias = "vkCmdWriteBufferMarker2AMD")]
 #[inline]
@@ -9785,7 +9824,10 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_nv(
         stride,
     )
 }
-#[cfg(feature = "ext_mesh_shader")]
+#[cfg(all(
+    feature = "ext_mesh_shader",
+    any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksIndirectCountNV")]
 #[inline]
@@ -9886,7 +9928,10 @@ pub unsafe fn get_queue_checkpoint_data_nv<R: DynamicArray<CheckpointDataNV<'sta
     vk_vec.resize_with_len(vk_len as _);
     vk_vec
 }
-#[cfg(feature = "ext_device_diagnostic_checkpoints")]
+#[cfg(all(
+    feature = "ext_device_diagnostic_checkpoints",
+    any(feature = "version_1_3", feature = "ext_synchronization2")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetQueueCheckpointData2NV.html>"]
 #[doc(alias = "vkGetQueueCheckpointData2NV")]
 pub unsafe fn get_queue_checkpoint_data2_nv<R: DynamicArray<CheckpointData2NV<'static>>>(
@@ -10320,7 +10365,10 @@ pub unsafe fn release_full_screen_exclusive_mode_ext(
     let vulkan_command = dispatcher.release_full_screen_exclusive_mode_ext.get();
     vulkan_command(Some(device.borrow()), Some(swapchain.borrow())).map_success(|| ())
 }
-#[cfg(feature = "ext_full_screen_exclusive")]
+#[cfg(all(
+    feature = "ext_full_screen_exclusive",
+    any(feature = "ext_device_group", feature = "version_1_1")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetDeviceGroupSurfacePresentModes2EXT.html>"]
 #[doc(alias = "vkGetDeviceGroupSurfacePresentModes2EXT")]
 pub unsafe fn get_device_group_surface_present_modes2_ext(
@@ -11065,7 +11113,10 @@ pub unsafe fn get_sampler_opaque_capture_descriptor_data_ext(
         .get();
     vulkan_command(Some(device.borrow()), ptr::from_ref(p_info), p_data).map_success(|| ())
 }
-#[cfg(feature = "ext_descriptor_buffer")]
+#[cfg(all(
+    feature = "ext_descriptor_buffer",
+    any(feature = "ext_acceleration_structure", feature = "ext_ray_tracing")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT.html>"]
 #[doc(alias = "vkGetAccelerationStructureOpaqueCaptureDescriptorDataEXT")]
 #[inline]
@@ -11133,7 +11184,10 @@ pub unsafe fn cmd_draw_mesh_tasks_indirect_ext(
         stride,
     )
 }
-#[cfg(feature = "ext_mesh_shader")]
+#[cfg(all(
+    feature = "ext_mesh_shader",
+    any(feature = "ext_draw_indirect_count", feature = "version_1_2")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdDrawMeshTasksIndirectCountEXT.html>"]
 #[doc(alias = "vkCmdDrawMeshTasksIndirectCountEXT")]
 #[inline]
@@ -11585,7 +11639,10 @@ pub unsafe fn cmd_set_color_write_enable_ext<'a>(
         p_color_write_enables.as_slice().as_ptr().cast(),
     )
 }
-#[cfg(feature = "ext_ray_tracing_maintenance1")]
+#[cfg(all(
+    feature = "ext_ray_tracing_maintenance1",
+    feature = "ext_ray_tracing_pipeline"
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdTraceRaysIndirect2KHR.html>"]
 #[doc(alias = "vkCmdTraceRaysIndirect2KHR")]
 #[inline]
@@ -12254,7 +12311,13 @@ pub unsafe fn cmd_set_color_write_mask_ext<'a>(
         p_color_write_masks.as_slice().as_ptr().cast(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        any(feature = "ext_maintenance2", feature = "version_1_1")
+    ),
+    feature = "ext_shader_object"
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetTessellationDomainOriginEXT.html>"]
 #[doc(alias = "vkCmdSetTessellationDomainOriginEXT")]
 #[inline]
@@ -12266,7 +12329,13 @@ pub unsafe fn cmd_set_tessellation_domain_origin_ext(
     let vulkan_command = dispatcher.cmd_set_tessellation_domain_origin_ext.get();
     vulkan_command(Some(command_buffer.borrow()), domain_origin)
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_transform_feedback"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_transform_feedback")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRasterizationStreamEXT.html>"]
 #[doc(alias = "vkCmdSetRasterizationStreamEXT")]
 #[inline]
@@ -12278,7 +12347,16 @@ pub unsafe fn cmd_set_rasterization_stream_ext(
     let vulkan_command = dispatcher.cmd_set_rasterization_stream_ext.get();
     vulkan_command(Some(command_buffer.borrow()), rasterization_stream)
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_conservative_rasterization"
+    ),
+    all(
+        feature = "ext_shader_object",
+        feature = "ext_conservative_rasterization"
+    )
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetConservativeRasterizationModeEXT.html>"]
 #[doc(alias = "vkCmdSetConservativeRasterizationModeEXT")]
 #[inline]
@@ -12293,7 +12371,16 @@ pub unsafe fn cmd_set_conservative_rasterization_mode_ext(
         conservative_rasterization_mode,
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_conservative_rasterization"
+    ),
+    all(
+        feature = "ext_shader_object",
+        feature = "ext_conservative_rasterization"
+    )
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetExtraPrimitiveOverestimationSizeEXT.html>"]
 #[doc(alias = "vkCmdSetExtraPrimitiveOverestimationSizeEXT")]
 #[inline]
@@ -12310,7 +12397,13 @@ pub unsafe fn cmd_set_extra_primitive_overestimation_size_ext(
         extra_primitive_overestimation_size,
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_depth_clip_enable"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_depth_clip_enable")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClipEnableEXT.html>"]
 #[doc(alias = "vkCmdSetDepthClipEnableEXT")]
 #[inline]
@@ -12322,7 +12415,13 @@ pub unsafe fn cmd_set_depth_clip_enable_ext(
     let vulkan_command = dispatcher.cmd_set_depth_clip_enable_ext.get();
     vulkan_command(Some(command_buffer.borrow()), depth_clip_enable.into())
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_sample_locations"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_sample_locations")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetSampleLocationsEnableEXT.html>"]
 #[doc(alias = "vkCmdSetSampleLocationsEnableEXT")]
 #[inline]
@@ -12337,7 +12436,16 @@ pub unsafe fn cmd_set_sample_locations_enable_ext(
         sample_locations_enable.into(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_blend_operation_advanced"
+    ),
+    all(
+        feature = "ext_shader_object",
+        feature = "ext_blend_operation_advanced"
+    )
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetColorBlendAdvancedEXT.html>"]
 #[doc(alias = "vkCmdSetColorBlendAdvancedEXT")]
 #[inline]
@@ -12355,7 +12463,13 @@ pub unsafe fn cmd_set_color_blend_advanced_ext<'a>(
         p_color_blend_advanced.as_slice().as_ptr().cast(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_provoking_vertex"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_provoking_vertex")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetProvokingVertexModeEXT.html>"]
 #[doc(alias = "vkCmdSetProvokingVertexModeEXT")]
 #[inline]
@@ -12367,7 +12481,13 @@ pub unsafe fn cmd_set_provoking_vertex_mode_ext(
     let vulkan_command = dispatcher.cmd_set_provoking_vertex_mode_ext.get();
     vulkan_command(Some(command_buffer.borrow()), provoking_vertex_mode)
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_line_rasterization"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineRasterizationModeEXT.html>"]
 #[doc(alias = "vkCmdSetLineRasterizationModeEXT")]
 #[inline]
@@ -12379,7 +12499,13 @@ pub unsafe fn cmd_set_line_rasterization_mode_ext(
     let vulkan_command = dispatcher.cmd_set_line_rasterization_mode_ext.get();
     vulkan_command(Some(command_buffer.borrow()), line_rasterization_mode)
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_line_rasterization"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_line_rasterization")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetLineStippleEnableEXT.html>"]
 #[doc(alias = "vkCmdSetLineStippleEnableEXT")]
 #[inline]
@@ -12391,7 +12517,13 @@ pub unsafe fn cmd_set_line_stipple_enable_ext(
     let vulkan_command = dispatcher.cmd_set_line_stipple_enable_ext.get();
     vulkan_command(Some(command_buffer.borrow()), stippled_line_enable.into())
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_depth_clip_control"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_depth_clip_control")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClipNegativeOneToOneEXT.html>"]
 #[doc(alias = "vkCmdSetDepthClipNegativeOneToOneEXT")]
 #[inline]
@@ -12403,7 +12535,13 @@ pub unsafe fn cmd_set_depth_clip_negative_one_to_one_ext(
     let vulkan_command = dispatcher.cmd_set_depth_clip_negative_one_to_one_ext.get();
     vulkan_command(Some(command_buffer.borrow()), negative_one_to_one.into())
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_clip_space_w_scaling"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_clip_space_w_scaling")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportWScalingEnableNV.html>"]
 #[doc(alias = "vkCmdSetViewportWScalingEnableNV")]
 #[inline]
@@ -12418,7 +12556,13 @@ pub unsafe fn cmd_set_viewport_wscaling_enable_nv(
         viewport_wscaling_enable.into(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_viewport_swizzle"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_viewport_swizzle")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetViewportSwizzleNV.html>"]
 #[doc(alias = "vkCmdSetViewportSwizzleNV")]
 #[inline]
@@ -12436,7 +12580,16 @@ pub unsafe fn cmd_set_viewport_swizzle_nv<'a>(
         p_viewport_swizzles.as_slice().as_ptr().cast(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_fragment_coverage_to_color"
+    ),
+    all(
+        feature = "ext_shader_object",
+        feature = "ext_fragment_coverage_to_color"
+    )
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageToColorEnableNV.html>"]
 #[doc(alias = "vkCmdSetCoverageToColorEnableNV")]
 #[inline]
@@ -12451,7 +12604,16 @@ pub unsafe fn cmd_set_coverage_to_color_enable_nv(
         coverage_to_color_enable.into(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_fragment_coverage_to_color"
+    ),
+    all(
+        feature = "ext_shader_object",
+        feature = "ext_fragment_coverage_to_color"
+    )
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageToColorLocationNV.html>"]
 #[doc(alias = "vkCmdSetCoverageToColorLocationNV")]
 #[inline]
@@ -12463,7 +12625,16 @@ pub unsafe fn cmd_set_coverage_to_color_location_nv(
     let vulkan_command = dispatcher.cmd_set_coverage_to_color_location_nv.get();
     vulkan_command(Some(command_buffer.borrow()), coverage_to_color_location)
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_framebuffer_mixed_samples"
+    ),
+    all(
+        feature = "ext_shader_object",
+        feature = "ext_framebuffer_mixed_samples"
+    )
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageModulationModeNV.html>"]
 #[doc(alias = "vkCmdSetCoverageModulationModeNV")]
 #[inline]
@@ -12475,7 +12646,16 @@ pub unsafe fn cmd_set_coverage_modulation_mode_nv(
     let vulkan_command = dispatcher.cmd_set_coverage_modulation_mode_nv.get();
     vulkan_command(Some(command_buffer.borrow()), coverage_modulation_mode)
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_framebuffer_mixed_samples"
+    ),
+    all(
+        feature = "ext_shader_object",
+        feature = "ext_framebuffer_mixed_samples"
+    )
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageModulationTableEnableNV.html>"]
 #[doc(alias = "vkCmdSetCoverageModulationTableEnableNV")]
 #[inline]
@@ -12490,7 +12670,16 @@ pub unsafe fn cmd_set_coverage_modulation_table_enable_nv(
         coverage_modulation_table_enable.into(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_framebuffer_mixed_samples"
+    ),
+    all(
+        feature = "ext_shader_object",
+        feature = "ext_framebuffer_mixed_samples"
+    )
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageModulationTableNV.html>"]
 #[doc(alias = "vkCmdSetCoverageModulationTableNV")]
 #[inline]
@@ -12506,7 +12695,13 @@ pub unsafe fn cmd_set_coverage_modulation_table_nv<'a>(
         p_coverage_modulation_table.as_slice().as_ptr().cast(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_shading_rate_image"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_shading_rate_image")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetShadingRateImageEnableNV.html>"]
 #[doc(alias = "vkCmdSetShadingRateImageEnableNV")]
 #[inline]
@@ -12521,7 +12716,16 @@ pub unsafe fn cmd_set_shading_rate_image_enable_nv(
         shading_rate_image_enable.into(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_representative_fragment_test"
+    ),
+    all(
+        feature = "ext_shader_object",
+        feature = "ext_representative_fragment_test"
+    )
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetRepresentativeFragmentTestEnableNV.html>"]
 #[doc(alias = "vkCmdSetRepresentativeFragmentTestEnableNV")]
 #[inline]
@@ -12538,7 +12742,13 @@ pub unsafe fn cmd_set_representative_fragment_test_enable_nv(
         representative_fragment_test_enable.into(),
     )
 }
-#[cfg(any(feature = "ext_extended_dynamic_state3", feature = "ext_shader_object"))]
+#[cfg(any(
+    all(
+        feature = "ext_extended_dynamic_state3",
+        feature = "ext_coverage_reduction_mode"
+    ),
+    all(feature = "ext_shader_object", feature = "ext_coverage_reduction_mode")
+))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetCoverageReductionModeNV.html>"]
 #[doc(alias = "vkCmdSetCoverageReductionModeNV")]
 #[inline]
@@ -12719,7 +12929,7 @@ pub unsafe fn get_physical_device_external_tensor_properties_arm<
     S::setup_cleanup(p_external_tensor_properties.as_mut_ptr());
     p_external_tensor_properties.assume_init()
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetTensorOpaqueCaptureDescriptorDataARM.html>"]
 #[doc(alias = "vkGetTensorOpaqueCaptureDescriptorDataARM")]
 #[inline]
@@ -12734,7 +12944,7 @@ pub unsafe fn get_tensor_opaque_capture_descriptor_data_arm(
         .get();
     vulkan_command(Some(device.borrow()), ptr::from_ref(p_info), p_data).map_success(|| ())
 }
-#[cfg(feature = "ext_tensors")]
+#[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetTensorViewOpaqueCaptureDescriptorDataARM.html>"]
 #[doc(alias = "vkGetTensorViewOpaqueCaptureDescriptorDataARM")]
 #[inline]
@@ -13021,7 +13231,7 @@ pub unsafe fn cmd_bind_shaders_ext<'a, V3: Alias<raw::ShaderEXT> + 'a>(
         p_shaders.as_slice().as_ptr().cast(),
     )
 }
-#[cfg(any(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
+#[cfg(all(feature = "ext_shader_object", feature = "ext_depth_clamp_control"))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDepthClampRangeEXT.html>"]
 #[doc(alias = "vkCmdSetDepthClampRangeEXT")]
 #[inline]
@@ -13832,7 +14042,7 @@ pub unsafe fn get_physical_device_calibrateable_time_domains_ext<R: DynamicArray
         vk_vec
     })
 }
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdSetDescriptorBufferOffsets2EXT.html>"]
 #[doc(alias = "vkCmdSetDescriptorBufferOffsets2EXT")]
 #[inline]
@@ -13847,7 +14057,7 @@ pub unsafe fn cmd_set_descriptor_buffer_offsets2_ext(
         ptr::from_ref(p_set_descriptor_buffer_offsets_info),
     )
 }
-#[cfg(feature = "ext_maintenance6")]
+#[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindDescriptorBufferEmbeddedSamplers2EXT.html>"]
 #[doc(alias = "vkCmdBindDescriptorBufferEmbeddedSamplers2EXT")]
 #[inline]
