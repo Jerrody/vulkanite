@@ -912,6 +912,17 @@ impl<'a> Generator<'a> {
             my_struct.add_or(Dependencies::Single("VK_VERSION_1_1"));
         }
 
+        // VkBlendOverlapEXT is defined by VK_EXT_blend_operation_advanced but used by VK_EXT_extended_dynamic_state3 / VK_EXT_shader_object
+        // I believe this is a bug in the spec..
+        {
+            let my_enum = self
+                .get_enum("VkBlendOverlapEXT")
+                .context("Failed to find enum")?;
+            let mut deps = my_enum.dependencies.borrow_mut();
+            deps.add_or(Dependencies::Single("extended_dynamic_state3"));
+            deps.add_or(Dependencies::Single("shader_object"));
+        }
+
         Ok(())
     }
 

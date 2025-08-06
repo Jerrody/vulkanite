@@ -4872,7 +4872,11 @@ bitflags! {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VK_SHADER_INDEX_UNUSED_AMDX.html>"]
 #[doc(alias = "VK_SHADER_INDEX_UNUSED_AMDX")]
 pub const SHADER_INDEX_UNUSED_AMDX: u32 = !0u32;
-#[cfg(feature = "ext_blend_operation_advanced")]
+#[cfg(any(
+    feature = "ext_blend_operation_advanced",
+    feature = "ext_extended_dynamic_state3",
+    feature = "ext_shader_object"
+))]
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBlendOverlapEXT.html>"]
 #[doc(alias = "VkBlendOverlapEXT")]
