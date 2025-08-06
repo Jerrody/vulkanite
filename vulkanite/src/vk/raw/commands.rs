@@ -11302,7 +11302,7 @@ pub unsafe fn cmd_set_vertex_input_ext<'a>(
         p_vertex_attribute_descriptions.as_slice().as_ptr().cast(),
     )
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetMemoryZirconHandleFUCHSIA.html>"]
 #[doc(alias = "vkGetMemoryZirconHandleFUCHSIA")]
 pub unsafe fn get_memory_zircon_handle_fuchsia(
@@ -11319,7 +11319,7 @@ pub unsafe fn get_memory_zircon_handle_fuchsia(
     );
     vk_status.map_success(|| p_zircon_handle.assume_init())
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetMemoryZirconHandlePropertiesFUCHSIA.html>"]
 #[doc(alias = "vkGetMemoryZirconHandlePropertiesFUCHSIA")]
 pub unsafe fn get_memory_zircon_handle_properties_fuchsia<
@@ -11344,7 +11344,7 @@ pub unsafe fn get_memory_zircon_handle_properties_fuchsia<
         p_memory_zircon_handle_properties.assume_init()
     })
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkImportSemaphoreZirconHandleFUCHSIA.html>"]
 #[doc(alias = "vkImportSemaphoreZirconHandleFUCHSIA")]
 #[inline]
@@ -11360,7 +11360,7 @@ pub unsafe fn import_semaphore_zircon_handle_fuchsia(
     )
     .map_success(|| ())
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetSemaphoreZirconHandleFUCHSIA.html>"]
 #[doc(alias = "vkGetSemaphoreZirconHandleFUCHSIA")]
 pub unsafe fn get_semaphore_zircon_handle_fuchsia(
@@ -14390,7 +14390,7 @@ pub unsafe fn update_indirect_execution_set_shader_ext<'a>(
         p_execution_set_writes.as_slice().as_ptr().cast(),
     )
 }
-#[cfg(feature = "ext_surface")]
+#[cfg(feature = "ext_ohos_surface")]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateSurfaceOHOS.html>"]
 #[doc(alias = "vkCreateSurfaceOHOS")]
 pub unsafe fn create_surface_ohos(

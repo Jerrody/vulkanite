@@ -19,6 +19,13 @@ pub enum Api {
     //VulkanSc
 }
 
+pub struct ExtFeature<'a> {
+    pub name: String,
+    pub is_non_trivial: Cell<bool>,
+    // Extensions/Features this depends on
+    pub dependencies: Dependencies<'a>,
+}
+
 pub struct Enum<'a> {
     pub name: String,
     pub bitflag: bool,
@@ -918,6 +925,21 @@ impl<'a> Dependencies<'a> {
 }
 
 pub fn remove_ext_prefix(name: &str) -> &str {
+    // Some extensions only have a different vendor while they provide
+    // completely different functionalities, so handle them separately
+    for (ext_name, ret) in [
+        ("VK_OHOS_surface", "ohos_surface"),
+        ("VK_FUCHSIA_external_memory", "fuchsia_external_memory"),
+        (
+            "VK_FUCHSIA_external_semaphore",
+            "fuchsia_external_semaphore",
+        ),
+    ] {
+        if name == ext_name {
+            return ret;
+        }
+    }
+
     name.strip_prefix("VK_")
         .and_then(|n| n.split_once('_'))
         .map(|(_, s)| s)

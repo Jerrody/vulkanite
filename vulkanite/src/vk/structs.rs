@@ -53665,7 +53665,7 @@ impl<'a> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
         self
     }
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMemoryZirconHandleInfoFUCHSIA.html>"]
 #[doc(alias = "VkImportMemoryZirconHandleInfoFUCHSIA")]
@@ -53676,22 +53676,22 @@ pub struct ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     pub handle: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> ExtendableStructureBase for ImportMemoryZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> ExtendableStructure for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ImportMemoryZirconHandleInfoFUCHSIA;
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> Send for ImportMemoryZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> Sync for ImportMemoryZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(all(feature = "ext_external_memory",))]
+#[cfg(all(feature = "ext_fuchsia_external_memory",))]
 unsafe impl<'a, 'b> ExtendingStructure<MemoryAllocateInfo<'b>>
     for ImportMemoryZirconHandleInfoFUCHSIA<'a>
 {
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 impl<'a> Default for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     fn default() -> Self {
         Self {
@@ -53703,7 +53703,7 @@ impl<'a> Default for ImportMemoryZirconHandleInfoFUCHSIA<'a> {
         }
     }
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 impl<'a> ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     #[inline]
     pub fn handle_type(mut self, value: ExternalMemoryHandleTypeFlags) -> Self {
@@ -53721,7 +53721,7 @@ impl<'a> ImportMemoryZirconHandleInfoFUCHSIA<'a> {
         self
     }
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryZirconHandlePropertiesFUCHSIA.html>"]
 #[doc(alias = "VkMemoryZirconHandlePropertiesFUCHSIA")]
@@ -53731,17 +53731,17 @@ pub struct MemoryZirconHandlePropertiesFUCHSIA<'a> {
     pub memory_type_bits: u32,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> ExtendableStructureBase for MemoryZirconHandlePropertiesFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> ExtendableStructure for MemoryZirconHandlePropertiesFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MemoryZirconHandlePropertiesFUCHSIA;
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> Send for MemoryZirconHandlePropertiesFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> Sync for MemoryZirconHandlePropertiesFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 impl<'a> Default for MemoryZirconHandlePropertiesFUCHSIA<'a> {
     fn default() -> Self {
         Self {
@@ -53752,7 +53752,7 @@ impl<'a> Default for MemoryZirconHandlePropertiesFUCHSIA<'a> {
         }
     }
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
     #[inline]
     pub fn memory_type_bits(mut self, value: u32) -> Self {
@@ -53765,7 +53765,7 @@ impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
         self
     }
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryGetZirconHandleInfoFUCHSIA.html>"]
 #[doc(alias = "VkMemoryGetZirconHandleInfoFUCHSIA")]
@@ -53776,17 +53776,17 @@ pub struct MemoryGetZirconHandleInfoFUCHSIA<'a> {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> ExtendableStructureBase for MemoryGetZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> ExtendableStructure for MemoryGetZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::MemoryGetZirconHandleInfoFUCHSIA;
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> Send for MemoryGetZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> Sync for MemoryGetZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 impl<'a> Default for MemoryGetZirconHandleInfoFUCHSIA<'a> {
     fn default() -> Self {
         Self {
@@ -53798,7 +53798,7 @@ impl<'a> Default for MemoryGetZirconHandleInfoFUCHSIA<'a> {
         }
     }
 }
-#[cfg(feature = "ext_external_memory")]
+#[cfg(feature = "ext_fuchsia_external_memory")]
 impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
     #[inline]
     pub fn memory(mut self, value: &'a raw::DeviceMemory) -> Self {
@@ -53816,7 +53816,7 @@ impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
         self
     }
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportSemaphoreZirconHandleInfoFUCHSIA.html>"]
 #[doc(alias = "VkImportSemaphoreZirconHandleInfoFUCHSIA")]
@@ -53829,17 +53829,17 @@ pub struct ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     pub zircon_handle: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> ExtendableStructureBase for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> ExtendableStructure for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::ImportSemaphoreZirconHandleInfoFUCHSIA;
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> Send for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> Sync for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 impl<'a> Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     fn default() -> Self {
         Self {
@@ -53853,7 +53853,7 @@ impl<'a> Default for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
         }
     }
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
@@ -53881,7 +53881,7 @@ impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
         self
     }
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSemaphoreGetZirconHandleInfoFUCHSIA.html>"]
 #[doc(alias = "VkSemaphoreGetZirconHandleInfoFUCHSIA")]
@@ -53892,17 +53892,17 @@ pub struct SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> ExtendableStructureBase for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> ExtendableStructure for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::SemaphoreGetZirconHandleInfoFUCHSIA;
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> Send for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> Sync for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {}
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 impl<'a> Default for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     fn default() -> Self {
         Self {
@@ -53914,7 +53914,7 @@ impl<'a> Default for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
         }
     }
 }
-#[cfg(feature = "ext_external_semaphore")]
+#[cfg(feature = "ext_fuchsia_external_semaphore")]
 impl<'a> SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     #[inline]
     pub fn semaphore(mut self, value: &'a raw::Semaphore) -> Self {
@@ -70823,7 +70823,10 @@ impl<'a> PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
         self
     }
 }
-# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
+#[cfg(all(
+    feature = "ext_unified_image_layouts",
+    all(any(feature = "version_1_3", feature = "ext_dynamic_rendering"))
+))]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAttachmentFeedbackLoopInfoEXT.html>"]
 #[doc(alias = "VkAttachmentFeedbackLoopInfoEXT")]
@@ -70833,22 +70836,43 @@ pub struct AttachmentFeedbackLoopInfoEXT<'a> {
     pub feedback_loop_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
-# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
+#[cfg(all(
+    feature = "ext_unified_image_layouts",
+    all(any(feature = "version_1_3", feature = "ext_dynamic_rendering"))
+))]
 unsafe impl<'a> ExtendableStructureBase for AttachmentFeedbackLoopInfoEXT<'a> {}
-# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
+#[cfg(all(
+    feature = "ext_unified_image_layouts",
+    all(any(feature = "version_1_3", feature = "ext_dynamic_rendering"))
+))]
 unsafe impl<'a> ExtendableStructure for AttachmentFeedbackLoopInfoEXT<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::AttachmentFeedbackLoopInfoEXT;
 }
-# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
+#[cfg(all(
+    feature = "ext_unified_image_layouts",
+    all(any(feature = "version_1_3", feature = "ext_dynamic_rendering"))
+))]
 unsafe impl<'a> Send for AttachmentFeedbackLoopInfoEXT<'a> {}
-# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
+#[cfg(all(
+    feature = "ext_unified_image_layouts",
+    all(any(feature = "version_1_3", feature = "ext_dynamic_rendering"))
+))]
 unsafe impl<'a> Sync for AttachmentFeedbackLoopInfoEXT<'a> {}
-# [cfg (all (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))) , any (feature = "ext_dynamic_rendering" , feature = "version_1_3")))]
+#[cfg(all(
+    all(
+        feature = "ext_unified_image_layouts",
+        all(any(feature = "version_1_3", feature = "ext_dynamic_rendering"))
+    ),
+    any(feature = "ext_dynamic_rendering", feature = "version_1_3")
+))]
 unsafe impl<'a, 'b> ExtendingStructure<RenderingAttachmentInfo<'b>>
     for AttachmentFeedbackLoopInfoEXT<'a>
 {
 }
-# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
+#[cfg(all(
+    feature = "ext_unified_image_layouts",
+    all(any(feature = "version_1_3", feature = "ext_dynamic_rendering"))
+))]
 impl<'a> Default for AttachmentFeedbackLoopInfoEXT<'a> {
     fn default() -> Self {
         Self {
@@ -70859,7 +70883,10 @@ impl<'a> Default for AttachmentFeedbackLoopInfoEXT<'a> {
         }
     }
 }
-# [cfg (all (feature = "ext_unified_image_layouts" , all (, any (feature = "version_1_3" , feature = "ext_dynamic_rendering"))))]
+#[cfg(all(
+    feature = "ext_unified_image_layouts",
+    all(any(feature = "version_1_3", feature = "ext_dynamic_rendering"))
+))]
 impl<'a> AttachmentFeedbackLoopInfoEXT<'a> {
     #[inline]
     pub fn feedback_loop_enable(mut self, value: impl Into<Bool32>) -> Self {
@@ -76618,7 +76645,7 @@ impl<'a> QueueFamilyOwnershipTransferPropertiesKHR<'a> {
         self
     }
 }
-#[cfg(feature = "ext_surface")]
+#[cfg(feature = "ext_ohos_surface")]
 #[repr(C)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOHSurfaceCreateInfoOHOS.html>"]
 #[doc(alias = "VkOHSurfaceCreateInfoOHOS")]
@@ -76629,17 +76656,17 @@ pub struct OHSurfaceCreateInfoOHOS<'a> {
     pub window: *const OHNativeWindow,
     phantom: PhantomData<&'a ()>,
 }
-#[cfg(feature = "ext_surface")]
+#[cfg(feature = "ext_ohos_surface")]
 unsafe impl<'a> ExtendableStructureBase for OHSurfaceCreateInfoOHOS<'a> {}
-#[cfg(feature = "ext_surface")]
+#[cfg(feature = "ext_ohos_surface")]
 unsafe impl<'a> ExtendableStructure for OHSurfaceCreateInfoOHOS<'a> {
     const STRUCTURE_TYPE: StructureType = StructureType::OhSurfaceCreateInfoOHOS;
 }
-#[cfg(feature = "ext_surface")]
+#[cfg(feature = "ext_ohos_surface")]
 unsafe impl<'a> Send for OHSurfaceCreateInfoOHOS<'a> {}
-#[cfg(feature = "ext_surface")]
+#[cfg(feature = "ext_ohos_surface")]
 unsafe impl<'a> Sync for OHSurfaceCreateInfoOHOS<'a> {}
-#[cfg(feature = "ext_surface")]
+#[cfg(feature = "ext_ohos_surface")]
 impl<'a> Default for OHSurfaceCreateInfoOHOS<'a> {
     fn default() -> Self {
         Self {
@@ -76651,7 +76678,7 @@ impl<'a> Default for OHSurfaceCreateInfoOHOS<'a> {
         }
     }
 }
-#[cfg(feature = "ext_surface")]
+#[cfg(feature = "ext_ohos_surface")]
 impl<'a> OHSurfaceCreateInfoOHOS<'a> {
     #[inline]
     pub fn flags(mut self, value: u32) -> Self {
@@ -76669,7 +76696,7 @@ impl<'a> OHSurfaceCreateInfoOHOS<'a> {
         self
     }
 }
-#[cfg(feature = "ext_surface")]
+#[cfg(feature = "ext_ohos_surface")]
 pub type SurfaceCreateInfoOHOS<'a> = OHSurfaceCreateInfoOHOS<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/OHNativeWindow.html>"]
 pub type OHNativeWindow = c_void;

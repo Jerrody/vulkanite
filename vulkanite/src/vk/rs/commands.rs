@@ -578,7 +578,7 @@ impl<D: Dispatcher, A: Allocator> Instance<D, A> {
         };
         vk_result.map(|vk_result| unsafe { SurfaceKHR::from_inner(vk_result) })
     }
-    #[cfg(feature = "ext_surface")]
+    #[cfg(feature = "ext_ohos_surface")]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCreateSurfaceOHOS.html>"]
     #[doc(alias = "vkCreateSurfaceOHOS")]
     #[inline]
@@ -5931,7 +5931,7 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_external_memory")]
+    #[cfg(feature = "ext_fuchsia_external_memory")]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetMemoryZirconHandleFUCHSIA.html>"]
     #[doc(alias = "vkGetMemoryZirconHandleFUCHSIA")]
     #[inline]
@@ -5947,7 +5947,7 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_external_memory")]
+    #[cfg(feature = "ext_fuchsia_external_memory")]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetMemoryZirconHandlePropertiesFUCHSIA.html>"]
     #[doc(alias = "vkGetMemoryZirconHandlePropertiesFUCHSIA")]
     pub fn get_memory_zircon_handle_properties_fuchsia<
@@ -5966,7 +5966,7 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_external_semaphore")]
+    #[cfg(feature = "ext_fuchsia_external_semaphore")]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkImportSemaphoreZirconHandleFUCHSIA.html>"]
     #[doc(alias = "vkImportSemaphoreZirconHandleFUCHSIA")]
     #[inline]
@@ -5982,7 +5982,7 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
             )
         }
     }
-    #[cfg(feature = "ext_external_semaphore")]
+    #[cfg(feature = "ext_fuchsia_external_semaphore")]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkGetSemaphoreZirconHandleFUCHSIA.html>"]
     #[doc(alias = "vkGetSemaphoreZirconHandleFUCHSIA")]
     #[inline]

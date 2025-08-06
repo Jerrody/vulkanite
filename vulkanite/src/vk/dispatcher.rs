@@ -4720,7 +4720,7 @@ pub struct CommandsDispatcher {
             *const VertexInputAttributeDescription2EXT,
         ),
     >,
-    #[cfg(feature = "ext_external_memory")]
+    #[cfg(feature = "ext_fuchsia_external_memory")]
     pub get_memory_zircon_handle_fuchsia: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -4728,7 +4728,7 @@ pub struct CommandsDispatcher {
             *const VoidPtr,
         ) -> Status,
     >,
-    #[cfg(feature = "ext_external_memory")]
+    #[cfg(feature = "ext_fuchsia_external_memory")]
     pub get_memory_zircon_handle_properties_fuchsia: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -4737,14 +4737,14 @@ pub struct CommandsDispatcher {
             *const MemoryZirconHandlePropertiesFUCHSIA,
         ) -> Status,
     >,
-    #[cfg(feature = "ext_external_semaphore")]
+    #[cfg(feature = "ext_fuchsia_external_semaphore")]
     pub import_semaphore_zircon_handle_fuchsia: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
             *const ImportSemaphoreZirconHandleInfoFUCHSIA,
         ) -> Status,
     >,
-    #[cfg(feature = "ext_external_semaphore")]
+    #[cfg(feature = "ext_fuchsia_external_semaphore")]
     pub get_semaphore_zircon_handle_fuchsia: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Device>>,
@@ -6050,7 +6050,7 @@ pub struct CommandsDispatcher {
             *const WriteIndirectExecutionSetShaderEXT,
         ),
     >,
-    #[cfg(feature = "ext_surface")]
+    #[cfg(feature = "ext_ohos_surface")]
     pub create_surface_ohos: Cell<
         unsafe extern "system" fn(
             Option<BorrowedHandle<'_, Instance>>,
@@ -12343,7 +12343,7 @@ impl CommandsDispatcher {
             }
             self.cmd_set_vertex_input_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_external_memory")]
+        #[cfg(feature = "ext_fuchsia_external_memory")]
         {
             let mut vk_func_ptr = self.get_memory_zircon_handle_fuchsia.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12355,7 +12355,7 @@ impl CommandsDispatcher {
             }
             self.get_memory_zircon_handle_fuchsia.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_external_memory")]
+        #[cfg(feature = "ext_fuchsia_external_memory")]
         {
             let mut vk_func_ptr = self.get_memory_zircon_handle_properties_fuchsia.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12368,7 +12368,7 @@ impl CommandsDispatcher {
             self.get_memory_zircon_handle_properties_fuchsia
                 .set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_external_semaphore")]
+        #[cfg(feature = "ext_fuchsia_external_semaphore")]
         {
             let mut vk_func_ptr = self.import_semaphore_zircon_handle_fuchsia.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -12380,7 +12380,7 @@ impl CommandsDispatcher {
             }
             self.import_semaphore_zircon_handle_fuchsia.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_external_semaphore")]
+        #[cfg(feature = "ext_fuchsia_external_semaphore")]
         {
             let mut vk_func_ptr = self.get_semaphore_zircon_handle_fuchsia.get();
             let loaded_ptr = get_instance_proc_addr(
@@ -14400,7 +14400,7 @@ impl CommandsDispatcher {
             self.update_indirect_execution_set_shader_ext
                 .set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_surface")]
+        #[cfg(feature = "ext_ohos_surface")]
         {
             let mut vk_func_ptr = self.create_surface_ohos.get();
             let loaded_ptr =
@@ -19370,7 +19370,7 @@ impl CommandsDispatcher {
             }
             self.cmd_set_vertex_input_ext.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_external_memory")]
+        #[cfg(feature = "ext_fuchsia_external_memory")]
         {
             let mut vk_func_ptr = self.get_memory_zircon_handle_fuchsia.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19382,7 +19382,7 @@ impl CommandsDispatcher {
             }
             self.get_memory_zircon_handle_fuchsia.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_external_memory")]
+        #[cfg(feature = "ext_fuchsia_external_memory")]
         {
             let mut vk_func_ptr = self.get_memory_zircon_handle_properties_fuchsia.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19395,7 +19395,7 @@ impl CommandsDispatcher {
             self.get_memory_zircon_handle_properties_fuchsia
                 .set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_external_semaphore")]
+        #[cfg(feature = "ext_fuchsia_external_semaphore")]
         {
             let mut vk_func_ptr = self.import_semaphore_zircon_handle_fuchsia.get();
             let loaded_ptr = get_device_proc_addr(
@@ -19407,7 +19407,7 @@ impl CommandsDispatcher {
             }
             self.import_semaphore_zircon_handle_fuchsia.set(vk_func_ptr);
         }
-        #[cfg(feature = "ext_external_semaphore")]
+        #[cfg(feature = "ext_fuchsia_external_semaphore")]
         {
             let mut vk_func_ptr = self.get_semaphore_zircon_handle_fuchsia.get();
             let loaded_ptr = get_device_proc_addr(
@@ -22696,13 +22696,13 @@ impl CommandsDispatcher {
                     feature = "ext_shader_object"
                 ))]
                 cmd_set_vertex_input_ext: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_external_memory")]
+                #[cfg(feature = "ext_fuchsia_external_memory")]
                 get_memory_zircon_handle_fuchsia: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_external_memory")]
+                #[cfg(feature = "ext_fuchsia_external_memory")]
                 get_memory_zircon_handle_properties_fuchsia: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_external_semaphore")]
+                #[cfg(feature = "ext_fuchsia_external_semaphore")]
                 import_semaphore_zircon_handle_fuchsia: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_external_semaphore")]
+                #[cfg(feature = "ext_fuchsia_external_semaphore")]
                 get_semaphore_zircon_handle_fuchsia: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_buffer_collection")]
                 create_buffer_collection_fuchsia: Cell::new(mem::transmute(unload_cmd)),
@@ -23255,7 +23255,7 @@ impl CommandsDispatcher {
                 update_indirect_execution_set_pipeline_ext: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_device_generated_commands")]
                 update_indirect_execution_set_shader_ext: Cell::new(mem::transmute(unload_cmd)),
-                #[cfg(feature = "ext_surface")]
+                #[cfg(feature = "ext_ohos_surface")]
                 create_surface_ohos: Cell::new(mem::transmute(unload_cmd)),
                 #[cfg(feature = "ext_cooperative_matrix2")]
                 get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv: Cell::new(
@@ -27346,7 +27346,7 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_external_memory")]
+        #[cfg(feature = "ext_fuchsia_external_memory")]
         extern "system" fn get_memory_zircon_handle_fuchsia(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const MemoryGetZirconHandleInfoFUCHSIA,
@@ -27354,7 +27354,7 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_external_memory")]
+        #[cfg(feature = "ext_fuchsia_external_memory")]
         extern "system" fn get_memory_zircon_handle_properties_fuchsia(
             _: Option<BorrowedHandle<'_, Device>>,
             _: ExternalMemoryHandleTypeFlags,
@@ -27363,14 +27363,14 @@ impl CommandsDispatcher {
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_external_semaphore")]
+        #[cfg(feature = "ext_fuchsia_external_semaphore")]
         extern "system" fn import_semaphore_zircon_handle_fuchsia(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const ImportSemaphoreZirconHandleInfoFUCHSIA,
         ) -> Status {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_external_semaphore")]
+        #[cfg(feature = "ext_fuchsia_external_semaphore")]
         extern "system" fn get_semaphore_zircon_handle_fuchsia(
             _: Option<BorrowedHandle<'_, Device>>,
             _: *const SemaphoreGetZirconHandleInfoFUCHSIA,
@@ -28759,7 +28759,7 @@ impl CommandsDispatcher {
         ) {
             panic!("Trying to call an unloaded Vulkan command");
         }
-        #[cfg(feature = "ext_surface")]
+        #[cfg(feature = "ext_ohos_surface")]
         extern "system" fn create_surface_ohos(
             _: Option<BorrowedHandle<'_, Instance>>,
             _: *const SurfaceCreateInfoOHOS,
@@ -30294,17 +30294,17 @@ impl CommandsDispatcher {
                 feature = "ext_shader_object"
             ))]
             cmd_set_vertex_input_ext: Cell::new(cmd_set_vertex_input_ext),
-            #[cfg(feature = "ext_external_memory")]
+            #[cfg(feature = "ext_fuchsia_external_memory")]
             get_memory_zircon_handle_fuchsia: Cell::new(get_memory_zircon_handle_fuchsia),
-            #[cfg(feature = "ext_external_memory")]
+            #[cfg(feature = "ext_fuchsia_external_memory")]
             get_memory_zircon_handle_properties_fuchsia: Cell::new(
                 get_memory_zircon_handle_properties_fuchsia,
             ),
-            #[cfg(feature = "ext_external_semaphore")]
+            #[cfg(feature = "ext_fuchsia_external_semaphore")]
             import_semaphore_zircon_handle_fuchsia: Cell::new(
                 import_semaphore_zircon_handle_fuchsia,
             ),
-            #[cfg(feature = "ext_external_semaphore")]
+            #[cfg(feature = "ext_fuchsia_external_semaphore")]
             get_semaphore_zircon_handle_fuchsia: Cell::new(get_semaphore_zircon_handle_fuchsia),
             #[cfg(feature = "ext_buffer_collection")]
             create_buffer_collection_fuchsia: Cell::new(create_buffer_collection_fuchsia),
@@ -30864,7 +30864,7 @@ impl CommandsDispatcher {
             update_indirect_execution_set_shader_ext: Cell::new(
                 update_indirect_execution_set_shader_ext,
             ),
-            #[cfg(feature = "ext_surface")]
+            #[cfg(feature = "ext_ohos_surface")]
             create_surface_ohos: Cell::new(create_surface_ohos),
             #[cfg(feature = "ext_cooperative_matrix2")]
             get_physical_device_cooperative_matrix_flexible_dimensions_properties_nv: Cell::new(

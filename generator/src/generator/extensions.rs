@@ -1,4 +1,4 @@
-use std::ffi::CString;
+use std::{collections::HashSet, ffi::CString};
 
 use anyhow::{bail, Context, Result};
 use proc_macro2::Span;
@@ -30,6 +30,8 @@ pub fn generate(gen: &Generator) -> Result<String> {
         .map(|v| v.parse::<u32>().ok())
         .unwrap_or_default()
         .context("Failed to find VK_HEADER_VERSION")?;
+
+    let mut extensions_deps_checked = HashSet::new();
 
     let extensions = gen
         .filtered_extensions()
@@ -82,9 +84,27 @@ pub fn generate(gen: &Generator) -> Result<String> {
                 .extensions_features
                 .get(remove_ext_prefix(&ext.name))
                 .context("Failed to find extension")?;
+            let feat_name = &ext_feature.name;
             let config = ext_feature.is_non_trivial.get().then(|| {
-                let feat_name = &ext_feature.name;
                 quote! { #[cfg(feature = #feat_name)] }
+            });
+
+            let dep_check = (ext_feature.is_non_trivial.get()
+                && extensions_deps_checked.insert(feat_name)
+                && !gen.has_trivial_dep(&ext_feature.dependencies))
+            .then(|| {
+                let dep_inner = gen.get_config_feature_inner(&ext_feature.dependencies);
+                let config_readable = gen
+                    .get_config_readable(&ext_feature.dependencies)
+                    .unwrap_or_default();
+                let error_msg = format!(
+                    "The feature {} requires {} to be enabled.",
+                    feat_name, config_readable
+                );
+                quote! {
+                    #[cfg(all(feature = #feat_name, not(#dep_inner)))]
+                    compile_error!(#error_msg);
+                }
             });
 
             Ok(quote! {
@@ -93,6 +113,7 @@ pub fn generate(gen: &Generator) -> Result<String> {
                     name: unsafe {#name_class::new(#ext_name)},
                     spec: #spec_version
                 };
+                #dep_check
             })
         })
         .collect::<Result<Vec<_>>>()?;

@@ -1,6 +1,6 @@
 use std::{
     borrow::{Borrow, Cow},
-    cell::{Cell, RefCell},
+    cell::RefCell,
     collections::HashMap,
     io::Write,
     ops::Deref,
@@ -16,7 +16,7 @@ use crate::{
     structs::{
         convert_field_to_snake_case, remove_ext_prefix, AdvancedType, Api, CType, Command,
         CommandParam, CommandParamsParsed, Constant, Dependencies, Enum, EnumAliased, EnumFlag,
-        EnumValue, EnumVariant, Handle, MappingEntry, MappingType, SliceType, Struct,
+        EnumValue, EnumVariant, ExtFeature, Handle, MappingEntry, MappingType, SliceType, Struct,
         StructBasetype, StructStandard, Type,
     },
     xml,
@@ -37,15 +37,10 @@ pub enum GeneratedCommandType {
     Basic,
 }
 
-struct ExtFeature {
-    name: String,
-    is_non_trivial: Cell<bool>,
-}
-
 pub struct Generator<'a> {
     registry: &'a xml::Registry,
     vendor_names: Vec<&'a str>,
-    extensions_features: HashMap<&'a str, ExtFeature>,
+    extensions_features: HashMap<&'a str, ExtFeature<'a>>,
     enums: HashMap<&'a str, Enum<'a>>,
     constants: HashMap<&'a str, Constant<'a>>,
     handles: HashMap<&'a str, Handle<'a>>,
@@ -70,7 +65,7 @@ impl<'a> Generator<'a> {
         }
 
         let features_list = Self::filter_features(&registry.features).map(|feat| {
-            (
+            Ok((
                 feat.name.deref(),
                 ExtFeature {
                     name: feat
@@ -79,20 +74,30 @@ impl<'a> Generator<'a> {
                         .unwrap_or("INVALID_FEATURE_NAME")
                         .to_ascii_lowercase(),
                     is_non_trivial: false.into(),
+                    dependencies: Dependencies::None,
                 },
-            )
+            ))
         });
         let extensions_list = Self::filter_extensions(&registry.extensions).map(|ext| {
             let ext_simplified = remove_ext_prefix(&ext.name);
-            (
+            let dependencies = ext
+                .depends
+                .as_ref()
+                .map(|dep| Dependencies::parse(&dep))
+                .transpose()?
+                .unwrap_or_default();
+            Ok((
                 ext_simplified,
                 ExtFeature {
                     name: format!("ext_{ext_simplified}"),
                     is_non_trivial: false.into(),
+                    dependencies,
                 },
-            )
+            ))
         });
-        let extensions_features = features_list.chain(extensions_list).collect();
+        let extensions_features = features_list
+            .chain(extensions_list)
+            .collect::<Result<_>>()?;
 
         let vendor_names: Vec<_> = registry
             .tags
@@ -1779,6 +1784,27 @@ impl<'a> Generator<'a> {
         }
     }
 
+    fn get_config_readable(&self, dependencies: &Dependencies) -> Option<String> {
+        match dependencies {
+            Dependencies::None => None,
+            Dependencies::Single(dep) => self
+                .extensions_features
+                .borrow()
+                .get(dep)
+                .map(|feat| feat.name.clone()),
+            Dependencies::Or(deps) => {
+                let deps_cnf = deps.iter().filter_map(|dep| self.get_config_readable(dep));
+                let res: String = deps_cnf.collect::<Vec<_>>().join(" or ").into();
+                Some(format!("({res})"))
+            }
+            Dependencies::And(deps) => {
+                let deps_cnf = deps.iter().filter_map(|dep| self.get_config_readable(dep));
+                let res: String = deps_cnf.collect::<Vec<_>>().join(" and ").into();
+                Some(format!("({res})"))
+            }
+        }
+    }
+
     fn get_config_feature_inner(&self, dependencies: &Dependencies) -> Option<TokenStream> {
         // Note: This is really inefficient (quadratic complexity)
         if self.has_trivial_dep(dependencies) {
@@ -1794,7 +1820,9 @@ impl<'a> Generator<'a> {
                 }
             }),
             Dependencies::Or(deps) => {
-                let deps_cnf = deps.iter().map(|dep| self.get_config_feature_inner(dep));
+                let deps_cnf = deps
+                    .iter()
+                    .filter_map(|dep| self.get_config_feature_inner(dep));
                 Some(quote! {
                     any(
                         #(#deps_cnf),*
@@ -1802,7 +1830,9 @@ impl<'a> Generator<'a> {
                 })
             }
             Dependencies::And(deps) => {
-                let deps_cnf = deps.iter().map(|dep| self.get_config_feature_inner(dep));
+                let deps_cnf = deps
+                    .iter()
+                    .filter_map(|dep| self.get_config_feature_inner(dep));
                 Some(quote! {
                     all(
                         #(#deps_cnf),*
