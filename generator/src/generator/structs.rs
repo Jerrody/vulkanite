@@ -185,12 +185,12 @@ fn generate_struct<'a>(
             let (ty_name, vis, default_impl) = match field.vk_name {
                 "sType" if my_struct.s_type.is_some() => (
                     quote!(StructureType),
-                    quote! (pub(crate)),
+                    quote!(pub),
                     quote! {#field_name: Self::STRUCTURE_TYPE},
                 ),
                 "pNext" if my_struct.s_type.is_some() => (
                     quote!(Cell<*const Header>),
-                    quote! (pub(crate)),
+                    quote!(pub),
                     quote! {p_next: Cell::new(ptr::null())},
                 ),
                 _ => {
@@ -207,15 +207,7 @@ fn generate_struct<'a>(
                     if my_struct.is_union && gen.compute_type_lifetime(&field.ty) {
                         ty_inner = quote! (ManuallyDrop<#ty_inner>)
                     };
-                    (
-                        ty_inner,
-                        if my_struct.is_union || simple_fields.get(field.vk_name).is_some() {
-                            quote!(pub)
-                        } else {
-                            quote! (pub(crate))
-                        },
-                        quote! (#field_name: #default_value),
-                    )
+                    (ty_inner, quote!(pub), quote! (#field_name: #default_value))
                 }
             };
             Ok((quote! {#vis #field_name: #ty_name,}, default_impl))

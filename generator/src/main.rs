@@ -12,7 +12,7 @@ mod structs;
 mod xml;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let file = std::fs::File::open("../vk.xml")?;
+    let file = std::fs::File::open("generator/vk.xml")?;
     let reader = BufReader::new(file);
     let registry: Registry = from_reader(reader)?;
 

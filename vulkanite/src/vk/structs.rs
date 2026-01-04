@@ -248,8 +248,8 @@ impl<'a> BaseOutStructure<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferMemoryBarrier.html>"]
 #[doc(alias = "VkBufferMemoryBarrier")]
 pub struct BufferMemoryBarrier<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
     pub src_queue_family_index: u32,
@@ -459,8 +459,8 @@ impl DrawIndirectCommand {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageMemoryBarrier.html>"]
 #[doc(alias = "VkImageMemoryBarrier")]
 pub struct ImageMemoryBarrier<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
     pub old_layout: ImageLayout,
@@ -545,8 +545,8 @@ impl<'a> ImageMemoryBarrier<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryBarrier.html>"]
 #[doc(alias = "VkMemoryBarrier")]
 pub struct MemoryBarrier<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
     phantom: PhantomData<&'a ()>,
@@ -698,8 +698,8 @@ impl AllocationCallbacks {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkApplicationInfo.html>"]
 #[doc(alias = "VkApplicationInfo")]
 pub struct ApplicationInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_application_name: *const c_char,
     pub application_version: u32,
     pub p_engine_name: *const c_char,
@@ -851,14 +851,14 @@ impl ImageFormatProperties {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkInstanceCreateInfo.html>"]
 #[doc(alias = "VkInstanceCreateInfo")]
 pub struct InstanceCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: InstanceCreateFlags,
     pub p_application_info: *const ApplicationInfo<'a>,
-    pub(crate) enabled_layer_count: u32,
-    pub(crate) pp_enabled_layer_names: *const *const c_char,
-    pub(crate) enabled_extension_count: u32,
-    pub(crate) pp_enabled_extension_names: *const InstanceExtensionName,
+    pub enabled_layer_count: u32,
+    pub pp_enabled_layer_names: *const *const c_char,
+    pub enabled_extension_count: u32,
+    pub pp_enabled_extension_names: *const InstanceExtensionName,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for InstanceCreateInfo<'a> {}
@@ -2169,10 +2169,10 @@ impl PhysicalDeviceLimits {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMemoryProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceMemoryProperties")]
 pub struct PhysicalDeviceMemoryProperties {
-    pub(crate) memory_type_count: u32,
-    pub(crate) memory_types: [MemoryType; MAX_MEMORY_TYPES as _],
-    pub(crate) memory_heap_count: u32,
-    pub(crate) memory_heaps: [MemoryHeap; MAX_MEMORY_HEAPS as _],
+    pub memory_type_count: u32,
+    pub memory_types: [MemoryType; MAX_MEMORY_TYPES as _],
+    pub memory_heap_count: u32,
+    pub memory_heaps: [MemoryHeap; MAX_MEMORY_HEAPS as _],
 }
 unsafe impl Send for PhysicalDeviceMemoryProperties {}
 unsafe impl Sync for PhysicalDeviceMemoryProperties {}
@@ -2206,7 +2206,7 @@ pub struct PhysicalDeviceProperties {
     pub vendor_id: u32,
     pub device_id: u32,
     pub device_type: PhysicalDeviceType,
-    pub(crate) device_name: [c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE as _],
+    pub device_name: [c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE as _],
     pub pipeline_cache_uuid: [u8; UUID_SIZE as _],
     pub limits: PhysicalDeviceLimits,
     pub sparse_properties: PhysicalDeviceSparseProperties,
@@ -2381,15 +2381,15 @@ impl QueueFamilyProperties {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceCreateInfo.html>"]
 #[doc(alias = "VkDeviceCreateInfo")]
 pub struct DeviceCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
-    pub(crate) queue_create_info_count: u32,
-    pub(crate) p_queue_create_infos: *const DeviceQueueCreateInfo<'a>,
-    pub(crate) enabled_layer_count: u32,
-    pub(crate) pp_enabled_layer_names: *const *const c_char,
-    pub(crate) enabled_extension_count: u32,
-    pub(crate) pp_enabled_extension_names: *const DeviceExtensionName,
+    pub queue_create_info_count: u32,
+    pub p_queue_create_infos: *const DeviceQueueCreateInfo<'a>,
+    pub enabled_layer_count: u32,
+    pub pp_enabled_layer_names: *const *const c_char,
+    pub enabled_extension_count: u32,
+    pub pp_enabled_extension_names: *const DeviceExtensionName,
     pub p_enabled_features: *const PhysicalDeviceFeatures,
     phantom: PhantomData<&'a ()>,
 }
@@ -2497,12 +2497,12 @@ impl<'a> DeviceCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceQueueCreateInfo.html>"]
 #[doc(alias = "VkDeviceQueueCreateInfo")]
 pub struct DeviceQueueCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: DeviceQueueCreateFlags,
     pub queue_family_index: u32,
-    pub(crate) queue_count: u32,
-    pub(crate) p_queue_priorities: *const f32,
+    pub queue_count: u32,
+    pub p_queue_priorities: *const f32,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DeviceQueueCreateInfo<'a> {}
@@ -2560,7 +2560,7 @@ impl<'a> DeviceQueueCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExtensionProperties.html>"]
 #[doc(alias = "VkExtensionProperties")]
 pub struct ExtensionProperties {
-    pub(crate) extension_name: [c_char; MAX_EXTENSION_NAME_SIZE as _],
+    pub extension_name: [c_char; MAX_EXTENSION_NAME_SIZE as _],
     pub spec_version: u32,
 }
 unsafe impl Send for ExtensionProperties {}
@@ -2594,10 +2594,10 @@ impl ExtensionProperties {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkLayerProperties.html>"]
 #[doc(alias = "VkLayerProperties")]
 pub struct LayerProperties {
-    pub(crate) layer_name: [c_char; MAX_EXTENSION_NAME_SIZE as _],
+    pub layer_name: [c_char; MAX_EXTENSION_NAME_SIZE as _],
     pub spec_version: u32,
     pub implementation_version: u32,
-    pub(crate) description: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
 }
 unsafe impl Send for LayerProperties {}
 unsafe impl Sync for LayerProperties {}
@@ -2641,15 +2641,15 @@ impl LayerProperties {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubmitInfo.html>"]
 #[doc(alias = "VkSubmitInfo")]
 pub struct SubmitInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) wait_semaphore_count: u32,
-    pub(crate) p_wait_semaphores: *const Semaphore,
-    pub(crate) p_wait_dst_stage_mask: *const PipelineStageFlags,
-    pub(crate) command_buffer_count: u32,
-    pub(crate) p_command_buffers: *const CommandBuffer,
-    pub(crate) signal_semaphore_count: u32,
-    pub(crate) p_signal_semaphores: *const Semaphore,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub wait_semaphore_count: u32,
+    pub p_wait_semaphores: *const Semaphore,
+    pub p_wait_dst_stage_mask: *const PipelineStageFlags,
+    pub command_buffer_count: u32,
+    pub p_command_buffers: *const CommandBuffer,
+    pub signal_semaphore_count: u32,
+    pub p_signal_semaphores: *const Semaphore,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for SubmitInfo<'a> {}
@@ -2760,8 +2760,8 @@ impl<'a> SubmitInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMappedMemoryRange.html>"]
 #[doc(alias = "VkMappedMemoryRange")]
 pub struct MappedMemoryRange<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
@@ -2811,8 +2811,8 @@ impl<'a> MappedMemoryRange<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryAllocateInfo.html>"]
 #[doc(alias = "VkMemoryAllocateInfo")]
 pub struct MemoryAllocateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub allocation_size: DeviceSize,
     pub memory_type_index: u32,
     phantom: PhantomData<&'a ()>,
@@ -2892,18 +2892,18 @@ impl MemoryRequirements {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindSparseInfo.html>"]
 #[doc(alias = "VkBindSparseInfo")]
 pub struct BindSparseInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) wait_semaphore_count: u32,
-    pub(crate) p_wait_semaphores: *const Semaphore,
-    pub(crate) buffer_bind_count: u32,
-    pub(crate) p_buffer_binds: *const SparseBufferMemoryBindInfo<'a>,
-    pub(crate) image_opaque_bind_count: u32,
-    pub(crate) p_image_opaque_binds: *const SparseImageOpaqueMemoryBindInfo<'a>,
-    pub(crate) image_bind_count: u32,
-    pub(crate) p_image_binds: *const SparseImageMemoryBindInfo<'a>,
-    pub(crate) signal_semaphore_count: u32,
-    pub(crate) p_signal_semaphores: *const Semaphore,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub wait_semaphore_count: u32,
+    pub p_wait_semaphores: *const Semaphore,
+    pub buffer_bind_count: u32,
+    pub p_buffer_binds: *const SparseBufferMemoryBindInfo<'a>,
+    pub image_opaque_bind_count: u32,
+    pub p_image_opaque_binds: *const SparseImageOpaqueMemoryBindInfo<'a>,
+    pub image_bind_count: u32,
+    pub p_image_binds: *const SparseImageMemoryBindInfo<'a>,
+    pub signal_semaphore_count: u32,
+    pub p_signal_semaphores: *const Semaphore,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for BindSparseInfo<'a> {}
@@ -3074,8 +3074,8 @@ impl ImageSubresource {
 #[doc(alias = "VkSparseBufferMemoryBindInfo")]
 pub struct SparseBufferMemoryBindInfo<'a> {
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
-    pub(crate) bind_count: u32,
-    pub(crate) p_binds: *const SparseMemoryBind<'a>,
+    pub bind_count: u32,
+    pub p_binds: *const SparseMemoryBind<'a>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SparseBufferMemoryBindInfo<'a> {}
@@ -3210,8 +3210,8 @@ impl<'a> SparseImageMemoryBind<'a> {
 #[doc(alias = "VkSparseImageMemoryBindInfo")]
 pub struct SparseImageMemoryBindInfo<'a> {
     pub image: Option<BorrowedHandle<'a, Image>>,
-    pub(crate) bind_count: u32,
-    pub(crate) p_binds: *const SparseImageMemoryBind<'a>,
+    pub bind_count: u32,
+    pub p_binds: *const SparseImageMemoryBind<'a>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SparseImageMemoryBindInfo<'a> {}
@@ -3301,8 +3301,8 @@ impl SparseImageMemoryRequirements {
 #[doc(alias = "VkSparseImageOpaqueMemoryBindInfo")]
 pub struct SparseImageOpaqueMemoryBindInfo<'a> {
     pub image: Option<BorrowedHandle<'a, Image>>,
-    pub(crate) bind_count: u32,
-    pub(crate) p_binds: *const SparseMemoryBind<'a>,
+    pub bind_count: u32,
+    pub p_binds: *const SparseMemoryBind<'a>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SparseImageOpaqueMemoryBindInfo<'a> {}
@@ -3392,8 +3392,8 @@ impl<'a> SparseMemoryBind<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFenceCreateInfo.html>"]
 #[doc(alias = "VkFenceCreateInfo")]
 pub struct FenceCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: FenceCreateFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -3429,8 +3429,8 @@ impl<'a> FenceCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSemaphoreCreateInfo.html>"]
 #[doc(alias = "VkSemaphoreCreateInfo")]
 pub struct SemaphoreCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -3466,8 +3466,8 @@ impl<'a> SemaphoreCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkEventCreateInfo.html>"]
 #[doc(alias = "VkEventCreateInfo")]
 pub struct EventCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: EventCreateFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -3503,8 +3503,8 @@ impl<'a> EventCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueryPoolCreateInfo.html>"]
 #[doc(alias = "VkQueryPoolCreateInfo")]
 pub struct QueryPoolCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: QueryPoolCreateFlags,
     pub query_type: QueryType,
     pub query_count: u32,
@@ -3561,14 +3561,14 @@ impl<'a> QueryPoolCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferCreateInfo.html>"]
 #[doc(alias = "VkBufferCreateInfo")]
 pub struct BufferCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: BufferCreateFlags,
     pub size: DeviceSize,
     pub usage: BufferUsageFlags,
     pub sharing_mode: SharingMode,
     pub queue_family_index_count: u32,
-    pub(crate) p_queue_family_indices: *const u32,
+    pub p_queue_family_indices: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for BufferCreateInfo<'a> {}
@@ -3645,8 +3645,8 @@ impl<'a> BufferCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferViewCreateInfo.html>"]
 #[doc(alias = "VkBufferViewCreateInfo")]
 pub struct BufferViewCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub format: Format,
@@ -3710,8 +3710,8 @@ impl<'a> BufferViewCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageCreateInfo.html>"]
 #[doc(alias = "VkImageCreateInfo")]
 pub struct ImageCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: ImageCreateFlags,
     pub image_type: ImageType,
     pub format: Format,
@@ -3723,7 +3723,7 @@ pub struct ImageCreateInfo<'a> {
     pub usage: ImageUsageFlags,
     pub sharing_mode: SharingMode,
     pub queue_family_index_count: u32,
-    pub(crate) p_queue_family_indices: *const u32,
+    pub p_queue_family_indices: *const u32,
     pub initial_layout: ImageLayout,
     phantom: PhantomData<&'a ()>,
 }
@@ -3989,8 +3989,8 @@ impl ImageSubresourceRange {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageViewCreateInfo.html>"]
 #[doc(alias = "VkImageViewCreateInfo")]
 pub struct ImageViewCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: ImageViewCreateFlags,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub view_type: ImageViewType,
@@ -4061,11 +4061,11 @@ impl<'a> ImageViewCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkShaderModuleCreateInfo.html>"]
 #[doc(alias = "VkShaderModuleCreateInfo")]
 pub struct ShaderModuleCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
-    pub(crate) code_size: usize,
-    pub(crate) p_code: *const u32,
+    pub code_size: usize,
+    pub p_code: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ShaderModuleCreateInfo<'a> {}
@@ -4118,11 +4118,11 @@ impl<'a> ShaderModuleCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCacheCreateInfo.html>"]
 #[doc(alias = "VkPipelineCacheCreateInfo")]
 pub struct PipelineCacheCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineCacheCreateFlags,
-    pub(crate) initial_data_size: usize,
-    pub(crate) p_initial_data: VoidPtr,
+    pub initial_data_size: usize,
+    pub p_initial_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineCacheCreateInfo<'a> {}
@@ -4176,8 +4176,8 @@ impl<'a> PipelineCacheCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkComputePipelineCreateInfo.html>"]
 #[doc(alias = "VkComputePipelineCreateInfo")]
 pub struct ComputePipelineCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineCreateFlags,
     pub stage: PipelineShaderStageCreateInfo<'a>,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
@@ -4241,11 +4241,11 @@ impl<'a> ComputePipelineCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGraphicsPipelineCreateInfo.html>"]
 #[doc(alias = "VkGraphicsPipelineCreateInfo")]
 pub struct GraphicsPipelineCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineCreateFlags,
     pub stage_count: u32,
-    pub(crate) p_stages: *const PipelineShaderStageCreateInfo<'a>,
+    pub p_stages: *const PipelineShaderStageCreateInfo<'a>,
     pub p_vertex_input_state: *const PipelineVertexInputStateCreateInfo<'a>,
     pub p_input_assembly_state: *const PipelineInputAssemblyStateCreateInfo<'a>,
     pub p_tessellation_state: *const PipelineTessellationStateCreateInfo<'a>,
@@ -4493,13 +4493,13 @@ impl PipelineColorBlendAttachmentState {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineColorBlendStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineColorBlendStateCreateInfo")]
 pub struct PipelineColorBlendStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineColorBlendStateCreateFlags,
     pub logic_op_enable: Bool32,
     pub logic_op: LogicOp,
     pub attachment_count: u32,
-    pub(crate) p_attachments: *const PipelineColorBlendAttachmentState,
+    pub p_attachments: *const PipelineColorBlendAttachmentState,
     pub blend_constants: [f32; 4u16 as _],
     phantom: PhantomData<&'a ()>,
 }
@@ -4577,8 +4577,8 @@ impl<'a> PipelineColorBlendStateCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineDepthStencilStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineDepthStencilStateCreateInfo")]
 pub struct PipelineDepthStencilStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineDepthStencilStateCreateFlags,
     pub depth_test_enable: Bool32,
     pub depth_write_enable: Bool32,
@@ -4677,11 +4677,11 @@ impl<'a> PipelineDepthStencilStateCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineDynamicStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineDynamicStateCreateInfo")]
 pub struct PipelineDynamicStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
-    pub(crate) dynamic_state_count: u32,
-    pub(crate) p_dynamic_states: *const DynamicState,
+    pub dynamic_state_count: u32,
+    pub p_dynamic_states: *const DynamicState,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineDynamicStateCreateInfo<'a> {}
@@ -4732,8 +4732,8 @@ impl<'a> PipelineDynamicStateCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineInputAssemblyStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineInputAssemblyStateCreateInfo")]
 pub struct PipelineInputAssemblyStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub topology: PrimitiveTopology,
     pub primitive_restart_enable: Bool32,
@@ -4783,13 +4783,13 @@ impl<'a> PipelineInputAssemblyStateCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineMultisampleStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineMultisampleStateCreateInfo")]
 pub struct PipelineMultisampleStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
-    pub(crate) rasterization_samples: SampleCountFlags,
+    pub rasterization_samples: SampleCountFlags,
     pub sample_shading_enable: Bool32,
     pub min_sample_shading: f32,
-    pub(crate) p_sample_mask: *const SampleMask,
+    pub p_sample_mask: *const SampleMask,
     pub alpha_to_coverage_enable: Bool32,
     pub alpha_to_one_enable: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -4865,8 +4865,8 @@ impl<'a> PipelineMultisampleStateCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRasterizationStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineRasterizationStateCreateInfo")]
 pub struct PipelineRasterizationStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub depth_clamp_enable: Bool32,
     pub rasterizer_discard_enable: Bool32,
@@ -4972,8 +4972,8 @@ impl<'a> PipelineRasterizationStateCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineShaderStageCreateInfo.html>"]
 #[doc(alias = "VkPipelineShaderStageCreateInfo")]
 pub struct PipelineShaderStageCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineShaderStageCreateFlags,
     pub stage: ShaderStageFlags,
     pub module: Option<BorrowedHandle<'a, ShaderModule>>,
@@ -5037,8 +5037,8 @@ impl<'a> PipelineShaderStageCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineTessellationStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineTessellationStateCreateInfo")]
 pub struct PipelineTessellationStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub patch_control_points: u32,
     phantom: PhantomData<&'a ()>,
@@ -5081,13 +5081,13 @@ impl<'a> PipelineTessellationStateCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineVertexInputStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineVertexInputStateCreateInfo")]
 pub struct PipelineVertexInputStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
-    pub(crate) vertex_binding_description_count: u32,
-    pub(crate) p_vertex_binding_descriptions: *const VertexInputBindingDescription,
-    pub(crate) vertex_attribute_description_count: u32,
-    pub(crate) p_vertex_attribute_descriptions: *const VertexInputAttributeDescription,
+    pub vertex_binding_description_count: u32,
+    pub p_vertex_binding_descriptions: *const VertexInputBindingDescription,
+    pub vertex_attribute_description_count: u32,
+    pub p_vertex_attribute_descriptions: *const VertexInputAttributeDescription,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineVertexInputStateCreateInfo<'a> {}
@@ -5169,13 +5169,13 @@ impl<'a> PipelineVertexInputStateCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineViewportStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineViewportStateCreateInfo")]
 pub struct PipelineViewportStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub viewport_count: u32,
-    pub(crate) p_viewports: *const Viewport,
+    pub p_viewports: *const Viewport,
     pub scissor_count: u32,
-    pub(crate) p_scissors: *const Rect2D,
+    pub p_scissors: *const Rect2D,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineViewportStateCreateInfo<'a> {}
@@ -5255,10 +5255,10 @@ pub type SampleMask = u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSpecializationInfo.html>"]
 #[doc(alias = "VkSpecializationInfo")]
 pub struct SpecializationInfo<'a> {
-    pub(crate) map_entry_count: u32,
-    pub(crate) p_map_entries: *const SpecializationMapEntry,
-    pub(crate) data_size: usize,
-    pub(crate) p_data: VoidPtr,
+    pub map_entry_count: u32,
+    pub p_map_entries: *const SpecializationMapEntry,
+    pub data_size: usize,
+    pub p_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SpecializationInfo<'a> {}
@@ -5549,13 +5549,13 @@ impl Viewport {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineLayoutCreateInfo.html>"]
 #[doc(alias = "VkPipelineLayoutCreateInfo")]
 pub struct PipelineLayoutCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineLayoutCreateFlags,
     pub set_layout_count: u32,
-    pub(crate) p_set_layouts: *const DescriptorSetLayout,
-    pub(crate) push_constant_range_count: u32,
-    pub(crate) p_push_constant_ranges: *const PushConstantRange,
+    pub p_set_layouts: *const DescriptorSetLayout,
+    pub push_constant_range_count: u32,
+    pub p_push_constant_ranges: *const PushConstantRange,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineLayoutCreateInfo<'a> {}
@@ -5720,8 +5720,8 @@ impl PushConstantRange {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerCreateInfo.html>"]
 #[doc(alias = "VkSamplerCreateInfo")]
 pub struct SamplerCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: SamplerCreateFlags,
     pub mag_filter: Filter,
     pub min_filter: Filter,
@@ -5862,8 +5862,8 @@ impl<'a> SamplerCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyDescriptorSet.html>"]
 #[doc(alias = "VkCopyDescriptorSet")]
 pub struct CopyDescriptorSet<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_set: Option<BorrowedHandle<'a, DescriptorSet>>,
     pub src_binding: u32,
     pub src_array_element: u32,
@@ -6017,12 +6017,12 @@ impl<'a> DescriptorImageInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorPoolCreateInfo.html>"]
 #[doc(alias = "VkDescriptorPoolCreateInfo")]
 pub struct DescriptorPoolCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: DescriptorPoolCreateFlags,
     pub max_sets: u32,
-    pub(crate) pool_size_count: u32,
-    pub(crate) p_pool_sizes: *const DescriptorPoolSize,
+    pub pool_size_count: u32,
+    pub p_pool_sizes: *const DescriptorPoolSize,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DescriptorPoolCreateInfo<'a> {}
@@ -6109,11 +6109,11 @@ impl DescriptorPoolSize {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorSetAllocateInfo.html>"]
 #[doc(alias = "VkDescriptorSetAllocateInfo")]
 pub struct DescriptorSetAllocateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub descriptor_pool: Option<BorrowedHandle<'a, DescriptorPool>>,
-    pub(crate) descriptor_set_count: u32,
-    pub(crate) p_set_layouts: *const DescriptorSetLayout,
+    pub descriptor_set_count: u32,
+    pub p_set_layouts: *const DescriptorSetLayout,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetAllocateInfo<'a> {}
@@ -6171,7 +6171,7 @@ pub struct DescriptorSetLayoutBinding<'a> {
     pub descriptor_type: DescriptorType,
     pub descriptor_count: u32,
     pub stage_flags: ShaderStageFlags,
-    pub(crate) p_immutable_samplers: *const Sampler,
+    pub p_immutable_samplers: *const Sampler,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for DescriptorSetLayoutBinding<'a> {}
@@ -6231,11 +6231,11 @@ impl<'a> DescriptorSetLayoutBinding<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorSetLayoutCreateInfo.html>"]
 #[doc(alias = "VkDescriptorSetLayoutCreateInfo")]
 pub struct DescriptorSetLayoutCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: DescriptorSetLayoutCreateFlags,
-    pub(crate) binding_count: u32,
-    pub(crate) p_bindings: *const DescriptorSetLayoutBinding<'a>,
+    pub binding_count: u32,
+    pub p_bindings: *const DescriptorSetLayoutBinding<'a>,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetLayoutCreateInfo<'a> {}
@@ -6289,16 +6289,16 @@ impl<'a> DescriptorSetLayoutCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWriteDescriptorSet.html>"]
 #[doc(alias = "VkWriteDescriptorSet")]
 pub struct WriteDescriptorSet<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dst_set: Option<BorrowedHandle<'a, DescriptorSet>>,
     pub dst_binding: u32,
     pub dst_array_element: u32,
     pub descriptor_count: u32,
     pub descriptor_type: DescriptorType,
-    pub(crate) p_image_info: *const DescriptorImageInfo<'a>,
-    pub(crate) p_buffer_info: *const DescriptorBufferInfo<'a>,
-    pub(crate) p_texel_buffer_view: *const BufferView,
+    pub p_image_info: *const DescriptorImageInfo<'a>,
+    pub p_buffer_info: *const DescriptorBufferInfo<'a>,
+    pub p_texel_buffer_view: *const BufferView,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for WriteDescriptorSet<'a> {}
@@ -6512,12 +6512,12 @@ impl AttachmentReference {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFramebufferCreateInfo.html>"]
 #[doc(alias = "VkFramebufferCreateInfo")]
 pub struct FramebufferCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: FramebufferCreateFlags,
     pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
     pub attachment_count: u32,
-    pub(crate) p_attachments: *const ImageView,
+    pub p_attachments: *const ImageView,
     pub width: u32,
     pub height: u32,
     pub layers: u32,
@@ -6603,15 +6603,15 @@ impl<'a> FramebufferCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassCreateInfo.html>"]
 #[doc(alias = "VkRenderPassCreateInfo")]
 pub struct RenderPassCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: RenderPassCreateFlags,
-    pub(crate) attachment_count: u32,
-    pub(crate) p_attachments: *const AttachmentDescription,
-    pub(crate) subpass_count: u32,
-    pub(crate) p_subpasses: *const SubpassDescription<'a>,
-    pub(crate) dependency_count: u32,
-    pub(crate) p_dependencies: *const SubpassDependency,
+    pub attachment_count: u32,
+    pub p_attachments: *const AttachmentDescription,
+    pub subpass_count: u32,
+    pub p_subpasses: *const SubpassDescription<'a>,
+    pub dependency_count: u32,
+    pub p_dependencies: *const SubpassDependency,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for RenderPassCreateInfo<'a> {}
@@ -6761,14 +6761,14 @@ impl SubpassDependency {
 pub struct SubpassDescription<'a> {
     pub flags: SubpassDescriptionFlags,
     pub pipeline_bind_point: PipelineBindPoint,
-    pub(crate) input_attachment_count: u32,
-    pub(crate) p_input_attachments: *const AttachmentReference,
-    pub(crate) color_attachment_count: u32,
-    pub(crate) p_color_attachments: *const AttachmentReference,
-    pub(crate) p_resolve_attachments: *const AttachmentReference,
+    pub input_attachment_count: u32,
+    pub p_input_attachments: *const AttachmentReference,
+    pub color_attachment_count: u32,
+    pub p_color_attachments: *const AttachmentReference,
+    pub p_resolve_attachments: *const AttachmentReference,
     pub p_depth_stencil_attachment: *const AttachmentReference,
-    pub(crate) preserve_attachment_count: u32,
-    pub(crate) p_preserve_attachments: *const u32,
+    pub preserve_attachment_count: u32,
+    pub p_preserve_attachments: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SubpassDescription<'a> {}
@@ -6883,8 +6883,8 @@ impl<'a> SubpassDescription<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCommandPoolCreateInfo.html>"]
 #[doc(alias = "VkCommandPoolCreateInfo")]
 pub struct CommandPoolCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: CommandPoolCreateFlags,
     pub queue_family_index: u32,
     phantom: PhantomData<&'a ()>,
@@ -6927,8 +6927,8 @@ impl<'a> CommandPoolCreateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCommandBufferAllocateInfo.html>"]
 #[doc(alias = "VkCommandBufferAllocateInfo")]
 pub struct CommandBufferAllocateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub command_pool: Option<BorrowedHandle<'a, CommandPool>>,
     pub level: CommandBufferLevel,
     pub command_buffer_count: u32,
@@ -6978,8 +6978,8 @@ impl<'a> CommandBufferAllocateInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCommandBufferBeginInfo.html>"]
 #[doc(alias = "VkCommandBufferBeginInfo")]
 pub struct CommandBufferBeginInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: CommandBufferUsageFlags,
     pub p_inheritance_info: *const CommandBufferInheritanceInfo<'a>,
     phantom: PhantomData<&'a ()>,
@@ -7022,8 +7022,8 @@ impl<'a> CommandBufferBeginInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCommandBufferInheritanceInfo.html>"]
 #[doc(alias = "VkCommandBufferInheritanceInfo")]
 pub struct CommandBufferInheritanceInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
     pub subpass: u32,
     pub framebuffer: Option<BorrowedHandle<'a, Framebuffer>>,
@@ -7514,13 +7514,13 @@ impl ImageSubresourceLayers {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassBeginInfo.html>"]
 #[doc(alias = "VkRenderPassBeginInfo")]
 pub struct RenderPassBeginInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
     pub framebuffer: Option<BorrowedHandle<'a, Framebuffer>>,
     pub render_area: Rect2D,
     pub clear_value_count: u32,
-    pub(crate) p_clear_values: *const ClearValue,
+    pub p_clear_values: *const ClearValue,
     phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for RenderPassBeginInfo<'a> {}
@@ -7589,8 +7589,8 @@ impl<'a> RenderPassBeginInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSubgroupProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceSubgroupProperties")]
 pub struct PhysicalDeviceSubgroupProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub subgroup_size: u32,
     pub supported_stages: ShaderStageFlags,
     pub supported_operations: SubgroupFeatureFlags,
@@ -7665,8 +7665,8 @@ impl<'a> PhysicalDeviceSubgroupProperties<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindBufferMemoryInfo.html>"]
 #[doc(alias = "VkBindBufferMemoryInfo")]
 pub struct BindBufferMemoryInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
@@ -7725,8 +7725,8 @@ pub type BindBufferMemoryInfoKHR<'a> = BindBufferMemoryInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindImageMemoryInfo.html>"]
 #[doc(alias = "VkBindImageMemoryInfo")]
 pub struct BindImageMemoryInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
@@ -7784,8 +7784,8 @@ pub type BindImageMemoryInfoKHR<'a> = BindImageMemoryInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevice16BitStorageFeatures.html>"]
 #[doc(alias = "VkPhysicalDevice16BitStorageFeatures")]
 pub struct PhysicalDevice16BitStorageFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub storage_buffer16_bit_access: Bool32,
     pub uniform_and_storage_buffer16_bit_access: Bool32,
     pub storage_push_constant16: Bool32,
@@ -7860,8 +7860,8 @@ pub type PhysicalDevice16BitStorageFeaturesKHR<'a> = PhysicalDevice16BitStorageF
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryDedicatedRequirements.html>"]
 #[doc(alias = "VkMemoryDedicatedRequirements")]
 pub struct MemoryDedicatedRequirements<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub prefers_dedicated_allocation: Bool32,
     pub requires_dedicated_allocation: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -7928,8 +7928,8 @@ pub type MemoryDedicatedRequirementsKHR<'a> = MemoryDedicatedRequirements<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryDedicatedAllocateInfo.html>"]
 #[doc(alias = "VkMemoryDedicatedAllocateInfo")]
 pub struct MemoryDedicatedAllocateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
@@ -7983,8 +7983,8 @@ pub type MemoryDedicatedAllocateInfoKHR<'a> = MemoryDedicatedAllocateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryAllocateFlagsInfo.html>"]
 #[doc(alias = "VkMemoryAllocateFlagsInfo")]
 pub struct MemoryAllocateFlagsInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: MemoryAllocateFlags,
     pub device_mask: u32,
     phantom: PhantomData<&'a ()>,
@@ -8038,11 +8038,11 @@ pub type MemoryAllocateFlagsInfoKHR<'a> = MemoryAllocateFlagsInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupRenderPassBeginInfo.html>"]
 #[doc(alias = "VkDeviceGroupRenderPassBeginInfo")]
 pub struct DeviceGroupRenderPassBeginInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_mask: u32,
-    pub(crate) device_render_area_count: u32,
-    pub(crate) p_device_render_areas: *const Rect2D,
+    pub device_render_area_count: u32,
+    pub p_device_render_areas: *const Rect2D,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
@@ -8122,8 +8122,8 @@ pub type DeviceGroupRenderPassBeginInfoKHR<'a> = DeviceGroupRenderPassBeginInfo<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupCommandBufferBeginInfo.html>"]
 #[doc(alias = "VkDeviceGroupCommandBufferBeginInfo")]
 pub struct DeviceGroupCommandBufferBeginInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_mask: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -8173,14 +8173,14 @@ pub type DeviceGroupCommandBufferBeginInfoKHR<'a> = DeviceGroupCommandBufferBegi
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupSubmitInfo.html>"]
 #[doc(alias = "VkDeviceGroupSubmitInfo")]
 pub struct DeviceGroupSubmitInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) wait_semaphore_count: u32,
-    pub(crate) p_wait_semaphore_device_indices: *const u32,
-    pub(crate) command_buffer_count: u32,
-    pub(crate) p_command_buffer_device_masks: *const u32,
-    pub(crate) signal_semaphore_count: u32,
-    pub(crate) p_signal_semaphore_device_indices: *const u32,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub wait_semaphore_count: u32,
+    pub p_wait_semaphore_device_indices: *const u32,
+    pub command_buffer_count: u32,
+    pub p_command_buffer_device_masks: *const u32,
+    pub signal_semaphore_count: u32,
+    pub p_signal_semaphore_device_indices: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
@@ -8289,8 +8289,8 @@ pub type DeviceGroupSubmitInfoKHR<'a> = DeviceGroupSubmitInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupBindSparseInfo.html>"]
 #[doc(alias = "VkDeviceGroupBindSparseInfo")]
 pub struct DeviceGroupBindSparseInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub resource_device_index: u32,
     pub memory_device_index: u32,
     phantom: PhantomData<&'a ()>,
@@ -8347,10 +8347,10 @@ pub type DeviceGroupBindSparseInfoKHR<'a> = DeviceGroupBindSparseInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindBufferMemoryDeviceGroupInfo.html>"]
 #[doc(alias = "VkBindBufferMemoryDeviceGroupInfo")]
 pub struct BindBufferMemoryDeviceGroupInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) device_index_count: u32,
-    pub(crate) p_device_indices: *const u32,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub device_index_count: u32,
+    pub p_device_indices: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
@@ -8439,12 +8439,12 @@ pub type BindBufferMemoryDeviceGroupInfoKHR<'a> = BindBufferMemoryDeviceGroupInf
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindImageMemoryDeviceGroupInfo.html>"]
 #[doc(alias = "VkBindImageMemoryDeviceGroupInfo")]
 pub struct BindImageMemoryDeviceGroupInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) device_index_count: u32,
-    pub(crate) p_device_indices: *const u32,
-    pub(crate) split_instance_bind_region_count: u32,
-    pub(crate) p_split_instance_bind_regions: *const Rect2D,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub device_index_count: u32,
+    pub p_device_indices: *const u32,
+    pub split_instance_bind_region_count: u32,
+    pub p_split_instance_bind_regions: *const Rect2D,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
@@ -8553,10 +8553,10 @@ pub type BindImageMemoryDeviceGroupInfoKHR<'a> = BindImageMemoryDeviceGroupInfo<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceGroupProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceGroupProperties")]
 pub struct PhysicalDeviceGroupProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) physical_device_count: u32,
-    pub(crate) physical_devices: [Option<PhysicalDevice>; MAX_DEVICE_GROUP_SIZE as _],
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub physical_device_count: u32,
+    pub physical_devices: [Option<PhysicalDevice>; MAX_DEVICE_GROUP_SIZE as _],
     pub subset_allocation: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -8608,10 +8608,10 @@ pub type PhysicalDeviceGroupPropertiesKHR<'a> = PhysicalDeviceGroupProperties<'a
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupDeviceCreateInfo.html>"]
 #[doc(alias = "VkDeviceGroupDeviceCreateInfo")]
 pub struct DeviceGroupDeviceCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) physical_device_count: u32,
-    pub(crate) p_physical_devices: *const PhysicalDevice,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub physical_device_count: u32,
+    pub p_physical_devices: *const PhysicalDevice,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group_creation", feature = "version_1_1"))]
@@ -8673,8 +8673,8 @@ pub type DeviceGroupDeviceCreateInfoKHR<'a> = DeviceGroupDeviceCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferMemoryRequirementsInfo2.html>"]
 #[doc(alias = "VkBufferMemoryRequirementsInfo2")]
 pub struct BufferMemoryRequirementsInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -8719,8 +8719,8 @@ pub type BufferMemoryRequirementsInfo2KHR<'a> = BufferMemoryRequirementsInfo2<'a
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageMemoryRequirementsInfo2.html>"]
 #[doc(alias = "VkImageMemoryRequirementsInfo2")]
 pub struct ImageMemoryRequirementsInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -8765,8 +8765,8 @@ pub type ImageMemoryRequirementsInfo2KHR<'a> = ImageMemoryRequirementsInfo2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageSparseMemoryRequirementsInfo2.html>"]
 #[doc(alias = "VkImageSparseMemoryRequirementsInfo2")]
 pub struct ImageSparseMemoryRequirementsInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -8818,8 +8818,8 @@ pub type ImageSparseMemoryRequirementsInfo2KHR<'a> = ImageSparseMemoryRequiremen
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryRequirements2.html>"]
 #[doc(alias = "VkMemoryRequirements2")]
 pub struct MemoryRequirements2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_requirements: MemoryRequirements,
     phantom: PhantomData<&'a ()>,
 }
@@ -8913,8 +8913,8 @@ pub type MemoryRequirements2KHR<'a> = MemoryRequirements2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSparseImageMemoryRequirements2.html>"]
 #[doc(alias = "VkSparseImageMemoryRequirements2")]
 pub struct SparseImageMemoryRequirements2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_requirements: SparseImageMemoryRequirements,
     phantom: PhantomData<&'a ()>,
 }
@@ -8962,8 +8962,8 @@ pub type SparseImageMemoryRequirements2KHR<'a> = SparseImageMemoryRequirements2<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFeatures2.html>"]
 #[doc(alias = "VkPhysicalDeviceFeatures2")]
 pub struct PhysicalDeviceFeatures2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub features: PhysicalDeviceFeatures,
     phantom: PhantomData<&'a ()>,
 }
@@ -9037,8 +9037,8 @@ pub type PhysicalDeviceFeatures2KHR<'a> = PhysicalDeviceFeatures2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceProperties2.html>"]
 #[doc(alias = "VkPhysicalDeviceProperties2")]
 pub struct PhysicalDeviceProperties2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub properties: PhysicalDeviceProperties,
     phantom: PhantomData<&'a ()>,
 }
@@ -9107,8 +9107,8 @@ pub type PhysicalDeviceProperties2KHR<'a> = PhysicalDeviceProperties2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFormatProperties2.html>"]
 #[doc(alias = "VkFormatProperties2")]
 pub struct FormatProperties2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format_properties: FormatProperties,
     phantom: PhantomData<&'a ()>,
 }
@@ -9177,8 +9177,8 @@ pub type FormatProperties2KHR<'a> = FormatProperties2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageFormatProperties2.html>"]
 #[doc(alias = "VkImageFormatProperties2")]
 pub struct ImageFormatProperties2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_format_properties: ImageFormatProperties,
     phantom: PhantomData<&'a ()>,
 }
@@ -9247,8 +9247,8 @@ pub type ImageFormatProperties2KHR<'a> = ImageFormatProperties2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageFormatInfo2.html>"]
 #[doc(alias = "VkPhysicalDeviceImageFormatInfo2")]
 pub struct PhysicalDeviceImageFormatInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format: Format,
     pub ty: ImageType,
     pub tiling: ImageTiling,
@@ -9345,8 +9345,8 @@ pub type PhysicalDeviceImageFormatInfo2KHR<'a> = PhysicalDeviceImageFormatInfo2<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueueFamilyProperties2.html>"]
 #[doc(alias = "VkQueueFamilyProperties2")]
 pub struct QueueFamilyProperties2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub queue_family_properties: QueueFamilyProperties,
     phantom: PhantomData<&'a ()>,
 }
@@ -9415,8 +9415,8 @@ pub type QueueFamilyProperties2KHR<'a> = QueueFamilyProperties2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMemoryProperties2.html>"]
 #[doc(alias = "VkPhysicalDeviceMemoryProperties2")]
 pub struct PhysicalDeviceMemoryProperties2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_properties: PhysicalDeviceMemoryProperties,
     phantom: PhantomData<&'a ()>,
 }
@@ -9485,8 +9485,8 @@ pub type PhysicalDeviceMemoryProperties2KHR<'a> = PhysicalDeviceMemoryProperties
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSparseImageFormatProperties2.html>"]
 #[doc(alias = "VkSparseImageFormatProperties2")]
 pub struct SparseImageFormatProperties2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub properties: SparseImageFormatProperties,
     phantom: PhantomData<&'a ()>,
 }
@@ -9555,8 +9555,8 @@ pub type SparseImageFormatProperties2KHR<'a> = SparseImageFormatProperties2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSparseImageFormatInfo2.html>"]
 #[doc(alias = "VkPhysicalDeviceSparseImageFormatInfo2")]
 pub struct PhysicalDeviceSparseImageFormatInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format: Format,
     pub ty: ImageType,
     pub samples: SampleCountFlags,
@@ -9650,8 +9650,8 @@ pub type PhysicalDeviceSparseImageFormatInfo2KHR<'a> = PhysicalDeviceSparseImage
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePointClippingProperties.html>"]
 #[doc(alias = "VkPhysicalDevicePointClippingProperties")]
 pub struct PhysicalDevicePointClippingProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub point_clipping_behavior: PointClippingBehavior,
     phantom: PhantomData<&'a ()>,
 }
@@ -9707,10 +9707,10 @@ pub type PhysicalDevicePointClippingPropertiesKHR<'a> = PhysicalDevicePointClipp
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassInputAttachmentAspectCreateInfo.html>"]
 #[doc(alias = "VkRenderPassInputAttachmentAspectCreateInfo")]
 pub struct RenderPassInputAttachmentAspectCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) aspect_reference_count: u32,
-    pub(crate) p_aspect_references: *const InputAttachmentAspectReference,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub aspect_reference_count: u32,
+    pub p_aspect_references: *const InputAttachmentAspectReference,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance2", feature = "version_1_1"))]
@@ -9820,8 +9820,8 @@ pub type InputAttachmentAspectReferenceKHR = InputAttachmentAspectReference;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageViewUsageCreateInfo.html>"]
 #[doc(alias = "VkImageViewUsageCreateInfo")]
 pub struct ImageViewUsageCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub usage: ImageUsageFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -9868,8 +9868,8 @@ pub type ImageViewUsageCreateInfoKHR<'a> = ImageViewUsageCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineTessellationDomainOriginStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineTessellationDomainOriginStateCreateInfo")]
 pub struct PipelineTessellationDomainOriginStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub domain_origin: TessellationDomainOrigin,
     phantom: PhantomData<&'a ()>,
 }
@@ -9921,14 +9921,14 @@ pub type PipelineTessellationDomainOriginStateCreateInfoKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassMultiviewCreateInfo.html>"]
 #[doc(alias = "VkRenderPassMultiviewCreateInfo")]
 pub struct RenderPassMultiviewCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) subpass_count: u32,
-    pub(crate) p_view_masks: *const u32,
-    pub(crate) dependency_count: u32,
-    pub(crate) p_view_offsets: *const i32,
-    pub(crate) correlation_mask_count: u32,
-    pub(crate) p_correlation_masks: *const u32,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub subpass_count: u32,
+    pub p_view_masks: *const u32,
+    pub dependency_count: u32,
+    pub p_view_offsets: *const i32,
+    pub correlation_mask_count: u32,
+    pub p_correlation_masks: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_multiview", feature = "version_1_1"))]
@@ -10022,8 +10022,8 @@ pub type RenderPassMultiviewCreateInfoKHR<'a> = RenderPassMultiviewCreateInfo<'a
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMultiviewFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceMultiviewFeatures")]
 pub struct PhysicalDeviceMultiviewFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub multiview: Bool32,
     pub multiview_geometry_shader: Bool32,
     pub multiview_tessellation_shader: Bool32,
@@ -10098,8 +10098,8 @@ pub type PhysicalDeviceMultiviewFeaturesKHR<'a> = PhysicalDeviceMultiviewFeature
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMultiviewProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceMultiviewProperties")]
 pub struct PhysicalDeviceMultiviewProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_multiview_view_count: u32,
     pub max_multiview_instance_index: u32,
     phantom: PhantomData<&'a ()>,
@@ -10161,8 +10161,8 @@ pub type PhysicalDeviceMultiviewPropertiesKHR<'a> = PhysicalDeviceMultiviewPrope
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVariablePointersFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceVariablePointersFeatures")]
 pub struct PhysicalDeviceVariablePointersFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub variable_pointers_storage_buffer: Bool32,
     pub variable_pointers: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -10225,8 +10225,8 @@ pub type PhysicalDeviceVariablePointerFeatures<'a> = PhysicalDeviceVariablePoint
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceProtectedMemoryFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceProtectedMemoryFeatures")]
 pub struct PhysicalDeviceProtectedMemoryFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub protected_memory: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -10285,8 +10285,8 @@ impl<'a> PhysicalDeviceProtectedMemoryFeatures<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceProtectedMemoryProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceProtectedMemoryProperties")]
 pub struct PhysicalDeviceProtectedMemoryProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub protected_no_fault: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -10340,8 +10340,8 @@ impl<'a> PhysicalDeviceProtectedMemoryProperties<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceQueueInfo2.html>"]
 #[doc(alias = "VkDeviceQueueInfo2")]
 pub struct DeviceQueueInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: DeviceQueueCreateFlags,
     pub queue_family_index: u32,
     pub queue_index: u32,
@@ -10398,8 +10398,8 @@ impl<'a> DeviceQueueInfo2<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkProtectedSubmitInfo.html>"]
 #[doc(alias = "VkProtectedSubmitInfo")]
 pub struct ProtectedSubmitInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub protected_submit: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -10444,8 +10444,8 @@ impl<'a> ProtectedSubmitInfo<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerYcbcrConversionCreateInfo.html>"]
 #[doc(alias = "VkSamplerYcbcrConversionCreateInfo")]
 pub struct SamplerYcbcrConversionCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format: Format,
     pub ycbcr_model: SamplerYcbcrModelConversion,
     pub ycbcr_range: SamplerYcbcrRange,
@@ -10539,8 +10539,8 @@ pub type SamplerYcbcrConversionCreateInfoKHR<'a> = SamplerYcbcrConversionCreateI
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerYcbcrConversionInfo.html>"]
 #[doc(alias = "VkSamplerYcbcrConversionInfo")]
 pub struct SamplerYcbcrConversionInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub conversion: Option<BorrowedHandle<'a, SamplerYcbcrConversion>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -10589,8 +10589,8 @@ pub type SamplerYcbcrConversionInfoKHR<'a> = SamplerYcbcrConversionInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindImagePlaneMemoryInfo.html>"]
 #[doc(alias = "VkBindImagePlaneMemoryInfo")]
 pub struct BindImagePlaneMemoryInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub plane_aspect: ImageAspectFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -10640,8 +10640,8 @@ pub type BindImagePlaneMemoryInfoKHR<'a> = BindImagePlaneMemoryInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImagePlaneMemoryRequirementsInfo.html>"]
 #[doc(alias = "VkImagePlaneMemoryRequirementsInfo")]
 pub struct ImagePlaneMemoryRequirementsInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub plane_aspect: ImageAspectFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -10694,8 +10694,8 @@ pub type ImagePlaneMemoryRequirementsInfoKHR<'a> = ImagePlaneMemoryRequirementsI
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSamplerYcbcrConversionFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceSamplerYcbcrConversionFeatures")]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub sampler_ycbcr_conversion: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -10758,8 +10758,8 @@ pub type PhysicalDeviceSamplerYcbcrConversionFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerYcbcrConversionImageFormatProperties.html>"]
 #[doc(alias = "VkSamplerYcbcrConversionImageFormatProperties")]
 pub struct SamplerYcbcrConversionImageFormatProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub combined_image_sampler_descriptor_count: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -10882,11 +10882,11 @@ pub type DescriptorUpdateTemplateEntryKHR = DescriptorUpdateTemplateEntry;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorUpdateTemplateCreateInfo.html>"]
 #[doc(alias = "VkDescriptorUpdateTemplateCreateInfo")]
 pub struct DescriptorUpdateTemplateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
-    pub(crate) descriptor_update_entry_count: u32,
-    pub(crate) p_descriptor_update_entries: *const DescriptorUpdateTemplateEntry,
+    pub descriptor_update_entry_count: u32,
+    pub p_descriptor_update_entries: *const DescriptorUpdateTemplateEntry,
     pub template_type: DescriptorUpdateTemplateType,
     pub descriptor_set_layout: Option<BorrowedHandle<'a, DescriptorSetLayout>>,
     pub pipeline_bind_point: PipelineBindPoint,
@@ -11034,8 +11034,8 @@ pub type ExternalMemoryPropertiesKHR = ExternalMemoryProperties;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalImageFormatInfo.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalImageFormatInfo")]
 pub struct PhysicalDeviceExternalImageFormatInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -11091,8 +11091,8 @@ pub type PhysicalDeviceExternalImageFormatInfoKHR<'a> = PhysicalDeviceExternalIm
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalImageFormatProperties.html>"]
 #[doc(alias = "VkExternalImageFormatProperties")]
 pub struct ExternalImageFormatProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub external_memory_properties: ExternalMemoryProperties,
     phantom: PhantomData<&'a ()>,
 }
@@ -11148,8 +11148,8 @@ pub type ExternalImageFormatPropertiesKHR<'a> = ExternalImageFormatProperties<'a
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalBufferInfo.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalBufferInfo")]
 pub struct PhysicalDeviceExternalBufferInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: BufferCreateFlags,
     pub usage: BufferUsageFlags,
     pub handle_type: ExternalMemoryHandleTypeFlags,
@@ -11208,8 +11208,8 @@ pub type PhysicalDeviceExternalBufferInfoKHR<'a> = PhysicalDeviceExternalBufferI
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalBufferProperties.html>"]
 #[doc(alias = "VkExternalBufferProperties")]
 pub struct ExternalBufferProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub external_memory_properties: ExternalMemoryProperties,
     phantom: PhantomData<&'a ()>,
 }
@@ -11259,8 +11259,8 @@ pub type ExternalBufferPropertiesKHR<'a> = ExternalBufferProperties<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceIDProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceIDProperties")]
 pub struct PhysicalDeviceIDProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_uuid: [u8; UUID_SIZE as _],
     pub driver_uuid: [u8; UUID_SIZE as _],
     pub device_luid: [u8; LUID_SIZE as _],
@@ -11384,8 +11384,8 @@ pub type PhysicalDeviceIDPropertiesKHR<'a> = PhysicalDeviceIDProperties<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalMemoryImageCreateInfo.html>"]
 #[doc(alias = "VkExternalMemoryImageCreateInfo")]
 pub struct ExternalMemoryImageCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -11432,8 +11432,8 @@ pub type ExternalMemoryImageCreateInfoKHR<'a> = ExternalMemoryImageCreateInfo<'a
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalMemoryBufferCreateInfo.html>"]
 #[doc(alias = "VkExternalMemoryBufferCreateInfo")]
 pub struct ExternalMemoryBufferCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -11483,8 +11483,8 @@ pub type ExternalMemoryBufferCreateInfoKHR<'a> = ExternalMemoryBufferCreateInfo<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMemoryAllocateInfo.html>"]
 #[doc(alias = "VkExportMemoryAllocateInfo")]
 pub struct ExportMemoryAllocateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -11531,8 +11531,8 @@ pub type ExportMemoryAllocateInfoKHR<'a> = ExportMemoryAllocateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalFenceInfo.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalFenceInfo")]
 pub struct PhysicalDeviceExternalFenceInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_type: ExternalFenceHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -11577,8 +11577,8 @@ pub type PhysicalDeviceExternalFenceInfoKHR<'a> = PhysicalDeviceExternalFenceInf
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalFenceProperties.html>"]
 #[doc(alias = "VkExternalFenceProperties")]
 pub struct ExternalFenceProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub export_from_imported_handle_types: ExternalFenceHandleTypeFlags,
     pub compatible_handle_types: ExternalFenceHandleTypeFlags,
     pub external_fence_features: ExternalFenceFeatureFlags,
@@ -11640,8 +11640,8 @@ pub type ExternalFencePropertiesKHR<'a> = ExternalFenceProperties<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportFenceCreateInfo.html>"]
 #[doc(alias = "VkExportFenceCreateInfo")]
 pub struct ExportFenceCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_types: ExternalFenceHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -11688,8 +11688,8 @@ pub type ExportFenceCreateInfoKHR<'a> = ExportFenceCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportSemaphoreCreateInfo.html>"]
 #[doc(alias = "VkExportSemaphoreCreateInfo")]
 pub struct ExportSemaphoreCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_types: ExternalSemaphoreHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -11739,8 +11739,8 @@ pub type ExportSemaphoreCreateInfoKHR<'a> = ExportSemaphoreCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalSemaphoreInfo.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalSemaphoreInfo")]
 pub struct PhysicalDeviceExternalSemaphoreInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -11809,8 +11809,8 @@ pub type PhysicalDeviceExternalSemaphoreInfoKHR<'a> = PhysicalDeviceExternalSema
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalSemaphoreProperties.html>"]
 #[doc(alias = "VkExternalSemaphoreProperties")]
 pub struct ExternalSemaphoreProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub compatible_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub external_semaphore_features: ExternalSemaphoreFeatureFlags,
@@ -11893,8 +11893,8 @@ pub type ExternalSemaphorePropertiesKHR<'a> = ExternalSemaphoreProperties<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance3Properties.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance3Properties")]
 pub struct PhysicalDeviceMaintenance3Properties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_per_set_descriptors: u32,
     pub max_memory_allocation_size: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -11957,8 +11957,8 @@ pub type PhysicalDeviceMaintenance3PropertiesKHR<'a> = PhysicalDeviceMaintenance
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorSetLayoutSupport.html>"]
 #[doc(alias = "VkDescriptorSetLayoutSupport")]
 pub struct DescriptorSetLayoutSupport<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub supported: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -12003,8 +12003,8 @@ pub type DescriptorSetLayoutSupportKHR<'a> = DescriptorSetLayoutSupport<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderDrawParametersFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderDrawParametersFeatures")]
 pub struct PhysicalDeviceShaderDrawParametersFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_draw_parameters: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -12066,8 +12066,8 @@ pub type PhysicalDeviceShaderDrawParameterFeatures<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVulkan11Features.html>"]
 #[doc(alias = "VkPhysicalDeviceVulkan11Features")]
 pub struct PhysicalDeviceVulkan11Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub storage_buffer16_bit_access: Bool32,
     pub uniform_and_storage_buffer16_bit_access: Bool32,
     pub storage_push_constant16: Bool32,
@@ -12203,8 +12203,8 @@ impl<'a> PhysicalDeviceVulkan11Features<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVulkan11Properties.html>"]
 #[doc(alias = "VkPhysicalDeviceVulkan11Properties")]
 pub struct PhysicalDeviceVulkan11Properties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_uuid: [u8; UUID_SIZE as _],
     pub driver_uuid: [u8; UUID_SIZE as _],
     pub device_luid: [u8; LUID_SIZE as _],
@@ -12356,8 +12356,8 @@ impl<'a> PhysicalDeviceVulkan11Properties<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVulkan12Features.html>"]
 #[doc(alias = "VkPhysicalDeviceVulkan12Features")]
 pub struct PhysicalDeviceVulkan12Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub sampler_mirror_clamp_to_edge: Bool32,
     pub draw_indirect_count: Bool32,
     pub storage_buffer8_bit_access: Bool32,
@@ -12795,11 +12795,11 @@ impl<'a> PhysicalDeviceVulkan12Features<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVulkan12Properties.html>"]
 #[doc(alias = "VkPhysicalDeviceVulkan12Properties")]
 pub struct PhysicalDeviceVulkan12Properties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub driver_id: DriverId,
-    pub(crate) driver_name: [c_char; MAX_DRIVER_NAME_SIZE as _],
-    pub(crate) driver_info: [c_char; MAX_DRIVER_INFO_SIZE as _],
+    pub driver_name: [c_char; MAX_DRIVER_NAME_SIZE as _],
+    pub driver_info: [c_char; MAX_DRIVER_INFO_SIZE as _],
     pub conformance_version: ConformanceVersion,
     pub denorm_behavior_independence: ShaderFloatControlsIndependence,
     pub rounding_mode_independence: ShaderFloatControlsIndependence,
@@ -13241,10 +13241,10 @@ impl<'a> PhysicalDeviceVulkan12Properties<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageFormatListCreateInfo.html>"]
 #[doc(alias = "VkImageFormatListCreateInfo")]
 pub struct ImageFormatListCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) view_format_count: u32,
-    pub(crate) p_view_formats: *const Format,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub view_format_count: u32,
+    pub p_view_formats: *const Format,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_image_format_list", feature = "version_1_2"))]
@@ -13319,17 +13319,17 @@ pub type ImageFormatListCreateInfoKHR<'a> = ImageFormatListCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassCreateInfo2.html>"]
 #[doc(alias = "VkRenderPassCreateInfo2")]
 pub struct RenderPassCreateInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: RenderPassCreateFlags,
-    pub(crate) attachment_count: u32,
-    pub(crate) p_attachments: *const AttachmentDescription2<'a>,
-    pub(crate) subpass_count: u32,
-    pub(crate) p_subpasses: *const SubpassDescription2<'a>,
-    pub(crate) dependency_count: u32,
-    pub(crate) p_dependencies: *const SubpassDependency2<'a>,
-    pub(crate) correlated_view_mask_count: u32,
-    pub(crate) p_correlated_view_masks: *const u32,
+    pub attachment_count: u32,
+    pub p_attachments: *const AttachmentDescription2<'a>,
+    pub subpass_count: u32,
+    pub p_subpasses: *const SubpassDescription2<'a>,
+    pub dependency_count: u32,
+    pub p_dependencies: *const SubpassDependency2<'a>,
+    pub correlated_view_mask_count: u32,
+    pub p_correlated_view_masks: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
@@ -13446,8 +13446,8 @@ pub type RenderPassCreateInfo2KHR<'a> = RenderPassCreateInfo2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAttachmentDescription2.html>"]
 #[doc(alias = "VkAttachmentDescription2")]
 pub struct AttachmentDescription2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: AttachmentDescriptionFlags,
     pub format: Format,
     pub samples: SampleCountFlags,
@@ -13548,8 +13548,8 @@ pub type AttachmentDescription2KHR<'a> = AttachmentDescription2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAttachmentReference2.html>"]
 #[doc(alias = "VkAttachmentReference2")]
 pub struct AttachmentReference2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub attachment: u32,
     pub layout: ImageLayout,
     pub aspect_mask: ImageAspectFlags,
@@ -13608,19 +13608,19 @@ pub type AttachmentReference2KHR<'a> = AttachmentReference2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubpassDescription2.html>"]
 #[doc(alias = "VkSubpassDescription2")]
 pub struct SubpassDescription2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: SubpassDescriptionFlags,
     pub pipeline_bind_point: PipelineBindPoint,
     pub view_mask: u32,
-    pub(crate) input_attachment_count: u32,
-    pub(crate) p_input_attachments: *const AttachmentReference2<'a>,
-    pub(crate) color_attachment_count: u32,
-    pub(crate) p_color_attachments: *const AttachmentReference2<'a>,
-    pub(crate) p_resolve_attachments: *const AttachmentReference2<'a>,
+    pub input_attachment_count: u32,
+    pub p_input_attachments: *const AttachmentReference2<'a>,
+    pub color_attachment_count: u32,
+    pub p_color_attachments: *const AttachmentReference2<'a>,
+    pub p_resolve_attachments: *const AttachmentReference2<'a>,
     pub p_depth_stencil_attachment: *const AttachmentReference2<'a>,
-    pub(crate) preserve_attachment_count: u32,
-    pub(crate) p_preserve_attachments: *const u32,
+    pub preserve_attachment_count: u32,
+    pub p_preserve_attachments: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
@@ -13761,8 +13761,8 @@ pub type SubpassDescription2KHR<'a> = SubpassDescription2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubpassDependency2.html>"]
 #[doc(alias = "VkSubpassDependency2")]
 pub struct SubpassDependency2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_subpass: u32,
     pub dst_subpass: u32,
     pub src_stage_mask: PipelineStageFlags,
@@ -13856,8 +13856,8 @@ pub type SubpassDependency2KHR<'a> = SubpassDependency2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubpassBeginInfo.html>"]
 #[doc(alias = "VkSubpassBeginInfo")]
 pub struct SubpassBeginInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub contents: SubpassContents,
     phantom: PhantomData<&'a ()>,
 }
@@ -13902,8 +13902,8 @@ pub type SubpassBeginInfoKHR<'a> = SubpassBeginInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubpassEndInfo.html>"]
 #[doc(alias = "VkSubpassEndInfo")]
 pub struct SubpassEndInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
@@ -13940,8 +13940,8 @@ pub type SubpassEndInfoKHR<'a> = SubpassEndInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevice8BitStorageFeatures.html>"]
 #[doc(alias = "VkPhysicalDevice8BitStorageFeatures")]
 pub struct PhysicalDevice8BitStorageFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub storage_buffer8_bit_access: Bool32,
     pub uniform_and_storage_buffer8_bit_access: Bool32,
     pub storage_push_constant8: Bool32,
@@ -14060,11 +14060,11 @@ pub type ConformanceVersionKHR = ConformanceVersion;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDriverProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceDriverProperties")]
 pub struct PhysicalDeviceDriverProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub driver_id: DriverId,
-    pub(crate) driver_name: [c_char; MAX_DRIVER_NAME_SIZE as _],
-    pub(crate) driver_info: [c_char; MAX_DRIVER_INFO_SIZE as _],
+    pub driver_name: [c_char; MAX_DRIVER_NAME_SIZE as _],
+    pub driver_info: [c_char; MAX_DRIVER_INFO_SIZE as _],
     pub conformance_version: ConformanceVersion,
     phantom: PhantomData<&'a ()>,
 }
@@ -14141,8 +14141,8 @@ pub type PhysicalDeviceDriverPropertiesKHR<'a> = PhysicalDeviceDriverProperties<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderAtomicInt64Features.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderAtomicInt64Features")]
 pub struct PhysicalDeviceShaderAtomicInt64Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_buffer_int64_atomics: Bool32,
     pub shader_shared_int64_atomics: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -14203,8 +14203,8 @@ pub type PhysicalDeviceShaderAtomicInt64FeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderFloat16Int8Features.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderFloat16Int8Features")]
 pub struct PhysicalDeviceShaderFloat16Int8Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_float16: Bool32,
     pub shader_int8: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -14267,8 +14267,8 @@ pub type PhysicalDeviceFloat16Int8FeaturesKHR<'a> = PhysicalDeviceShaderFloat16I
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFloatControlsProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceFloatControlsProperties")]
 pub struct PhysicalDeviceFloatControlsProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub denorm_behavior_independence: ShaderFloatControlsIndependence,
     pub rounding_mode_independence: ShaderFloatControlsIndependence,
     pub shader_signed_zero_inf_nan_preserve_float16: Bool32,
@@ -14436,10 +14436,10 @@ pub type PhysicalDeviceFloatControlsPropertiesKHR<'a> = PhysicalDeviceFloatContr
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorSetLayoutBindingFlagsCreateInfo.html>"]
 #[doc(alias = "VkDescriptorSetLayoutBindingFlagsCreateInfo")]
 pub struct DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub binding_count: u32,
-    pub(crate) p_binding_flags: *const DescriptorBindingFlags,
+    pub p_binding_flags: *const DescriptorBindingFlags,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_descriptor_indexing", feature = "version_1_2"))]
@@ -14507,8 +14507,8 @@ pub type DescriptorSetLayoutBindingFlagsCreateInfoEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorIndexingFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorIndexingFeatures")]
 pub struct PhysicalDeviceDescriptorIndexingFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_input_attachment_array_dynamic_indexing: Bool32,
     pub shader_uniform_texel_buffer_array_dynamic_indexing: Bool32,
     pub shader_storage_texel_buffer_array_dynamic_indexing: Bool32,
@@ -14757,8 +14757,8 @@ pub type PhysicalDeviceDescriptorIndexingFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorIndexingProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorIndexingProperties")]
 pub struct PhysicalDeviceDescriptorIndexingProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_update_after_bind_descriptors_in_all_pools: u32,
     pub shader_uniform_buffer_array_non_uniform_indexing_native: Bool32,
     pub shader_sampled_image_array_non_uniform_indexing_native: Bool32,
@@ -14999,10 +14999,10 @@ pub type PhysicalDeviceDescriptorIndexingPropertiesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorSetVariableDescriptorCountAllocateInfo.html>"]
 #[doc(alias = "VkDescriptorSetVariableDescriptorCountAllocateInfo")]
 pub struct DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) descriptor_set_count: u32,
-    pub(crate) p_descriptor_counts: *const u32,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub descriptor_set_count: u32,
+    pub p_descriptor_counts: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_descriptor_indexing", feature = "version_1_2"))]
@@ -15066,8 +15066,8 @@ pub type DescriptorSetVariableDescriptorCountAllocateInfoEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorSetVariableDescriptorCountLayoutSupport.html>"]
 #[doc(alias = "VkDescriptorSetVariableDescriptorCountLayoutSupport")]
 pub struct DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_variable_descriptor_count: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -15122,8 +15122,8 @@ pub type DescriptorSetVariableDescriptorCountLayoutSupportEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubpassDescriptionDepthStencilResolve.html>"]
 #[doc(alias = "VkSubpassDescriptionDepthStencilResolve")]
 pub struct SubpassDescriptionDepthStencilResolve<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub depth_resolve_mode: ResolveModeFlags,
     pub stencil_resolve_mode: ResolveModeFlags,
     pub p_depth_stencil_resolve_attachment: *const AttachmentReference2<'a>,
@@ -15194,8 +15194,8 @@ pub type SubpassDescriptionDepthStencilResolveKHR<'a> = SubpassDescriptionDepthS
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDepthStencilResolveProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceDepthStencilResolveProperties")]
 pub struct PhysicalDeviceDepthStencilResolveProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub supported_depth_resolve_modes: ResolveModeFlags,
     pub supported_stencil_resolve_modes: ResolveModeFlags,
     pub independent_resolve_none: Bool32,
@@ -15273,8 +15273,8 @@ pub type PhysicalDeviceDepthStencilResolvePropertiesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceScalarBlockLayoutFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceScalarBlockLayoutFeatures")]
 pub struct PhysicalDeviceScalarBlockLayoutFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub scalar_block_layout: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -15329,8 +15329,8 @@ pub type PhysicalDeviceScalarBlockLayoutFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageStencilUsageCreateInfo.html>"]
 #[doc(alias = "VkImageStencilUsageCreateInfo")]
 pub struct ImageStencilUsageCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stencil_usage: ImageUsageFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -15388,8 +15388,8 @@ pub type ImageStencilUsageCreateInfoEXT<'a> = ImageStencilUsageCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerReductionModeCreateInfo.html>"]
 #[doc(alias = "VkSamplerReductionModeCreateInfo")]
 pub struct SamplerReductionModeCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub reduction_mode: SamplerReductionMode,
     phantom: PhantomData<&'a ()>,
 }
@@ -15439,8 +15439,8 @@ pub type SamplerReductionModeCreateInfoEXT<'a> = SamplerReductionModeCreateInfo<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSamplerFilterMinmaxProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceSamplerFilterMinmaxProperties")]
 pub struct PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub filter_minmax_single_component_formats: Bool32,
     pub filter_minmax_image_component_mapping: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -15504,8 +15504,8 @@ pub type PhysicalDeviceSamplerFilterMinmaxPropertiesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVulkanMemoryModelFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceVulkanMemoryModelFeatures")]
 pub struct PhysicalDeviceVulkanMemoryModelFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vulkan_memory_model: Bool32,
     pub vulkan_memory_model_device_scope: Bool32,
     pub vulkan_memory_model_availability_visibility_chains: Bool32,
@@ -15577,8 +15577,8 @@ pub type PhysicalDeviceVulkanMemoryModelFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImagelessFramebufferFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceImagelessFramebufferFeatures")]
 pub struct PhysicalDeviceImagelessFramebufferFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub imageless_framebuffer: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -15640,10 +15640,10 @@ pub type PhysicalDeviceImagelessFramebufferFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFramebufferAttachmentsCreateInfo.html>"]
 #[doc(alias = "VkFramebufferAttachmentsCreateInfo")]
 pub struct FramebufferAttachmentsCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) attachment_image_info_count: u32,
-    pub(crate) p_attachment_image_infos: *const FramebufferAttachmentImageInfo<'a>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub attachment_image_info_count: u32,
+    pub p_attachment_image_infos: *const FramebufferAttachmentImageInfo<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_imageless_framebuffer", feature = "version_1_2"))]
@@ -15708,15 +15708,15 @@ pub type FramebufferAttachmentsCreateInfoKHR<'a> = FramebufferAttachmentsCreateI
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFramebufferAttachmentImageInfo.html>"]
 #[doc(alias = "VkFramebufferAttachmentImageInfo")]
 pub struct FramebufferAttachmentImageInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: ImageCreateFlags,
     pub usage: ImageUsageFlags,
     pub width: u32,
     pub height: u32,
     pub layer_count: u32,
-    pub(crate) view_format_count: u32,
-    pub(crate) p_view_formats: *const Format,
+    pub view_format_count: u32,
+    pub p_view_formats: *const Format,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_imageless_framebuffer", feature = "version_1_2"))]
@@ -15800,10 +15800,10 @@ pub type FramebufferAttachmentImageInfoKHR<'a> = FramebufferAttachmentImageInfo<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassAttachmentBeginInfo.html>"]
 #[doc(alias = "VkRenderPassAttachmentBeginInfo")]
 pub struct RenderPassAttachmentBeginInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) attachment_count: u32,
-    pub(crate) p_attachments: *const ImageView,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub attachment_count: u32,
+    pub p_attachments: *const ImageView,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_imageless_framebuffer", feature = "version_1_2"))]
@@ -15864,8 +15864,8 @@ pub type RenderPassAttachmentBeginInfoKHR<'a> = RenderPassAttachmentBeginInfo<'a
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceUniformBufferStandardLayoutFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceUniformBufferStandardLayoutFeatures")]
 pub struct PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub uniform_buffer_standard_layout: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -15920,8 +15920,8 @@ pub type PhysicalDeviceUniformBufferStandardLayoutFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderSubgroupExtendedTypesFeatures")]
 pub struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_subgroup_extended_types: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -15980,8 +15980,8 @@ pub type PhysicalDeviceShaderSubgroupExtendedTypesFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceSeparateDepthStencilLayoutsFeatures")]
 pub struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub separate_depth_stencil_layouts: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -16074,8 +16074,8 @@ pub type PhysicalDeviceSeparateDepthStencilLayoutsFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAttachmentReferenceStencilLayout.html>"]
 #[doc(alias = "VkAttachmentReferenceStencilLayout")]
 pub struct AttachmentReferenceStencilLayout<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stencil_layout: ImageLayout,
     phantom: PhantomData<&'a ()>,
 }
@@ -16155,8 +16155,8 @@ pub type AttachmentReferenceStencilLayoutKHR<'a> = AttachmentReferenceStencilLay
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAttachmentDescriptionStencilLayout.html>"]
 #[doc(alias = "VkAttachmentDescriptionStencilLayout")]
 pub struct AttachmentDescriptionStencilLayout<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stencil_initial_layout: ImageLayout,
     pub stencil_final_layout: ImageLayout,
     phantom: PhantomData<&'a ()>,
@@ -16240,8 +16240,8 @@ pub type AttachmentDescriptionStencilLayoutKHR<'a> = AttachmentDescriptionStenci
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceHostQueryResetFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceHostQueryResetFeatures")]
 pub struct PhysicalDeviceHostQueryResetFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub host_query_reset: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -16302,8 +16302,8 @@ pub type PhysicalDeviceHostQueryResetFeaturesEXT<'a> = PhysicalDeviceHostQueryRe
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTimelineSemaphoreFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceTimelineSemaphoreFeatures")]
 pub struct PhysicalDeviceTimelineSemaphoreFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub timeline_semaphore: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -16365,8 +16365,8 @@ pub type PhysicalDeviceTimelineSemaphoreFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTimelineSemaphoreProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceTimelineSemaphoreProperties")]
 pub struct PhysicalDeviceTimelineSemaphoreProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_timeline_semaphore_value_difference: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -16423,8 +16423,8 @@ pub type PhysicalDeviceTimelineSemaphorePropertiesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSemaphoreTypeCreateInfo.html>"]
 #[doc(alias = "VkSemaphoreTypeCreateInfo")]
 pub struct SemaphoreTypeCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore_type: SemaphoreType,
     pub initial_value: u64,
     phantom: PhantomData<&'a ()>,
@@ -16489,12 +16489,12 @@ pub type SemaphoreTypeCreateInfoKHR<'a> = SemaphoreTypeCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTimelineSemaphoreSubmitInfo.html>"]
 #[doc(alias = "VkTimelineSemaphoreSubmitInfo")]
 pub struct TimelineSemaphoreSubmitInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub wait_semaphore_value_count: u32,
-    pub(crate) p_wait_semaphore_values: *const u64,
+    pub p_wait_semaphore_values: *const u64,
     pub signal_semaphore_value_count: u32,
-    pub(crate) p_signal_semaphore_values: *const u64,
+    pub p_signal_semaphore_values: *const u64,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_timeline_semaphore", feature = "version_1_2"))]
@@ -16587,12 +16587,12 @@ pub type TimelineSemaphoreSubmitInfoKHR<'a> = TimelineSemaphoreSubmitInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSemaphoreWaitInfo.html>"]
 #[doc(alias = "VkSemaphoreWaitInfo")]
 pub struct SemaphoreWaitInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: SemaphoreWaitFlags,
-    pub(crate) semaphore_count: u32,
-    pub(crate) p_semaphores: *const Semaphore,
-    pub(crate) p_values: *const u64,
+    pub semaphore_count: u32,
+    pub p_semaphores: *const Semaphore,
+    pub p_values: *const u64,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_timeline_semaphore", feature = "version_1_2"))]
@@ -16666,8 +16666,8 @@ pub type SemaphoreWaitInfoKHR<'a> = SemaphoreWaitInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSemaphoreSignalInfo.html>"]
 #[doc(alias = "VkSemaphoreSignalInfo")]
 pub struct SemaphoreSignalInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub value: u64,
     phantom: PhantomData<&'a ()>,
@@ -16719,8 +16719,8 @@ pub type SemaphoreSignalInfoKHR<'a> = SemaphoreSignalInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceBufferDeviceAddressFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceBufferDeviceAddressFeatures")]
 pub struct PhysicalDeviceBufferDeviceAddressFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer_device_address: Bool32,
     pub buffer_device_address_capture_replay: Bool32,
     pub buffer_device_address_multi_device: Bool32,
@@ -16796,8 +16796,8 @@ pub type PhysicalDeviceBufferDeviceAddressFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferDeviceAddressInfo.html>"]
 #[doc(alias = "VkBufferDeviceAddressInfo")]
 pub struct BufferDeviceAddressInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -16844,8 +16844,8 @@ pub type BufferDeviceAddressInfoEXT<'a> = BufferDeviceAddressInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferOpaqueCaptureAddressCreateInfo.html>"]
 #[doc(alias = "VkBufferOpaqueCaptureAddressCreateInfo")]
 pub struct BufferOpaqueCaptureAddressCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub opaque_capture_address: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -16895,8 +16895,8 @@ pub type BufferOpaqueCaptureAddressCreateInfoKHR<'a> = BufferOpaqueCaptureAddres
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryOpaqueCaptureAddressAllocateInfo.html>"]
 #[doc(alias = "VkMemoryOpaqueCaptureAddressAllocateInfo")]
 pub struct MemoryOpaqueCaptureAddressAllocateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub opaque_capture_address: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -16946,8 +16946,8 @@ pub type MemoryOpaqueCaptureAddressAllocateInfoKHR<'a> = MemoryOpaqueCaptureAddr
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceMemoryOpaqueCaptureAddressInfo.html>"]
 #[doc(alias = "VkDeviceMemoryOpaqueCaptureAddressInfo")]
 pub struct DeviceMemoryOpaqueCaptureAddressInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -16995,8 +16995,8 @@ pub type Flags64 = u64;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVulkan13Features.html>"]
 #[doc(alias = "VkPhysicalDeviceVulkan13Features")]
 pub struct PhysicalDeviceVulkan13Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub robust_image_access: Bool32,
     pub inline_uniform_block: Bool32,
     pub descriptor_binding_inline_uniform_block_update_after_bind: Bool32,
@@ -17156,8 +17156,8 @@ impl<'a> PhysicalDeviceVulkan13Features<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVulkan13Properties.html>"]
 #[doc(alias = "VkPhysicalDeviceVulkan13Properties")]
 pub struct PhysicalDeviceVulkan13Properties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_subgroup_size: u32,
     pub max_subgroup_size: u32,
     pub max_compute_workgroup_subgroups: u32,
@@ -17576,11 +17576,11 @@ impl<'a> PhysicalDeviceVulkan13Properties<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCreationFeedbackCreateInfo.html>"]
 #[doc(alias = "VkPipelineCreationFeedbackCreateInfo")]
 pub struct PipelineCreationFeedbackCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_pipeline_creation_feedback: *const PipelineCreationFeedback,
-    pub(crate) pipeline_stage_creation_feedback_count: u32,
-    pub(crate) p_pipeline_stage_creation_feedbacks: *const PipelineCreationFeedback,
+    pub pipeline_stage_creation_feedback_count: u32,
+    pub p_pipeline_stage_creation_feedbacks: *const PipelineCreationFeedback,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_pipeline_creation_feedback", feature = "version_1_3"))]
@@ -17728,8 +17728,8 @@ pub type PipelineCreationFeedbackEXT = PipelineCreationFeedback;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderTerminateInvocationFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderTerminateInvocationFeatures")]
 pub struct PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_terminate_invocation: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -17785,13 +17785,13 @@ pub type PhysicalDeviceShaderTerminateInvocationFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceToolProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceToolProperties")]
 pub struct PhysicalDeviceToolProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) name: [c_char; MAX_EXTENSION_NAME_SIZE as _],
-    pub(crate) version: [c_char; MAX_EXTENSION_NAME_SIZE as _],
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub name: [c_char; MAX_EXTENSION_NAME_SIZE as _],
+    pub version: [c_char; MAX_EXTENSION_NAME_SIZE as _],
     pub purposes: ToolPurposeFlags,
-    pub(crate) description: [c_char; MAX_DESCRIPTION_SIZE as _],
-    pub(crate) layer: [c_char; MAX_EXTENSION_NAME_SIZE as _],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub layer: [c_char; MAX_EXTENSION_NAME_SIZE as _],
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_tooling_info", feature = "version_1_3"))]
@@ -17866,8 +17866,8 @@ pub type PhysicalDeviceToolPropertiesEXT<'a> = PhysicalDeviceToolProperties<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderDemoteToHelperInvocationFeatures")]
 pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_demote_to_helper_invocation: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -17926,8 +17926,8 @@ pub type PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePrivateDataFeatures.html>"]
 #[doc(alias = "VkPhysicalDevicePrivateDataFeatures")]
 pub struct PhysicalDevicePrivateDataFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub private_data: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -17988,8 +17988,8 @@ pub type PhysicalDevicePrivateDataFeaturesEXT<'a> = PhysicalDevicePrivateDataFea
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDevicePrivateDataCreateInfo.html>"]
 #[doc(alias = "VkDevicePrivateDataCreateInfo")]
 pub struct DevicePrivateDataCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub private_data_slot_request_count: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -18036,8 +18036,8 @@ pub type DevicePrivateDataCreateInfoEXT<'a> = DevicePrivateDataCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPrivateDataSlotCreateInfo.html>"]
 #[doc(alias = "VkPrivateDataSlotCreateInfo")]
 pub struct PrivateDataSlotCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -18085,8 +18085,8 @@ pub type PrivateDataSlotCreateInfoEXT<'a> = PrivateDataSlotCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineCreationCacheControlFeatures.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineCreationCacheControlFeatures")]
 pub struct PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_creation_cache_control: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -18176,8 +18176,8 @@ pub type PhysicalDevicePipelineCreationCacheControlFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryBarrier2.html>"]
 #[doc(alias = "VkMemoryBarrier2")]
 pub struct MemoryBarrier2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_stage_mask: PipelineStageFlags2,
     pub src_access_mask: AccessFlags2,
     pub dst_stage_mask: PipelineStageFlags2,
@@ -18248,8 +18248,8 @@ pub type MemoryBarrier2KHR<'a> = MemoryBarrier2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferMemoryBarrier2.html>"]
 #[doc(alias = "VkBufferMemoryBarrier2")]
 pub struct BufferMemoryBarrier2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_stage_mask: PipelineStageFlags2,
     pub src_access_mask: AccessFlags2,
     pub dst_stage_mask: PipelineStageFlags2,
@@ -18350,8 +18350,8 @@ pub type BufferMemoryBarrier2KHR<'a> = BufferMemoryBarrier2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageMemoryBarrier2.html>"]
 #[doc(alias = "VkImageMemoryBarrier2")]
 pub struct ImageMemoryBarrier2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_stage_mask: PipelineStageFlags2,
     pub src_access_mask: AccessFlags2,
     pub dst_stage_mask: PipelineStageFlags2,
@@ -18459,15 +18459,15 @@ pub type ImageMemoryBarrier2KHR<'a> = ImageMemoryBarrier2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDependencyInfo.html>"]
 #[doc(alias = "VkDependencyInfo")]
 pub struct DependencyInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dependency_flags: DependencyFlags,
-    pub(crate) memory_barrier_count: u32,
-    pub(crate) p_memory_barriers: *const MemoryBarrier2<'a>,
-    pub(crate) buffer_memory_barrier_count: u32,
-    pub(crate) p_buffer_memory_barriers: *const BufferMemoryBarrier2<'a>,
-    pub(crate) image_memory_barrier_count: u32,
-    pub(crate) p_image_memory_barriers: *const ImageMemoryBarrier2<'a>,
+    pub memory_barrier_count: u32,
+    pub p_memory_barriers: *const MemoryBarrier2<'a>,
+    pub buffer_memory_barrier_count: u32,
+    pub p_buffer_memory_barriers: *const BufferMemoryBarrier2<'a>,
+    pub image_memory_barrier_count: u32,
+    pub p_image_memory_barriers: *const ImageMemoryBarrier2<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
@@ -18577,15 +18577,15 @@ pub type DependencyInfoKHR<'a> = DependencyInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubmitInfo2.html>"]
 #[doc(alias = "VkSubmitInfo2")]
 pub struct SubmitInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: SubmitFlags,
-    pub(crate) wait_semaphore_info_count: u32,
-    pub(crate) p_wait_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
-    pub(crate) command_buffer_info_count: u32,
-    pub(crate) p_command_buffer_infos: *const CommandBufferSubmitInfo<'a>,
-    pub(crate) signal_semaphore_info_count: u32,
-    pub(crate) p_signal_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
+    pub wait_semaphore_info_count: u32,
+    pub p_wait_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
+    pub command_buffer_info_count: u32,
+    pub p_command_buffer_infos: *const CommandBufferSubmitInfo<'a>,
+    pub signal_semaphore_info_count: u32,
+    pub p_signal_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
@@ -18695,8 +18695,8 @@ pub type SubmitInfo2KHR<'a> = SubmitInfo2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSemaphoreSubmitInfo.html>"]
 #[doc(alias = "VkSemaphoreSubmitInfo")]
 pub struct SemaphoreSubmitInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub value: u64,
     pub stage_mask: PipelineStageFlags2,
@@ -18762,8 +18762,8 @@ pub type SemaphoreSubmitInfoKHR<'a> = SemaphoreSubmitInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCommandBufferSubmitInfo.html>"]
 #[doc(alias = "VkCommandBufferSubmitInfo")]
 pub struct CommandBufferSubmitInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub command_buffer: Option<BorrowedHandle<'a, CommandBuffer>>,
     pub device_mask: u32,
     phantom: PhantomData<&'a ()>,
@@ -18815,8 +18815,8 @@ pub type CommandBufferSubmitInfoKHR<'a> = CommandBufferSubmitInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSynchronization2Features.html>"]
 #[doc(alias = "VkPhysicalDeviceSynchronization2Features")]
 pub struct PhysicalDeviceSynchronization2Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub synchronization2: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -18876,8 +18876,8 @@ pub type PhysicalDeviceSynchronization2FeaturesKHR<'a> = PhysicalDeviceSynchroni
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeatures")]
 pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_zero_initialize_workgroup_memory: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -18935,8 +18935,8 @@ pub type PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageRobustnessFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceImageRobustnessFeatures")]
 pub struct PhysicalDeviceImageRobustnessFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub robust_image_access: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -18990,12 +18990,12 @@ pub type PhysicalDeviceImageRobustnessFeaturesEXT<'a> = PhysicalDeviceImageRobus
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyBufferInfo2.html>"]
 #[doc(alias = "VkCopyBufferInfo2")]
 pub struct CopyBufferInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub dst_buffer: Option<BorrowedHandle<'a, Buffer>>,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const BufferCopy2<'a>,
+    pub region_count: u32,
+    pub p_regions: *const BufferCopy2<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
@@ -19061,14 +19061,14 @@ pub type CopyBufferInfo2KHR<'a> = CopyBufferInfo2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyImageInfo2.html>"]
 #[doc(alias = "VkCopyImageInfo2")]
 pub struct CopyImageInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
     pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const ImageCopy2<'a>,
+    pub region_count: u32,
+    pub p_regions: *const ImageCopy2<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
@@ -19146,13 +19146,13 @@ pub type CopyImageInfo2KHR<'a> = CopyImageInfo2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyBufferToImageInfo2.html>"]
 #[doc(alias = "VkCopyBufferToImageInfo2")]
 pub struct CopyBufferToImageInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const BufferImageCopy2<'a>,
+    pub region_count: u32,
+    pub p_regions: *const BufferImageCopy2<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
@@ -19224,13 +19224,13 @@ pub type CopyBufferToImageInfo2KHR<'a> = CopyBufferToImageInfo2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyImageToBufferInfo2.html>"]
 #[doc(alias = "VkCopyImageToBufferInfo2")]
 pub struct CopyImageToBufferInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
     pub dst_buffer: Option<BorrowedHandle<'a, Buffer>>,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const BufferImageCopy2<'a>,
+    pub region_count: u32,
+    pub p_regions: *const BufferImageCopy2<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
@@ -19302,14 +19302,14 @@ pub type CopyImageToBufferInfo2KHR<'a> = CopyImageToBufferInfo2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBlitImageInfo2.html>"]
 #[doc(alias = "VkBlitImageInfo2")]
 pub struct BlitImageInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
     pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const ImageBlit2<'a>,
+    pub region_count: u32,
+    pub p_regions: *const ImageBlit2<'a>,
     pub filter: Filter,
     phantom: PhantomData<&'a ()>,
 }
@@ -19394,14 +19394,14 @@ pub type BlitImageInfo2KHR<'a> = BlitImageInfo2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkResolveImageInfo2.html>"]
 #[doc(alias = "VkResolveImageInfo2")]
 pub struct ResolveImageInfo2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
     pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const ImageResolve2<'a>,
+    pub region_count: u32,
+    pub p_regions: *const ImageResolve2<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
@@ -19479,8 +19479,8 @@ pub type ResolveImageInfo2KHR<'a> = ResolveImageInfo2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferCopy2.html>"]
 #[doc(alias = "VkBufferCopy2")]
 pub struct BufferCopy2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_offset: DeviceSize,
     pub dst_offset: DeviceSize,
     pub size: DeviceSize,
@@ -19539,8 +19539,8 @@ pub type BufferCopy2KHR<'a> = BufferCopy2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageCopy2.html>"]
 #[doc(alias = "VkImageCopy2")]
 pub struct ImageCopy2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_subresource: ImageSubresourceLayers,
     pub src_offset: Offset3D,
     pub dst_subresource: ImageSubresourceLayers,
@@ -19613,8 +19613,8 @@ pub type ImageCopy2KHR<'a> = ImageCopy2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageBlit2.html>"]
 #[doc(alias = "VkImageBlit2")]
 pub struct ImageBlit2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_subresource: ImageSubresourceLayers,
     pub src_offsets: [Offset3D; 2u16 as _],
     pub dst_subresource: ImageSubresourceLayers,
@@ -19680,8 +19680,8 @@ pub type ImageBlit2KHR<'a> = ImageBlit2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferImageCopy2.html>"]
 #[doc(alias = "VkBufferImageCopy2")]
 pub struct BufferImageCopy2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer_offset: DeviceSize,
     pub buffer_row_length: u32,
     pub buffer_image_height: u32,
@@ -19761,8 +19761,8 @@ pub type BufferImageCopy2KHR<'a> = BufferImageCopy2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageResolve2.html>"]
 #[doc(alias = "VkImageResolve2")]
 pub struct ImageResolve2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_subresource: ImageSubresourceLayers,
     pub src_offset: Offset3D,
     pub dst_subresource: ImageSubresourceLayers,
@@ -19835,8 +19835,8 @@ pub type ImageResolve2KHR<'a> = ImageResolve2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSubgroupSizeControlFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceSubgroupSizeControlFeatures")]
 pub struct PhysicalDeviceSubgroupSizeControlFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub subgroup_size_control: Bool32,
     pub compute_full_subgroups: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -19905,8 +19905,8 @@ pub type PhysicalDeviceSubgroupSizeControlFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSubgroupSizeControlProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceSubgroupSizeControlProperties")]
 pub struct PhysicalDeviceSubgroupSizeControlProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_subgroup_size: u32,
     pub max_subgroup_size: u32,
     pub max_compute_workgroup_subgroups: u32,
@@ -19989,8 +19989,8 @@ pub type PhysicalDeviceSubgroupSizeControlPropertiesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineShaderStageRequiredSubgroupSizeCreateInfo.html>"]
 #[doc(alias = "VkPipelineShaderStageRequiredSubgroupSizeCreateInfo")]
 pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub required_subgroup_size: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -20093,8 +20093,8 @@ pub type ShaderRequiredSubgroupSizeCreateInfoEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceInlineUniformBlockFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceInlineUniformBlockFeatures")]
 pub struct PhysicalDeviceInlineUniformBlockFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub inline_uniform_block: Bool32,
     pub descriptor_binding_inline_uniform_block_update_after_bind: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -20166,8 +20166,8 @@ pub type PhysicalDeviceInlineUniformBlockFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceInlineUniformBlockProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceInlineUniformBlockProperties")]
 pub struct PhysicalDeviceInlineUniformBlockProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_inline_uniform_block_size: u32,
     pub max_per_stage_descriptor_inline_uniform_blocks: u32,
     pub max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32,
@@ -20258,10 +20258,10 @@ pub type PhysicalDeviceInlineUniformBlockPropertiesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWriteDescriptorSetInlineUniformBlock.html>"]
 #[doc(alias = "VkWriteDescriptorSetInlineUniformBlock")]
 pub struct WriteDescriptorSetInlineUniformBlock<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) data_size: u32,
-    pub(crate) p_data: VoidPtr,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub data_size: u32,
+    pub p_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_inline_uniform_block", feature = "version_1_3"))]
@@ -20320,8 +20320,8 @@ pub type WriteDescriptorSetInlineUniformBlockEXT<'a> = WriteDescriptorSetInlineU
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorPoolInlineUniformBlockCreateInfo.html>"]
 #[doc(alias = "VkDescriptorPoolInlineUniformBlockCreateInfo")]
 pub struct DescriptorPoolInlineUniformBlockCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_inline_uniform_block_bindings: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -20371,8 +20371,8 @@ pub type DescriptorPoolInlineUniformBlockCreateInfoEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTextureCompressionASTCHDRFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceTextureCompressionASTCHDRFeatures")]
 pub struct PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub texture_compression_astc_hdr: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -20435,14 +20435,14 @@ pub type PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingInfo.html>"]
 #[doc(alias = "VkRenderingInfo")]
 pub struct RenderingInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: RenderingFlags,
     pub render_area: Rect2D,
     pub layer_count: u32,
     pub view_mask: u32,
-    pub(crate) color_attachment_count: u32,
-    pub(crate) p_color_attachments: *const RenderingAttachmentInfo<'a>,
+    pub color_attachment_count: u32,
+    pub p_color_attachments: *const RenderingAttachmentInfo<'a>,
     pub p_depth_attachment: *const RenderingAttachmentInfo<'a>,
     pub p_stencil_attachment: *const RenderingAttachmentInfo<'a>,
     phantom: PhantomData<&'a ()>,
@@ -20589,8 +20589,8 @@ pub type RenderingInfoKHR<'a> = RenderingInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingAttachmentInfo.html>"]
 #[doc(alias = "VkRenderingAttachmentInfo")]
 pub struct RenderingAttachmentInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
     pub resolve_mode: ResolveModeFlags,
@@ -20684,11 +20684,11 @@ pub type RenderingAttachmentInfoKHR<'a> = RenderingAttachmentInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRenderingCreateInfo.html>"]
 #[doc(alias = "VkPipelineRenderingCreateInfo")]
 pub struct PipelineRenderingCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub view_mask: u32,
     pub color_attachment_count: u32,
-    pub(crate) p_color_attachment_formats: *const Format,
+    pub p_color_attachment_formats: *const Format,
     pub depth_attachment_format: Format,
     pub stencil_attachment_format: Format,
     phantom: PhantomData<&'a ()>,
@@ -20778,8 +20778,8 @@ pub type PipelineRenderingCreateInfoKHR<'a> = PipelineRenderingCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDynamicRenderingFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceDynamicRenderingFeatures")]
 pub struct PhysicalDeviceDynamicRenderingFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dynamic_rendering: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -20840,12 +20840,12 @@ pub type PhysicalDeviceDynamicRenderingFeaturesKHR<'a> = PhysicalDeviceDynamicRe
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCommandBufferInheritanceRenderingInfo.html>"]
 #[doc(alias = "VkCommandBufferInheritanceRenderingInfo")]
 pub struct CommandBufferInheritanceRenderingInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: RenderingFlags,
     pub view_mask: u32,
-    pub(crate) color_attachment_count: u32,
-    pub(crate) p_color_attachment_formats: *const Format,
+    pub color_attachment_count: u32,
+    pub p_color_attachment_formats: *const Format,
     pub depth_attachment_format: Format,
     pub stencil_attachment_format: Format,
     pub rasterization_samples: SampleCountFlags,
@@ -20942,8 +20942,8 @@ pub type CommandBufferInheritanceRenderingInfoKHR<'a> = CommandBufferInheritance
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderIntegerDotProductFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderIntegerDotProductFeatures")]
 pub struct PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_integer_dot_product: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -20998,8 +20998,8 @@ pub type PhysicalDeviceShaderIntegerDotProductFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderIntegerDotProductProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderIntegerDotProductProperties")]
 pub struct PhysicalDeviceShaderIntegerDotProductProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub integer_dot_product8_bit_unsigned_accelerated: Bool32,
     pub integer_dot_product8_bit_signed_accelerated: Bool32,
     pub integer_dot_product8_bit_mixed_signedness_accelerated: Bool32,
@@ -21312,8 +21312,8 @@ pub type PhysicalDeviceShaderIntegerDotProductPropertiesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTexelBufferAlignmentProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceTexelBufferAlignmentProperties")]
 pub struct PhysicalDeviceTexelBufferAlignmentProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub storage_texel_buffer_offset_alignment_bytes: DeviceSize,
     pub storage_texel_buffer_offset_single_texel_alignment: Bool32,
     pub uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
@@ -21391,8 +21391,8 @@ pub type PhysicalDeviceTexelBufferAlignmentPropertiesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFormatProperties3.html>"]
 #[doc(alias = "VkFormatProperties3")]
 pub struct FormatProperties3<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub linear_tiling_features: FormatFeatureFlags2,
     pub optimal_tiling_features: FormatFeatureFlags2,
     pub buffer_features: FormatFeatureFlags2,
@@ -21459,8 +21459,8 @@ pub type FormatProperties3KHR<'a> = FormatProperties3<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance4Features.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance4Features")]
 pub struct PhysicalDeviceMaintenance4Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub maintenance4: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -21521,8 +21521,8 @@ pub type PhysicalDeviceMaintenance4FeaturesKHR<'a> = PhysicalDeviceMaintenance4F
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance4Properties.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance4Properties")]
 pub struct PhysicalDeviceMaintenance4Properties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_buffer_size: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -21578,8 +21578,8 @@ pub type PhysicalDeviceMaintenance4PropertiesKHR<'a> = PhysicalDeviceMaintenance
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceBufferMemoryRequirements.html>"]
 #[doc(alias = "VkDeviceBufferMemoryRequirements")]
 pub struct DeviceBufferMemoryRequirements<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_create_info: *const BufferCreateInfo<'a>,
     phantom: PhantomData<&'a ()>,
 }
@@ -21624,8 +21624,8 @@ pub type DeviceBufferMemoryRequirementsKHR<'a> = DeviceBufferMemoryRequirements<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceImageMemoryRequirements.html>"]
 #[doc(alias = "VkDeviceImageMemoryRequirements")]
 pub struct DeviceImageMemoryRequirements<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_create_info: *const ImageCreateInfo<'a>,
     pub plane_aspect: ImageAspectFlags,
     phantom: PhantomData<&'a ()>,
@@ -21677,8 +21677,8 @@ pub type DeviceImageMemoryRequirementsKHR<'a> = DeviceImageMemoryRequirements<'a
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVulkan14Features.html>"]
 #[doc(alias = "VkPhysicalDeviceVulkan14Features")]
 pub struct PhysicalDeviceVulkan14Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub global_priority_query: Bool32,
     pub shader_subgroup_rotate: Bool32,
     pub shader_subgroup_rotate_clustered: Bool32,
@@ -21877,8 +21877,8 @@ impl<'a> PhysicalDeviceVulkan14Features<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVulkan14Properties.html>"]
 #[doc(alias = "VkPhysicalDeviceVulkan14Properties")]
 pub struct PhysicalDeviceVulkan14Properties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub line_sub_pixel_precision_bits: u32,
     pub max_vertex_attrib_divisor: u32,
     pub supports_non_zero_first_instance: Bool32,
@@ -21899,9 +21899,9 @@ pub struct PhysicalDeviceVulkan14Properties<'a> {
     pub default_robustness_vertex_inputs: PipelineRobustnessBufferBehavior,
     pub default_robustness_images: PipelineRobustnessImageBehavior,
     pub copy_src_layout_count: u32,
-    pub(crate) p_copy_src_layouts: *const ImageLayout,
+    pub p_copy_src_layouts: *const ImageLayout,
     pub copy_dst_layout_count: u32,
-    pub(crate) p_copy_dst_layouts: *const ImageLayout,
+    pub p_copy_dst_layouts: *const ImageLayout,
     pub optimal_tiling_layout_uuid: [u8; UUID_SIZE as _],
     pub identical_memory_type_requirements: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -22136,8 +22136,8 @@ impl<'a> PhysicalDeviceVulkan14Properties<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceQueueGlobalPriorityCreateInfo.html>"]
 #[doc(alias = "VkDeviceQueueGlobalPriorityCreateInfo")]
 pub struct DeviceQueueGlobalPriorityCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub global_priority: QueueGlobalPriority,
     phantom: PhantomData<&'a ()>,
 }
@@ -22189,8 +22189,8 @@ pub type DeviceQueueGlobalPriorityCreateInfoEXT<'a> = DeviceQueueGlobalPriorityC
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceGlobalPriorityQueryFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceGlobalPriorityQueryFeatures")]
 pub struct PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub global_priority_query: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -22255,10 +22255,10 @@ pub type PhysicalDeviceGlobalPriorityQueryFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueueFamilyGlobalPriorityProperties.html>"]
 #[doc(alias = "VkQueueFamilyGlobalPriorityProperties")]
 pub struct QueueFamilyGlobalPriorityProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) priority_count: u32,
-    pub(crate) priorities: [QueueGlobalPriority; MAX_GLOBAL_PRIORITY_SIZE as _],
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub priority_count: u32,
+    pub priorities: [QueueGlobalPriority; MAX_GLOBAL_PRIORITY_SIZE as _],
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_global_priority", feature = "version_1_4"))]
@@ -22314,8 +22314,8 @@ pub type QueueFamilyGlobalPriorityPropertiesEXT<'a> = QueueFamilyGlobalPriorityP
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderSubgroupRotateFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderSubgroupRotateFeatures")]
 pub struct PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_subgroup_rotate: Bool32,
     pub shader_subgroup_rotate_clustered: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -22376,8 +22376,8 @@ pub type PhysicalDeviceShaderSubgroupRotateFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderFloatControls2Features.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderFloatControls2Features")]
 pub struct PhysicalDeviceShaderFloatControls2Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_float_controls2: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -22431,8 +22431,8 @@ pub type PhysicalDeviceShaderFloatControls2FeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderExpectAssumeFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderExpectAssumeFeatures")]
 pub struct PhysicalDeviceShaderExpectAssumeFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_expect_assume: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -22487,8 +22487,8 @@ pub type PhysicalDeviceShaderExpectAssumeFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLineRasterizationFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceLineRasterizationFeatures")]
 pub struct PhysicalDeviceLineRasterizationFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub rectangular_lines: Bool32,
     pub bresenham_lines: Bool32,
     pub smooth_lines: Bool32,
@@ -22588,8 +22588,8 @@ pub type PhysicalDeviceLineRasterizationFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLineRasterizationProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceLineRasterizationProperties")]
 pub struct PhysicalDeviceLineRasterizationProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub line_sub_pixel_precision_bits: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -22649,8 +22649,8 @@ pub type PhysicalDeviceLineRasterizationPropertiesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRasterizationLineStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineRasterizationLineStateCreateInfo")]
 pub struct PipelineRasterizationLineStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub line_rasterization_mode: LineRasterizationMode,
     pub stippled_line_enable: Bool32,
     pub line_stipple_factor: u32,
@@ -22725,8 +22725,8 @@ pub type PipelineRasterizationLineStateCreateInfoEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVertexAttributeDivisorProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceVertexAttributeDivisorProperties")]
 pub struct PhysicalDeviceVertexAttributeDivisorProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_vertex_attrib_divisor: u32,
     pub supports_non_zero_first_instance: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -22830,10 +22830,10 @@ pub type VertexInputBindingDivisorDescriptionEXT = VertexInputBindingDivisorDesc
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineVertexInputDivisorStateCreateInfo.html>"]
 #[doc(alias = "VkPipelineVertexInputDivisorStateCreateInfo")]
 pub struct PipelineVertexInputDivisorStateCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) vertex_binding_divisor_count: u32,
-    pub(crate) p_vertex_binding_divisors: *const VertexInputBindingDivisorDescription,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub vertex_binding_divisor_count: u32,
+    pub p_vertex_binding_divisors: *const VertexInputBindingDivisorDescription,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_vertex_attribute_divisor", feature = "version_1_4"))]
@@ -22902,8 +22902,8 @@ pub type PipelineVertexInputDivisorStateCreateInfoEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVertexAttributeDivisorFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceVertexAttributeDivisorFeatures")]
 pub struct PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vertex_attribute_instance_rate_divisor: Bool32,
     pub vertex_attribute_instance_rate_zero_divisor: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -22975,8 +22975,8 @@ pub type PhysicalDeviceVertexAttributeDivisorFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceIndexTypeUint8Features.html>"]
 #[doc(alias = "VkPhysicalDeviceIndexTypeUint8Features")]
 pub struct PhysicalDeviceIndexTypeUint8Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub index_type_uint8: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -23031,8 +23031,8 @@ pub type PhysicalDeviceIndexTypeUint8FeaturesEXT<'a> = PhysicalDeviceIndexTypeUi
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryMapInfo.html>"]
 #[doc(alias = "VkMemoryMapInfo")]
 pub struct MemoryMapInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: MemoryMapFlags,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub offset: DeviceSize,
@@ -23098,8 +23098,8 @@ pub type MemoryMapInfoKHR<'a> = MemoryMapInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryUnmapInfo.html>"]
 #[doc(alias = "VkMemoryUnmapInfo")]
 pub struct MemoryUnmapInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: MemoryUnmapFlags,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     phantom: PhantomData<&'a ()>,
@@ -23151,8 +23151,8 @@ pub type MemoryUnmapInfoKHR<'a> = MemoryUnmapInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance5Features.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance5Features")]
 pub struct PhysicalDeviceMaintenance5Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub maintenance5: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -23213,8 +23213,8 @@ pub type PhysicalDeviceMaintenance5FeaturesKHR<'a> = PhysicalDeviceMaintenance5F
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance5Properties.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance5Properties")]
 pub struct PhysicalDeviceMaintenance5Properties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub early_fragment_multisample_coverage_after_sample_counting: Bool32,
     pub early_fragment_sample_mask_test_before_sample_counting: Bool32,
     pub depth_stencil_swizzle_one_support: Bool32,
@@ -23314,11 +23314,11 @@ pub type PhysicalDeviceMaintenance5PropertiesKHR<'a> = PhysicalDeviceMaintenance
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingAreaInfo.html>"]
 #[doc(alias = "VkRenderingAreaInfo")]
 pub struct RenderingAreaInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub view_mask: u32,
     pub color_attachment_count: u32,
-    pub(crate) p_color_attachment_formats: *const Format,
+    pub p_color_attachment_formats: *const Format,
     pub depth_attachment_format: Format,
     pub stencil_attachment_format: Format,
     phantom: PhantomData<&'a ()>,
@@ -23403,8 +23403,8 @@ pub type RenderingAreaInfoKHR<'a> = RenderingAreaInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceImageSubresourceInfo.html>"]
 #[doc(alias = "VkDeviceImageSubresourceInfo")]
 pub struct DeviceImageSubresourceInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_create_info: *const ImageCreateInfo<'a>,
     pub p_subresource: *const ImageSubresource2<'a>,
     phantom: PhantomData<&'a ()>,
@@ -23461,8 +23461,8 @@ pub type DeviceImageSubresourceInfoKHR<'a> = DeviceImageSubresourceInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageSubresource2.html>"]
 #[doc(alias = "VkImageSubresource2")]
 pub struct ImageSubresource2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_subresource: ImageSubresource,
     phantom: PhantomData<&'a ()>,
 }
@@ -23554,8 +23554,8 @@ pub type ImageSubresource2EXT<'a> = ImageSubresource2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubresourceLayout2.html>"]
 #[doc(alias = "VkSubresourceLayout2")]
 pub struct SubresourceLayout2<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub subresource_layout: SubresourceLayout,
     phantom: PhantomData<&'a ()>,
 }
@@ -23642,8 +23642,8 @@ pub type SubresourceLayout2EXT<'a> = SubresourceLayout2<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCreateFlags2CreateInfo.html>"]
 #[doc(alias = "VkPipelineCreateFlags2CreateInfo")]
 pub struct PipelineCreateFlags2CreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineCreateFlags2,
     phantom: PhantomData<&'a ()>,
 }
@@ -23714,8 +23714,8 @@ pub type PipelineCreateFlags2CreateInfoKHR<'a> = PipelineCreateFlags2CreateInfo<
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferUsageFlags2CreateInfo.html>"]
 #[doc(alias = "VkBufferUsageFlags2CreateInfo")]
 pub struct BufferUsageFlags2CreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub usage: BufferUsageFlags2,
     phantom: PhantomData<&'a ()>,
 }
@@ -23783,8 +23783,8 @@ pub type BufferUsageFlags2CreateInfoKHR<'a> = BufferUsageFlags2CreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePushDescriptorProperties.html>"]
 #[doc(alias = "VkPhysicalDevicePushDescriptorProperties")]
 pub struct PhysicalDevicePushDescriptorProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_push_descriptors: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -23840,8 +23840,8 @@ pub type PhysicalDevicePushDescriptorPropertiesKHR<'a> = PhysicalDevicePushDescr
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDynamicRenderingLocalReadFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceDynamicRenderingLocalReadFeatures")]
 pub struct PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dynamic_rendering_local_read: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -23904,10 +23904,10 @@ pub type PhysicalDeviceDynamicRenderingLocalReadFeaturesKHR<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingAttachmentLocationInfo.html>"]
 #[doc(alias = "VkRenderingAttachmentLocationInfo")]
 pub struct RenderingAttachmentLocationInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub color_attachment_count: u32,
-    pub(crate) p_color_attachment_locations: *const u32,
+    pub p_color_attachment_locations: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dynamic_rendering_local_read", feature = "version_1_4"))]
@@ -23982,10 +23982,10 @@ pub type RenderingAttachmentLocationInfoKHR<'a> = RenderingAttachmentLocationInf
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingInputAttachmentIndexInfo.html>"]
 #[doc(alias = "VkRenderingInputAttachmentIndexInfo")]
 pub struct RenderingInputAttachmentIndexInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub color_attachment_count: u32,
-    pub(crate) p_color_attachment_input_indices: *const u32,
+    pub p_color_attachment_input_indices: *const u32,
     pub p_depth_input_attachment_index: *const u32,
     pub p_stencil_input_attachment_index: *const u32,
     phantom: PhantomData<&'a ()>,
@@ -24077,8 +24077,8 @@ pub type RenderingInputAttachmentIndexInfoKHR<'a> = RenderingInputAttachmentInde
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance6Features.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance6Features")]
 pub struct PhysicalDeviceMaintenance6Features<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub maintenance6: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -24139,8 +24139,8 @@ pub type PhysicalDeviceMaintenance6FeaturesKHR<'a> = PhysicalDeviceMaintenance6F
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance6Properties.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance6Properties")]
 pub struct PhysicalDeviceMaintenance6Properties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub block_texel_view_compatible_multiple_layers: Bool32,
     pub max_combined_image_sampler_descriptor_count: u32,
     pub fragment_shading_rate_clamp_combiner_inputs: Bool32,
@@ -24210,8 +24210,8 @@ pub type PhysicalDeviceMaintenance6PropertiesKHR<'a> = PhysicalDeviceMaintenance
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindMemoryStatus.html>"]
 #[doc(alias = "VkBindMemoryStatus")]
 pub struct BindMemoryStatus<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_result: *const Status,
     phantom: PhantomData<&'a ()>,
 }
@@ -24266,15 +24266,15 @@ pub type BindMemoryStatusKHR<'a> = BindMemoryStatus<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindDescriptorSetsInfo.html>"]
 #[doc(alias = "VkBindDescriptorSetsInfo")]
 pub struct BindDescriptorSetsInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stage_flags: ShaderStageFlags,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub first_set: u32,
-    pub(crate) descriptor_set_count: u32,
-    pub(crate) p_descriptor_sets: *const DescriptorSet,
+    pub descriptor_set_count: u32,
+    pub p_descriptor_sets: *const DescriptorSet,
     pub dynamic_offset_count: u32,
-    pub(crate) p_dynamic_offsets: *const u32,
+    pub p_dynamic_offsets: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
@@ -24376,13 +24376,13 @@ pub type BindDescriptorSetsInfoKHR<'a> = BindDescriptorSetsInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPushConstantsInfo.html>"]
 #[doc(alias = "VkPushConstantsInfo")]
 pub struct PushConstantsInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub stage_flags: ShaderStageFlags,
     pub offset: u32,
-    pub(crate) size: u32,
-    pub(crate) p_values: VoidPtr,
+    pub size: u32,
+    pub p_values: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
@@ -24457,13 +24457,13 @@ pub type PushConstantsInfoKHR<'a> = PushConstantsInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPushDescriptorSetInfo.html>"]
 #[doc(alias = "VkPushDescriptorSetInfo")]
 pub struct PushDescriptorSetInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stage_flags: ShaderStageFlags,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
-    pub(crate) descriptor_write_count: u32,
-    pub(crate) p_descriptor_writes: *const WriteDescriptorSet<'a>,
+    pub descriptor_write_count: u32,
+    pub p_descriptor_writes: *const WriteDescriptorSet<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
@@ -24565,8 +24565,8 @@ pub type PushDescriptorSetInfoKHR<'a> = PushDescriptorSetInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPushDescriptorSetWithTemplateInfo.html>"]
 #[doc(alias = "VkPushDescriptorSetWithTemplateInfo")]
 pub struct PushDescriptorSetWithTemplateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub descriptor_update_template: Option<BorrowedHandle<'a, DescriptorUpdateTemplate>>,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
@@ -24652,8 +24652,8 @@ pub type PushDescriptorSetWithTemplateInfoKHR<'a> = PushDescriptorSetWithTemplat
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineProtectedAccessFeatures.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineProtectedAccessFeatures")]
 pub struct PhysicalDevicePipelineProtectedAccessFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_protected_access: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -24709,8 +24709,8 @@ pub type PhysicalDevicePipelineProtectedAccessFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineRobustnessFeatures.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineRobustnessFeatures")]
 pub struct PhysicalDevicePipelineRobustnessFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_robustness: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -24772,8 +24772,8 @@ pub type PhysicalDevicePipelineRobustnessFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineRobustnessProperties.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineRobustnessProperties")]
 pub struct PhysicalDevicePipelineRobustnessProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub default_robustness_storage_buffers: PipelineRobustnessBufferBehavior,
     pub default_robustness_uniform_buffers: PipelineRobustnessBufferBehavior,
     pub default_robustness_vertex_inputs: PipelineRobustnessBufferBehavior,
@@ -24860,8 +24860,8 @@ pub type PhysicalDevicePipelineRobustnessPropertiesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRobustnessCreateInfo.html>"]
 #[doc(alias = "VkPipelineRobustnessCreateInfo")]
 pub struct PipelineRobustnessCreateInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub storage_buffers: PipelineRobustnessBufferBehavior,
     pub uniform_buffers: PipelineRobustnessBufferBehavior,
     pub vertex_inputs: PipelineRobustnessBufferBehavior,
@@ -24950,8 +24950,8 @@ pub type PipelineRobustnessCreateInfoEXT<'a> = PipelineRobustnessCreateInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceHostImageCopyFeatures.html>"]
 #[doc(alias = "VkPhysicalDeviceHostImageCopyFeatures")]
 pub struct PhysicalDeviceHostImageCopyFeatures<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub host_image_copy: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -25012,12 +25012,12 @@ pub type PhysicalDeviceHostImageCopyFeaturesEXT<'a> = PhysicalDeviceHostImageCop
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceHostImageCopyProperties.html>"]
 #[doc(alias = "VkPhysicalDeviceHostImageCopyProperties")]
 pub struct PhysicalDeviceHostImageCopyProperties<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub copy_src_layout_count: u32,
-    pub(crate) p_copy_src_layouts: *const ImageLayout,
+    pub p_copy_src_layouts: *const ImageLayout,
     pub copy_dst_layout_count: u32,
-    pub(crate) p_copy_dst_layouts: *const ImageLayout,
+    pub p_copy_dst_layouts: *const ImageLayout,
     pub optimal_tiling_layout_uuid: [u8; UUID_SIZE as _],
     pub identical_memory_type_requirements: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -25128,8 +25128,8 @@ pub type PhysicalDeviceHostImageCopyPropertiesEXT<'a> = PhysicalDeviceHostImageC
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryToImageCopy.html>"]
 #[doc(alias = "VkMemoryToImageCopy")]
 pub struct MemoryToImageCopy<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_host_pointer: VoidPtr,
     pub memory_row_length: u32,
     pub memory_image_height: u32,
@@ -25209,8 +25209,8 @@ pub type MemoryToImageCopyEXT<'a> = MemoryToImageCopy<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageToMemoryCopy.html>"]
 #[doc(alias = "VkImageToMemoryCopy")]
 pub struct ImageToMemoryCopy<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_host_pointer: VoidPtr,
     pub memory_row_length: u32,
     pub memory_image_height: u32,
@@ -25290,13 +25290,13 @@ pub type ImageToMemoryCopyEXT<'a> = ImageToMemoryCopy<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyMemoryToImageInfo.html>"]
 #[doc(alias = "VkCopyMemoryToImageInfo")]
 pub struct CopyMemoryToImageInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: HostImageCopyFlags,
     pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const MemoryToImageCopy<'a>,
+    pub region_count: u32,
+    pub p_regions: *const MemoryToImageCopy<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
@@ -25368,13 +25368,13 @@ pub type CopyMemoryToImageInfoEXT<'a> = CopyMemoryToImageInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyImageToMemoryInfo.html>"]
 #[doc(alias = "VkCopyImageToMemoryInfo")]
 pub struct CopyImageToMemoryInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: HostImageCopyFlags,
     pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const ImageToMemoryCopy<'a>,
+    pub region_count: u32,
+    pub p_regions: *const ImageToMemoryCopy<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
@@ -25446,15 +25446,15 @@ pub type CopyImageToMemoryInfoEXT<'a> = CopyImageToMemoryInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyImageToImageInfo.html>"]
 #[doc(alias = "VkCopyImageToImageInfo")]
 pub struct CopyImageToImageInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: HostImageCopyFlags,
     pub src_image: Option<BorrowedHandle<'a, Image>>,
     pub src_image_layout: ImageLayout,
     pub dst_image: Option<BorrowedHandle<'a, Image>>,
     pub dst_image_layout: ImageLayout,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const ImageCopy2<'a>,
+    pub region_count: u32,
+    pub p_regions: *const ImageCopy2<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
@@ -25538,8 +25538,8 @@ pub type CopyImageToImageInfoEXT<'a> = CopyImageToImageInfo<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkHostImageLayoutTransitionInfo.html>"]
 #[doc(alias = "VkHostImageLayoutTransitionInfo")]
 pub struct HostImageLayoutTransitionInfo<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub old_layout: ImageLayout,
     pub new_layout: ImageLayout,
@@ -25605,8 +25605,8 @@ pub type HostImageLayoutTransitionInfoEXT<'a> = HostImageLayoutTransitionInfo<'a
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubresourceHostMemcpySize.html>"]
 #[doc(alias = "VkSubresourceHostMemcpySize")]
 pub struct SubresourceHostMemcpySize<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub size: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -25661,8 +25661,8 @@ pub type SubresourceHostMemcpySizeEXT<'a> = SubresourceHostMemcpySize<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkHostImageCopyDevicePerformanceQuery.html>"]
 #[doc(alias = "VkHostImageCopyDevicePerformanceQuery")]
 pub struct HostImageCopyDevicePerformanceQuery<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub optimal_device_access: Bool32,
     pub identical_memory_layout: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -25851,8 +25851,8 @@ impl SurfaceFormatKHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSwapchainCreateInfoKHR.html>"]
 #[doc(alias = "VkSwapchainCreateInfoKHR")]
 pub struct SwapchainCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: SwapchainCreateFlagsKHR,
     pub surface: Option<BorrowedHandle<'a, SurfaceKHR>>,
     pub min_image_count: u32,
@@ -25863,7 +25863,7 @@ pub struct SwapchainCreateInfoKHR<'a> {
     pub image_usage: ImageUsageFlags,
     pub image_sharing_mode: SharingMode,
     pub queue_family_index_count: u32,
-    pub(crate) p_queue_family_indices: *const u32,
+    pub p_queue_family_indices: *const u32,
     pub pre_transform: SurfaceTransformFlagsKHR,
     pub composite_alpha: CompositeAlphaFlagsKHR,
     pub present_mode: PresentModeKHR,
@@ -26012,14 +26012,14 @@ impl<'a> SwapchainCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentInfoKHR.html>"]
 #[doc(alias = "VkPresentInfoKHR")]
 pub struct PresentInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) wait_semaphore_count: u32,
-    pub(crate) p_wait_semaphores: *const Semaphore,
-    pub(crate) swapchain_count: u32,
-    pub(crate) p_swapchains: *const SwapchainKHR,
-    pub(crate) p_image_indices: *const u32,
-    pub(crate) p_results: *const Status,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub wait_semaphore_count: u32,
+    pub p_wait_semaphores: *const Semaphore,
+    pub swapchain_count: u32,
+    pub p_swapchains: *const SwapchainKHR,
+    pub p_image_indices: *const u32,
+    pub p_results: *const Status,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain")]
@@ -26123,8 +26123,8 @@ impl<'a> PresentInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageSwapchainCreateInfoKHR.html>"]
 #[doc(alias = "VkImageSwapchainCreateInfoKHR")]
 pub struct ImageSwapchainCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -26193,8 +26193,8 @@ impl<'a> ImageSwapchainCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindImageMemorySwapchainInfoKHR.html>"]
 #[doc(alias = "VkBindImageMemorySwapchainInfoKHR")]
 pub struct BindImageMemorySwapchainInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     pub image_index: u32,
     phantom: PhantomData<&'a ()>,
@@ -26276,8 +26276,8 @@ impl<'a> BindImageMemorySwapchainInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAcquireNextImageInfoKHR.html>"]
 #[doc(alias = "VkAcquireNextImageInfoKHR")]
 pub struct AcquireNextImageInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     pub timeout: u64,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
@@ -26369,8 +26369,8 @@ impl<'a> AcquireNextImageInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupPresentCapabilitiesKHR.html>"]
 #[doc(alias = "VkDeviceGroupPresentCapabilitiesKHR")]
 pub struct DeviceGroupPresentCapabilitiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_mask: [u32; MAX_DEVICE_GROUP_SIZE as _],
     pub modes: DeviceGroupPresentModeFlagsKHR,
     phantom: PhantomData<&'a ()>,
@@ -26441,10 +26441,10 @@ impl<'a> DeviceGroupPresentCapabilitiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupPresentInfoKHR.html>"]
 #[doc(alias = "VkDeviceGroupPresentInfoKHR")]
 pub struct DeviceGroupPresentInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) swapchain_count: u32,
-    pub(crate) p_device_masks: *const u32,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub swapchain_count: u32,
+    pub p_device_masks: *const u32,
     pub mode: DeviceGroupPresentModeFlagsKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -26532,8 +26532,8 @@ impl<'a> DeviceGroupPresentInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceGroupSwapchainCreateInfoKHR.html>"]
 #[doc(alias = "VkDeviceGroupSwapchainCreateInfoKHR")]
 pub struct DeviceGroupSwapchainCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub modes: DeviceGroupPresentModeFlagsKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -26605,8 +26605,8 @@ impl<'a> DeviceGroupSwapchainCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayModeCreateInfoKHR.html>"]
 #[doc(alias = "VkDisplayModeCreateInfoKHR")]
 pub struct DisplayModeCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub parameters: DisplayModeParametersKHR,
     phantom: PhantomData<&'a ()>,
@@ -26918,8 +26918,8 @@ impl<'a> DisplayPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplaySurfaceCreateInfoKHR.html>"]
 #[doc(alias = "VkDisplaySurfaceCreateInfoKHR")]
 pub struct DisplaySurfaceCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub display_mode: Option<BorrowedHandle<'a, DisplayModeKHR>>,
     pub plane_index: u32,
@@ -27011,8 +27011,8 @@ impl<'a> DisplaySurfaceCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayPresentInfoKHR.html>"]
 #[doc(alias = "VkDisplayPresentInfoKHR")]
 pub struct DisplayPresentInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_rect: Rect2D,
     pub dst_rect: Rect2D,
     pub persistent: Bool32,
@@ -27071,8 +27071,8 @@ impl<'a> DisplayPresentInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkXlibSurfaceCreateInfoKHR.html>"]
 #[doc(alias = "VkXlibSurfaceCreateInfoKHR")]
 pub struct XlibSurfaceCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub dpy: *const VoidPtr,
     pub window: c_ulong,
@@ -27129,8 +27129,8 @@ impl<'a> XlibSurfaceCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkXcbSurfaceCreateInfoKHR.html>"]
 #[doc(alias = "VkXcbSurfaceCreateInfoKHR")]
 pub struct XcbSurfaceCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub connection: *const VoidPtr,
     pub window: u32,
@@ -27187,8 +27187,8 @@ impl<'a> XcbSurfaceCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWaylandSurfaceCreateInfoKHR.html>"]
 #[doc(alias = "VkWaylandSurfaceCreateInfoKHR")]
 pub struct WaylandSurfaceCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub display: *const VoidPtr,
     pub surface: *const VoidPtr,
@@ -27247,8 +27247,8 @@ pub type ANativeWindow = c_void;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAndroidSurfaceCreateInfoKHR.html>"]
 #[doc(alias = "VkAndroidSurfaceCreateInfoKHR")]
 pub struct AndroidSurfaceCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub window: *const ANativeWindow,
     phantom: PhantomData<&'a ()>,
@@ -27298,8 +27298,8 @@ impl<'a> AndroidSurfaceCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWin32SurfaceCreateInfoKHR.html>"]
 #[doc(alias = "VkWin32SurfaceCreateInfoKHR")]
 pub struct Win32SurfaceCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub hinstance: VoidPtr,
     pub hwnd: VoidPtr,
@@ -27356,8 +27356,8 @@ impl<'a> Win32SurfaceCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDebugReportCallbackCreateInfoEXT.html>"]
 #[doc(alias = "VkDebugReportCallbackCreateInfoEXT")]
 pub struct DebugReportCallbackCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: DebugReportFlagsEXT,
     pub pfn_callback: FuncPtr,
     pub p_user_data: VoidPtr,
@@ -27419,8 +27419,8 @@ impl<'a> DebugReportCallbackCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRasterizationStateRasterizationOrderAMD.html>"]
 #[doc(alias = "VkPipelineRasterizationStateRasterizationOrderAMD")]
 pub struct PipelineRasterizationStateRasterizationOrderAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub rasterization_order: RasterizationOrderAMD,
     phantom: PhantomData<&'a ()>,
 }
@@ -27469,8 +27469,8 @@ impl<'a> PipelineRasterizationStateRasterizationOrderAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDebugMarkerObjectNameInfoEXT.html>"]
 #[doc(alias = "VkDebugMarkerObjectNameInfoEXT")]
 pub struct DebugMarkerObjectNameInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub object_type: DebugReportObjectTypeEXT,
     pub object: u64,
     pub p_object_name: *const c_char,
@@ -27527,13 +27527,13 @@ impl<'a> DebugMarkerObjectNameInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDebugMarkerObjectTagInfoEXT.html>"]
 #[doc(alias = "VkDebugMarkerObjectTagInfoEXT")]
 pub struct DebugMarkerObjectTagInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub object_type: DebugReportObjectTypeEXT,
     pub object: u64,
     pub tag_name: u64,
-    pub(crate) tag_size: usize,
-    pub(crate) p_tag: VoidPtr,
+    pub tag_size: usize,
+    pub p_tag: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_marker")]
@@ -27603,8 +27603,8 @@ impl<'a> DebugMarkerObjectTagInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDebugMarkerMarkerInfoEXT.html>"]
 #[doc(alias = "VkDebugMarkerMarkerInfoEXT")]
 pub struct DebugMarkerMarkerInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_marker_name: *const c_char,
     pub color: [f32; 4u16 as _],
     phantom: PhantomData<&'a ()>,
@@ -27654,8 +27654,8 @@ impl<'a> DebugMarkerMarkerInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDedicatedAllocationImageCreateInfoNV.html>"]
 #[doc(alias = "VkDedicatedAllocationImageCreateInfoNV")]
 pub struct DedicatedAllocationImageCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dedicated_allocation: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -27703,8 +27703,8 @@ impl<'a> DedicatedAllocationImageCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDedicatedAllocationBufferCreateInfoNV.html>"]
 #[doc(alias = "VkDedicatedAllocationBufferCreateInfoNV")]
 pub struct DedicatedAllocationBufferCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dedicated_allocation: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -27752,8 +27752,8 @@ impl<'a> DedicatedAllocationBufferCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDedicatedAllocationMemoryAllocateInfoNV.html>"]
 #[doc(alias = "VkDedicatedAllocationMemoryAllocateInfoNV")]
 pub struct DedicatedAllocationMemoryAllocateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
@@ -27808,8 +27808,8 @@ impl<'a> DedicatedAllocationMemoryAllocateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTransformFeedbackFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceTransformFeedbackFeaturesEXT")]
 pub struct PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub transform_feedback: Bool32,
     pub geometry_streams: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -27875,8 +27875,8 @@ impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTransformFeedbackPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceTransformFeedbackPropertiesEXT")]
 pub struct PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_transform_feedback_streams: u32,
     pub max_transform_feedback_buffers: u32,
     pub max_transform_feedback_buffer_size: DeviceSize,
@@ -27997,8 +27997,8 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRasterizationStateStreamCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineRasterizationStateStreamCreateInfoEXT")]
 pub struct PipelineRasterizationStateStreamCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub rasterization_stream: u32,
     phantom: PhantomData<&'a ()>,
@@ -28054,10 +28054,10 @@ impl<'a> PipelineRasterizationStateStreamCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCuModuleCreateInfoNVX.html>"]
 #[doc(alias = "VkCuModuleCreateInfoNVX")]
 pub struct CuModuleCreateInfoNVX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) data_size: usize,
-    pub(crate) p_data: VoidPtr,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub data_size: usize,
+    pub p_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_binary_import")]
@@ -28109,8 +28109,8 @@ impl<'a> CuModuleCreateInfoNVX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCuModuleTexturingModeCreateInfoNVX.html>"]
 #[doc(alias = "VkCuModuleTexturingModeCreateInfoNVX")]
 pub struct CuModuleTexturingModeCreateInfoNVX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub use64bit_texturing: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -28158,8 +28158,8 @@ impl<'a> CuModuleTexturingModeCreateInfoNVX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCuFunctionCreateInfoNVX.html>"]
 #[doc(alias = "VkCuFunctionCreateInfoNVX")]
 pub struct CuFunctionCreateInfoNVX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub module: Option<BorrowedHandle<'a, CuModuleNVX>>,
     pub p_name: *const c_char,
     phantom: PhantomData<&'a ()>,
@@ -28209,8 +28209,8 @@ impl<'a> CuFunctionCreateInfoNVX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCuLaunchInfoNVX.html>"]
 #[doc(alias = "VkCuLaunchInfoNVX")]
 pub struct CuLaunchInfoNVX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub function: Option<BorrowedHandle<'a, CuFunctionNVX>>,
     pub grid_dim_x: u32,
     pub grid_dim_y: u32,
@@ -28219,10 +28219,10 @@ pub struct CuLaunchInfoNVX<'a> {
     pub block_dim_y: u32,
     pub block_dim_z: u32,
     pub shared_mem_bytes: u32,
-    pub(crate) param_count: usize,
-    pub(crate) p_params: *const *const c_void,
-    pub(crate) extra_count: usize,
-    pub(crate) p_extras: *const *const c_void,
+    pub param_count: usize,
+    pub p_params: *const *const c_void,
+    pub extra_count: usize,
+    pub p_extras: *const *const c_void,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_binary_import")]
@@ -28334,8 +28334,8 @@ impl<'a> CuLaunchInfoNVX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageViewHandleInfoNVX.html>"]
 #[doc(alias = "VkImageViewHandleInfoNVX")]
 pub struct ImageViewHandleInfoNVX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub descriptor_type: DescriptorType,
     pub sampler: Option<BorrowedHandle<'a, Sampler>>,
@@ -28392,8 +28392,8 @@ impl<'a> ImageViewHandleInfoNVX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageViewAddressPropertiesNVX.html>"]
 #[doc(alias = "VkImageViewAddressPropertiesNVX")]
 pub struct ImageViewAddressPropertiesNVX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_address: DeviceAddress,
     pub size: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -28442,8 +28442,8 @@ impl<'a> ImageViewAddressPropertiesNVX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTextureLODGatherFormatPropertiesAMD.html>"]
 #[doc(alias = "VkTextureLODGatherFormatPropertiesAMD")]
 pub struct TextureLODGatherFormatPropertiesAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub supports_texture_gather_lodbias_amd: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -28617,8 +28617,8 @@ impl ShaderStatisticsInfoAMD {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkStreamDescriptorSurfaceCreateInfoGGP.html>"]
 #[doc(alias = "VkStreamDescriptorSurfaceCreateInfoGGP")]
 pub struct StreamDescriptorSurfaceCreateInfoGGP<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub stream_descriptor: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -28667,8 +28667,8 @@ impl<'a> StreamDescriptorSurfaceCreateInfoGGP<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCornerSampledImageFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCornerSampledImageFeaturesNV")]
 pub struct PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub corner_sampled_image: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -28773,8 +28773,8 @@ impl ExternalImageFormatPropertiesNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalMemoryImageCreateInfoNV.html>"]
 #[doc(alias = "VkExternalMemoryImageCreateInfoNV")]
 pub struct ExternalMemoryImageCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
     phantom: PhantomData<&'a ()>,
 }
@@ -28822,8 +28822,8 @@ impl<'a> ExternalMemoryImageCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMemoryAllocateInfoNV.html>"]
 #[doc(alias = "VkExportMemoryAllocateInfoNV")]
 pub struct ExportMemoryAllocateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
     phantom: PhantomData<&'a ()>,
 }
@@ -28868,8 +28868,8 @@ impl<'a> ExportMemoryAllocateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMemoryWin32HandleInfoNV.html>"]
 #[doc(alias = "VkImportMemoryWin32HandleInfoNV")]
 pub struct ImportMemoryWin32HandleInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlagsNV,
     pub handle: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -28924,8 +28924,8 @@ impl<'a> ImportMemoryWin32HandleInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMemoryWin32HandleInfoNV.html>"]
 #[doc(alias = "VkExportMemoryWin32HandleInfoNV")]
 pub struct ExportMemoryWin32HandleInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_attributes: *const VoidPtr,
     pub dw_access: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -28980,15 +28980,15 @@ impl<'a> ExportMemoryWin32HandleInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWin32KeyedMutexAcquireReleaseInfoNV.html>"]
 #[doc(alias = "VkWin32KeyedMutexAcquireReleaseInfoNV")]
 pub struct Win32KeyedMutexAcquireReleaseInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) acquire_count: u32,
-    pub(crate) p_acquire_syncs: *const DeviceMemory,
-    pub(crate) p_acquire_keys: *const u64,
-    pub(crate) p_acquire_timeout_milliseconds: *const u32,
-    pub(crate) release_count: u32,
-    pub(crate) p_release_syncs: *const DeviceMemory,
-    pub(crate) p_release_keys: *const u64,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub acquire_count: u32,
+    pub p_acquire_syncs: *const DeviceMemory,
+    pub p_acquire_keys: *const u64,
+    pub p_acquire_timeout_milliseconds: *const u32,
+    pub release_count: u32,
+    pub p_release_syncs: *const DeviceMemory,
+    pub p_release_keys: *const u64,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_win32_keyed_mutex")]
@@ -29109,10 +29109,10 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkValidationFlagsEXT.html>"]
 #[doc(alias = "VkValidationFlagsEXT")]
 pub struct ValidationFlagsEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) disabled_validation_check_count: u32,
-    pub(crate) p_disabled_validation_checks: *const ValidationCheckEXT,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub disabled_validation_check_count: u32,
+    pub p_disabled_validation_checks: *const ValidationCheckEXT,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_validation_flags")]
@@ -29172,8 +29172,8 @@ impl<'a> ValidationFlagsEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkViSurfaceCreateInfoNN.html>"]
 #[doc(alias = "VkViSurfaceCreateInfoNN")]
 pub struct ViSurfaceCreateInfoNN<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub window: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -29223,8 +29223,8 @@ impl<'a> ViSurfaceCreateInfoNN<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageViewASTCDecodeModeEXT.html>"]
 #[doc(alias = "VkImageViewASTCDecodeModeEXT")]
 pub struct ImageViewASTCDecodeModeEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub decode_mode: Format,
     phantom: PhantomData<&'a ()>,
 }
@@ -29269,8 +29269,8 @@ impl<'a> ImageViewASTCDecodeModeEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceASTCDecodeFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceASTCDecodeFeaturesEXT")]
 pub struct PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub decode_mode_shared_exponent: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -29329,8 +29329,8 @@ impl<'a> PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMemoryWin32HandleInfoKHR.html>"]
 #[doc(alias = "VkImportMemoryWin32HandleInfoKHR")]
 pub struct ImportMemoryWin32HandleInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub handle: VoidPtr,
     pub name: VoidPtr,
@@ -29392,8 +29392,8 @@ impl<'a> ImportMemoryWin32HandleInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMemoryWin32HandleInfoKHR.html>"]
 #[doc(alias = "VkExportMemoryWin32HandleInfoKHR")]
 pub struct ExportMemoryWin32HandleInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_attributes: *const VoidPtr,
     pub dw_access: VoidPtr,
     pub name: VoidPtr,
@@ -29455,8 +29455,8 @@ impl<'a> ExportMemoryWin32HandleInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryWin32HandlePropertiesKHR.html>"]
 #[doc(alias = "VkMemoryWin32HandlePropertiesKHR")]
 pub struct MemoryWin32HandlePropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -29499,8 +29499,8 @@ impl<'a> MemoryWin32HandlePropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryGetWin32HandleInfoKHR.html>"]
 #[doc(alias = "VkMemoryGetWin32HandleInfoKHR")]
 pub struct MemoryGetWin32HandleInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -29550,8 +29550,8 @@ impl<'a> MemoryGetWin32HandleInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMemoryFdInfoKHR.html>"]
 #[doc(alias = "VkImportMemoryFdInfoKHR")]
 pub struct ImportMemoryFdInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub fd: c_int,
     phantom: PhantomData<&'a ()>,
@@ -29603,8 +29603,8 @@ impl<'a> ImportMemoryFdInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryFdPropertiesKHR.html>"]
 #[doc(alias = "VkMemoryFdPropertiesKHR")]
 pub struct MemoryFdPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -29647,8 +29647,8 @@ impl<'a> MemoryFdPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryGetFdInfoKHR.html>"]
 #[doc(alias = "VkMemoryGetFdInfoKHR")]
 pub struct MemoryGetFdInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -29698,15 +29698,15 @@ impl<'a> MemoryGetFdInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWin32KeyedMutexAcquireReleaseInfoKHR.html>"]
 #[doc(alias = "VkWin32KeyedMutexAcquireReleaseInfoKHR")]
 pub struct Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) acquire_count: u32,
-    pub(crate) p_acquire_syncs: *const DeviceMemory,
-    pub(crate) p_acquire_keys: *const u64,
-    pub(crate) p_acquire_timeouts: *const u32,
-    pub(crate) release_count: u32,
-    pub(crate) p_release_syncs: *const DeviceMemory,
-    pub(crate) p_release_keys: *const u64,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub acquire_count: u32,
+    pub p_acquire_syncs: *const DeviceMemory,
+    pub p_acquire_keys: *const u64,
+    pub p_acquire_timeouts: *const u32,
+    pub release_count: u32,
+    pub p_release_syncs: *const DeviceMemory,
+    pub p_release_keys: *const u64,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_win32_keyed_mutex")]
@@ -29826,8 +29826,8 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportSemaphoreWin32HandleInfoKHR.html>"]
 #[doc(alias = "VkImportSemaphoreWin32HandleInfoKHR")]
 pub struct ImportSemaphoreWin32HandleInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub flags: SemaphoreImportFlags,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
@@ -29898,8 +29898,8 @@ impl<'a> ImportSemaphoreWin32HandleInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportSemaphoreWin32HandleInfoKHR.html>"]
 #[doc(alias = "VkExportSemaphoreWin32HandleInfoKHR")]
 pub struct ExportSemaphoreWin32HandleInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_attributes: *const VoidPtr,
     pub dw_access: VoidPtr,
     pub name: VoidPtr,
@@ -29961,12 +29961,12 @@ impl<'a> ExportSemaphoreWin32HandleInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkD3D12FenceSubmitInfoKHR.html>"]
 #[doc(alias = "VkD3D12FenceSubmitInfoKHR")]
 pub struct D3D12FenceSubmitInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub wait_semaphore_values_count: u32,
-    pub(crate) p_wait_semaphore_values: *const u64,
+    pub p_wait_semaphore_values: *const u64,
     pub signal_semaphore_values_count: u32,
-    pub(crate) p_signal_semaphore_values: *const u64,
+    pub p_signal_semaphore_values: *const u64,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_semaphore_win32")]
@@ -30055,8 +30055,8 @@ impl<'a> D3D12FenceSubmitInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSemaphoreGetWin32HandleInfoKHR.html>"]
 #[doc(alias = "VkSemaphoreGetWin32HandleInfoKHR")]
 pub struct SemaphoreGetWin32HandleInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -30106,8 +30106,8 @@ impl<'a> SemaphoreGetWin32HandleInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportSemaphoreFdInfoKHR.html>"]
 #[doc(alias = "VkImportSemaphoreFdInfoKHR")]
 pub struct ImportSemaphoreFdInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub flags: SemaphoreImportFlags,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
@@ -30171,8 +30171,8 @@ impl<'a> ImportSemaphoreFdInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSemaphoreGetFdInfoKHR.html>"]
 #[doc(alias = "VkSemaphoreGetFdInfoKHR")]
 pub struct SemaphoreGetFdInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -30222,8 +30222,8 @@ impl<'a> SemaphoreGetFdInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkConditionalRenderingBeginInfoEXT.html>"]
 #[doc(alias = "VkConditionalRenderingBeginInfoEXT")]
 pub struct ConditionalRenderingBeginInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub flags: ConditionalRenderingFlagsEXT,
@@ -30280,8 +30280,8 @@ impl<'a> ConditionalRenderingBeginInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceConditionalRenderingFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceConditionalRenderingFeaturesEXT")]
 pub struct PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub conditional_rendering: Bool32,
     pub inherited_conditional_rendering: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -30348,8 +30348,8 @@ impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCommandBufferInheritanceConditionalRenderingInfoEXT.html>"]
 #[doc(alias = "VkCommandBufferInheritanceConditionalRenderingInfoEXT")]
 pub struct CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub conditional_rendering_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -30401,10 +30401,10 @@ impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentRegionsKHR.html>"]
 #[doc(alias = "VkPresentRegionsKHR")]
 pub struct PresentRegionsKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
-    pub(crate) p_regions: *const PresentRegionKHR<'a>,
+    pub p_regions: *const PresentRegionKHR<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_incremental_present")]
@@ -30464,7 +30464,7 @@ impl<'a> PresentRegionsKHR<'a> {
 #[doc(alias = "VkPresentRegionKHR")]
 pub struct PresentRegionKHR<'a> {
     pub rectangle_count: u32,
-    pub(crate) p_rectangles: *const RectLayerKHR,
+    pub p_rectangles: *const RectLayerKHR,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_incremental_present")]
@@ -30585,11 +30585,11 @@ impl ViewportWScalingNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineViewportWScalingStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineViewportWScalingStateCreateInfoNV")]
 pub struct PipelineViewportWScalingStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub viewport_wscaling_enable: Bool32,
     pub viewport_count: u32,
-    pub(crate) p_viewport_wscalings: *const ViewportWScalingNV,
+    pub p_viewport_wscalings: *const ViewportWScalingNV,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_clip_space_w_scaling")]
@@ -30660,8 +30660,8 @@ impl<'a> PipelineViewportWScalingStateCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceCapabilities2EXT.html>"]
 #[doc(alias = "VkSurfaceCapabilities2EXT")]
 pub struct SurfaceCapabilities2EXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_image_count: u32,
     pub max_image_count: u32,
     pub current_extent: Extent2D,
@@ -30774,8 +30774,8 @@ impl<'a> SurfaceCapabilities2EXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayPowerInfoEXT.html>"]
 #[doc(alias = "VkDisplayPowerInfoEXT")]
 pub struct DisplayPowerInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub power_state: DisplayPowerStateEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -30818,8 +30818,8 @@ impl<'a> DisplayPowerInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceEventInfoEXT.html>"]
 #[doc(alias = "VkDeviceEventInfoEXT")]
 pub struct DeviceEventInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_event: DeviceEventTypeEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -30862,8 +30862,8 @@ impl<'a> DeviceEventInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayEventInfoEXT.html>"]
 #[doc(alias = "VkDisplayEventInfoEXT")]
 pub struct DisplayEventInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub display_event: DisplayEventTypeEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -30906,8 +30906,8 @@ impl<'a> DisplayEventInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSwapchainCounterCreateInfoEXT.html>"]
 #[doc(alias = "VkSwapchainCounterCreateInfoEXT")]
 pub struct SwapchainCounterCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub surface_counters: SurfaceCounterFlagsEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -31039,10 +31039,10 @@ impl PastPresentationTimingGOOGLE {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentTimesInfoGOOGLE.html>"]
 #[doc(alias = "VkPresentTimesInfoGOOGLE")]
 pub struct PresentTimesInfoGOOGLE<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
-    pub(crate) p_times: *const PresentTimeGOOGLE,
+    pub p_times: *const PresentTimeGOOGLE,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_timing")]
@@ -31136,8 +31136,8 @@ impl PresentTimeGOOGLE {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX.html>"]
 #[doc(alias = "VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX")]
 pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub per_view_position_all_components: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -31198,8 +31198,8 @@ impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMultiviewPerViewAttributesInfoNVX.html>"]
 #[doc(alias = "VkMultiviewPerViewAttributesInfoNVX")]
 pub struct MultiviewPerViewAttributesInfoNVX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub per_view_attributes: Bool32,
     pub per_view_attributes_position_xonly: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -31350,11 +31350,11 @@ impl ViewportSwizzleNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineViewportSwizzleStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineViewportSwizzleStateCreateInfoNV")]
 pub struct PipelineViewportSwizzleStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
-    pub(crate) viewport_count: u32,
-    pub(crate) p_viewport_swizzles: *const ViewportSwizzleNV,
+    pub viewport_count: u32,
+    pub p_viewport_swizzles: *const ViewportSwizzleNV,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_viewport_swizzle")]
@@ -31420,8 +31420,8 @@ impl<'a> PipelineViewportSwizzleStateCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDiscardRectanglePropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDiscardRectanglePropertiesEXT")]
 pub struct PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_discard_rectangles: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -31476,12 +31476,12 @@ impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineDiscardRectangleStateCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineDiscardRectangleStateCreateInfoEXT")]
 pub struct PipelineDiscardRectangleStateCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub discard_rectangle_mode: DiscardRectangleModeEXT,
     pub discard_rectangle_count: u32,
-    pub(crate) p_discard_rectangles: *const Rect2D,
+    pub p_discard_rectangles: *const Rect2D,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_discard_rectangles")]
@@ -31558,8 +31558,8 @@ impl<'a> PipelineDiscardRectangleStateCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceConservativeRasterizationPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceConservativeRasterizationPropertiesEXT")]
 pub struct PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub primitive_overestimation_size: f32,
     pub max_extra_primitive_overestimation_size: f32,
     pub extra_primitive_overestimation_size_granularity: f32,
@@ -31679,8 +31679,8 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRasterizationConservativeStateCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineRasterizationConservativeStateCreateInfoEXT")]
 pub struct PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub conservative_rasterization_mode: ConservativeRasterizationModeEXT,
     pub extra_primitive_overestimation_size: f32,
@@ -31749,8 +31749,8 @@ impl<'a> PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDepthClipEnableFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDepthClipEnableFeaturesEXT")]
 pub struct PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub depth_clip_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -31809,8 +31809,8 @@ impl<'a> PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRasterizationDepthClipStateCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineRasterizationDepthClipStateCreateInfoEXT")]
 pub struct PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub depth_clip_enable: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -31866,8 +31866,8 @@ impl<'a> PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkHdrMetadataEXT.html>"]
 #[doc(alias = "VkHdrMetadataEXT")]
 pub struct HdrMetadataEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub display_primary_red: XYColorEXT,
     pub display_primary_green: XYColorEXT,
     pub display_primary_blue: XYColorEXT,
@@ -31993,8 +31993,8 @@ impl XYColorEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG.html>"]
 #[doc(alias = "VkPhysicalDeviceRelaxedLineRasterizationFeaturesIMG")]
 pub struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub relaxed_line_rasterization: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -32048,8 +32048,8 @@ impl<'a> PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSharedPresentSurfaceCapabilitiesKHR.html>"]
 #[doc(alias = "VkSharedPresentSurfaceCapabilitiesKHR")]
 pub struct SharedPresentSurfaceCapabilitiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shared_present_supported_usage_flags: ImageUsageFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -32100,8 +32100,8 @@ impl<'a> SharedPresentSurfaceCapabilitiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportFenceWin32HandleInfoKHR.html>"]
 #[doc(alias = "VkImportFenceWin32HandleInfoKHR")]
 pub struct ImportFenceWin32HandleInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub flags: FenceImportFlags,
     pub handle_type: ExternalFenceHandleTypeFlags,
@@ -32172,8 +32172,8 @@ impl<'a> ImportFenceWin32HandleInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportFenceWin32HandleInfoKHR.html>"]
 #[doc(alias = "VkExportFenceWin32HandleInfoKHR")]
 pub struct ExportFenceWin32HandleInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_attributes: *const VoidPtr,
     pub dw_access: VoidPtr,
     pub name: VoidPtr,
@@ -32232,8 +32232,8 @@ impl<'a> ExportFenceWin32HandleInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFenceGetWin32HandleInfoKHR.html>"]
 #[doc(alias = "VkFenceGetWin32HandleInfoKHR")]
 pub struct FenceGetWin32HandleInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub handle_type: ExternalFenceHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -32283,8 +32283,8 @@ impl<'a> FenceGetWin32HandleInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportFenceFdInfoKHR.html>"]
 #[doc(alias = "VkImportFenceFdInfoKHR")]
 pub struct ImportFenceFdInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub flags: FenceImportFlags,
     pub handle_type: ExternalFenceHandleTypeFlags,
@@ -32348,8 +32348,8 @@ impl<'a> ImportFenceFdInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFenceGetFdInfoKHR.html>"]
 #[doc(alias = "VkFenceGetFdInfoKHR")]
 pub struct FenceGetFdInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub handle_type: ExternalFenceHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -32399,8 +32399,8 @@ impl<'a> FenceGetFdInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePerformanceQueryFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePerformanceQueryFeaturesKHR")]
 pub struct PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub performance_counter_query_pools: Bool32,
     pub performance_counter_multiple_query_pools: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -32466,8 +32466,8 @@ impl<'a> PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePerformanceQueryPropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePerformanceQueryPropertiesKHR")]
 pub struct PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub allow_command_buffer_query_copies: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -32522,8 +32522,8 @@ impl<'a> PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerformanceCounterKHR.html>"]
 #[doc(alias = "VkPerformanceCounterKHR")]
 pub struct PerformanceCounterKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub unit: PerformanceCounterUnitKHR,
     pub scope: PerformanceCounterScopeKHR,
     pub storage: PerformanceCounterStorageKHR,
@@ -32587,12 +32587,12 @@ impl<'a> PerformanceCounterKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerformanceCounterDescriptionKHR.html>"]
 #[doc(alias = "VkPerformanceCounterDescriptionKHR")]
 pub struct PerformanceCounterDescriptionKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PerformanceCounterDescriptionFlagsKHR,
-    pub(crate) name: [c_char; MAX_DESCRIPTION_SIZE as _],
-    pub(crate) category: [c_char; MAX_DESCRIPTION_SIZE as _],
-    pub(crate) description: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub name: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub category: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
@@ -32657,11 +32657,11 @@ impl<'a> PerformanceCounterDescriptionKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueryPoolPerformanceCreateInfoKHR.html>"]
 #[doc(alias = "VkQueryPoolPerformanceCreateInfoKHR")]
 pub struct QueryPoolPerformanceCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub queue_family_index: u32,
-    pub(crate) counter_index_count: u32,
-    pub(crate) p_counter_indices: *const u32,
+    pub counter_index_count: u32,
+    pub p_counter_indices: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
@@ -32745,8 +32745,8 @@ impl Default for PerformanceCounterResultKHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAcquireProfilingLockInfoKHR.html>"]
 #[doc(alias = "VkAcquireProfilingLockInfoKHR")]
 pub struct AcquireProfilingLockInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: AcquireProfilingLockFlagsKHR,
     pub timeout: u64,
     phantom: PhantomData<&'a ()>,
@@ -32796,8 +32796,8 @@ impl<'a> AcquireProfilingLockInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerformanceQuerySubmitInfoKHR.html>"]
 #[doc(alias = "VkPerformanceQuerySubmitInfoKHR")]
 pub struct PerformanceQuerySubmitInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub counter_pass_index: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -32847,8 +32847,8 @@ impl<'a> PerformanceQuerySubmitInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerformanceQueryReservationInfoKHR.html>"]
 #[doc(alias = "VkPerformanceQueryReservationInfoKHR")]
 pub struct PerformanceQueryReservationInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_performance_queries_per_pool: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -32896,8 +32896,8 @@ impl<'a> PerformanceQueryReservationInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSurfaceInfo2KHR.html>"]
 #[doc(alias = "VkPhysicalDeviceSurfaceInfo2KHR")]
 pub struct PhysicalDeviceSurfaceInfo2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub surface: Option<BorrowedHandle<'a, SurfaceKHR>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -32940,8 +32940,8 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceCapabilities2KHR.html>"]
 #[doc(alias = "VkSurfaceCapabilities2KHR")]
 pub struct SurfaceCapabilities2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub surface_capabilities: SurfaceCapabilitiesKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -32984,8 +32984,8 @@ impl<'a> SurfaceCapabilities2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceFormat2KHR.html>"]
 #[doc(alias = "VkSurfaceFormat2KHR")]
 pub struct SurfaceFormat2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub surface_format: SurfaceFormatKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -33028,8 +33028,8 @@ impl<'a> SurfaceFormat2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayProperties2KHR.html>"]
 #[doc(alias = "VkDisplayProperties2KHR")]
 pub struct DisplayProperties2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub display_properties: DisplayPropertiesKHR<'a>,
     phantom: PhantomData<&'a ()>,
 }
@@ -33072,8 +33072,8 @@ impl<'a> DisplayProperties2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayPlaneProperties2KHR.html>"]
 #[doc(alias = "VkDisplayPlaneProperties2KHR")]
 pub struct DisplayPlaneProperties2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub display_plane_properties: DisplayPlanePropertiesKHR<'a>,
     phantom: PhantomData<&'a ()>,
 }
@@ -33116,8 +33116,8 @@ impl<'a> DisplayPlaneProperties2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayModeProperties2KHR.html>"]
 #[doc(alias = "VkDisplayModeProperties2KHR")]
 pub struct DisplayModeProperties2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub display_mode_properties: DisplayModePropertiesKHR<'a>,
     phantom: PhantomData<&'a ()>,
 }
@@ -33160,8 +33160,8 @@ impl<'a> DisplayModeProperties2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayPlaneInfo2KHR.html>"]
 #[doc(alias = "VkDisplayPlaneInfo2KHR")]
 pub struct DisplayPlaneInfo2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub mode: Option<BorrowedHandle<'a, DisplayModeKHR>>,
     pub plane_index: u32,
     phantom: PhantomData<&'a ()>,
@@ -33211,8 +33211,8 @@ impl<'a> DisplayPlaneInfo2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayPlaneCapabilities2KHR.html>"]
 #[doc(alias = "VkDisplayPlaneCapabilities2KHR")]
 pub struct DisplayPlaneCapabilities2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub capabilities: DisplayPlaneCapabilitiesKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -33255,8 +33255,8 @@ impl<'a> DisplayPlaneCapabilities2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIOSSurfaceCreateInfoMVK.html>"]
 #[doc(alias = "VkIOSSurfaceCreateInfoMVK")]
 pub struct IOSSurfaceCreateInfoMVK<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub p_view: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -33306,8 +33306,8 @@ impl<'a> IOSSurfaceCreateInfoMVK<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMacOSSurfaceCreateInfoMVK.html>"]
 #[doc(alias = "VkMacOSSurfaceCreateInfoMVK")]
 pub struct MacOSSurfaceCreateInfoMVK<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub p_view: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -33357,8 +33357,8 @@ impl<'a> MacOSSurfaceCreateInfoMVK<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDebugUtilsLabelEXT.html>"]
 #[doc(alias = "VkDebugUtilsLabelEXT")]
 pub struct DebugUtilsLabelEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_label_name: *const c_char,
     pub color: [f32; 4u16 as _],
     phantom: PhantomData<&'a ()>,
@@ -33408,18 +33408,18 @@ impl<'a> DebugUtilsLabelEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDebugUtilsMessengerCallbackDataEXT.html>"]
 #[doc(alias = "VkDebugUtilsMessengerCallbackDataEXT")]
 pub struct DebugUtilsMessengerCallbackDataEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub p_message_id_name: *const c_char,
     pub message_id_number: i32,
     pub p_message: *const c_char,
-    pub(crate) queue_label_count: u32,
-    pub(crate) p_queue_labels: *const DebugUtilsLabelEXT<'a>,
-    pub(crate) cmd_buf_label_count: u32,
-    pub(crate) p_cmd_buf_labels: *const DebugUtilsLabelEXT<'a>,
-    pub(crate) object_count: u32,
-    pub(crate) p_objects: *const DebugUtilsObjectNameInfoEXT<'a>,
+    pub queue_label_count: u32,
+    pub p_queue_labels: *const DebugUtilsLabelEXT<'a>,
+    pub cmd_buf_label_count: u32,
+    pub p_cmd_buf_labels: *const DebugUtilsLabelEXT<'a>,
+    pub object_count: u32,
+    pub p_objects: *const DebugUtilsObjectNameInfoEXT<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_utils")]
@@ -33533,8 +33533,8 @@ impl<'a> DebugUtilsMessengerCallbackDataEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDebugUtilsMessengerCreateInfoEXT.html>"]
 #[doc(alias = "VkDebugUtilsMessengerCreateInfoEXT")]
 pub struct DebugUtilsMessengerCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub message_severity: DebugUtilsMessageSeverityFlagsEXT,
     pub message_type: DebugUtilsMessageTypeFlagsEXT,
@@ -33610,8 +33610,8 @@ impl<'a> DebugUtilsMessengerCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDebugUtilsObjectNameInfoEXT.html>"]
 #[doc(alias = "VkDebugUtilsObjectNameInfoEXT")]
 pub struct DebugUtilsObjectNameInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub object_type: ObjectType,
     pub object_handle: u64,
     pub p_object_name: *const c_char,
@@ -33673,13 +33673,13 @@ impl<'a> DebugUtilsObjectNameInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDebugUtilsObjectTagInfoEXT.html>"]
 #[doc(alias = "VkDebugUtilsObjectTagInfoEXT")]
 pub struct DebugUtilsObjectTagInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub object_type: ObjectType,
     pub object_handle: u64,
     pub tag_name: u64,
-    pub(crate) tag_size: usize,
-    pub(crate) p_tag: VoidPtr,
+    pub tag_size: usize,
+    pub p_tag: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_utils")]
@@ -33749,8 +33749,8 @@ impl<'a> DebugUtilsObjectTagInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAndroidHardwareBufferUsageANDROID.html>"]
 #[doc(alias = "VkAndroidHardwareBufferUsageANDROID")]
 pub struct AndroidHardwareBufferUsageANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub android_hardware_buffer_usage: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -33804,8 +33804,8 @@ impl<'a> AndroidHardwareBufferUsageANDROID<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAndroidHardwareBufferPropertiesANDROID.html>"]
 #[doc(alias = "VkAndroidHardwareBufferPropertiesANDROID")]
 pub struct AndroidHardwareBufferPropertiesANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub allocation_size: DeviceSize,
     pub memory_type_bits: u32,
     phantom: PhantomData<&'a ()>,
@@ -33855,8 +33855,8 @@ impl<'a> AndroidHardwareBufferPropertiesANDROID<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAndroidHardwareBufferFormatPropertiesANDROID.html>"]
 #[doc(alias = "VkAndroidHardwareBufferFormatPropertiesANDROID")]
 pub struct AndroidHardwareBufferFormatPropertiesANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format: Format,
     pub external_format: u64,
     pub format_features: FormatFeatureFlags,
@@ -33957,8 +33957,8 @@ impl<'a> AndroidHardwareBufferFormatPropertiesANDROID<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportAndroidHardwareBufferInfoANDROID.html>"]
 #[doc(alias = "VkImportAndroidHardwareBufferInfoANDROID")]
 pub struct ImportAndroidHardwareBufferInfoANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer: *const AHardwareBuffer,
     phantom: PhantomData<&'a ()>,
 }
@@ -34006,8 +34006,8 @@ impl<'a> ImportAndroidHardwareBufferInfoANDROID<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryGetAndroidHardwareBufferInfoANDROID.html>"]
 #[doc(alias = "VkMemoryGetAndroidHardwareBufferInfoANDROID")]
 pub struct MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -34050,8 +34050,8 @@ impl<'a> MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalFormatANDROID.html>"]
 #[doc(alias = "VkExternalFormatANDROID")]
 pub struct ExternalFormatANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub external_format: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -34124,8 +34124,8 @@ pub type AHardwareBuffer = c_void;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAndroidHardwareBufferFormatProperties2ANDROID.html>"]
 #[doc(alias = "VkAndroidHardwareBufferFormatProperties2ANDROID")]
 pub struct AndroidHardwareBufferFormatProperties2ANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format: Format,
     pub external_format: u64,
     pub format_features: FormatFeatureFlags2,
@@ -34247,8 +34247,8 @@ impl<'a> AndroidHardwareBufferFormatProperties2ANDROID<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderEnqueueFeaturesAMDX.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderEnqueueFeaturesAMDX")]
 pub struct PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_enqueue: Bool32,
     pub shader_mesh_enqueue: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -34314,8 +34314,8 @@ impl<'a> PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderEnqueuePropertiesAMDX.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderEnqueuePropertiesAMDX")]
 pub struct PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_execution_graph_depth: u32,
     pub max_execution_graph_shader_output_nodes: u32,
     pub max_execution_graph_shader_payload_size: u32,
@@ -34411,8 +34411,8 @@ impl<'a> PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExecutionGraphPipelineScratchSizeAMDX.html>"]
 #[doc(alias = "VkExecutionGraphPipelineScratchSizeAMDX")]
 pub struct ExecutionGraphPipelineScratchSizeAMDX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_size: DeviceSize,
     pub max_size: DeviceSize,
     pub size_granularity: DeviceSize,
@@ -34469,11 +34469,11 @@ impl<'a> ExecutionGraphPipelineScratchSizeAMDX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExecutionGraphPipelineCreateInfoAMDX.html>"]
 #[doc(alias = "VkExecutionGraphPipelineCreateInfoAMDX")]
 pub struct ExecutionGraphPipelineCreateInfoAMDX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineCreateFlags,
     pub stage_count: u32,
-    pub(crate) p_stages: *const PipelineShaderStageCreateInfo<'a>,
+    pub p_stages: *const PipelineShaderStageCreateInfo<'a>,
     pub p_library_info: *const PipelineLibraryCreateInfoKHR<'a>,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
@@ -34653,8 +34653,8 @@ impl DispatchGraphCountInfoAMDX {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineShaderStageNodeCreateInfoAMDX.html>"]
 #[doc(alias = "VkPipelineShaderStageNodeCreateInfoAMDX")]
 pub struct PipelineShaderStageNodeCreateInfoAMDX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_name: *const c_char,
     pub index: u32,
     phantom: PhantomData<&'a ()>,
@@ -34735,10 +34735,10 @@ impl Default for DeviceOrHostAddressConstAMDX {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAttachmentSampleCountInfoAMD.html>"]
 #[doc(alias = "VkAttachmentSampleCountInfoAMD")]
 pub struct AttachmentSampleCountInfoAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub color_attachment_count: u32,
-    pub(crate) p_color_attachment_samples: *const SampleCountFlags,
+    pub p_color_attachment_samples: *const SampleCountFlags,
     pub depth_stencil_attachment_samples: SampleCountFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -34900,8 +34900,8 @@ pub type AttachmentSampleCountInfoNV<'a> = AttachmentSampleCountInfoAMD<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderBfloat16FeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderBfloat16FeaturesKHR")]
 pub struct PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_bfloat16_type: Bool32,
     pub shader_bfloat16_dot_product: Bool32,
     pub shader_bfloat16_cooperative_matrix: Bool32,
@@ -35003,12 +35003,12 @@ impl SampleLocationEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSampleLocationsInfoEXT.html>"]
 #[doc(alias = "VkSampleLocationsInfoEXT")]
 pub struct SampleLocationsInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub sample_locations_per_pixel: SampleCountFlags,
     pub sample_location_grid_size: Extent2D,
-    pub(crate) sample_locations_count: u32,
-    pub(crate) p_sample_locations: *const SampleLocationEXT,
+    pub sample_locations_count: u32,
+    pub p_sample_locations: *const SampleLocationEXT,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_sample_locations")]
@@ -35157,12 +35157,12 @@ impl<'a> SubpassSampleLocationsEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassSampleLocationsBeginInfoEXT.html>"]
 #[doc(alias = "VkRenderPassSampleLocationsBeginInfoEXT")]
 pub struct RenderPassSampleLocationsBeginInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) attachment_initial_sample_locations_count: u32,
-    pub(crate) p_attachment_initial_sample_locations: *const AttachmentSampleLocationsEXT<'a>,
-    pub(crate) post_subpass_sample_locations_count: u32,
-    pub(crate) p_post_subpass_sample_locations: *const SubpassSampleLocationsEXT<'a>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub attachment_initial_sample_locations_count: u32,
+    pub p_attachment_initial_sample_locations: *const AttachmentSampleLocationsEXT<'a>,
+    pub post_subpass_sample_locations_count: u32,
+    pub p_post_subpass_sample_locations: *const SubpassSampleLocationsEXT<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_sample_locations")]
@@ -35255,8 +35255,8 @@ impl<'a> RenderPassSampleLocationsBeginInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineSampleLocationsStateCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineSampleLocationsStateCreateInfoEXT")]
 pub struct PipelineSampleLocationsStateCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub sample_locations_enable: Bool32,
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
     phantom: PhantomData<&'a ()>,
@@ -35311,8 +35311,8 @@ impl<'a> PipelineSampleLocationsStateCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSampleLocationsPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceSampleLocationsPropertiesEXT")]
 pub struct PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub sample_location_sample_counts: SampleCountFlags,
     pub max_sample_location_grid_size: Extent2D,
     pub sample_location_coordinate_range: [f32; 2u16 as _],
@@ -35394,8 +35394,8 @@ impl<'a> PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMultisamplePropertiesEXT.html>"]
 #[doc(alias = "VkMultisamplePropertiesEXT")]
 pub struct MultisamplePropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_sample_location_grid_size: Extent2D,
     phantom: PhantomData<&'a ()>,
 }
@@ -35438,8 +35438,8 @@ impl<'a> MultisamplePropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT")]
 pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub advanced_blend_coherent_operations: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -35499,8 +35499,8 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT")]
 pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub advanced_blend_max_color_attachments: u32,
     pub advanced_blend_independent_blend: Bool32,
     pub advanced_blend_non_premultiplied_src_color: Bool32,
@@ -35590,8 +35590,8 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineColorBlendAdvancedStateCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineColorBlendAdvancedStateCreateInfoEXT")]
 pub struct PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_premultiplied: Bool32,
     pub dst_premultiplied: Bool32,
     pub blend_overlap: BlendOverlapEXT,
@@ -35654,8 +35654,8 @@ impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCoverageToColorStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineCoverageToColorStateCreateInfoNV")]
 pub struct PipelineCoverageToColorStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub coverage_to_color_enable: Bool32,
     pub coverage_to_color_location: u32,
@@ -35877,8 +35877,8 @@ pub type AabbPositionsNV = AabbPositionsKHR;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureGeometryTrianglesDataKHR.html>"]
 #[doc(alias = "VkAccelerationStructureGeometryTrianglesDataKHR")]
 pub struct AccelerationStructureGeometryTrianglesDataKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vertex_format: Format,
     pub vertex_data: DeviceOrHostAddressConstKHR,
     pub vertex_stride: DeviceSize,
@@ -35994,16 +35994,16 @@ pub type TransformMatrixNV = TransformMatrixKHR;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureBuildGeometryInfoKHR.html>"]
 #[doc(alias = "VkAccelerationStructureBuildGeometryInfoKHR")]
 pub struct AccelerationStructureBuildGeometryInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: AccelerationStructureTypeKHR,
     pub flags: BuildAccelerationStructureFlagsKHR,
     pub mode: BuildAccelerationStructureModeKHR,
     pub src_acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub dst_acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub geometry_count: u32,
-    pub(crate) p_geometries: *const AccelerationStructureGeometryKHR<'a>,
-    pub(crate) pp_geometries: *const *const AccelerationStructureGeometryKHR<'a>,
+    pub p_geometries: *const AccelerationStructureGeometryKHR<'a>,
+    pub pp_geometries: *const *const AccelerationStructureGeometryKHR<'a>,
     pub scratch_data: DeviceOrHostAddressKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -36121,8 +36121,8 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureGeometryAabbsDataKHR.html>"]
 #[doc(alias = "VkAccelerationStructureGeometryAabbsDataKHR")]
 pub struct AccelerationStructureGeometryAabbsDataKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub data: DeviceOrHostAddressConstKHR,
     pub stride: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -36238,8 +36238,8 @@ pub type AccelerationStructureInstanceNV = AccelerationStructureInstanceKHR;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureGeometryInstancesDataKHR.html>"]
 #[doc(alias = "VkAccelerationStructureGeometryInstancesDataKHR")]
 pub struct AccelerationStructureGeometryInstancesDataKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub array_of_pointers: Bool32,
     pub data: DeviceOrHostAddressConstKHR,
     phantom: PhantomData<&'a ()>,
@@ -36307,8 +36307,8 @@ impl<'a> Default for AccelerationStructureGeometryDataKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureGeometryKHR.html>"]
 #[doc(alias = "VkAccelerationStructureGeometryKHR")]
 pub struct AccelerationStructureGeometryKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub geometry_type: GeometryTypeKHR,
     pub geometry: AccelerationStructureGeometryDataKHR<'a>,
     pub flags: GeometryFlagsKHR,
@@ -36365,8 +36365,8 @@ impl<'a> AccelerationStructureGeometryKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureCreateInfoKHR.html>"]
 #[doc(alias = "VkAccelerationStructureCreateInfoKHR")]
 pub struct AccelerationStructureCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub create_flags: AccelerationStructureCreateFlagsKHR,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
@@ -36444,10 +36444,10 @@ impl<'a> AccelerationStructureCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWriteDescriptorSetAccelerationStructureKHR.html>"]
 #[doc(alias = "VkWriteDescriptorSetAccelerationStructureKHR")]
 pub struct WriteDescriptorSetAccelerationStructureKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub acceleration_structure_count: u32,
-    pub(crate) p_acceleration_structures: *const AccelerationStructureKHR,
+    pub p_acceleration_structures: *const AccelerationStructureKHR,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
@@ -36517,8 +36517,8 @@ impl<'a> WriteDescriptorSetAccelerationStructureKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceAccelerationStructureFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceAccelerationStructureFeaturesKHR")]
 pub struct PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub acceleration_structure: Bool32,
     pub acceleration_structure_capture_replay: Bool32,
     pub acceleration_structure_indirect_build: Bool32,
@@ -36609,8 +36609,8 @@ impl<'a> PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceAccelerationStructurePropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceAccelerationStructurePropertiesKHR")]
 pub struct PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_geometry_count: u64,
     pub max_instance_count: u64,
     pub max_primitive_count: u64,
@@ -36720,8 +36720,8 @@ impl<'a> PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureDeviceAddressInfoKHR.html>"]
 #[doc(alias = "VkAccelerationStructureDeviceAddressInfoKHR")]
 pub struct AccelerationStructureDeviceAddressInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -36764,9 +36764,9 @@ impl<'a> AccelerationStructureDeviceAddressInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureVersionInfoKHR.html>"]
 #[doc(alias = "VkAccelerationStructureVersionInfoKHR")]
 pub struct AccelerationStructureVersionInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) p_version_data: *const u8,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub p_version_data: *const u8,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
@@ -36808,8 +36808,8 @@ impl<'a> AccelerationStructureVersionInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyAccelerationStructureToMemoryInfoKHR.html>"]
 #[doc(alias = "VkCopyAccelerationStructureToMemoryInfoKHR")]
 pub struct CopyAccelerationStructureToMemoryInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub dst: DeviceOrHostAddressKHR,
     pub mode: CopyAccelerationStructureModeKHR,
@@ -36866,8 +36866,8 @@ impl<'a> CopyAccelerationStructureToMemoryInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyMemoryToAccelerationStructureInfoKHR.html>"]
 #[doc(alias = "VkCopyMemoryToAccelerationStructureInfoKHR")]
 pub struct CopyMemoryToAccelerationStructureInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src: DeviceOrHostAddressConstKHR,
     pub dst: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub mode: CopyAccelerationStructureModeKHR,
@@ -36924,8 +36924,8 @@ impl<'a> CopyMemoryToAccelerationStructureInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyAccelerationStructureInfoKHR.html>"]
 #[doc(alias = "VkCopyAccelerationStructureInfoKHR")]
 pub struct CopyAccelerationStructureInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub dst: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub mode: CopyAccelerationStructureModeKHR,
@@ -36982,8 +36982,8 @@ impl<'a> CopyAccelerationStructureInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureBuildSizesInfoKHR.html>"]
 #[doc(alias = "VkAccelerationStructureBuildSizesInfoKHR")]
 pub struct AccelerationStructureBuildSizesInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub acceleration_structure_size: DeviceSize,
     pub update_scratch_size: DeviceSize,
     pub build_scratch_size: DeviceSize,
@@ -37040,8 +37040,8 @@ impl<'a> AccelerationStructureBuildSizesInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRayTracingShaderGroupCreateInfoKHR.html>"]
 #[doc(alias = "VkRayTracingShaderGroupCreateInfoKHR")]
 pub struct RayTracingShaderGroupCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: RayTracingShaderGroupTypeKHR,
     pub general_shader: u32,
     pub closest_hit_shader: u32,
@@ -37119,13 +37119,13 @@ impl<'a> RayTracingShaderGroupCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRayTracingPipelineCreateInfoKHR.html>"]
 #[doc(alias = "VkRayTracingPipelineCreateInfoKHR")]
 pub struct RayTracingPipelineCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineCreateFlags,
-    pub(crate) stage_count: u32,
-    pub(crate) p_stages: *const PipelineShaderStageCreateInfo<'a>,
-    pub(crate) group_count: u32,
-    pub(crate) p_groups: *const RayTracingShaderGroupCreateInfoKHR<'a>,
+    pub stage_count: u32,
+    pub p_stages: *const PipelineShaderStageCreateInfo<'a>,
+    pub group_count: u32,
+    pub p_groups: *const RayTracingShaderGroupCreateInfoKHR<'a>,
     pub max_pipeline_ray_recursion_depth: u32,
     pub p_library_info: *const PipelineLibraryCreateInfoKHR<'a>,
     pub p_library_interface: *const RayTracingPipelineInterfaceCreateInfoKHR<'a>,
@@ -37250,8 +37250,8 @@ impl<'a> RayTracingPipelineCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingPipelineFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingPipelineFeaturesKHR")]
 pub struct PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ray_tracing_pipeline: Bool32,
     pub ray_tracing_pipeline_shader_group_handle_capture_replay: Bool32,
     pub ray_tracing_pipeline_shader_group_handle_capture_replay_mixed: Bool32,
@@ -37345,8 +37345,8 @@ impl<'a> PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingPipelinePropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingPipelinePropertiesKHR")]
 pub struct PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_group_handle_size: u32,
     pub max_ray_recursion_depth: u32,
     pub max_shader_group_stride: u32,
@@ -37534,8 +37534,8 @@ impl TraceRaysIndirectCommandKHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRayTracingPipelineInterfaceCreateInfoKHR.html>"]
 #[doc(alias = "VkRayTracingPipelineInterfaceCreateInfoKHR")]
 pub struct RayTracingPipelineInterfaceCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_pipeline_ray_payload_size: u32,
     pub max_pipeline_ray_hit_attribute_size: u32,
     phantom: PhantomData<&'a ()>,
@@ -37584,8 +37584,8 @@ impl<'a> RayTracingPipelineInterfaceCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayQueryFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceRayQueryFeaturesKHR")]
 pub struct PhysicalDeviceRayQueryFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ray_query: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -37638,13 +37638,13 @@ impl<'a> PhysicalDeviceRayQueryFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCoverageModulationStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineCoverageModulationStateCreateInfoNV")]
 pub struct PipelineCoverageModulationStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub coverage_modulation_mode: CoverageModulationModeNV,
     pub coverage_modulation_table_enable: Bool32,
     pub coverage_modulation_table_count: u32,
-    pub(crate) p_coverage_modulation_table: *const f32,
+    pub p_coverage_modulation_table: *const f32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_framebuffer_mixed_samples")]
@@ -37730,8 +37730,8 @@ impl<'a> PipelineCoverageModulationStateCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderSMBuiltinsPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderSMBuiltinsPropertiesNV")]
 pub struct PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_smcount: u32,
     pub shader_warps_per_sm: u32,
     phantom: PhantomData<&'a ()>,
@@ -37785,8 +37785,8 @@ impl<'a> PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderSMBuiltinsFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderSMBuiltinsFeaturesNV")]
 pub struct PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_smbuiltins: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -37839,10 +37839,10 @@ impl<'a> PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDrmFormatModifierPropertiesListEXT.html>"]
 #[doc(alias = "VkDrmFormatModifierPropertiesListEXT")]
 pub struct DrmFormatModifierPropertiesListEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub drm_format_modifier_count: u32,
-    pub(crate) p_drm_format_modifier_properties: *const DrmFormatModifierPropertiesEXT,
+    pub p_drm_format_modifier_properties: *const DrmFormatModifierPropertiesEXT,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_drm_format_modifier")]
@@ -37949,12 +37949,12 @@ impl DrmFormatModifierPropertiesEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageDrmFormatModifierInfoEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceImageDrmFormatModifierInfoEXT")]
 pub struct PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub drm_format_modifier: u64,
     pub sharing_mode: SharingMode,
     pub queue_family_index_count: u32,
-    pub(crate) p_queue_family_indices: *const u32,
+    pub p_queue_family_indices: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_drm_format_modifier")]
@@ -38038,10 +38038,10 @@ impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageDrmFormatModifierListCreateInfoEXT.html>"]
 #[doc(alias = "VkImageDrmFormatModifierListCreateInfoEXT")]
 pub struct ImageDrmFormatModifierListCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) drm_format_modifier_count: u32,
-    pub(crate) p_drm_format_modifiers: *const u64,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub drm_format_modifier_count: u32,
+    pub p_drm_format_modifiers: *const u64,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_drm_format_modifier")]
@@ -38101,11 +38101,11 @@ impl<'a> ImageDrmFormatModifierListCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageDrmFormatModifierExplicitCreateInfoEXT.html>"]
 #[doc(alias = "VkImageDrmFormatModifierExplicitCreateInfoEXT")]
 pub struct ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub drm_format_modifier: u64,
-    pub(crate) drm_format_modifier_plane_count: u32,
-    pub(crate) p_plane_layouts: *const SubresourceLayout,
+    pub drm_format_modifier_plane_count: u32,
+    pub p_plane_layouts: *const SubresourceLayout,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_drm_format_modifier")]
@@ -38172,8 +38172,8 @@ impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageDrmFormatModifierPropertiesEXT.html>"]
 #[doc(alias = "VkImageDrmFormatModifierPropertiesEXT")]
 pub struct ImageDrmFormatModifierPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub drm_format_modifier: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -38219,10 +38219,10 @@ impl<'a> ImageDrmFormatModifierPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDrmFormatModifierPropertiesList2EXT.html>"]
 #[doc(alias = "VkDrmFormatModifierPropertiesList2EXT")]
 pub struct DrmFormatModifierPropertiesList2EXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub drm_format_modifier_count: u32,
-    pub(crate) p_drm_format_modifier_properties: *const DrmFormatModifierProperties2EXT,
+    pub p_drm_format_modifier_properties: *const DrmFormatModifierProperties2EXT,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
@@ -38365,11 +38365,11 @@ impl DrmFormatModifierProperties2EXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkValidationCacheCreateInfoEXT.html>"]
 #[doc(alias = "VkValidationCacheCreateInfoEXT")]
 pub struct ValidationCacheCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
-    pub(crate) initial_data_size: usize,
-    pub(crate) p_initial_data: VoidPtr,
+    pub initial_data_size: usize,
+    pub p_initial_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_validation_cache")]
@@ -38430,8 +38430,8 @@ impl<'a> ValidationCacheCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkShaderModuleValidationCacheCreateInfoEXT.html>"]
 #[doc(alias = "VkShaderModuleValidationCacheCreateInfoEXT")]
 pub struct ShaderModuleValidationCacheCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub validation_cache: Option<BorrowedHandle<'a, ValidationCacheEXT>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -38483,8 +38483,8 @@ impl<'a> ShaderModuleValidationCacheCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePortabilitySubsetFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePortabilitySubsetFeaturesKHR")]
 pub struct PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub constant_alpha_color_blend_factors: Bool32,
     pub events: Bool32,
     pub image_view_format_reinterpretation: Bool32,
@@ -38634,8 +38634,8 @@ impl<'a> PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePortabilitySubsetPropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePortabilitySubsetPropertiesKHR")]
 pub struct PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_vertex_input_binding_stride_alignment: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -38684,8 +38684,8 @@ impl<'a> PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkShadingRatePaletteNV.html>"]
 #[doc(alias = "VkShadingRatePaletteNV")]
 pub struct ShadingRatePaletteNV<'a> {
-    pub(crate) shading_rate_palette_entry_count: u32,
-    pub(crate) p_shading_rate_palette_entries: *const ShadingRatePaletteEntryNV,
+    pub shading_rate_palette_entry_count: u32,
+    pub p_shading_rate_palette_entries: *const ShadingRatePaletteEntryNV,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
@@ -38732,11 +38732,11 @@ impl<'a> ShadingRatePaletteNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineViewportShadingRateImageStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineViewportShadingRateImageStateCreateInfoNV")]
 pub struct PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shading_rate_image_enable: Bool32,
     pub viewport_count: u32,
-    pub(crate) p_shading_rate_palettes: *const ShadingRatePaletteNV<'a>,
+    pub p_shading_rate_palettes: *const ShadingRatePaletteNV<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
@@ -38811,8 +38811,8 @@ impl<'a> PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShadingRateImageFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceShadingRateImageFeaturesNV")]
 pub struct PhysicalDeviceShadingRateImageFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shading_rate_image: Bool32,
     pub shading_rate_coarse_sample_order: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -38878,8 +38878,8 @@ impl<'a> PhysicalDeviceShadingRateImageFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShadingRateImagePropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceShadingRateImagePropertiesNV")]
 pub struct PhysicalDeviceShadingRateImagePropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shading_rate_texel_size: Extent2D,
     pub shading_rate_palette_size: u32,
     pub shading_rate_max_coarse_samples: u32,
@@ -38991,8 +38991,8 @@ impl CoarseSampleLocationNV {
 pub struct CoarseSampleOrderCustomNV<'a> {
     pub shading_rate: ShadingRatePaletteEntryNV,
     pub sample_count: u32,
-    pub(crate) sample_location_count: u32,
-    pub(crate) p_sample_locations: *const CoarseSampleLocationNV,
+    pub sample_location_count: u32,
+    pub p_sample_locations: *const CoarseSampleLocationNV,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
@@ -39049,11 +39049,11 @@ impl<'a> CoarseSampleOrderCustomNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineViewportCoarseSampleOrderStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineViewportCoarseSampleOrderStateCreateInfoNV")]
 pub struct PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub sample_order_type: CoarseSampleOrderTypeNV,
-    pub(crate) custom_sample_order_count: u32,
-    pub(crate) p_custom_sample_orders: *const CoarseSampleOrderCustomNV<'a>,
+    pub custom_sample_order_count: u32,
+    pub p_custom_sample_orders: *const CoarseSampleOrderCustomNV<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
@@ -39123,8 +39123,8 @@ impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRayTracingShaderGroupCreateInfoNV.html>"]
 #[doc(alias = "VkRayTracingShaderGroupCreateInfoNV")]
 pub struct RayTracingShaderGroupCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: RayTracingShaderGroupTypeKHR,
     pub general_shader: u32,
     pub closest_hit_shader: u32,
@@ -39195,13 +39195,13 @@ impl<'a> RayTracingShaderGroupCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRayTracingPipelineCreateInfoNV.html>"]
 #[doc(alias = "VkRayTracingPipelineCreateInfoNV")]
 pub struct RayTracingPipelineCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineCreateFlags,
-    pub(crate) stage_count: u32,
-    pub(crate) p_stages: *const PipelineShaderStageCreateInfo<'a>,
-    pub(crate) group_count: u32,
-    pub(crate) p_groups: *const RayTracingShaderGroupCreateInfoNV<'a>,
+    pub stage_count: u32,
+    pub p_stages: *const PipelineShaderStageCreateInfo<'a>,
+    pub group_count: u32,
+    pub p_groups: *const RayTracingShaderGroupCreateInfoNV<'a>,
     pub max_recursion_depth: u32,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
@@ -39302,8 +39302,8 @@ impl<'a> RayTracingPipelineCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGeometryTrianglesNV.html>"]
 #[doc(alias = "VkGeometryTrianglesNV")]
 pub struct GeometryTrianglesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vertex_data: Option<BorrowedHandle<'a, Buffer>>,
     pub vertex_offset: DeviceSize,
     pub vertex_count: u32,
@@ -39416,8 +39416,8 @@ impl<'a> GeometryTrianglesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGeometryAABBNV.html>"]
 #[doc(alias = "VkGeometryAABBNV")]
 pub struct GeometryAABBNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub aabb_data: Option<BorrowedHandle<'a, Buffer>>,
     pub num_aabbs: u32,
     pub stride: u32,
@@ -39517,8 +39517,8 @@ impl<'a> GeometryDataNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGeometryNV.html>"]
 #[doc(alias = "VkGeometryNV")]
 pub struct GeometryNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub geometry_type: GeometryTypeKHR,
     pub geometry: GeometryDataNV<'a>,
     pub flags: GeometryFlagsKHR,
@@ -39575,13 +39575,13 @@ impl<'a> GeometryNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureInfoNV.html>"]
 #[doc(alias = "VkAccelerationStructureInfoNV")]
 pub struct AccelerationStructureInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: AccelerationStructureTypeNV,
     pub flags: BuildAccelerationStructureFlagsNV,
     pub instance_count: u32,
-    pub(crate) geometry_count: u32,
-    pub(crate) p_geometries: *const GeometryNV<'a>,
+    pub geometry_count: u32,
+    pub p_geometries: *const GeometryNV<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
@@ -39651,8 +39651,8 @@ impl<'a> AccelerationStructureInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureCreateInfoNV.html>"]
 #[doc(alias = "VkAccelerationStructureCreateInfoNV")]
 pub struct AccelerationStructureCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub compacted_size: DeviceSize,
     pub info: AccelerationStructureInfoNV<'a>,
     phantom: PhantomData<&'a ()>,
@@ -39702,13 +39702,13 @@ impl<'a> AccelerationStructureCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindAccelerationStructureMemoryInfoNV.html>"]
 #[doc(alias = "VkBindAccelerationStructureMemoryInfoNV")]
 pub struct BindAccelerationStructureMemoryInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureNV>>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
-    pub(crate) device_index_count: u32,
-    pub(crate) p_device_indices: *const u32,
+    pub device_index_count: u32,
+    pub p_device_indices: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
@@ -39778,10 +39778,10 @@ impl<'a> BindAccelerationStructureMemoryInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWriteDescriptorSetAccelerationStructureNV.html>"]
 #[doc(alias = "VkWriteDescriptorSetAccelerationStructureNV")]
 pub struct WriteDescriptorSetAccelerationStructureNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub acceleration_structure_count: u32,
-    pub(crate) p_acceleration_structures: *const AccelerationStructureNV,
+    pub p_acceleration_structures: *const AccelerationStructureNV,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
@@ -39851,8 +39851,8 @@ impl<'a> WriteDescriptorSetAccelerationStructureNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureMemoryRequirementsInfoNV.html>"]
 #[doc(alias = "VkAccelerationStructureMemoryRequirementsInfoNV")]
 pub struct AccelerationStructureMemoryRequirementsInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: AccelerationStructureMemoryRequirementsTypeNV,
     pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureNV>>,
     phantom: PhantomData<&'a ()>,
@@ -39903,8 +39903,8 @@ impl<'a> AccelerationStructureMemoryRequirementsInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingPropertiesNV")]
 pub struct PhysicalDeviceRayTracingPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_group_handle_size: u32,
     pub max_recursion_depth: u32,
     pub max_shader_group_stride: u32,
@@ -40007,8 +40007,8 @@ impl<'a> PhysicalDeviceRayTracingPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceRepresentativeFragmentTestFeaturesNV")]
 pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub representative_fragment_test: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -40068,8 +40068,8 @@ impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRepresentativeFragmentTestStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineRepresentativeFragmentTestStateCreateInfoNV")]
 pub struct PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub representative_fragment_test_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -40121,8 +40121,8 @@ impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageViewImageFormatInfoEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceImageViewImageFormatInfoEXT")]
 pub struct PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_view_type: ImageViewType,
     phantom: PhantomData<&'a ()>,
 }
@@ -40176,8 +40176,8 @@ impl<'a> PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFilterCubicImageViewImageFormatPropertiesEXT.html>"]
 #[doc(alias = "VkFilterCubicImageViewImageFormatPropertiesEXT")]
 pub struct FilterCubicImageViewImageFormatPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub filter_cubic: Bool32,
     pub filter_cubic_minmax: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -40239,8 +40239,8 @@ impl<'a> FilterCubicImageViewImageFormatPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMemoryHostPointerInfoEXT.html>"]
 #[doc(alias = "VkImportMemoryHostPointerInfoEXT")]
 pub struct ImportMemoryHostPointerInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub p_host_pointer: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -40295,8 +40295,8 @@ impl<'a> ImportMemoryHostPointerInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryHostPointerPropertiesEXT.html>"]
 #[doc(alias = "VkMemoryHostPointerPropertiesEXT")]
 pub struct MemoryHostPointerPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -40339,8 +40339,8 @@ impl<'a> MemoryHostPointerPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalMemoryHostPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalMemoryHostPropertiesEXT")]
 pub struct PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_imported_host_pointer_alignment: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -40394,8 +40394,8 @@ impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderClockFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderClockFeaturesKHR")]
 pub struct PhysicalDeviceShaderClockFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_subgroup_clock: Bool32,
     pub shader_device_clock: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -40455,8 +40455,8 @@ impl<'a> PhysicalDeviceShaderClockFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCompilerControlCreateInfoAMD.html>"]
 #[doc(alias = "VkPipelineCompilerControlCreateInfoAMD")]
 pub struct PipelineCompilerControlCreateInfoAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub compiler_control_flags: PipelineCompilerControlFlagsAMD,
     phantom: PhantomData<&'a ()>,
 }
@@ -40516,8 +40516,8 @@ impl<'a> PipelineCompilerControlCreateInfoAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderCorePropertiesAMD.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderCorePropertiesAMD")]
 pub struct PhysicalDeviceShaderCorePropertiesAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_engine_count: u32,
     pub shader_arrays_per_engine_count: u32,
     pub compute_units_per_shader_array: u32,
@@ -40656,8 +40656,8 @@ impl<'a> PhysicalDeviceShaderCorePropertiesAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceMemoryOverallocationCreateInfoAMD.html>"]
 #[doc(alias = "VkDeviceMemoryOverallocationCreateInfoAMD")]
 pub struct DeviceMemoryOverallocationCreateInfoAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub overallocation_behavior: MemoryOverallocationBehaviorAMD,
     phantom: PhantomData<&'a ()>,
 }
@@ -40705,8 +40705,8 @@ impl<'a> DeviceMemoryOverallocationCreateInfoAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceVertexAttributeDivisorPropertiesEXT")]
 pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_vertex_attrib_divisor: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -40761,8 +40761,8 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentFrameTokenGGP.html>"]
 #[doc(alias = "VkPresentFrameTokenGGP")]
 pub struct PresentFrameTokenGGP<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub frame_token: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
@@ -40807,8 +40807,8 @@ impl<'a> PresentFrameTokenGGP<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMeshShaderFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceMeshShaderFeaturesNV")]
 pub struct PhysicalDeviceMeshShaderFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub task_shader: Bool32,
     pub mesh_shader: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -40874,8 +40874,8 @@ impl<'a> PhysicalDeviceMeshShaderFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMeshShaderPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceMeshShaderPropertiesNV")]
 pub struct PhysicalDeviceMeshShaderPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_draw_mesh_tasks_count: u32,
     pub max_task_work_group_invocations: u32,
     pub max_task_work_group_size: [u32; 3u16 as _],
@@ -41047,8 +41047,8 @@ impl DrawMeshTasksIndirectCommandNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderImageFootprintFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderImageFootprintFeaturesNV")]
 pub struct PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_footprint: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -41102,10 +41102,10 @@ impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineViewportExclusiveScissorStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineViewportExclusiveScissorStateCreateInfoNV")]
 pub struct PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub exclusive_scissor_count: u32,
-    pub(crate) p_exclusive_scissors: *const Rect2D,
+    pub p_exclusive_scissors: *const Rect2D,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_scissor_exclusive")]
@@ -41171,8 +41171,8 @@ impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExclusiveScissorFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceExclusiveScissorFeaturesNV")]
 pub struct PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub exclusive_scissor: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -41231,8 +41231,8 @@ impl<'a> PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueueFamilyCheckpointPropertiesNV.html>"]
 #[doc(alias = "VkQueueFamilyCheckpointPropertiesNV")]
 pub struct QueueFamilyCheckpointPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub checkpoint_execution_stage_mask: PipelineStageFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -41286,8 +41286,8 @@ impl<'a> QueueFamilyCheckpointPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCheckpointDataNV.html>"]
 #[doc(alias = "VkCheckpointDataNV")]
 pub struct CheckpointDataNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stage: PipelineStageFlags,
     pub p_checkpoint_marker: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -41340,8 +41340,8 @@ impl<'a> CheckpointDataNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueueFamilyCheckpointProperties2NV.html>"]
 #[doc(alias = "VkQueueFamilyCheckpointProperties2NV")]
 pub struct QueueFamilyCheckpointProperties2NV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub checkpoint_execution_stage_mask: PipelineStageFlags2,
     phantom: PhantomData<&'a ()>,
 }
@@ -41419,8 +41419,8 @@ impl<'a> QueueFamilyCheckpointProperties2NV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCheckpointData2NV.html>"]
 #[doc(alias = "VkCheckpointData2NV")]
 pub struct CheckpointData2NV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stage: PipelineStageFlags2,
     pub p_checkpoint_marker: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -41487,8 +41487,8 @@ impl<'a> CheckpointData2NV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderIntegerFunctions2FeaturesINTEL")]
 pub struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_integer_functions2: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -41597,8 +41597,8 @@ impl PerformanceValueINTEL {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkInitializePerformanceApiInfoINTEL.html>"]
 #[doc(alias = "VkInitializePerformanceApiInfoINTEL")]
 pub struct InitializePerformanceApiInfoINTEL<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_user_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
@@ -41641,8 +41641,8 @@ impl<'a> InitializePerformanceApiInfoINTEL<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueryPoolPerformanceQueryCreateInfoINTEL.html>"]
 #[doc(alias = "VkQueryPoolPerformanceQueryCreateInfoINTEL")]
 pub struct QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub performance_counters_sampling: QueryPoolSamplingModeINTEL,
     phantom: PhantomData<&'a ()>,
 }
@@ -41692,8 +41692,8 @@ pub type QueryPoolCreateInfoINTEL<'a> = QueryPoolPerformanceQueryCreateInfoINTEL
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerformanceMarkerInfoINTEL.html>"]
 #[doc(alias = "VkPerformanceMarkerInfoINTEL")]
 pub struct PerformanceMarkerInfoINTEL<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub marker: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -41736,8 +41736,8 @@ impl<'a> PerformanceMarkerInfoINTEL<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerformanceStreamMarkerInfoINTEL.html>"]
 #[doc(alias = "VkPerformanceStreamMarkerInfoINTEL")]
 pub struct PerformanceStreamMarkerInfoINTEL<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub marker: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -41780,8 +41780,8 @@ impl<'a> PerformanceStreamMarkerInfoINTEL<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerformanceOverrideInfoINTEL.html>"]
 #[doc(alias = "VkPerformanceOverrideInfoINTEL")]
 pub struct PerformanceOverrideInfoINTEL<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: PerformanceOverrideTypeINTEL,
     pub enable: Bool32,
     pub parameter: u64,
@@ -41838,8 +41838,8 @@ impl<'a> PerformanceOverrideInfoINTEL<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerformanceConfigurationAcquireInfoINTEL.html>"]
 #[doc(alias = "VkPerformanceConfigurationAcquireInfoINTEL")]
 pub struct PerformanceConfigurationAcquireInfoINTEL<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: PerformanceConfigurationTypeINTEL,
     phantom: PhantomData<&'a ()>,
 }
@@ -41881,8 +41881,8 @@ impl<'a> PerformanceConfigurationAcquireInfoINTEL<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePCIBusInfoPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDevicePCIBusInfoPropertiesEXT")]
 pub struct PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pci_domain: u32,
     pub pci_bus: u32,
     pub pci_device: u32,
@@ -41951,8 +41951,8 @@ impl<'a> PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayNativeHdrSurfaceCapabilitiesAMD.html>"]
 #[doc(alias = "VkDisplayNativeHdrSurfaceCapabilitiesAMD")]
 pub struct DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub local_dimming_support: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -42003,8 +42003,8 @@ impl<'a> DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSwapchainDisplayNativeHdrCreateInfoAMD.html>"]
 #[doc(alias = "VkSwapchainDisplayNativeHdrCreateInfoAMD")]
 pub struct SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub local_dimming_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -42052,8 +42052,8 @@ impl<'a> SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImagePipeSurfaceCreateInfoFUCHSIA.html>"]
 #[doc(alias = "VkImagePipeSurfaceCreateInfoFUCHSIA")]
 pub struct ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub image_pipe_handle: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -42103,8 +42103,8 @@ impl<'a> ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMetalSurfaceCreateInfoEXT.html>"]
 #[doc(alias = "VkMetalSurfaceCreateInfoEXT")]
 pub struct MetalSurfaceCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub p_layer: *const CAMetalLayer,
     phantom: PhantomData<&'a ()>,
@@ -42156,8 +42156,8 @@ pub type CAMetalLayer = c_void;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentDensityMapFeaturesEXT")]
 pub struct PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_density_map: Bool32,
     pub fragment_density_map_dynamic: Bool32,
     pub fragment_density_map_non_subsampled_images: Bool32,
@@ -42231,8 +42231,8 @@ impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentDensityMapPropertiesEXT")]
 pub struct PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_fragment_density_texel_size: Extent2D,
     pub max_fragment_density_texel_size: Extent2D,
     pub fragment_density_invocations: Bool32,
@@ -42301,8 +42301,8 @@ impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassFragmentDensityMapCreateInfoEXT.html>"]
 #[doc(alias = "VkRenderPassFragmentDensityMapCreateInfoEXT")]
 pub struct RenderPassFragmentDensityMapCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_density_map_attachment: AttachmentReference,
     phantom: PhantomData<&'a ()>,
 }
@@ -42361,8 +42361,8 @@ impl<'a> RenderPassFragmentDensityMapCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingFragmentDensityMapAttachmentInfoEXT.html>"]
 #[doc(alias = "VkRenderingFragmentDensityMapAttachmentInfoEXT")]
 pub struct RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
     phantom: PhantomData<&'a ()>,
@@ -42449,8 +42449,8 @@ impl<'a> RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFragmentShadingRateAttachmentInfoKHR.html>"]
 #[doc(alias = "VkFragmentShadingRateAttachmentInfoKHR")]
 pub struct FragmentShadingRateAttachmentInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_fragment_shading_rate_attachment: *const AttachmentReference2<'a>,
     pub shading_rate_attachment_texel_size: Extent2D,
     phantom: PhantomData<&'a ()>,
@@ -42512,8 +42512,8 @@ impl<'a> FragmentShadingRateAttachmentInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineFragmentShadingRateStateCreateInfoKHR.html>"]
 #[doc(alias = "VkPipelineFragmentShadingRateStateCreateInfoKHR")]
 pub struct PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_size: Extent2D,
     pub combiner_ops: [FragmentShadingRateCombinerOpKHR; 2u16 as _],
     phantom: PhantomData<&'a ()>,
@@ -42569,8 +42569,8 @@ impl<'a> PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentShadingRateFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentShadingRateFeaturesKHR")]
 pub struct PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_fragment_shading_rate: Bool32,
     pub primitive_fragment_shading_rate: Bool32,
     pub attachment_fragment_shading_rate: Bool32,
@@ -42644,8 +42644,8 @@ impl<'a> PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentShadingRatePropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentShadingRatePropertiesKHR")]
 pub struct PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_fragment_shading_rate_attachment_texel_size: Extent2D,
     pub max_fragment_shading_rate_attachment_texel_size: Extent2D,
     pub max_fragment_shading_rate_attachment_texel_size_aspect_ratio: u32,
@@ -42842,8 +42842,8 @@ impl<'a> PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentShadingRateKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentShadingRateKHR")]
 pub struct PhysicalDeviceFragmentShadingRateKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub sample_counts: SampleCountFlags,
     pub fragment_size: Extent2D,
     phantom: PhantomData<&'a ()>,
@@ -42896,8 +42896,8 @@ impl<'a> PhysicalDeviceFragmentShadingRateKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingFragmentShadingRateAttachmentInfoKHR.html>"]
 #[doc(alias = "VkRenderingFragmentShadingRateAttachmentInfoKHR")]
 pub struct RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
     pub shading_rate_attachment_texel_size: Extent2D,
@@ -42991,8 +42991,8 @@ impl<'a> RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderCoreProperties2AMD.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderCoreProperties2AMD")]
 pub struct PhysicalDeviceShaderCoreProperties2AMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_core_features: ShaderCorePropertiesFlagsAMD,
     pub active_compute_unit_count: u32,
     phantom: PhantomData<&'a ()>,
@@ -43052,8 +43052,8 @@ impl<'a> PhysicalDeviceShaderCoreProperties2AMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCoherentMemoryFeaturesAMD.html>"]
 #[doc(alias = "VkPhysicalDeviceCoherentMemoryFeaturesAMD")]
 pub struct PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_coherent_memory: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -43105,8 +43105,8 @@ impl<'a> PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderImageAtomicInt64FeaturesEXT")]
 pub struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_image_int64_atomics: Bool32,
     pub sparse_image_int64_atomics: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -43166,8 +43166,8 @@ impl<'a> PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderQuadControlFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderQuadControlFeaturesKHR")]
 pub struct PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_quad_control: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -43219,8 +43219,8 @@ impl<'a> PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMemoryBudgetPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMemoryBudgetPropertiesEXT")]
 pub struct PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub heap_budget: [DeviceSize; MAX_MEMORY_HEAPS as _],
     pub heap_usage: [DeviceSize; MAX_MEMORY_HEAPS as _],
     phantom: PhantomData<&'a ()>,
@@ -43275,8 +43275,8 @@ impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMemoryPriorityFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMemoryPriorityFeaturesEXT")]
 pub struct PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_priority: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -43335,8 +43335,8 @@ impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryPriorityAllocateInfoEXT.html>"]
 #[doc(alias = "VkMemoryPriorityAllocateInfoEXT")]
 pub struct MemoryPriorityAllocateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub priority: f32,
     phantom: PhantomData<&'a ()>,
 }
@@ -43384,8 +43384,8 @@ impl<'a> MemoryPriorityAllocateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceProtectedCapabilitiesKHR.html>"]
 #[doc(alias = "VkSurfaceProtectedCapabilitiesKHR")]
 pub struct SurfaceProtectedCapabilitiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub supports_protected: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -43435,8 +43435,8 @@ impl<'a> SurfaceProtectedCapabilitiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV")]
 pub struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dedicated_allocation_image_aliasing: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -43495,8 +43495,8 @@ impl<'a> PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceBufferDeviceAddressFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceBufferDeviceAddressFeaturesEXT")]
 pub struct PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer_device_address: Bool32,
     pub buffer_device_address_capture_replay: Bool32,
     pub buffer_device_address_multi_device: Bool32,
@@ -43573,8 +43573,8 @@ pub type PhysicalDeviceBufferAddressFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferDeviceAddressCreateInfoEXT.html>"]
 #[doc(alias = "VkBufferDeviceAddressCreateInfoEXT")]
 pub struct BufferDeviceAddressCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_address: DeviceAddress,
     phantom: PhantomData<&'a ()>,
 }
@@ -43622,12 +43622,12 @@ impl<'a> BufferDeviceAddressCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkValidationFeaturesEXT.html>"]
 #[doc(alias = "VkValidationFeaturesEXT")]
 pub struct ValidationFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) enabled_validation_feature_count: u32,
-    pub(crate) p_enabled_validation_features: *const ValidationFeatureEnableEXT,
-    pub(crate) disabled_validation_feature_count: u32,
-    pub(crate) p_disabled_validation_features: *const ValidationFeatureDisableEXT,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub enabled_validation_feature_count: u32,
+    pub p_enabled_validation_features: *const ValidationFeatureEnableEXT,
+    pub disabled_validation_feature_count: u32,
+    pub p_disabled_validation_features: *const ValidationFeatureDisableEXT,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_validation_features")]
@@ -43716,8 +43716,8 @@ impl<'a> ValidationFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePresentWaitFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePresentWaitFeaturesKHR")]
 pub struct PhysicalDevicePresentWaitFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_wait: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -43776,8 +43776,8 @@ impl<'a> PhysicalDevicePresentWaitFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCooperativeMatrixPropertiesNV.html>"]
 #[doc(alias = "VkCooperativeMatrixPropertiesNV")]
 pub struct CooperativeMatrixPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub msize: u32,
     pub nsize: u32,
     pub ksize: u32,
@@ -43869,8 +43869,8 @@ impl<'a> CooperativeMatrixPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCooperativeMatrixFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCooperativeMatrixFeaturesNV")]
 pub struct PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cooperative_matrix: Bool32,
     pub cooperative_matrix_robust_buffer_access: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -43936,8 +43936,8 @@ impl<'a> PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCooperativeMatrixPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCooperativeMatrixPropertiesNV")]
 pub struct PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cooperative_matrix_supported_stages: ShaderStageFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -43992,8 +43992,8 @@ impl<'a> PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCoverageReductionModeFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCoverageReductionModeFeaturesNV")]
 pub struct PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub coverage_reduction_mode: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -44053,8 +44053,8 @@ impl<'a> PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCoverageReductionStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineCoverageReductionStateCreateInfoNV")]
 pub struct PipelineCoverageReductionStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub coverage_reduction_mode: CoverageReductionModeNV,
     phantom: PhantomData<&'a ()>,
@@ -44109,8 +44109,8 @@ impl<'a> PipelineCoverageReductionStateCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFramebufferMixedSamplesCombinationNV.html>"]
 #[doc(alias = "VkFramebufferMixedSamplesCombinationNV")]
 pub struct FramebufferMixedSamplesCombinationNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub coverage_reduction_mode: CoverageReductionModeNV,
     pub rasterization_samples: SampleCountFlags,
     pub depth_stencil_samples: SampleCountFlags,
@@ -44173,8 +44173,8 @@ impl<'a> FramebufferMixedSamplesCombinationNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentShaderInterlockFeaturesEXT")]
 pub struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_shader_sample_interlock: Bool32,
     pub fragment_shader_pixel_interlock: Bool32,
     pub fragment_shader_shading_rate_interlock: Bool32,
@@ -44241,8 +44241,8 @@ impl<'a> PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceYcbcrImageArraysFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceYcbcrImageArraysFeaturesEXT")]
 pub struct PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ycbcr_image_arrays: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -44295,8 +44295,8 @@ impl<'a> PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceProvokingVertexFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceProvokingVertexFeaturesEXT")]
 pub struct PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub provoking_vertex_last: Bool32,
     pub transform_feedback_preserves_provoking_vertex: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -44365,8 +44365,8 @@ impl<'a> PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceProvokingVertexPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceProvokingVertexPropertiesEXT")]
 pub struct PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub provoking_vertex_mode_per_pipeline: Bool32,
     pub transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -44430,8 +44430,8 @@ impl<'a> PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineRasterizationProvokingVertexStateCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineRasterizationProvokingVertexStateCreateInfoEXT")]
 pub struct PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub provoking_vertex_mode: ProvokingVertexModeEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -44483,8 +44483,8 @@ impl<'a> PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceFullScreenExclusiveInfoEXT.html>"]
 #[doc(alias = "VkSurfaceFullScreenExclusiveInfoEXT")]
 pub struct SurfaceFullScreenExclusiveInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub full_screen_exclusive: FullScreenExclusiveEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -44540,8 +44540,8 @@ impl<'a> SurfaceFullScreenExclusiveInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceCapabilitiesFullScreenExclusiveEXT.html>"]
 #[doc(alias = "VkSurfaceCapabilitiesFullScreenExclusiveEXT")]
 pub struct SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub full_screen_exclusive_supported: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -44592,8 +44592,8 @@ impl<'a> SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceFullScreenExclusiveWin32InfoEXT.html>"]
 #[doc(alias = "VkSurfaceFullScreenExclusiveWin32InfoEXT")]
 pub struct SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub hmonitor: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
@@ -44652,8 +44652,8 @@ impl<'a> SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkHeadlessSurfaceCreateInfoEXT.html>"]
 #[doc(alias = "VkHeadlessSurfaceCreateInfoEXT")]
 pub struct HeadlessSurfaceCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -44695,8 +44695,8 @@ impl<'a> HeadlessSurfaceCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderAtomicFloatFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderAtomicFloatFeaturesEXT")]
 pub struct PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_buffer_float32_atomics: Bool32,
     pub shader_buffer_float32_atomic_add: Bool32,
     pub shader_buffer_float64_atomics: Bool32,
@@ -44826,8 +44826,8 @@ impl<'a> PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExtendedDynamicStateFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceExtendedDynamicStateFeaturesEXT")]
 pub struct PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub extended_dynamic_state: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -44887,8 +44887,8 @@ impl<'a> PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineExecutablePropertiesFeaturesKHR")]
 pub struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_executable_info: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -44954,8 +44954,8 @@ impl<'a> PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineInfoKHR.html>"]
 #[doc(alias = "VkPipelineInfoKHR")]
 pub struct PipelineInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -45021,11 +45021,11 @@ pub type PipelineInfoEXT<'a> = PipelineInfoKHR<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineExecutablePropertiesKHR.html>"]
 #[doc(alias = "VkPipelineExecutablePropertiesKHR")]
 pub struct PipelineExecutablePropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stages: ShaderStageFlags,
-    pub(crate) name: [c_char; MAX_DESCRIPTION_SIZE as _],
-    pub(crate) description: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub name: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub subgroup_size: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -45089,8 +45089,8 @@ impl<'a> PipelineExecutablePropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineExecutableInfoKHR.html>"]
 #[doc(alias = "VkPipelineExecutableInfoKHR")]
 pub struct PipelineExecutableInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub executable_index: u32,
     phantom: PhantomData<&'a ()>,
@@ -45159,10 +45159,10 @@ impl Default for PipelineExecutableStatisticValueKHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineExecutableStatisticKHR.html>"]
 #[doc(alias = "VkPipelineExecutableStatisticKHR")]
 pub struct PipelineExecutableStatisticKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) name: [c_char; MAX_DESCRIPTION_SIZE as _],
-    pub(crate) description: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub name: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub format: PipelineExecutableStatisticFormatKHR,
     pub value: PipelineExecutableStatisticValueKHR,
     phantom: PhantomData<&'a ()>,
@@ -45227,13 +45227,13 @@ impl<'a> PipelineExecutableStatisticKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineExecutableInternalRepresentationKHR.html>"]
 #[doc(alias = "VkPipelineExecutableInternalRepresentationKHR")]
 pub struct PipelineExecutableInternalRepresentationKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) name: [c_char; MAX_DESCRIPTION_SIZE as _],
-    pub(crate) description: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub name: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub is_text: Bool32,
     pub data_size: usize,
-    pub(crate) p_data: VoidPtr,
+    pub p_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_executable_properties")]
@@ -45306,8 +45306,8 @@ impl<'a> PipelineExecutableInternalRepresentationKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMapMemoryPlacedFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMapMemoryPlacedFeaturesEXT")]
 pub struct PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_map_placed: Bool32,
     pub memory_map_range_placed: Bool32,
     pub memory_unmap_reserve: Bool32,
@@ -45380,8 +45380,8 @@ impl<'a> PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMapMemoryPlacedPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMapMemoryPlacedPropertiesEXT")]
 pub struct PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_placed_memory_map_alignment: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -45435,8 +45435,8 @@ impl<'a> PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryMapPlacedInfoEXT.html>"]
 #[doc(alias = "VkMemoryMapPlacedInfoEXT")]
 pub struct MemoryMapPlacedInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_placed_address: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
@@ -45483,8 +45483,8 @@ impl<'a> MemoryMapPlacedInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderAtomicFloat2FeaturesEXT")]
 pub struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_buffer_float16_atomics: Bool32,
     pub shader_buffer_float16_atomic_add: Bool32,
     pub shader_buffer_float16_atomic_min_max: Bool32,
@@ -45615,8 +45615,8 @@ impl<'a> PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceDeviceGeneratedCommandsPropertiesNV")]
 pub struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_graphics_shader_group_count: u32,
     pub max_indirect_sequence_count: u32,
     pub max_indirect_commands_token_count: u32,
@@ -45727,8 +45727,8 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceDeviceGeneratedCommandsFeaturesNV")]
 pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_generated_commands: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -45788,10 +45788,10 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGraphicsShaderGroupCreateInfoNV.html>"]
 #[doc(alias = "VkGraphicsShaderGroupCreateInfoNV")]
 pub struct GraphicsShaderGroupCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) stage_count: u32,
-    pub(crate) p_stages: *const PipelineShaderStageCreateInfo<'a>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub stage_count: u32,
+    pub p_stages: *const PipelineShaderStageCreateInfo<'a>,
     pub p_vertex_input_state: *const PipelineVertexInputStateCreateInfo<'a>,
     pub p_tessellation_state: *const PipelineTessellationStateCreateInfo<'a>,
     phantom: PhantomData<&'a ()>,
@@ -45861,12 +45861,12 @@ impl<'a> GraphicsShaderGroupCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGraphicsPipelineShaderGroupsCreateInfoNV.html>"]
 #[doc(alias = "VkGraphicsPipelineShaderGroupsCreateInfoNV")]
 pub struct GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) group_count: u32,
-    pub(crate) p_groups: *const GraphicsShaderGroupCreateInfoNV<'a>,
-    pub(crate) pipeline_count: u32,
-    pub(crate) p_pipelines: *const Pipeline,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub group_count: u32,
+    pub p_groups: *const GraphicsShaderGroupCreateInfoNV<'a>,
+    pub pipeline_count: u32,
+    pub p_pipelines: *const Pipeline,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
@@ -46119,8 +46119,8 @@ impl<'a> IndirectCommandsStreamNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIndirectCommandsLayoutTokenNV.html>"]
 #[doc(alias = "VkIndirectCommandsLayoutTokenNV")]
 pub struct IndirectCommandsLayoutTokenNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub token_type: IndirectCommandsTokenTypeNV,
     pub stream: u32,
     pub offset: u32,
@@ -46131,9 +46131,9 @@ pub struct IndirectCommandsLayoutTokenNV<'a> {
     pub pushconstant_offset: u32,
     pub pushconstant_size: u32,
     pub indirect_state_flags: IndirectStateFlagsNV,
-    pub(crate) index_type_count: u32,
-    pub(crate) p_index_types: *const IndexType,
-    pub(crate) p_index_type_values: *const u32,
+    pub index_type_count: u32,
+    pub p_index_types: *const IndexType,
+    pub p_index_type_values: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
@@ -46259,14 +46259,14 @@ impl<'a> IndirectCommandsLayoutTokenNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIndirectCommandsLayoutCreateInfoNV.html>"]
 #[doc(alias = "VkIndirectCommandsLayoutCreateInfoNV")]
 pub struct IndirectCommandsLayoutCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: IndirectCommandsLayoutUsageFlagsNV,
     pub pipeline_bind_point: PipelineBindPoint,
-    pub(crate) token_count: u32,
-    pub(crate) p_tokens: *const IndirectCommandsLayoutTokenNV<'a>,
-    pub(crate) stream_count: u32,
-    pub(crate) p_stream_strides: *const u32,
+    pub token_count: u32,
+    pub p_tokens: *const IndirectCommandsLayoutTokenNV<'a>,
+    pub stream_count: u32,
+    pub p_stream_strides: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
@@ -46344,13 +46344,13 @@ impl<'a> IndirectCommandsLayoutCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGeneratedCommandsInfoNV.html>"]
 #[doc(alias = "VkGeneratedCommandsInfoNV")]
 pub struct GeneratedCommandsInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_bind_point: PipelineBindPoint,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutNV>>,
-    pub(crate) stream_count: u32,
-    pub(crate) p_streams: *const IndirectCommandsStreamNV<'a>,
+    pub stream_count: u32,
+    pub p_streams: *const IndirectCommandsStreamNV<'a>,
     pub sequences_count: u32,
     pub preprocess_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub preprocess_offset: DeviceSize,
@@ -46476,8 +46476,8 @@ impl<'a> GeneratedCommandsInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGeneratedCommandsMemoryRequirementsInfoNV.html>"]
 #[doc(alias = "VkGeneratedCommandsMemoryRequirementsInfoNV")]
 pub struct GeneratedCommandsMemoryRequirementsInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_bind_point: PipelineBindPoint,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutNV>>,
@@ -46541,8 +46541,8 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceInheritedViewportScissorFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceInheritedViewportScissorFeaturesNV")]
 pub struct PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub inherited_viewport_scissor2_d: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -46602,8 +46602,8 @@ impl<'a> PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCommandBufferInheritanceViewportScissorInfoNV.html>"]
 #[doc(alias = "VkCommandBufferInheritanceViewportScissorInfoNV")]
 pub struct CommandBufferInheritanceViewportScissorInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub viewport_scissor2_d: Bool32,
     pub viewport_depth_count: u32,
     pub p_viewport_depths: *const Viewport,
@@ -46665,8 +46665,8 @@ impl<'a> CommandBufferInheritanceViewportScissorInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceTexelBufferAlignmentFeaturesEXT")]
 pub struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub texel_buffer_alignment: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -46720,8 +46720,8 @@ impl<'a> PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassTransformBeginInfoQCOM.html>"]
 #[doc(alias = "VkRenderPassTransformBeginInfoQCOM")]
 pub struct RenderPassTransformBeginInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub transform: SurfaceTransformFlagsKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -46769,8 +46769,8 @@ impl<'a> RenderPassTransformBeginInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCommandBufferInheritanceRenderPassTransformInfoQCOM.html>"]
 #[doc(alias = "VkCommandBufferInheritanceRenderPassTransformInfoQCOM")]
 pub struct CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub transform: SurfaceTransformFlagsKHR,
     pub render_area: Rect2D,
     phantom: PhantomData<&'a ()>,
@@ -46829,8 +46829,8 @@ impl<'a> CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDepthBiasControlFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDepthBiasControlFeaturesEXT")]
 pub struct PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub depth_bias_control: Bool32,
     pub least_representable_value_force_unorm_representation: Bool32,
     pub float_representation: Bool32,
@@ -46913,8 +46913,8 @@ impl<'a> PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDepthBiasInfoEXT.html>"]
 #[doc(alias = "VkDepthBiasInfoEXT")]
 pub struct DepthBiasInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub depth_bias_constant_factor: f32,
     pub depth_bias_clamp: f32,
     pub depth_bias_slope_factor: f32,
@@ -46971,8 +46971,8 @@ impl<'a> DepthBiasInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDepthBiasRepresentationInfoEXT.html>"]
 #[doc(alias = "VkDepthBiasRepresentationInfoEXT")]
 pub struct DepthBiasRepresentationInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub depth_bias_representation: DepthBiasRepresentationEXT,
     pub depth_bias_exact: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -47032,8 +47032,8 @@ impl<'a> DepthBiasRepresentationInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDeviceMemoryReportFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDeviceMemoryReportFeaturesEXT")]
 pub struct PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_memory_report: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -47093,8 +47093,8 @@ impl<'a> PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceDeviceMemoryReportCreateInfoEXT.html>"]
 #[doc(alias = "VkDeviceDeviceMemoryReportCreateInfoEXT")]
 pub struct DeviceDeviceMemoryReportCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub pfn_user_callback: FuncPtr,
     pub p_user_data: VoidPtr,
@@ -47156,8 +47156,8 @@ impl<'a> DeviceDeviceMemoryReportCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceMemoryReportCallbackDataEXT.html>"]
 #[doc(alias = "VkDeviceMemoryReportCallbackDataEXT")]
 pub struct DeviceMemoryReportCallbackDataEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub ty: DeviceMemoryReportEventTypeEXT,
     pub memory_object_id: u64,
@@ -47242,8 +47242,8 @@ impl<'a> DeviceMemoryReportCallbackDataEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerCustomBorderColorCreateInfoEXT.html>"]
 #[doc(alias = "VkSamplerCustomBorderColorCreateInfoEXT")]
 pub struct SamplerCustomBorderColorCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub custom_border_color: ClearColorValue,
     pub format: Format,
     phantom: PhantomData<&'a ()>,
@@ -47298,8 +47298,8 @@ impl<'a> SamplerCustomBorderColorCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCustomBorderColorPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceCustomBorderColorPropertiesEXT")]
 pub struct PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_custom_border_color_samplers: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -47354,8 +47354,8 @@ impl<'a> PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCustomBorderColorFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceCustomBorderColorFeaturesEXT")]
 pub struct PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub custom_border_colors: Bool32,
     pub custom_border_color_without_format: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -47421,10 +47421,10 @@ impl<'a> PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineLibraryCreateInfoKHR.html>"]
 #[doc(alias = "VkPipelineLibraryCreateInfoKHR")]
 pub struct PipelineLibraryCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) library_count: u32,
-    pub(crate) p_libraries: *const Pipeline,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub library_count: u32,
+    pub p_libraries: *const Pipeline,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_library")]
@@ -47484,8 +47484,8 @@ impl<'a> PipelineLibraryCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePresentBarrierFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDevicePresentBarrierFeaturesNV")]
 pub struct PhysicalDevicePresentBarrierFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_barrier: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -47544,8 +47544,8 @@ impl<'a> PhysicalDevicePresentBarrierFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceCapabilitiesPresentBarrierNV.html>"]
 #[doc(alias = "VkSurfaceCapabilitiesPresentBarrierNV")]
 pub struct SurfaceCapabilitiesPresentBarrierNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_barrier_supported: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -47596,8 +47596,8 @@ impl<'a> SurfaceCapabilitiesPresentBarrierNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSwapchainPresentBarrierCreateInfoNV.html>"]
 #[doc(alias = "VkSwapchainPresentBarrierCreateInfoNV")]
 pub struct SwapchainPresentBarrierCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_barrier_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -47645,10 +47645,10 @@ impl<'a> SwapchainPresentBarrierCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentIdKHR.html>"]
 #[doc(alias = "VkPresentIdKHR")]
 pub struct PresentIdKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
-    pub(crate) p_present_ids: *const u64,
+    pub p_present_ids: *const u64,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_id")]
@@ -47707,8 +47707,8 @@ impl<'a> PresentIdKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePresentIdFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePresentIdFeaturesKHR")]
 pub struct PhysicalDevicePresentIdFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_id: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -47767,8 +47767,8 @@ impl<'a> PhysicalDevicePresentIdFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDiagnosticsConfigFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceDiagnosticsConfigFeaturesNV")]
 pub struct PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub diagnostics_config: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -47827,8 +47827,8 @@ impl<'a> PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceDiagnosticsConfigCreateInfoNV.html>"]
 #[doc(alias = "VkDeviceDiagnosticsConfigCreateInfoNV")]
 pub struct DeviceDiagnosticsConfigCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: DeviceDiagnosticsConfigFlagsNV,
     phantom: PhantomData<&'a ()>,
 }
@@ -47876,10 +47876,10 @@ impl<'a> DeviceDiagnosticsConfigCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCudaModuleCreateInfoNV.html>"]
 #[doc(alias = "VkCudaModuleCreateInfoNV")]
 pub struct CudaModuleCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) data_size: usize,
-    pub(crate) p_data: VoidPtr,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub data_size: usize,
+    pub p_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cuda_kernel_launch")]
@@ -47931,8 +47931,8 @@ impl<'a> CudaModuleCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCudaFunctionCreateInfoNV.html>"]
 #[doc(alias = "VkCudaFunctionCreateInfoNV")]
 pub struct CudaFunctionCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub module: Option<BorrowedHandle<'a, CudaModuleNV>>,
     pub p_name: *const c_char,
     phantom: PhantomData<&'a ()>,
@@ -47982,8 +47982,8 @@ impl<'a> CudaFunctionCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCudaLaunchInfoNV.html>"]
 #[doc(alias = "VkCudaLaunchInfoNV")]
 pub struct CudaLaunchInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub function: Option<BorrowedHandle<'a, CudaFunctionNV>>,
     pub grid_dim_x: u32,
     pub grid_dim_y: u32,
@@ -47993,9 +47993,9 @@ pub struct CudaLaunchInfoNV<'a> {
     pub block_dim_z: u32,
     pub shared_mem_bytes: u32,
     pub param_count: usize,
-    pub(crate) p_params: *const *const c_void,
+    pub p_params: *const *const c_void,
     pub extra_count: usize,
-    pub(crate) p_extras: *const *const c_void,
+    pub p_extras: *const *const c_void,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cuda_kernel_launch")]
@@ -48117,8 +48117,8 @@ impl<'a> CudaLaunchInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCudaKernelLaunchFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCudaKernelLaunchFeaturesNV")]
 pub struct PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cuda_kernel_launch_features: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -48177,8 +48177,8 @@ impl<'a> PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCudaKernelLaunchPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCudaKernelLaunchPropertiesNV")]
 pub struct PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub compute_capability_minor: u32,
     pub compute_capability_major: u32,
     phantom: PhantomData<&'a ()>,
@@ -48239,8 +48239,8 @@ impl<'a> PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTileShadingFeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceTileShadingFeaturesQCOM")]
 pub struct PhysicalDeviceTileShadingFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tile_shading: Bool32,
     pub tile_shading_fragment_stage: Bool32,
     pub tile_shading_color_attachments: Bool32,
@@ -48390,8 +48390,8 @@ impl<'a> PhysicalDeviceTileShadingFeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTileShadingPropertiesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceTileShadingPropertiesQCOM")]
 pub struct PhysicalDeviceTileShadingPropertiesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_apron_size: u32,
     pub prefer_non_coherent: Bool32,
     pub tile_granularity: Extent2D,
@@ -48466,8 +48466,8 @@ impl<'a> PhysicalDeviceTileShadingPropertiesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassTileShadingCreateInfoQCOM.html>"]
 #[doc(alias = "VkRenderPassTileShadingCreateInfoQCOM")]
 pub struct RenderPassTileShadingCreateInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: TileShadingRenderPassFlagsQCOM,
     pub tile_apron_size: Extent2D,
     phantom: PhantomData<&'a ()>,
@@ -48550,8 +48550,8 @@ impl<'a> RenderPassTileShadingCreateInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerTileBeginInfoQCOM.html>"]
 #[doc(alias = "VkPerTileBeginInfoQCOM")]
 pub struct PerTileBeginInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_shading")]
@@ -48587,8 +48587,8 @@ impl<'a> PerTileBeginInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPerTileEndInfoQCOM.html>"]
 #[doc(alias = "VkPerTileEndInfoQCOM")]
 pub struct PerTileEndInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_shading")]
@@ -48624,8 +48624,8 @@ impl<'a> PerTileEndInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDispatchTileInfoQCOM.html>"]
 #[doc(alias = "VkDispatchTileInfoQCOM")]
 pub struct DispatchTileInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_shading")]
@@ -48661,8 +48661,8 @@ impl<'a> DispatchTileInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueryLowLatencySupportNV.html>"]
 #[doc(alias = "VkQueryLowLatencySupportNV")]
 pub struct QueryLowLatencySupportNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_queried_low_latency_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
@@ -48707,8 +48707,8 @@ impl<'a> QueryLowLatencySupportNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMetalObjectCreateInfoEXT.html>"]
 #[doc(alias = "VkExportMetalObjectCreateInfoEXT")]
 pub struct ExportMetalObjectCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub export_object_type: ExportMetalObjectTypeFlagsEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -48780,8 +48780,8 @@ impl<'a> ExportMetalObjectCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMetalObjectsInfoEXT.html>"]
 #[doc(alias = "VkExportMetalObjectsInfoEXT")]
 pub struct ExportMetalObjectsInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
@@ -48817,8 +48817,8 @@ impl<'a> ExportMetalObjectsInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMetalDeviceInfoEXT.html>"]
 #[doc(alias = "VkExportMetalDeviceInfoEXT")]
 pub struct ExportMetalDeviceInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub mtl_device: MTLDeviceId,
     phantom: PhantomData<&'a ()>,
 }
@@ -48866,8 +48866,8 @@ impl<'a> ExportMetalDeviceInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMetalCommandQueueInfoEXT.html>"]
 #[doc(alias = "VkExportMetalCommandQueueInfoEXT")]
 pub struct ExportMetalCommandQueueInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub queue: Option<BorrowedHandle<'a, Queue>>,
     pub mtl_command_queue: MTLCommandQueueId,
     phantom: PhantomData<&'a ()>,
@@ -48922,8 +48922,8 @@ impl<'a> ExportMetalCommandQueueInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMetalBufferInfoEXT.html>"]
 #[doc(alias = "VkExportMetalBufferInfoEXT")]
 pub struct ExportMetalBufferInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub mtl_buffer: MTLBufferId,
     phantom: PhantomData<&'a ()>,
@@ -48978,8 +48978,8 @@ impl<'a> ExportMetalBufferInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMetalBufferInfoEXT.html>"]
 #[doc(alias = "VkImportMetalBufferInfoEXT")]
 pub struct ImportMetalBufferInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub mtl_buffer: MTLBufferId,
     phantom: PhantomData<&'a ()>,
 }
@@ -49024,8 +49024,8 @@ impl<'a> ImportMetalBufferInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMetalTextureInfoEXT.html>"]
 #[doc(alias = "VkExportMetalTextureInfoEXT")]
 pub struct ExportMetalTextureInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub buffer_view: Option<BorrowedHandle<'a, BufferView>>,
@@ -49101,8 +49101,8 @@ impl<'a> ExportMetalTextureInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMetalTextureInfoEXT.html>"]
 #[doc(alias = "VkImportMetalTextureInfoEXT")]
 pub struct ImportMetalTextureInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub plane: ImageAspectFlags,
     pub mtl_texture: MTLTextureId,
     phantom: PhantomData<&'a ()>,
@@ -49154,8 +49154,8 @@ impl<'a> ImportMetalTextureInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMetalIOSurfaceInfoEXT.html>"]
 #[doc(alias = "VkExportMetalIOSurfaceInfoEXT")]
 pub struct ExportMetalIOSurfaceInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub io_surface: IOSurfaceRef,
     phantom: PhantomData<&'a ()>,
@@ -49210,8 +49210,8 @@ impl<'a> ExportMetalIOSurfaceInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMetalIOSurfaceInfoEXT.html>"]
 #[doc(alias = "VkImportMetalIOSurfaceInfoEXT")]
 pub struct ImportMetalIOSurfaceInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub io_surface: IOSurfaceRef,
     phantom: PhantomData<&'a ()>,
 }
@@ -49256,8 +49256,8 @@ impl<'a> ImportMetalIOSurfaceInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExportMetalSharedEventInfoEXT.html>"]
 #[doc(alias = "VkExportMetalSharedEventInfoEXT")]
 pub struct ExportMetalSharedEventInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub event: Option<BorrowedHandle<'a, Event>>,
     pub mtl_shared_event: MTLSharedEventId,
@@ -49319,8 +49319,8 @@ impl<'a> ExportMetalSharedEventInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMetalSharedEventInfoEXT.html>"]
 #[doc(alias = "VkImportMetalSharedEventInfoEXT")]
 pub struct ImportMetalSharedEventInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub mtl_shared_event: MTLSharedEventId,
     phantom: PhantomData<&'a ()>,
 }
@@ -49382,8 +49382,8 @@ pub type IOSurfaceRef = VoidPtr;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorBufferPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorBufferPropertiesEXT")]
 pub struct PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub combined_image_sampler_descriptor_single_array: Bool32,
     pub bufferless_push_descriptors: Bool32,
     pub allow_sampler_image_view_post_submit_creation: Bool32,
@@ -49671,8 +49671,8 @@ impl<'a> PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorBufferDensityMapPropertiesEXT")]
 pub struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub combined_image_sampler_density_map_descriptor_size: usize,
     phantom: PhantomData<&'a ()>,
 }
@@ -49730,8 +49730,8 @@ impl<'a> PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorBufferFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorBufferFeaturesEXT")]
 pub struct PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub descriptor_buffer: Bool32,
     pub descriptor_buffer_capture_replay: Bool32,
     pub descriptor_buffer_image_layout_ignored: Bool32,
@@ -49811,8 +49811,8 @@ impl<'a> PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorAddressInfoEXT.html>"]
 #[doc(alias = "VkDescriptorAddressInfoEXT")]
 pub struct DescriptorAddressInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub address: DeviceAddress,
     pub range: DeviceSize,
     pub format: Format,
@@ -49869,8 +49869,8 @@ impl<'a> DescriptorAddressInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorBufferBindingInfoEXT.html>"]
 #[doc(alias = "VkDescriptorBufferBindingInfoEXT")]
 pub struct DescriptorBufferBindingInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub address: DeviceAddress,
     pub usage: BufferUsageFlags,
     phantom: PhantomData<&'a ()>,
@@ -49920,8 +49920,8 @@ impl<'a> DescriptorBufferBindingInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorBufferBindingPushDescriptorBufferHandleEXT.html>"]
 #[doc(alias = "VkDescriptorBufferBindingPushDescriptorBufferHandleEXT")]
 pub struct DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -49997,8 +49997,8 @@ impl<'a> Default for DescriptorDataEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorGetInfoEXT.html>"]
 #[doc(alias = "VkDescriptorGetInfoEXT")]
 pub struct DescriptorGetInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: DescriptorType,
     pub data: DescriptorDataEXT<'a>,
     phantom: PhantomData<&'a ()>,
@@ -50048,8 +50048,8 @@ impl<'a> DescriptorGetInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferCaptureDescriptorDataInfoEXT.html>"]
 #[doc(alias = "VkBufferCaptureDescriptorDataInfoEXT")]
 pub struct BufferCaptureDescriptorDataInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -50092,8 +50092,8 @@ impl<'a> BufferCaptureDescriptorDataInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageCaptureDescriptorDataInfoEXT.html>"]
 #[doc(alias = "VkImageCaptureDescriptorDataInfoEXT")]
 pub struct ImageCaptureDescriptorDataInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -50136,8 +50136,8 @@ impl<'a> ImageCaptureDescriptorDataInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageViewCaptureDescriptorDataInfoEXT.html>"]
 #[doc(alias = "VkImageViewCaptureDescriptorDataInfoEXT")]
 pub struct ImageViewCaptureDescriptorDataInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -50180,8 +50180,8 @@ impl<'a> ImageViewCaptureDescriptorDataInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerCaptureDescriptorDataInfoEXT.html>"]
 #[doc(alias = "VkSamplerCaptureDescriptorDataInfoEXT")]
 pub struct SamplerCaptureDescriptorDataInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub sampler: Option<BorrowedHandle<'a, Sampler>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -50224,8 +50224,8 @@ impl<'a> SamplerCaptureDescriptorDataInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOpaqueCaptureDescriptorDataCreateInfoEXT.html>"]
 #[doc(alias = "VkOpaqueCaptureDescriptorDataCreateInfoEXT")]
 pub struct OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub opaque_capture_descriptor_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
@@ -50314,8 +50314,8 @@ impl<'a> OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureCaptureDescriptorDataInfoEXT.html>"]
 #[doc(alias = "VkAccelerationStructureCaptureDescriptorDataInfoEXT")]
 pub struct AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub acceleration_structure_nv: Option<BorrowedHandle<'a, AccelerationStructureNV>>,
     phantom: PhantomData<&'a ()>,
@@ -50390,8 +50390,8 @@ impl<'a> AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceGraphicsPipelineLibraryFeaturesEXT")]
 pub struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub graphics_pipeline_library: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -50451,8 +50451,8 @@ impl<'a> PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceGraphicsPipelineLibraryPropertiesEXT")]
 pub struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub graphics_pipeline_library_fast_linking: Bool32,
     pub graphics_pipeline_library_independent_interpolation_decoration: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -50517,8 +50517,8 @@ impl<'a> PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGraphicsPipelineLibraryCreateInfoEXT.html>"]
 #[doc(alias = "VkGraphicsPipelineLibraryCreateInfoEXT")]
 pub struct GraphicsPipelineLibraryCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: GraphicsPipelineLibraryFlagsEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -50565,8 +50565,8 @@ impl<'a> GraphicsPipelineLibraryCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD")]
 pub struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_early_and_late_fragment_tests: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -50624,8 +50624,8 @@ impl<'a> PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR")]
 pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_shader_barycentric: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -50680,8 +50680,8 @@ pub type PhysicalDeviceFragmentShaderBarycentricFeaturesNV<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentShaderBarycentricPropertiesKHR")]
 pub struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tri_strip_vertex_order_independent_of_provoking_vertex: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -50735,8 +50735,8 @@ impl<'a> PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR")]
 pub struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_subgroup_uniform_control_flow: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -50795,8 +50795,8 @@ impl<'a> PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentShadingRateEnumsFeaturesNV")]
 pub struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_shading_rate_enums: Bool32,
     pub supersample_fragment_shading_rates: Bool32,
     pub no_invocation_fragment_shading_rates: Bool32,
@@ -50870,8 +50870,8 @@ impl<'a> PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentShadingRateEnumsPropertiesNV")]
 pub struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_fragment_shading_rate_invocation_count: SampleCountFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -50926,8 +50926,8 @@ impl<'a> PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineFragmentShadingRateEnumStateCreateInfoNV.html>"]
 #[doc(alias = "VkPipelineFragmentShadingRateEnumStateCreateInfoNV")]
 pub struct PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shading_rate_type: FragmentShadingRateTypeNV,
     pub shading_rate: FragmentShadingRateNV,
     pub combiner_ops: [FragmentShadingRateCombinerOpKHR; 2u16 as _],
@@ -50990,8 +50990,8 @@ impl<'a> PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureGeometryMotionTrianglesDataNV.html>"]
 #[doc(alias = "VkAccelerationStructureGeometryMotionTrianglesDataNV")]
 pub struct AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vertex_data: DeviceOrHostAddressConstKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -51043,8 +51043,8 @@ impl<'a> AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureMotionInfoNV.html>"]
 #[doc(alias = "VkAccelerationStructureMotionInfoNV")]
 pub struct AccelerationStructureMotionInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_instances: u32,
     pub flags: u32,
     phantom: PhantomData<&'a ()>,
@@ -51437,8 +51437,8 @@ impl SRTDataNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingMotionBlurFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingMotionBlurFeaturesNV")]
 pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ray_tracing_motion_blur: Bool32,
     pub ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -51508,8 +51508,8 @@ impl<'a> PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMeshShaderFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMeshShaderFeaturesEXT")]
 pub struct PhysicalDeviceMeshShaderFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub task_shader: Bool32,
     pub mesh_shader: Bool32,
     pub multiview_mesh_shader: Bool32,
@@ -51596,8 +51596,8 @@ impl<'a> PhysicalDeviceMeshShaderFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMeshShaderPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMeshShaderPropertiesEXT")]
 pub struct PhysicalDeviceMeshShaderPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_task_work_group_total_count: u32,
     pub max_task_work_group_count: [u32; 3u16 as _],
     pub max_task_work_group_invocations: u32,
@@ -51881,8 +51881,8 @@ impl DrawMeshTasksIndirectCommandEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT")]
 pub struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ycbcr2plane444_formats: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -51935,8 +51935,8 @@ impl<'a> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMap2FeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentDensityMap2FeaturesEXT")]
 pub struct PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_density_map_deferred: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -51989,8 +51989,8 @@ impl<'a> PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMap2PropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentDensityMap2PropertiesEXT")]
 pub struct PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub subsampled_loads: Bool32,
     pub subsampled_coarse_reconstruction_early_access: Bool32,
     pub max_subsampled_array_layers: u32,
@@ -52063,8 +52063,8 @@ impl<'a> PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyCommandTransformInfoQCOM.html>"]
 #[doc(alias = "VkCopyCommandTransformInfoQCOM")]
 pub struct CopyCommandTransformInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub transform: SurfaceTransformFlagsKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -52116,8 +52116,8 @@ impl<'a> CopyCommandTransformInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR")]
 pub struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub workgroup_memory_explicit_layout: Bool32,
     pub workgroup_memory_explicit_layout_scalar_block_layout: Bool32,
     pub workgroup_memory_explicit_layout8_bit_access: Bool32,
@@ -52204,8 +52204,8 @@ impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageCompressionControlFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceImageCompressionControlFeaturesEXT")]
 pub struct PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_compression_control: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -52265,11 +52265,11 @@ impl<'a> PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageCompressionControlEXT.html>"]
 #[doc(alias = "VkImageCompressionControlEXT")]
 pub struct ImageCompressionControlEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: ImageCompressionFlagsEXT,
     pub compression_control_plane_count: u32,
-    pub(crate) p_fixed_rate_flags: *const ImageCompressionFixedRateFlagsEXT,
+    pub p_fixed_rate_flags: *const ImageCompressionFixedRateFlagsEXT,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_compression_control")]
@@ -52356,8 +52356,8 @@ impl<'a> ImageCompressionControlEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageCompressionPropertiesEXT.html>"]
 #[doc(alias = "VkImageCompressionPropertiesEXT")]
 pub struct ImageCompressionPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_compression_flags: ImageCompressionFlagsEXT,
     pub image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT,
     phantom: PhantomData<&'a ()>,
@@ -52441,8 +52441,8 @@ impl<'a> ImageCompressionPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT")]
 pub struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub attachment_feedback_loop_layout: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -52498,8 +52498,8 @@ impl<'a> PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevice4444FormatsFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDevice4444FormatsFeaturesEXT")]
 pub struct PhysicalDevice4444FormatsFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format_a4_r4_g4_b4: Bool32,
     pub format_a4_b4_g4_r4: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -52559,8 +52559,8 @@ impl<'a> PhysicalDevice4444FormatsFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFaultFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceFaultFeaturesEXT")]
 pub struct PhysicalDeviceFaultFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_fault: Bool32,
     pub device_fault_vendor_binary: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -52626,8 +52626,8 @@ impl<'a> PhysicalDeviceFaultFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceFaultCountsEXT.html>"]
 #[doc(alias = "VkDeviceFaultCountsEXT")]
 pub struct DeviceFaultCountsEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub address_info_count: u32,
     pub vendor_info_count: u32,
     pub vendor_binary_size: DeviceSize,
@@ -52684,9 +52684,9 @@ impl<'a> DeviceFaultCountsEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceFaultInfoEXT.html>"]
 #[doc(alias = "VkDeviceFaultInfoEXT")]
 pub struct DeviceFaultInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) description: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub p_address_infos: *const DeviceFaultAddressInfoEXT,
     pub p_vendor_infos: *const DeviceFaultVendorInfoEXT,
     pub p_vendor_binary_data: VoidPtr,
@@ -52794,7 +52794,7 @@ impl DeviceFaultAddressInfoEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceFaultVendorInfoEXT.html>"]
 #[doc(alias = "VkDeviceFaultVendorInfoEXT")]
 pub struct DeviceFaultVendorInfoEXT {
-    pub(crate) description: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub vendor_fault_code: u64,
     pub vendor_fault_data: u64,
 }
@@ -52934,8 +52934,8 @@ impl DeviceFaultVendorBinaryHeaderVersionOneEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceRGBA10X6FormatsFeaturesEXT")]
 pub struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format_rgba10x6_without_ycb_cr_sampler: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -52988,8 +52988,8 @@ impl<'a> PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDirectFBSurfaceCreateInfoEXT.html>"]
 #[doc(alias = "VkDirectFBSurfaceCreateInfoEXT")]
 pub struct DirectFBSurfaceCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub dfb: *const VoidPtr,
     pub surface: *const VoidPtr,
@@ -53046,8 +53046,8 @@ impl<'a> DirectFBSurfaceCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceVertexInputDynamicStateFeaturesEXT")]
 pub struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vertex_input_dynamic_state: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -53110,8 +53110,8 @@ impl<'a> PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkVertexInputBindingDescription2EXT.html>"]
 #[doc(alias = "VkVertexInputBindingDescription2EXT")]
 pub struct VertexInputBindingDescription2EXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub binding: u32,
     pub stride: u32,
     pub input_rate: VertexInputRate,
@@ -53196,8 +53196,8 @@ impl<'a> VertexInputBindingDescription2EXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkVertexInputAttributeDescription2EXT.html>"]
 #[doc(alias = "VkVertexInputAttributeDescription2EXT")]
 pub struct VertexInputAttributeDescription2EXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub location: u32,
     pub binding: u32,
     pub format: Format,
@@ -53278,8 +53278,8 @@ impl<'a> VertexInputAttributeDescription2EXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDrmPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDrmPropertiesEXT")]
 pub struct PhysicalDeviceDrmPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub has_primary: Bool32,
     pub has_render: Bool32,
     pub primary_major: i64,
@@ -53362,8 +53362,8 @@ impl<'a> PhysicalDeviceDrmPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceAddressBindingReportFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceAddressBindingReportFeaturesEXT")]
 pub struct PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub report_address_binding: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -53423,8 +53423,8 @@ impl<'a> PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceAddressBindingCallbackDataEXT.html>"]
 #[doc(alias = "VkDeviceAddressBindingCallbackDataEXT")]
 pub struct DeviceAddressBindingCallbackDataEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: DeviceAddressBindingFlagsEXT,
     pub base_address: DeviceAddress,
     pub size: DeviceSize,
@@ -53496,8 +53496,8 @@ impl<'a> DeviceAddressBindingCallbackDataEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDepthClipControlFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDepthClipControlFeaturesEXT")]
 pub struct PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub depth_clip_control: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -53556,8 +53556,8 @@ impl<'a> PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineViewportDepthClipControlCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineViewportDepthClipControlCreateInfoEXT")]
 pub struct PipelineViewportDepthClipControlCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub negative_one_to_one: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -53605,8 +53605,8 @@ impl<'a> PipelineViewportDepthClipControlCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePrimitiveTopologyListRestartFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDevicePrimitiveTopologyListRestartFeaturesEXT")]
 pub struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub primitive_topology_list_restart: Bool32,
     pub primitive_topology_patch_list_restart: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -53670,8 +53670,8 @@ impl<'a> PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMemoryZirconHandleInfoFUCHSIA.html>"]
 #[doc(alias = "VkImportMemoryZirconHandleInfoFUCHSIA")]
 pub struct ImportMemoryZirconHandleInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub handle: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -53726,8 +53726,8 @@ impl<'a> ImportMemoryZirconHandleInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryZirconHandlePropertiesFUCHSIA.html>"]
 #[doc(alias = "VkMemoryZirconHandlePropertiesFUCHSIA")]
 pub struct MemoryZirconHandlePropertiesFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -53770,8 +53770,8 @@ impl<'a> MemoryZirconHandlePropertiesFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryGetZirconHandleInfoFUCHSIA.html>"]
 #[doc(alias = "VkMemoryGetZirconHandleInfoFUCHSIA")]
 pub struct MemoryGetZirconHandleInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -53821,8 +53821,8 @@ impl<'a> MemoryGetZirconHandleInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportSemaphoreZirconHandleInfoFUCHSIA.html>"]
 #[doc(alias = "VkImportSemaphoreZirconHandleInfoFUCHSIA")]
 pub struct ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub flags: SemaphoreImportFlags,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
@@ -53886,8 +53886,8 @@ impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSemaphoreGetZirconHandleInfoFUCHSIA.html>"]
 #[doc(alias = "VkSemaphoreGetZirconHandleInfoFUCHSIA")]
 pub struct SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -53937,8 +53937,8 @@ impl<'a> SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferCollectionCreateInfoFUCHSIA.html>"]
 #[doc(alias = "VkBufferCollectionCreateInfoFUCHSIA")]
 pub struct BufferCollectionCreateInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub collection_token: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
@@ -53981,8 +53981,8 @@ impl<'a> BufferCollectionCreateInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMemoryBufferCollectionFUCHSIA.html>"]
 #[doc(alias = "VkImportMemoryBufferCollectionFUCHSIA")]
 pub struct ImportMemoryBufferCollectionFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub collection: Option<BorrowedHandle<'a, BufferCollectionFUCHSIA>>,
     pub index: u32,
     phantom: PhantomData<&'a ()>,
@@ -54037,8 +54037,8 @@ impl<'a> ImportMemoryBufferCollectionFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferCollectionImageCreateInfoFUCHSIA.html>"]
 #[doc(alias = "VkBufferCollectionImageCreateInfoFUCHSIA")]
 pub struct BufferCollectionImageCreateInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub collection: Option<BorrowedHandle<'a, BufferCollectionFUCHSIA>>,
     pub index: u32,
     phantom: PhantomData<&'a ()>,
@@ -54093,8 +54093,8 @@ impl<'a> BufferCollectionImageCreateInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferConstraintsInfoFUCHSIA.html>"]
 #[doc(alias = "VkBufferConstraintsInfoFUCHSIA")]
 pub struct BufferConstraintsInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub create_info: BufferCreateInfo<'a>,
     pub required_format_features: FormatFeatureFlags,
     pub buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA<'a>,
@@ -54154,8 +54154,8 @@ impl<'a> BufferConstraintsInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferCollectionBufferCreateInfoFUCHSIA.html>"]
 #[doc(alias = "VkBufferCollectionBufferCreateInfoFUCHSIA")]
 pub struct BufferCollectionBufferCreateInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub collection: Option<BorrowedHandle<'a, BufferCollectionFUCHSIA>>,
     pub index: u32,
     phantom: PhantomData<&'a ()>,
@@ -54210,8 +54210,8 @@ impl<'a> BufferCollectionBufferCreateInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferCollectionPropertiesFUCHSIA.html>"]
 #[doc(alias = "VkBufferCollectionPropertiesFUCHSIA")]
 pub struct BufferCollectionPropertiesFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
     pub buffer_count: u32,
     pub create_info_index: u32,
@@ -54324,8 +54324,8 @@ impl<'a> BufferCollectionPropertiesFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSysmemColorSpaceFUCHSIA.html>"]
 #[doc(alias = "VkSysmemColorSpaceFUCHSIA")]
 pub struct SysmemColorSpaceFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub color_space: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -54368,10 +54368,10 @@ impl<'a> SysmemColorSpaceFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageConstraintsInfoFUCHSIA.html>"]
 #[doc(alias = "VkImageConstraintsInfoFUCHSIA")]
 pub struct ImageConstraintsInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) format_constraints_count: u32,
-    pub(crate) p_format_constraints: *const ImageFormatConstraintsInfoFUCHSIA<'a>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub format_constraints_count: u32,
+    pub p_format_constraints: *const ImageFormatConstraintsInfoFUCHSIA<'a>,
     pub buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA<'a>,
     pub flags: ImageConstraintsInfoFlagsFUCHSIA,
     phantom: PhantomData<&'a ()>,
@@ -54446,14 +54446,14 @@ impl<'a> ImageConstraintsInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageFormatConstraintsInfoFUCHSIA.html>"]
 #[doc(alias = "VkImageFormatConstraintsInfoFUCHSIA")]
 pub struct ImageFormatConstraintsInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_create_info: ImageCreateInfo<'a>,
     pub required_format_features: FormatFeatureFlags,
     pub flags: u32,
     pub sysmem_pixel_format: u64,
-    pub(crate) color_space_count: u32,
-    pub(crate) p_color_spaces: *const SysmemColorSpaceFUCHSIA<'a>,
+    pub color_space_count: u32,
+    pub p_color_spaces: *const SysmemColorSpaceFUCHSIA<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
@@ -54532,8 +54532,8 @@ impl<'a> ImageFormatConstraintsInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBufferCollectionConstraintsInfoFUCHSIA.html>"]
 #[doc(alias = "VkBufferCollectionConstraintsInfoFUCHSIA")]
 pub struct BufferCollectionConstraintsInfoFUCHSIA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_buffer_count: u32,
     pub max_buffer_count: u32,
     pub min_buffer_count_for_camping: u32,
@@ -54604,8 +54604,8 @@ impl<'a> BufferCollectionConstraintsInfoFUCHSIA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubpassShadingPipelineCreateInfoHUAWEI.html>"]
 #[doc(alias = "VkSubpassShadingPipelineCreateInfoHUAWEI")]
 pub struct SubpassShadingPipelineCreateInfoHUAWEI<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
     pub subpass: u32,
     phantom: PhantomData<&'a ()>,
@@ -54660,8 +54660,8 @@ impl<'a> SubpassShadingPipelineCreateInfoHUAWEI<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSubpassShadingFeaturesHUAWEI.html>"]
 #[doc(alias = "VkPhysicalDeviceSubpassShadingFeaturesHUAWEI")]
 pub struct PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub subpass_shading: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -54720,8 +54720,8 @@ impl<'a> PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSubpassShadingPropertiesHUAWEI.html>"]
 #[doc(alias = "VkPhysicalDeviceSubpassShadingPropertiesHUAWEI")]
 pub struct PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_subpass_shading_workgroup_size_aspect_ratio: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -54776,8 +54776,8 @@ impl<'a> PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceInvocationMaskFeaturesHUAWEI.html>"]
 #[doc(alias = "VkPhysicalDeviceInvocationMaskFeaturesHUAWEI")]
 pub struct PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub invocation_mask: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -54839,8 +54839,8 @@ pub type RemoteAddressNV = VoidPtr;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryGetRemoteAddressInfoNV.html>"]
 #[doc(alias = "VkMemoryGetRemoteAddressInfoNV")]
 pub struct MemoryGetRemoteAddressInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -54890,8 +54890,8 @@ impl<'a> MemoryGetRemoteAddressInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalMemoryRDMAFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalMemoryRDMAFeaturesNV")]
 pub struct PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub external_memory_rdma: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -54950,8 +54950,8 @@ impl<'a> PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelinePropertiesIdentifierEXT.html>"]
 #[doc(alias = "VkPipelinePropertiesIdentifierEXT")]
 pub struct PipelinePropertiesIdentifierEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_identifier: [u8; UUID_SIZE as _],
     phantom: PhantomData<&'a ()>,
 }
@@ -54994,8 +54994,8 @@ impl<'a> PipelinePropertiesIdentifierEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelinePropertiesFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDevicePipelinePropertiesFeaturesEXT")]
 pub struct PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_properties_identifier: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -55055,8 +55055,8 @@ impl<'a> PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFrameBoundaryFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceFrameBoundaryFeaturesEXT")]
 pub struct PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub frame_boundary: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -55115,17 +55115,17 @@ impl<'a> PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFrameBoundaryEXT.html>"]
 #[doc(alias = "VkFrameBoundaryEXT")]
 pub struct FrameBoundaryEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: FrameBoundaryFlagsEXT,
     pub frame_id: u64,
     pub image_count: u32,
-    pub(crate) p_images: *const Image,
+    pub p_images: *const Image,
     pub buffer_count: u32,
-    pub(crate) p_buffers: *const Buffer,
+    pub p_buffers: *const Buffer,
     pub tag_name: u64,
     pub tag_size: usize,
-    pub(crate) p_tag: VoidPtr,
+    pub p_tag: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_frame_boundary")]
@@ -55251,8 +55251,8 @@ impl<'a> FrameBoundaryEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT")]
 pub struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub multisampled_render_to_single_sampled: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -55317,8 +55317,8 @@ impl<'a> PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSubpassResolvePerformanceQueryEXT.html>"]
 #[doc(alias = "VkSubpassResolvePerformanceQueryEXT")]
 pub struct SubpassResolvePerformanceQueryEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub optimal: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -55372,8 +55372,8 @@ impl<'a> SubpassResolvePerformanceQueryEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMultisampledRenderToSingleSampledInfoEXT.html>"]
 #[doc(alias = "VkMultisampledRenderToSingleSampledInfoEXT")]
 pub struct MultisampledRenderToSingleSampledInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub multisampled_render_to_single_sampled_enable: Bool32,
     pub rasterization_samples: SampleCountFlags,
     phantom: PhantomData<&'a ()>,
@@ -55449,8 +55449,8 @@ impl<'a> MultisampledRenderToSingleSampledInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExtendedDynamicState2FeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceExtendedDynamicState2FeaturesEXT")]
 pub struct PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub extended_dynamic_state2: Bool32,
     pub extended_dynamic_state2_logic_op: Bool32,
     pub extended_dynamic_state2_patch_control_points: Bool32,
@@ -55527,8 +55527,8 @@ impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkScreenSurfaceCreateInfoQNX.html>"]
 #[doc(alias = "VkScreenSurfaceCreateInfoQNX")]
 pub struct ScreenSurfaceCreateInfoQNX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub context: *const VoidPtr,
     pub window: *const VoidPtr,
@@ -55585,8 +55585,8 @@ impl<'a> ScreenSurfaceCreateInfoQNX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceColorWriteEnableFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceColorWriteEnableFeaturesEXT")]
 pub struct PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub color_write_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -55645,10 +55645,10 @@ impl<'a> PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineColorWriteCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineColorWriteCreateInfoEXT")]
 pub struct PipelineColorWriteCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) attachment_count: u32,
-    pub(crate) p_color_write_enables: *const Bool32,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub attachment_count: u32,
+    pub p_color_write_enables: *const Bool32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_color_write_enable")]
@@ -55707,8 +55707,8 @@ impl<'a> PipelineColorWriteCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDevicePrimitivesGeneratedQueryFeaturesEXT")]
 pub struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub primitives_generated_query: Bool32,
     pub primitives_generated_query_with_rasterizer_discard: Bool32,
     pub primitives_generated_query_with_non_zero_streams: Bool32,
@@ -55782,8 +55782,8 @@ impl<'a> PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingMaintenance1FeaturesKHR")]
 pub struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ray_tracing_maintenance1: Bool32,
     pub ray_tracing_pipeline_trace_rays_indirect2: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -55984,8 +55984,8 @@ impl TraceRaysIndirectCommand2KHR {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageViewMinLodFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceImageViewMinLodFeaturesEXT")]
 pub struct PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_lod: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -56044,8 +56044,8 @@ impl<'a> PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageViewMinLodCreateInfoEXT.html>"]
 #[doc(alias = "VkImageViewMinLodCreateInfoEXT")]
 pub struct ImageViewMinLodCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub min_lod: f32,
     phantom: PhantomData<&'a ()>,
 }
@@ -56093,8 +56093,8 @@ impl<'a> ImageViewMinLodCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMultiDrawFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMultiDrawFeaturesEXT")]
 pub struct PhysicalDeviceMultiDrawFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub multi_draw: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -56153,8 +56153,8 @@ impl<'a> PhysicalDeviceMultiDrawFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMultiDrawPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMultiDrawPropertiesEXT")]
 pub struct PhysicalDeviceMultiDrawPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_multi_draw_count: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -56284,8 +56284,8 @@ impl MultiDrawIndexedInfoEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImage2DViewOf3DFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceImage2DViewOf3DFeaturesEXT")]
 pub struct PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image2_dview_of3_d: Bool32,
     pub sampler2_dview_of3_d: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -56344,8 +56344,8 @@ impl<'a> PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderTileImageFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderTileImageFeaturesEXT")]
 pub struct PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_tile_image_color_read_access: Bool32,
     pub shader_tile_image_depth_read_access: Bool32,
     pub shader_tile_image_stencil_read_access: Bool32,
@@ -56411,8 +56411,8 @@ impl<'a> PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderTileImagePropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderTileImagePropertiesEXT")]
 pub struct PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_tile_image_coherent_read_accelerated: Bool32,
     pub shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32,
     pub shader_tile_image_read_from_helper_invocation: Bool32,
@@ -56480,15 +56480,15 @@ impl<'a> PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMicromapBuildInfoEXT.html>"]
 #[doc(alias = "VkMicromapBuildInfoEXT")]
 pub struct MicromapBuildInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: MicromapTypeEXT,
     pub flags: BuildMicromapFlagsEXT,
     pub mode: BuildMicromapModeEXT,
     pub dst_micromap: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub usage_counts_count: u32,
-    pub(crate) p_usage_counts: *const MicromapUsageEXT,
-    pub(crate) pp_usage_counts: *const *const MicromapUsageEXT,
+    pub p_usage_counts: *const MicromapUsageEXT,
+    pub pp_usage_counts: *const *const MicromapUsageEXT,
     pub data: DeviceOrHostAddressConstKHR,
     pub scratch_data: DeviceOrHostAddressKHR,
     pub triangle_array: DeviceOrHostAddressConstKHR,
@@ -56659,8 +56659,8 @@ impl MicromapUsageEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMicromapCreateInfoEXT.html>"]
 #[doc(alias = "VkMicromapCreateInfoEXT")]
 pub struct MicromapCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub create_flags: MicromapCreateFlagsEXT,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
@@ -56738,8 +56738,8 @@ impl<'a> MicromapCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceOpacityMicromapFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceOpacityMicromapFeaturesEXT")]
 pub struct PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub micromap: Bool32,
     pub micromap_capture_replay: Bool32,
     pub micromap_host_commands: Bool32,
@@ -56812,8 +56812,8 @@ impl<'a> PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceOpacityMicromapPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceOpacityMicromapPropertiesEXT")]
 pub struct PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_opacity2_state_subdivision_level: u32,
     pub max_opacity4_state_subdivision_level: u32,
     phantom: PhantomData<&'a ()>,
@@ -56874,9 +56874,9 @@ impl<'a> PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMicromapVersionInfoEXT.html>"]
 #[doc(alias = "VkMicromapVersionInfoEXT")]
 pub struct MicromapVersionInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) p_version_data: *const u8,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub p_version_data: *const u8,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
@@ -56918,8 +56918,8 @@ impl<'a> MicromapVersionInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyMicromapToMemoryInfoEXT.html>"]
 #[doc(alias = "VkCopyMicromapToMemoryInfoEXT")]
 pub struct CopyMicromapToMemoryInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub dst: DeviceOrHostAddressKHR,
     pub mode: CopyMicromapModeEXT,
@@ -56976,8 +56976,8 @@ impl<'a> CopyMicromapToMemoryInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyMemoryToMicromapInfoEXT.html>"]
 #[doc(alias = "VkCopyMemoryToMicromapInfoEXT")]
 pub struct CopyMemoryToMicromapInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src: DeviceOrHostAddressConstKHR,
     pub dst: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub mode: CopyMicromapModeEXT,
@@ -57034,8 +57034,8 @@ impl<'a> CopyMemoryToMicromapInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyMicromapInfoEXT.html>"]
 #[doc(alias = "VkCopyMicromapInfoEXT")]
 pub struct CopyMicromapInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub dst: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub mode: CopyMicromapModeEXT,
@@ -57092,8 +57092,8 @@ impl<'a> CopyMicromapInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMicromapBuildSizesInfoEXT.html>"]
 #[doc(alias = "VkMicromapBuildSizesInfoEXT")]
 pub struct MicromapBuildSizesInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub micromap_size: DeviceSize,
     pub build_scratch_size: DeviceSize,
     pub discardable: Bool32,
@@ -57150,15 +57150,15 @@ impl<'a> MicromapBuildSizesInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureTrianglesOpacityMicromapEXT.html>"]
 #[doc(alias = "VkAccelerationStructureTrianglesOpacityMicromapEXT")]
 pub struct AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub index_type: IndexType,
     pub index_buffer: DeviceOrHostAddressConstKHR,
     pub index_stride: DeviceSize,
     pub base_triangle: u32,
     pub usage_counts_count: u32,
-    pub(crate) p_usage_counts: *const MicromapUsageEXT,
-    pub(crate) pp_usage_counts: *const *const MicromapUsageEXT,
+    pub p_usage_counts: *const MicromapUsageEXT,
+    pub pp_usage_counts: *const *const MicromapUsageEXT,
     pub micromap: Option<BorrowedHandle<'a, MicromapEXT>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -57326,8 +57326,8 @@ impl MicromapTriangleEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDisplacementMicromapFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceDisplacementMicromapFeaturesNV")]
 pub struct PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub displacement_micromap: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -57387,8 +57387,8 @@ impl<'a> PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDisplacementMicromapPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceDisplacementMicromapPropertiesNV")]
 pub struct PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_displacement_micromap_subdivision_level: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -57443,8 +57443,8 @@ impl<'a> PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureTrianglesDisplacementMicromapNV.html>"]
 #[doc(alias = "VkAccelerationStructureTrianglesDisplacementMicromapNV")]
 pub struct AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub displacement_bias_and_scale_format: Format,
     pub displacement_vector_format: Format,
     pub displacement_bias_and_scale_buffer: DeviceOrHostAddressConstKHR,
@@ -57458,8 +57458,8 @@ pub struct AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     pub index_stride: DeviceSize,
     pub base_triangle: u32,
     pub usage_counts_count: u32,
-    pub(crate) p_usage_counts: *const MicromapUsageEXT,
-    pub(crate) pp_usage_counts: *const *const MicromapUsageEXT,
+    pub p_usage_counts: *const MicromapUsageEXT,
+    pub pp_usage_counts: *const *const MicromapUsageEXT,
     pub micromap: Option<BorrowedHandle<'a, MicromapEXT>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -57633,8 +57633,8 @@ impl<'a> AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI.html>"]
 #[doc(alias = "VkPhysicalDeviceClusterCullingShaderFeaturesHUAWEI")]
 pub struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub clusterculling_shader: Bool32,
     pub multiview_cluster_culling_shader: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -57701,8 +57701,8 @@ impl<'a> PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceClusterCullingShaderPropertiesHUAWEI.html>"]
 #[doc(alias = "VkPhysicalDeviceClusterCullingShaderPropertiesHUAWEI")]
 pub struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_work_group_count: [u32; 3u16 as _],
     pub max_work_group_size: [u32; 3u16 as _],
     pub max_output_cluster_count: u32,
@@ -57778,8 +57778,8 @@ impl<'a> PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI.html>"]
 #[doc(alias = "VkPhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI")]
 pub struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cluster_shading_rate: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -57834,8 +57834,8 @@ impl<'a> PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceBorderColorSwizzleFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceBorderColorSwizzleFeaturesEXT")]
 pub struct PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub border_color_swizzle: Bool32,
     pub border_color_swizzle_from_image: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -57902,8 +57902,8 @@ impl<'a> PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerBorderColorComponentMappingCreateInfoEXT.html>"]
 #[doc(alias = "VkSamplerBorderColorComponentMappingCreateInfoEXT")]
 pub struct SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub components: ComponentMapping,
     pub srgb: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -57959,8 +57959,8 @@ impl<'a> SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDevicePageableDeviceLocalMemoryFeaturesEXT")]
 pub struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pageable_device_local_memory: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -58019,8 +58019,8 @@ impl<'a> PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderCorePropertiesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderCorePropertiesARM")]
 pub struct PhysicalDeviceShaderCorePropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pixel_rate: u32,
     pub texel_rate: u32,
     pub fma_rate: u32,
@@ -58082,8 +58082,8 @@ impl<'a> PhysicalDeviceShaderCorePropertiesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceQueueShaderCoreControlCreateInfoARM.html>"]
 #[doc(alias = "VkDeviceQueueShaderCoreControlCreateInfoARM")]
 pub struct DeviceQueueShaderCoreControlCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_core_count: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -58136,8 +58136,8 @@ impl<'a> DeviceQueueShaderCoreControlCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSchedulingControlsFeaturesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceSchedulingControlsFeaturesARM")]
 pub struct PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub scheduling_controls: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -58197,8 +58197,8 @@ impl<'a> PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSchedulingControlsPropertiesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceSchedulingControlsPropertiesARM")]
 pub struct PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub scheduling_controls_flags: PhysicalDeviceSchedulingControlsFlagsARM,
     phantom: PhantomData<&'a ()>,
 }
@@ -58256,8 +58256,8 @@ impl<'a> PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceImageSlicedViewOf3DFeaturesEXT")]
 pub struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_sliced_view_of3_d: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -58317,8 +58317,8 @@ impl<'a> PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageViewSlicedCreateInfoEXT.html>"]
 #[doc(alias = "VkImageViewSlicedCreateInfoEXT")]
 pub struct ImageViewSlicedCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub slice_offset: u32,
     pub slice_count: u32,
     phantom: PhantomData<&'a ()>,
@@ -58373,8 +58373,8 @@ impl<'a> ImageViewSlicedCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorSetHostMappingFeaturesVALVE")]
 pub struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub descriptor_set_host_mapping: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -58437,8 +58437,8 @@ impl<'a> PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorSetBindingReferenceVALVE.html>"]
 #[doc(alias = "VkDescriptorSetBindingReferenceVALVE")]
 pub struct DescriptorSetBindingReferenceVALVE<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub descriptor_set_layout: Option<BorrowedHandle<'a, DescriptorSetLayout>>,
     pub binding: u32,
     phantom: PhantomData<&'a ()>,
@@ -58488,8 +58488,8 @@ impl<'a> DescriptorSetBindingReferenceVALVE<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorSetLayoutHostMappingInfoVALVE.html>"]
 #[doc(alias = "VkDescriptorSetLayoutHostMappingInfoVALVE")]
 pub struct DescriptorSetLayoutHostMappingInfoVALVE<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub descriptor_offset: usize,
     pub descriptor_size: u32,
     phantom: PhantomData<&'a ()>,
@@ -58538,8 +58538,8 @@ impl<'a> DescriptorSetLayoutHostMappingInfoVALVE<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceNonSeamlessCubeMapFeaturesEXT")]
 pub struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub non_seamless_cube_map: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -58593,8 +58593,8 @@ impl<'a> PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRenderPassStripedFeaturesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceRenderPassStripedFeaturesARM")]
 pub struct PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub render_pass_striped: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -58653,8 +58653,8 @@ impl<'a> PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRenderPassStripedPropertiesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceRenderPassStripedPropertiesARM")]
 pub struct PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub render_pass_stripe_granularity: Extent2D,
     pub max_render_pass_stripes: u32,
     phantom: PhantomData<&'a ()>,
@@ -58716,10 +58716,10 @@ impl<'a> PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassStripeBeginInfoARM.html>"]
 #[doc(alias = "VkRenderPassStripeBeginInfoARM")]
 pub struct RenderPassStripeBeginInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) stripe_info_count: u32,
-    pub(crate) p_stripe_infos: *const RenderPassStripeInfoARM<'a>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub stripe_info_count: u32,
+    pub p_stripe_infos: *const RenderPassStripeInfoARM<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_render_pass_striped")]
@@ -58791,8 +58791,8 @@ impl<'a> RenderPassStripeBeginInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassStripeInfoARM.html>"]
 #[doc(alias = "VkRenderPassStripeInfoARM")]
 pub struct RenderPassStripeInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stripe_area: Rect2D,
     phantom: PhantomData<&'a ()>,
 }
@@ -58835,10 +58835,10 @@ impl<'a> RenderPassStripeInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassStripeSubmitInfoARM.html>"]
 #[doc(alias = "VkRenderPassStripeSubmitInfoARM")]
 pub struct RenderPassStripeSubmitInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) stripe_semaphore_info_count: u32,
-    pub(crate) p_stripe_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub stripe_semaphore_info_count: u32,
+    pub p_stripe_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_render_pass_striped")]
@@ -59009,8 +59009,8 @@ impl CopyMemoryToImageIndirectCommandNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCopyMemoryIndirectFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCopyMemoryIndirectFeaturesNV")]
 pub struct PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub indirect_copy: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -59069,8 +59069,8 @@ impl<'a> PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCopyMemoryIndirectPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCopyMemoryIndirectPropertiesNV")]
 pub struct PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub supported_queues: QueueFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -59181,8 +59181,8 @@ impl DecompressMemoryRegionNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMemoryDecompressionFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceMemoryDecompressionFeaturesNV")]
 pub struct PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_decompression: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -59242,8 +59242,8 @@ impl<'a> PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMemoryDecompressionPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceMemoryDecompressionPropertiesNV")]
 pub struct PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub decompression_methods: MemoryDecompressionMethodFlagsNV,
     pub max_decompression_indirect_count: u64,
     phantom: PhantomData<&'a ()>,
@@ -59305,8 +59305,8 @@ impl<'a> PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV")]
 pub struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_generated_compute: Bool32,
     pub device_generated_compute_pipelines: Bool32,
     pub device_generated_compute_capture_replay: Bool32,
@@ -59383,8 +59383,8 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkComputePipelineIndirectBufferInfoNV.html>"]
 #[doc(alias = "VkComputePipelineIndirectBufferInfoNV")]
 pub struct ComputePipelineIndirectBufferInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_address: DeviceAddress,
     pub size: DeviceSize,
     pub pipeline_device_address_capture_replay: DeviceAddress,
@@ -59446,8 +59446,8 @@ impl<'a> ComputePipelineIndirectBufferInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineIndirectDeviceAddressInfoNV.html>"]
 #[doc(alias = "VkPipelineIndirectDeviceAddressInfoNV")]
 pub struct PipelineIndirectDeviceAddressInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_bind_point: PipelineBindPoint,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
@@ -59525,8 +59525,8 @@ impl BindPipelineIndirectCommandNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV")]
 pub struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub spheres: Bool32,
     pub linear_swept_spheres: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -59596,8 +59596,8 @@ impl<'a> PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureGeometryLinearSweptSpheresDataNV.html>"]
 #[doc(alias = "VkAccelerationStructureGeometryLinearSweptSpheresDataNV")]
 pub struct AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vertex_format: Format,
     pub vertex_data: DeviceOrHostAddressConstKHR,
     pub vertex_stride: DeviceSize,
@@ -59722,8 +59722,8 @@ impl<'a> AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureGeometrySpheresDataNV.html>"]
 #[doc(alias = "VkAccelerationStructureGeometrySpheresDataNV")]
 pub struct AccelerationStructureGeometrySpheresDataNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vertex_format: Format,
     pub vertex_data: DeviceOrHostAddressConstKHR,
     pub vertex_stride: DeviceSize,
@@ -59829,8 +59829,8 @@ impl<'a> AccelerationStructureGeometrySpheresDataNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLinearColorAttachmentFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceLinearColorAttachmentFeaturesNV")]
 pub struct PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub linear_color_attachment: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -59883,8 +59883,8 @@ impl<'a> PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderMaximalReconvergenceFeaturesKHR")]
 pub struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_maximal_reconvergence: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -59940,8 +59940,8 @@ impl<'a> PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceImageCompressionControlSwapchainFeaturesEXT")]
 pub struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_compression_control_swapchain: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -60000,8 +60000,8 @@ impl<'a> PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageViewSampleWeightCreateInfoQCOM.html>"]
 #[doc(alias = "VkImageViewSampleWeightCreateInfoQCOM")]
 pub struct ImageViewSampleWeightCreateInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub filter_center: Offset2D,
     pub filter_size: Extent2D,
     pub num_phases: u32,
@@ -60063,8 +60063,8 @@ impl<'a> ImageViewSampleWeightCreateInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageProcessingFeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceImageProcessingFeaturesQCOM")]
 pub struct PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub texture_sample_weighted: Bool32,
     pub texture_box_filter: Bool32,
     pub texture_block_match: Bool32,
@@ -60137,8 +60137,8 @@ impl<'a> PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageProcessingPropertiesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceImageProcessingPropertiesQCOM")]
 pub struct PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_weight_filter_phases: u32,
     pub max_weight_filter_dimension: Extent2D,
     pub max_block_match_region: Extent2D,
@@ -60213,8 +60213,8 @@ impl<'a> PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceNestedCommandBufferFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceNestedCommandBufferFeaturesEXT")]
 pub struct PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub nested_command_buffer: Bool32,
     pub nested_command_buffer_rendering: Bool32,
     pub nested_command_buffer_simultaneous_use: Bool32,
@@ -60281,8 +60281,8 @@ impl<'a> PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceNestedCommandBufferPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceNestedCommandBufferPropertiesEXT")]
 pub struct PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_command_buffer_nesting_level: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -60331,8 +60331,8 @@ impl<'a> PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalMemoryAcquireUnmodifiedEXT.html>"]
 #[doc(alias = "VkExternalMemoryAcquireUnmodifiedEXT")]
 pub struct ExternalMemoryAcquireUnmodifiedEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub acquire_unmodified_memory: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -60401,8 +60401,8 @@ impl<'a> ExternalMemoryAcquireUnmodifiedEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExtendedDynamicState3FeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceExtendedDynamicState3FeaturesEXT")]
 pub struct PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub extended_dynamic_state3_tessellation_domain_origin: Bool32,
     pub extended_dynamic_state3_depth_clamp_enable: Bool32,
     pub extended_dynamic_state3_polygon_mode: Bool32,
@@ -60735,8 +60735,8 @@ impl<'a> PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExtendedDynamicState3PropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceExtendedDynamicState3PropertiesEXT")]
 pub struct PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dynamic_primitive_topology_unrestricted: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -60910,8 +60910,8 @@ impl ColorBlendAdvancedEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceSubpassMergeFeedbackFeaturesEXT")]
 pub struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub subpass_merge_feedback: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -60971,8 +60971,8 @@ impl<'a> PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassCreationControlEXT.html>"]
 #[doc(alias = "VkRenderPassCreationControlEXT")]
 pub struct RenderPassCreationControlEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub disallow_merging: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -61059,8 +61059,8 @@ impl RenderPassCreationFeedbackInfoEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassCreationFeedbackCreateInfoEXT.html>"]
 #[doc(alias = "VkRenderPassCreationFeedbackCreateInfoEXT")]
 pub struct RenderPassCreationFeedbackCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_render_pass_feedback: *const RenderPassCreationFeedbackInfoEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -61113,7 +61113,7 @@ impl<'a> RenderPassCreationFeedbackCreateInfoEXT<'a> {
 #[doc(alias = "VkRenderPassSubpassFeedbackInfoEXT")]
 pub struct RenderPassSubpassFeedbackInfoEXT {
     pub subpass_merge_status: SubpassMergeStatusEXT,
-    pub(crate) description: [c_char; MAX_DESCRIPTION_SIZE as _],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub post_merge_index: u32,
 }
 #[cfg(feature = "ext_subpass_merge_feedback")]
@@ -61155,8 +61155,8 @@ impl RenderPassSubpassFeedbackInfoEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassSubpassFeedbackCreateInfoEXT.html>"]
 #[doc(alias = "VkRenderPassSubpassFeedbackCreateInfoEXT")]
 pub struct RenderPassSubpassFeedbackCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_subpass_feedback: *const RenderPassSubpassFeedbackInfoEXT,
     phantom: PhantomData<&'a ()>,
 }
@@ -61207,8 +61207,8 @@ impl<'a> RenderPassSubpassFeedbackCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDirectDriverLoadingInfoLUNARG.html>"]
 #[doc(alias = "VkDirectDriverLoadingInfoLUNARG")]
 pub struct DirectDriverLoadingInfoLUNARG<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub pfn_get_instance_proc_addr: FuncPtr,
     phantom: PhantomData<&'a ()>,
@@ -61258,11 +61258,11 @@ impl<'a> DirectDriverLoadingInfoLUNARG<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDirectDriverLoadingListLUNARG.html>"]
 #[doc(alias = "VkDirectDriverLoadingListLUNARG")]
 pub struct DirectDriverLoadingListLUNARG<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub mode: DirectDriverLoadingModeLUNARG,
-    pub(crate) driver_count: u32,
-    pub(crate) p_drivers: *const DirectDriverLoadingInfoLUNARG<'a>,
+    pub driver_count: u32,
+    pub p_drivers: *const DirectDriverLoadingInfoLUNARG<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_direct_driver_loading")]
@@ -61328,13 +61328,13 @@ impl<'a> DirectDriverLoadingListLUNARG<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorDescriptionARM.html>"]
 #[doc(alias = "VkTensorDescriptionARM")]
 pub struct TensorDescriptionARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tiling: TensorTilingARM,
     pub format: Format,
-    pub(crate) dimension_count: u32,
-    pub(crate) p_dimensions: *const i64,
-    pub(crate) p_strides: *const i64,
+    pub dimension_count: u32,
+    pub p_dimensions: *const i64,
+    pub p_strides: *const i64,
     pub usage: TensorUsageFlagsARM,
     phantom: PhantomData<&'a ()>,
 }
@@ -61431,13 +61431,13 @@ impl<'a> TensorDescriptionARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorCreateInfoARM.html>"]
 #[doc(alias = "VkTensorCreateInfoARM")]
 pub struct TensorCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: TensorCreateFlagsARM,
     pub p_description: *const TensorDescriptionARM<'a>,
     pub sharing_mode: SharingMode,
     pub queue_family_index_count: u32,
-    pub(crate) p_queue_family_indices: *const u32,
+    pub p_queue_family_indices: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
@@ -61515,8 +61515,8 @@ impl<'a> TensorCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorViewCreateInfoARM.html>"]
 #[doc(alias = "VkTensorViewCreateInfoARM")]
 pub struct TensorViewCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: TensorViewCreateFlagsARM,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
     pub format: Format,
@@ -61573,8 +61573,8 @@ impl<'a> TensorViewCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorMemoryRequirementsInfoARM.html>"]
 #[doc(alias = "VkTensorMemoryRequirementsInfoARM")]
 pub struct TensorMemoryRequirementsInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -61617,8 +61617,8 @@ impl<'a> TensorMemoryRequirementsInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindTensorMemoryInfoARM.html>"]
 #[doc(alias = "VkBindTensorMemoryInfoARM")]
 pub struct BindTensorMemoryInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
@@ -61675,10 +61675,10 @@ impl<'a> BindTensorMemoryInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWriteDescriptorSetTensorARM.html>"]
 #[doc(alias = "VkWriteDescriptorSetTensorARM")]
 pub struct WriteDescriptorSetTensorARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) tensor_view_count: u32,
-    pub(crate) p_tensor_views: *const TensorViewARM,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub tensor_view_count: u32,
+    pub p_tensor_views: *const TensorViewARM,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
@@ -61735,8 +61735,8 @@ impl<'a> WriteDescriptorSetTensorARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorFormatPropertiesARM.html>"]
 #[doc(alias = "VkTensorFormatPropertiesARM")]
 pub struct TensorFormatPropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub optimal_tiling_tensor_features: FormatFeatureFlags2,
     pub linear_tiling_tensor_features: FormatFeatureFlags2,
     phantom: PhantomData<&'a ()>,
@@ -61794,8 +61794,8 @@ impl<'a> TensorFormatPropertiesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTensorPropertiesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceTensorPropertiesARM")]
 pub struct PhysicalDeviceTensorPropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_tensor_dimension_count: u32,
     pub max_tensor_elements: u64,
     pub max_per_dimension_tensor_elements: u64,
@@ -61939,8 +61939,8 @@ impl<'a> PhysicalDeviceTensorPropertiesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorMemoryBarrierARM.html>"]
 #[doc(alias = "VkTensorMemoryBarrierARM")]
 pub struct TensorMemoryBarrierARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_stage_mask: PipelineStageFlags2,
     pub src_access_mask: AccessFlags2,
     pub dst_stage_mask: PipelineStageFlags2,
@@ -62030,8 +62030,8 @@ impl<'a> TensorMemoryBarrierARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorDependencyInfoARM.html>"]
 #[doc(alias = "VkTensorDependencyInfoARM")]
 pub struct TensorDependencyInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tensor_memory_barrier_count: u32,
     pub p_tensor_memory_barriers: *const TensorMemoryBarrierARM<'a>,
     phantom: PhantomData<&'a ()>,
@@ -62086,8 +62086,8 @@ impl<'a> TensorDependencyInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTensorFeaturesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceTensorFeaturesARM")]
 pub struct PhysicalDeviceTensorFeaturesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tensor_non_packed: Bool32,
     pub shader_tensor_access: Bool32,
     pub shader_storage_tensor_array_dynamic_indexing: Bool32,
@@ -62190,8 +62190,8 @@ impl<'a> PhysicalDeviceTensorFeaturesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDeviceTensorMemoryRequirementsARM.html>"]
 #[doc(alias = "VkDeviceTensorMemoryRequirementsARM")]
 pub struct DeviceTensorMemoryRequirementsARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_create_info: *const TensorCreateInfoARM<'a>,
     phantom: PhantomData<&'a ()>,
 }
@@ -62234,12 +62234,12 @@ impl<'a> DeviceTensorMemoryRequirementsARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCopyTensorInfoARM.html>"]
 #[doc(alias = "VkCopyTensorInfoARM")]
 pub struct CopyTensorInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_tensor: Option<BorrowedHandle<'a, TensorARM>>,
     pub dst_tensor: Option<BorrowedHandle<'a, TensorARM>>,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const TensorCopyARM<'a>,
+    pub region_count: u32,
+    pub p_regions: *const TensorCopyARM<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
@@ -62303,12 +62303,12 @@ impl<'a> CopyTensorInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorCopyARM.html>"]
 #[doc(alias = "VkTensorCopyARM")]
 pub struct TensorCopyARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dimension_count: u32,
-    pub(crate) p_src_offset: *const u64,
-    pub(crate) p_dst_offset: *const u64,
-    pub(crate) p_extent: *const u64,
+    pub p_src_offset: *const u64,
+    pub p_dst_offset: *const u64,
+    pub p_extent: *const u64,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
@@ -62396,8 +62396,8 @@ impl<'a> TensorCopyARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryDedicatedAllocateInfoTensorARM.html>"]
 #[doc(alias = "VkMemoryDedicatedAllocateInfoTensorARM")]
 pub struct MemoryDedicatedAllocateInfoTensorARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -62445,8 +62445,8 @@ impl<'a> MemoryDedicatedAllocateInfoTensorARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalTensorInfoARM.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalTensorInfoARM")]
 pub struct PhysicalDeviceExternalTensorInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: TensorCreateFlagsARM,
     pub p_description: *const TensorDescriptionARM<'a>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
@@ -62503,8 +62503,8 @@ impl<'a> PhysicalDeviceExternalTensorInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalTensorPropertiesARM.html>"]
 #[doc(alias = "VkExternalTensorPropertiesARM")]
 pub struct ExternalTensorPropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub external_memory_properties: ExternalMemoryProperties,
     phantom: PhantomData<&'a ()>,
 }
@@ -62547,8 +62547,8 @@ impl<'a> ExternalTensorPropertiesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalMemoryTensorCreateInfoARM.html>"]
 #[doc(alias = "VkExternalMemoryTensorCreateInfoARM")]
 pub struct ExternalMemoryTensorCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -62596,8 +62596,8 @@ impl<'a> ExternalMemoryTensorCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorBufferTensorFeaturesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorBufferTensorFeaturesARM")]
 pub struct PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub descriptor_buffer_tensor_descriptors: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -62657,8 +62657,8 @@ impl<'a> PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorBufferTensorPropertiesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorBufferTensorPropertiesARM")]
 pub struct PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tensor_capture_replay_descriptor_data_size: usize,
     pub tensor_view_capture_replay_descriptor_data_size: usize,
     pub tensor_descriptor_size: usize,
@@ -62727,8 +62727,8 @@ impl<'a> PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDescriptorGetTensorInfoARM.html>"]
 #[doc(alias = "VkDescriptorGetTensorInfoARM")]
 pub struct DescriptorGetTensorInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tensor_view: Option<BorrowedHandle<'a, TensorViewARM>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -62779,8 +62779,8 @@ impl<'a> DescriptorGetTensorInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorCaptureDescriptorDataInfoARM.html>"]
 #[doc(alias = "VkTensorCaptureDescriptorDataInfoARM")]
 pub struct TensorCaptureDescriptorDataInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -62823,8 +62823,8 @@ impl<'a> TensorCaptureDescriptorDataInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTensorViewCaptureDescriptorDataInfoARM.html>"]
 #[doc(alias = "VkTensorViewCaptureDescriptorDataInfoARM")]
 pub struct TensorViewCaptureDescriptorDataInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tensor_view: Option<BorrowedHandle<'a, TensorViewARM>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -62867,10 +62867,10 @@ impl<'a> TensorViewCaptureDescriptorDataInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkFrameBoundaryTensorsARM.html>"]
 #[doc(alias = "VkFrameBoundaryTensorsARM")]
 pub struct FrameBoundaryTensorsARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) tensor_count: u32,
-    pub(crate) p_tensors: *const TensorARM,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub tensor_count: u32,
+    pub p_tensors: *const TensorARM,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_tensors", feature = "ext_frame_boundary"))]
@@ -62939,8 +62939,8 @@ impl<'a> FrameBoundaryTensorsARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderModuleIdentifierFeaturesEXT")]
 pub struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_module_identifier: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -63000,8 +63000,8 @@ impl<'a> PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderModuleIdentifierPropertiesEXT")]
 pub struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_module_identifier_algorithm_uuid: [u8; UUID_SIZE as _],
     phantom: PhantomData<&'a ()>,
 }
@@ -63056,10 +63056,10 @@ impl<'a> PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineShaderStageModuleIdentifierCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineShaderStageModuleIdentifierCreateInfoEXT")]
 pub struct PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) identifier_size: u32,
-    pub(crate) p_identifier: *const u8,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub identifier_size: u32,
+    pub p_identifier: *const u8,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_module_identifier")]
@@ -63117,10 +63117,10 @@ impl<'a> PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkShaderModuleIdentifierEXT.html>"]
 #[doc(alias = "VkShaderModuleIdentifierEXT")]
 pub struct ShaderModuleIdentifierEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) identifier_size: u32,
-    pub(crate) identifier: [u8; MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT as _],
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub identifier_size: u32,
+    pub identifier: [u8; MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT as _],
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_module_identifier")]
@@ -63162,8 +63162,8 @@ impl<'a> ShaderModuleIdentifierEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT")]
 pub struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub rasterization_order_color_attachment_access: Bool32,
     pub rasterization_order_depth_attachment_access: Bool32,
     pub rasterization_order_stencil_attachment_access: Bool32,
@@ -63248,8 +63248,8 @@ pub type PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesARM<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceOpticalFlowFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceOpticalFlowFeaturesNV")]
 pub struct PhysicalDeviceOpticalFlowFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub optical_flow: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -63308,8 +63308,8 @@ impl<'a> PhysicalDeviceOpticalFlowFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceOpticalFlowPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceOpticalFlowPropertiesNV")]
 pub struct PhysicalDeviceOpticalFlowPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub supported_output_grid_sizes: OpticalFlowGridSizeFlagsNV,
     pub supported_hint_grid_sizes: OpticalFlowGridSizeFlagsNV,
     pub hint_supported: Bool32,
@@ -63433,8 +63433,8 @@ impl<'a> PhysicalDeviceOpticalFlowPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOpticalFlowImageFormatInfoNV.html>"]
 #[doc(alias = "VkOpticalFlowImageFormatInfoNV")]
 pub struct OpticalFlowImageFormatInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub usage: OpticalFlowUsageFlagsNV,
     phantom: PhantomData<&'a ()>,
 }
@@ -63490,8 +63490,8 @@ impl<'a> OpticalFlowImageFormatInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOpticalFlowImageFormatPropertiesNV.html>"]
 #[doc(alias = "VkOpticalFlowImageFormatPropertiesNV")]
 pub struct OpticalFlowImageFormatPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format: Format,
     phantom: PhantomData<&'a ()>,
 }
@@ -63534,8 +63534,8 @@ impl<'a> OpticalFlowImageFormatPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOpticalFlowSessionCreateInfoNV.html>"]
 #[doc(alias = "VkOpticalFlowSessionCreateInfoNV")]
 pub struct OpticalFlowSessionCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub width: u32,
     pub height: u32,
     pub image_format: Format,
@@ -63634,8 +63634,8 @@ impl<'a> OpticalFlowSessionCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOpticalFlowSessionCreatePrivateDataInfoNV.html>"]
 #[doc(alias = "VkOpticalFlowSessionCreatePrivateDataInfoNV")]
 pub struct OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub id: u32,
     pub size: u32,
     pub p_private_data: VoidPtr,
@@ -63697,11 +63697,11 @@ impl<'a> OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOpticalFlowExecuteInfoNV.html>"]
 #[doc(alias = "VkOpticalFlowExecuteInfoNV")]
 pub struct OpticalFlowExecuteInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: OpticalFlowExecuteFlagsNV,
-    pub(crate) region_count: u32,
-    pub(crate) p_regions: *const Rect2D,
+    pub region_count: u32,
+    pub p_regions: *const Rect2D,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_optical_flow")]
@@ -63758,8 +63758,8 @@ impl<'a> OpticalFlowExecuteInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLegacyDitheringFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceLegacyDitheringFeaturesEXT")]
 pub struct PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub legacy_dithering: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -63812,8 +63812,8 @@ impl<'a> PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalFormatResolveFeaturesANDROID.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalFormatResolveFeaturesANDROID")]
 pub struct PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub external_format_resolve: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -63873,8 +63873,8 @@ impl<'a> PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalFormatResolvePropertiesANDROID.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalFormatResolvePropertiesANDROID")]
 pub struct PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub null_color_attachment_with_external_format_resolve: Bool32,
     pub external_format_resolve_chroma_offset_x: ChromaLocation,
     pub external_format_resolve_chroma_offset_y: ChromaLocation,
@@ -63948,8 +63948,8 @@ impl<'a> PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAndroidHardwareBufferFormatResolvePropertiesANDROID.html>"]
 #[doc(alias = "VkAndroidHardwareBufferFormatResolvePropertiesANDROID")]
 pub struct AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub color_attachment_format: Format,
     phantom: PhantomData<&'a ()>,
 }
@@ -63995,8 +63995,8 @@ impl<'a> AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceAntiLagFeaturesAMD.html>"]
 #[doc(alias = "VkPhysicalDeviceAntiLagFeaturesAMD")]
 pub struct PhysicalDeviceAntiLagFeaturesAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub anti_lag: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -64055,8 +64055,8 @@ impl<'a> PhysicalDeviceAntiLagFeaturesAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAntiLagDataAMD.html>"]
 #[doc(alias = "VkAntiLagDataAMD")]
 pub struct AntiLagDataAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub mode: AntiLagModeAMD,
     pub max_fps: u32,
     pub p_presentation_info: *const AntiLagPresentationInfoAMD<'a>,
@@ -64113,8 +64113,8 @@ impl<'a> AntiLagDataAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAntiLagPresentationInfoAMD.html>"]
 #[doc(alias = "VkAntiLagPresentationInfoAMD")]
 pub struct AntiLagPresentationInfoAMD<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stage: AntiLagStageAMD,
     pub frame_index: u64,
     phantom: PhantomData<&'a ()>,
@@ -64164,8 +64164,8 @@ impl<'a> AntiLagPresentationInfoAMD<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDenseGeometryFormatFeaturesAMDX.html>"]
 #[doc(alias = "VkPhysicalDeviceDenseGeometryFormatFeaturesAMDX")]
 pub struct PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dense_geometry_format: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -64225,8 +64225,8 @@ impl<'a> PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAccelerationStructureDenseGeometryFormatTrianglesDataAMDX.html>"]
 #[doc(alias = "VkAccelerationStructureDenseGeometryFormatTrianglesDataAMDX")]
 pub struct AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub compressed_data: DeviceOrHostAddressConstKHR,
     pub data_size: DeviceSize,
     pub num_triangles: u32,
@@ -64325,8 +64325,8 @@ impl<'a> AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceCapabilitiesPresentId2KHR.html>"]
 #[doc(alias = "VkSurfaceCapabilitiesPresentId2KHR")]
 pub struct SurfaceCapabilitiesPresentId2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_id2_supported: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -64374,10 +64374,10 @@ impl<'a> SurfaceCapabilitiesPresentId2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentId2KHR.html>"]
 #[doc(alias = "VkPresentId2KHR")]
 pub struct PresentId2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
-    pub(crate) p_present_ids: *const u64,
+    pub p_present_ids: *const u64,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_id2")]
@@ -64436,8 +64436,8 @@ impl<'a> PresentId2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePresentId2FeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePresentId2FeaturesKHR")]
 pub struct PhysicalDevicePresentId2FeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_id2: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -64496,8 +64496,8 @@ impl<'a> PhysicalDevicePresentId2FeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfaceCapabilitiesPresentWait2KHR.html>"]
 #[doc(alias = "VkSurfaceCapabilitiesPresentWait2KHR")]
 pub struct SurfaceCapabilitiesPresentWait2KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_wait2_supported: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -64548,8 +64548,8 @@ impl<'a> SurfaceCapabilitiesPresentWait2KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePresentWait2FeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePresentWait2FeaturesKHR")]
 pub struct PhysicalDevicePresentWait2FeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_wait2: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -64608,8 +64608,8 @@ impl<'a> PhysicalDevicePresentWait2FeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPresentWait2InfoKHR.html>"]
 #[doc(alias = "VkPresentWait2InfoKHR")]
 pub struct PresentWait2InfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_id: u64,
     pub timeout: u64,
     phantom: PhantomData<&'a ()>,
@@ -64658,8 +64658,8 @@ impl<'a> PresentWait2InfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingPositionFetchFeaturesKHR")]
 pub struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ray_tracing_position_fetch: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -64713,8 +64713,8 @@ impl<'a> PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderObjectFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderObjectFeaturesEXT")]
 pub struct PhysicalDeviceShaderObjectFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_object: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -64773,8 +64773,8 @@ impl<'a> PhysicalDeviceShaderObjectFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderObjectPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderObjectPropertiesEXT")]
 pub struct PhysicalDeviceShaderObjectPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_binary_uuid: [u8; UUID_SIZE as _],
     pub shader_binary_version: u32,
     phantom: PhantomData<&'a ()>,
@@ -64835,19 +64835,19 @@ impl<'a> PhysicalDeviceShaderObjectPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkShaderCreateInfoEXT.html>"]
 #[doc(alias = "VkShaderCreateInfoEXT")]
 pub struct ShaderCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: ShaderCreateFlagsEXT,
     pub stage: ShaderStageFlags,
     pub next_stage: ShaderStageFlags,
     pub code_type: ShaderCodeTypeEXT,
-    pub(crate) code_size: usize,
-    pub(crate) p_code: VoidPtr,
+    pub code_size: usize,
+    pub p_code: VoidPtr,
     pub p_name: *const c_char,
     pub set_layout_count: u32,
-    pub(crate) p_set_layouts: *const DescriptorSetLayout,
+    pub p_set_layouts: *const DescriptorSetLayout,
     pub push_constant_range_count: u32,
-    pub(crate) p_push_constant_ranges: *const PushConstantRange,
+    pub p_push_constant_ranges: *const PushConstantRange,
     pub p_specialization_info: *const SpecializationInfo<'a>,
     phantom: PhantomData<&'a ()>,
 }
@@ -64987,8 +64987,8 @@ impl<'a> ShaderCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineBinaryFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineBinaryFeaturesKHR")]
 pub struct PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_binaries: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -65047,8 +65047,8 @@ impl<'a> PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineBinaryPropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineBinaryPropertiesKHR")]
 pub struct PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_binary_internal_cache: Bool32,
     pub pipeline_binary_internal_cache_control: Bool32,
     pub pipeline_binary_prefers_internal_cache: Bool32,
@@ -65130,8 +65130,8 @@ impl<'a> PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDevicePipelineBinaryInternalCacheControlKHR.html>"]
 #[doc(alias = "VkDevicePipelineBinaryInternalCacheControlKHR")]
 pub struct DevicePipelineBinaryInternalCacheControlKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub disable_internal_cache: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -65180,8 +65180,8 @@ impl<'a> DevicePipelineBinaryInternalCacheControlKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineBinaryKeyKHR.html>"]
 #[doc(alias = "VkPipelineBinaryKeyKHR")]
 pub struct PipelineBinaryKeyKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub key_size: u32,
     pub key: [u8; MAX_PIPELINE_BINARY_KEY_SIZE_KHR as _],
     phantom: PhantomData<&'a ()>,
@@ -65231,8 +65231,8 @@ impl<'a> PipelineBinaryKeyKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineBinaryDataKHR.html>"]
 #[doc(alias = "VkPipelineBinaryDataKHR")]
 pub struct PipelineBinaryDataKHR<'a> {
-    pub(crate) data_size: usize,
-    pub(crate) p_data: VoidPtr,
+    pub data_size: usize,
+    pub p_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
@@ -65271,9 +65271,9 @@ impl<'a> PipelineBinaryDataKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineBinaryKeysAndDataKHR.html>"]
 #[doc(alias = "VkPipelineBinaryKeysAndDataKHR")]
 pub struct PipelineBinaryKeysAndDataKHR<'a> {
-    pub(crate) binary_count: u32,
-    pub(crate) p_pipeline_binary_keys: *const PipelineBinaryKeyKHR<'a>,
-    pub(crate) p_pipeline_binary_data: *const PipelineBinaryDataKHR<'a>,
+    pub binary_count: u32,
+    pub p_pipeline_binary_keys: *const PipelineBinaryKeyKHR<'a>,
+    pub p_pipeline_binary_data: *const PipelineBinaryDataKHR<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
@@ -65326,8 +65326,8 @@ impl<'a> PipelineBinaryKeysAndDataKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineBinaryCreateInfoKHR.html>"]
 #[doc(alias = "VkPipelineBinaryCreateInfoKHR")]
 pub struct PipelineBinaryCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_keys_and_data_info: *const PipelineBinaryKeysAndDataKHR<'a>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub p_pipeline_create_info: *const PipelineCreateInfoKHR<'a>,
@@ -65387,10 +65387,10 @@ impl<'a> PipelineBinaryCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineBinaryInfoKHR.html>"]
 #[doc(alias = "VkPipelineBinaryInfoKHR")]
 pub struct PipelineBinaryInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) binary_count: u32,
-    pub(crate) p_pipeline_binaries: *const PipelineBinaryKHR,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub binary_count: u32,
+    pub p_pipeline_binaries: *const PipelineBinaryKHR,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
@@ -65460,8 +65460,8 @@ impl<'a> PipelineBinaryInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkReleaseCapturedPipelineDataInfoKHR.html>"]
 #[doc(alias = "VkReleaseCapturedPipelineDataInfoKHR")]
 pub struct ReleaseCapturedPipelineDataInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -65504,8 +65504,8 @@ impl<'a> ReleaseCapturedPipelineDataInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineBinaryDataInfoKHR.html>"]
 #[doc(alias = "VkPipelineBinaryDataInfoKHR")]
 pub struct PipelineBinaryDataInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_binary: Option<BorrowedHandle<'a, PipelineBinaryKHR>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -65548,8 +65548,8 @@ impl<'a> PipelineBinaryDataInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineCreateInfoKHR.html>"]
 #[doc(alias = "VkPipelineCreateInfoKHR")]
 pub struct PipelineCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
@@ -65585,10 +65585,10 @@ impl<'a> PipelineCreateInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineBinaryHandlesInfoKHR.html>"]
 #[doc(alias = "VkPipelineBinaryHandlesInfoKHR")]
 pub struct PipelineBinaryHandlesInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_binary_count: u32,
-    pub(crate) p_pipeline_binaries: *const PipelineBinaryKHR,
+    pub p_pipeline_binaries: *const PipelineBinaryKHR,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
@@ -65651,8 +65651,8 @@ impl<'a> PipelineBinaryHandlesInfoKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTilePropertiesFeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceTilePropertiesFeaturesQCOM")]
 pub struct PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tile_properties: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -65711,8 +65711,8 @@ impl<'a> PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTilePropertiesQCOM.html>"]
 #[doc(alias = "VkTilePropertiesQCOM")]
 pub struct TilePropertiesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tile_size: Extent3D,
     pub apron_size: Extent2D,
     pub origin: Offset2D,
@@ -65769,8 +65769,8 @@ impl<'a> TilePropertiesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceAmigoProfilingFeaturesSEC.html>"]
 #[doc(alias = "VkPhysicalDeviceAmigoProfilingFeaturesSEC")]
 pub struct PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub amigo_profiling: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -65829,8 +65829,8 @@ impl<'a> PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAmigoProfilingSubmitInfoSEC.html>"]
 #[doc(alias = "VkAmigoProfilingSubmitInfoSEC")]
 pub struct AmigoProfilingSubmitInfoSEC<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub first_draw_timestamp: u64,
     pub swap_buffer_timestamp: u64,
     phantom: PhantomData<&'a ()>,
@@ -65882,8 +65882,8 @@ impl<'a> AmigoProfilingSubmitInfoSEC<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfacePresentModeKHR.html>"]
 #[doc(alias = "VkSurfacePresentModeKHR")]
 pub struct SurfacePresentModeKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_mode: PresentModeKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -65936,8 +65936,8 @@ pub type SurfacePresentModeEXT<'a> = SurfacePresentModeKHR<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfacePresentScalingCapabilitiesKHR.html>"]
 #[doc(alias = "VkSurfacePresentScalingCapabilitiesKHR")]
 pub struct SurfacePresentScalingCapabilitiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub supported_present_scaling: PresentScalingFlagsKHR,
     pub supported_present_gravity_x: PresentGravityFlagsKHR,
     pub supported_present_gravity_y: PresentGravityFlagsKHR,
@@ -66018,10 +66018,10 @@ pub type SurfacePresentScalingCapabilitiesEXT<'a> = SurfacePresentScalingCapabil
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSurfacePresentModeCompatibilityKHR.html>"]
 #[doc(alias = "VkSurfacePresentModeCompatibilityKHR")]
 pub struct SurfacePresentModeCompatibilityKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_mode_count: u32,
-    pub(crate) p_present_modes: *const PresentModeKHR,
+    pub p_present_modes: *const PresentModeKHR,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_surface_maintenance1")]
@@ -66088,8 +66088,8 @@ pub type SurfacePresentModeCompatibilityEXT<'a> = SurfacePresentModeCompatibilit
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceSwapchainMaintenance1FeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceSwapchainMaintenance1FeaturesKHR")]
 pub struct PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain_maintenance1: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -66152,10 +66152,10 @@ pub type PhysicalDeviceSwapchainMaintenance1FeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSwapchainPresentFenceInfoKHR.html>"]
 #[doc(alias = "VkSwapchainPresentFenceInfoKHR")]
 pub struct SwapchainPresentFenceInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
-    pub(crate) p_fences: *const Fence,
+    pub p_fences: *const Fence,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
@@ -66216,10 +66216,10 @@ pub type SwapchainPresentFenceInfoEXT<'a> = SwapchainPresentFenceInfoKHR<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSwapchainPresentModesCreateInfoKHR.html>"]
 #[doc(alias = "VkSwapchainPresentModesCreateInfoKHR")]
 pub struct SwapchainPresentModesCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) present_mode_count: u32,
-    pub(crate) p_present_modes: *const PresentModeKHR,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub present_mode_count: u32,
+    pub p_present_modes: *const PresentModeKHR,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
@@ -66278,10 +66278,10 @@ pub type SwapchainPresentModesCreateInfoEXT<'a> = SwapchainPresentModesCreateInf
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSwapchainPresentModeInfoKHR.html>"]
 #[doc(alias = "VkSwapchainPresentModeInfoKHR")]
 pub struct SwapchainPresentModeInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) swapchain_count: u32,
-    pub(crate) p_present_modes: *const PresentModeKHR,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub swapchain_count: u32,
+    pub p_present_modes: *const PresentModeKHR,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
@@ -66337,8 +66337,8 @@ pub type SwapchainPresentModeInfoEXT<'a> = SwapchainPresentModeInfoKHR<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSwapchainPresentScalingCreateInfoKHR.html>"]
 #[doc(alias = "VkSwapchainPresentScalingCreateInfoKHR")]
 pub struct SwapchainPresentScalingCreateInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub scaling_behavior: PresentScalingFlagsKHR,
     pub present_gravity_x: PresentGravityFlagsKHR,
     pub present_gravity_y: PresentGravityFlagsKHR,
@@ -66402,11 +66402,11 @@ pub type SwapchainPresentScalingCreateInfoEXT<'a> = SwapchainPresentScalingCreat
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkReleaseSwapchainImagesInfoKHR.html>"]
 #[doc(alias = "VkReleaseSwapchainImagesInfoKHR")]
 pub struct ReleaseSwapchainImagesInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
-    pub(crate) image_index_count: u32,
-    pub(crate) p_image_indices: *const u32,
+    pub image_index_count: u32,
+    pub p_image_indices: *const u32,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
@@ -66465,8 +66465,8 @@ pub type ReleaseSwapchainImagesInfoEXT<'a> = ReleaseSwapchainImagesInfoKHR<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM")]
 pub struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub multiview_per_view_viewports: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -66523,8 +66523,8 @@ impl<'a> PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingInvocationReorderPropertiesNV")]
 pub struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ray_tracing_invocation_reorder_reordering_hint: RayTracingInvocationReorderModeNV,
     phantom: PhantomData<&'a ()>,
 }
@@ -66585,8 +66585,8 @@ impl<'a> PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingInvocationReorderFeaturesNV")]
 pub struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ray_tracing_invocation_reorder: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -66649,8 +66649,8 @@ impl<'a> PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCooperativeVectorPropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCooperativeVectorPropertiesNV")]
 pub struct PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cooperative_vector_supported_stages: ShaderStageFlags,
     pub cooperative_vector_training_float16_accumulation: Bool32,
     pub cooperative_vector_training_float32_accumulation: Bool32,
@@ -66732,8 +66732,8 @@ impl<'a> PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCooperativeVectorFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCooperativeVectorFeaturesNV")]
 pub struct PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cooperative_vector: Bool32,
     pub cooperative_vector_training: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -66799,8 +66799,8 @@ impl<'a> PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCooperativeVectorPropertiesNV.html>"]
 #[doc(alias = "VkCooperativeVectorPropertiesNV")]
 pub struct CooperativeVectorPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub input_type: ComponentTypeKHR,
     pub input_interpretation: ComponentTypeKHR,
     pub matrix_interpretation: ComponentTypeKHR,
@@ -66878,8 +66878,8 @@ impl<'a> CooperativeVectorPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkConvertCooperativeVectorMatrixInfoNV.html>"]
 #[doc(alias = "VkConvertCooperativeVectorMatrixInfoNV")]
 pub struct ConvertCooperativeVectorMatrixInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_size: usize,
     pub src_data: DeviceOrHostAddressConstKHR,
     pub p_dst_size: *const usize,
@@ -66998,8 +66998,8 @@ impl<'a> ConvertCooperativeVectorMatrixInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceExtendedSparseAddressSpaceFeaturesNV")]
 pub struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub extended_sparse_address_space: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -67052,8 +67052,8 @@ impl<'a> PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExtendedSparseAddressSpacePropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceExtendedSparseAddressSpacePropertiesNV")]
 pub struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub extended_sparse_address_space_size: DeviceSize,
     pub extended_sparse_image_usage_flags: ImageUsageFlags,
     pub extended_sparse_buffer_usage_flags: BufferUsageFlags,
@@ -67119,8 +67119,8 @@ impl<'a> PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceMutableDescriptorTypeFeaturesEXT")]
 pub struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub mutable_descriptor_type: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -67183,8 +67183,8 @@ pub type PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMutableDescriptorTypeListEXT.html>"]
 #[doc(alias = "VkMutableDescriptorTypeListEXT")]
 pub struct MutableDescriptorTypeListEXT<'a> {
-    pub(crate) descriptor_type_count: u32,
-    pub(crate) p_descriptor_types: *const DescriptorType,
+    pub descriptor_type_count: u32,
+    pub p_descriptor_types: *const DescriptorType,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_mutable_descriptor_type")]
@@ -67231,10 +67231,10 @@ pub type MutableDescriptorTypeListVALVE<'a> = MutableDescriptorTypeListEXT<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMutableDescriptorTypeCreateInfoEXT.html>"]
 #[doc(alias = "VkMutableDescriptorTypeCreateInfoEXT")]
 pub struct MutableDescriptorTypeCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) mutable_descriptor_type_list_count: u32,
-    pub(crate) p_mutable_descriptor_type_lists: *const MutableDescriptorTypeListEXT<'a>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub mutable_descriptor_type_list_count: u32,
+    pub p_mutable_descriptor_type_lists: *const MutableDescriptorTypeListEXT<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_mutable_descriptor_type")]
@@ -67305,8 +67305,8 @@ pub type MutableDescriptorTypeCreateInfoVALVE<'a> = MutableDescriptorTypeCreateI
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLegacyVertexAttributesFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceLegacyVertexAttributesFeaturesEXT")]
 pub struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub legacy_vertex_attributes: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -67359,8 +67359,8 @@ impl<'a> PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLegacyVertexAttributesPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceLegacyVertexAttributesPropertiesEXT")]
 pub struct PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub native_unaligned_performance: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -67409,10 +67409,10 @@ impl<'a> PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkLayerSettingsCreateInfoEXT.html>"]
 #[doc(alias = "VkLayerSettingsCreateInfoEXT")]
 pub struct LayerSettingsCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) setting_count: u32,
-    pub(crate) p_settings: *const LayerSettingEXT<'a>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub setting_count: u32,
+    pub p_settings: *const LayerSettingEXT<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_layer_settings")]
@@ -67470,7 +67470,7 @@ pub struct LayerSettingEXT<'a> {
     pub p_setting_name: *const c_char,
     pub ty: LayerSettingTypeEXT,
     pub value_count: u32,
-    pub(crate) p_values: VoidPtr,
+    pub p_values: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_layer_settings")]
@@ -67531,8 +67531,8 @@ impl<'a> LayerSettingEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderCoreBuiltinsFeaturesARM")]
 pub struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_core_builtins: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -67585,8 +67585,8 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderCoreBuiltinsPropertiesARM")]
 pub struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_core_mask: u64,
     pub shader_core_count: u32,
     pub shader_warps_per_core: u32,
@@ -67648,8 +67648,8 @@ impl<'a> PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT")]
 pub struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_library_group_handles: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -67705,8 +67705,8 @@ impl<'a> PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT")]
 pub struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dynamic_rendering_unused_attachments: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -67765,8 +67765,8 @@ impl<'a> PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkLatencySleepModeInfoNV.html>"]
 #[doc(alias = "VkLatencySleepModeInfoNV")]
 pub struct LatencySleepModeInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub low_latency_mode: Bool32,
     pub low_latency_boost: Bool32,
     pub minimum_interval_us: u32,
@@ -67823,8 +67823,8 @@ impl<'a> LatencySleepModeInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkLatencySleepInfoNV.html>"]
 #[doc(alias = "VkLatencySleepInfoNV")]
 pub struct LatencySleepInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub signal_semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub value: u64,
     phantom: PhantomData<&'a ()>,
@@ -67874,8 +67874,8 @@ impl<'a> LatencySleepInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSetLatencyMarkerInfoNV.html>"]
 #[doc(alias = "VkSetLatencyMarkerInfoNV")]
 pub struct SetLatencyMarkerInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_id: u64,
     pub marker: LatencyMarkerNV,
     phantom: PhantomData<&'a ()>,
@@ -67925,10 +67925,10 @@ impl<'a> SetLatencyMarkerInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGetLatencyMarkerInfoNV.html>"]
 #[doc(alias = "VkGetLatencyMarkerInfoNV")]
 pub struct GetLatencyMarkerInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub timing_count: u32,
-    pub(crate) p_timings: *const LatencyTimingsFrameReportNV<'a>,
+    pub p_timings: *const LatencyTimingsFrameReportNV<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
@@ -67985,8 +67985,8 @@ impl<'a> GetLatencyMarkerInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkLatencyTimingsFrameReportNV.html>"]
 #[doc(alias = "VkLatencyTimingsFrameReportNV")]
 pub struct LatencyTimingsFrameReportNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_id: u64,
     pub input_sample_time_us: u64,
     pub sim_start_time_us: u64,
@@ -68120,8 +68120,8 @@ impl<'a> LatencyTimingsFrameReportNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkLatencySubmissionPresentIdNV.html>"]
 #[doc(alias = "VkLatencySubmissionPresentIdNV")]
 pub struct LatencySubmissionPresentIdNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_id: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -68171,8 +68171,8 @@ impl<'a> LatencySubmissionPresentIdNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSwapchainLatencyCreateInfoNV.html>"]
 #[doc(alias = "VkSwapchainLatencyCreateInfoNV")]
 pub struct SwapchainLatencyCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub latency_mode_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -68220,8 +68220,8 @@ impl<'a> SwapchainLatencyCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOutOfBandQueueTypeInfoNV.html>"]
 #[doc(alias = "VkOutOfBandQueueTypeInfoNV")]
 pub struct OutOfBandQueueTypeInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub queue_type: OutOfBandQueueTypeNV,
     phantom: PhantomData<&'a ()>,
 }
@@ -68264,10 +68264,10 @@ impl<'a> OutOfBandQueueTypeInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkLatencySurfaceCapabilitiesNV.html>"]
 #[doc(alias = "VkLatencySurfaceCapabilitiesNV")]
 pub struct LatencySurfaceCapabilitiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_mode_count: u32,
-    pub(crate) p_present_modes: *const PresentModeKHR,
+    pub p_present_modes: *const PresentModeKHR,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
@@ -68332,8 +68332,8 @@ impl<'a> LatencySurfaceCapabilitiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCooperativeMatrixPropertiesKHR.html>"]
 #[doc(alias = "VkCooperativeMatrixPropertiesKHR")]
 pub struct CooperativeMatrixPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub msize: u32,
     pub nsize: u32,
     pub ksize: u32,
@@ -68432,8 +68432,8 @@ impl<'a> CooperativeMatrixPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCooperativeMatrixFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceCooperativeMatrixFeaturesKHR")]
 pub struct PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cooperative_matrix: Bool32,
     pub cooperative_matrix_robust_buffer_access: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -68499,8 +68499,8 @@ impl<'a> PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCooperativeMatrixPropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceCooperativeMatrixPropertiesKHR")]
 pub struct PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cooperative_matrix_supported_stages: ShaderStageFlags,
     phantom: PhantomData<&'a ()>,
 }
@@ -68555,8 +68555,8 @@ impl<'a> PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDataGraphFeaturesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceDataGraphFeaturesARM")]
 pub struct PhysicalDeviceDataGraphFeaturesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub data_graph: Bool32,
     pub data_graph_update_after_bind: Bool32,
     pub data_graph_specialization_constants: Bool32,
@@ -68643,8 +68643,8 @@ impl<'a> PhysicalDeviceDataGraphFeaturesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineConstantARM.html>"]
 #[doc(alias = "VkDataGraphPipelineConstantARM")]
 pub struct DataGraphPipelineConstantARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub id: u32,
     pub p_constant_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -68694,8 +68694,8 @@ impl<'a> DataGraphPipelineConstantARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineResourceInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineResourceInfoARM")]
 pub struct DataGraphPipelineResourceInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub descriptor_set: u32,
     pub binding: u32,
     pub array_element: u32,
@@ -68752,8 +68752,8 @@ impl<'a> DataGraphPipelineResourceInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineCompilerControlCreateInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineCompilerControlCreateInfoARM")]
 pub struct DataGraphPipelineCompilerControlCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub p_vendor_options: *const c_char,
     phantom: PhantomData<&'a ()>,
 }
@@ -68802,12 +68802,12 @@ impl<'a> DataGraphPipelineCompilerControlCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineCreateInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineCreateInfoARM")]
 pub struct DataGraphPipelineCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: PipelineCreateFlags2KHR,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
-    pub(crate) resource_info_count: u32,
-    pub(crate) p_resource_infos: *const DataGraphPipelineResourceInfoARM<'a>,
+    pub resource_info_count: u32,
+    pub p_resource_infos: *const DataGraphPipelineResourceInfoARM<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
@@ -68874,13 +68874,13 @@ impl<'a> DataGraphPipelineCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineShaderModuleCreateInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineShaderModuleCreateInfoARM")]
 pub struct DataGraphPipelineShaderModuleCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub module: Option<BorrowedHandle<'a, ShaderModule>>,
     pub p_name: *const c_char,
     pub p_specialization_info: *const SpecializationInfo<'a>,
     pub constant_count: u32,
-    pub(crate) p_constants: *const DataGraphPipelineConstantARM<'a>,
+    pub p_constants: *const DataGraphPipelineConstantARM<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
@@ -68963,8 +68963,8 @@ impl<'a> DataGraphPipelineShaderModuleCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineSessionCreateInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineSessionCreateInfoARM")]
 pub struct DataGraphPipelineSessionCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: DataGraphPipelineSessionCreateFlagsARM,
     pub data_graph_pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
@@ -69014,8 +69014,8 @@ impl<'a> DataGraphPipelineSessionCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineSessionBindPointRequirementsInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineSessionBindPointRequirementsInfoARM")]
 pub struct DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub session: Option<BorrowedHandle<'a, DataGraphPipelineSessionARM>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -69062,8 +69062,8 @@ impl<'a> DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineSessionBindPointRequirementARM.html>"]
 #[doc(alias = "VkDataGraphPipelineSessionBindPointRequirementARM")]
 pub struct DataGraphPipelineSessionBindPointRequirementARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub bind_point: DataGraphPipelineSessionBindPointARM,
     pub bind_point_type: DataGraphPipelineSessionBindPointTypeARM,
     pub num_objects: u32,
@@ -69121,8 +69121,8 @@ impl<'a> DataGraphPipelineSessionBindPointRequirementARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineSessionMemoryRequirementsInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineSessionMemoryRequirementsInfoARM")]
 pub struct DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub session: Option<BorrowedHandle<'a, DataGraphPipelineSessionARM>>,
     pub bind_point: DataGraphPipelineSessionBindPointARM,
     pub object_index: u32,
@@ -69180,8 +69180,8 @@ impl<'a> DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindDataGraphPipelineSessionMemoryInfoARM.html>"]
 #[doc(alias = "VkBindDataGraphPipelineSessionMemoryInfoARM")]
 pub struct BindDataGraphPipelineSessionMemoryInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub session: Option<BorrowedHandle<'a, DataGraphPipelineSessionARM>>,
     pub bind_point: DataGraphPipelineSessionBindPointARM,
     pub object_index: u32,
@@ -69252,8 +69252,8 @@ impl<'a> BindDataGraphPipelineSessionMemoryInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineInfoARM")]
 pub struct DataGraphPipelineInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub data_graph_pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -69296,12 +69296,12 @@ impl<'a> DataGraphPipelineInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelinePropertyQueryResultARM.html>"]
 #[doc(alias = "VkDataGraphPipelinePropertyQueryResultARM")]
 pub struct DataGraphPipelinePropertyQueryResultARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub property: DataGraphPipelinePropertyARM,
     pub is_text: Bool32,
     pub data_size: usize,
-    pub(crate) p_data: VoidPtr,
+    pub p_data: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
@@ -69370,10 +69370,10 @@ impl<'a> DataGraphPipelinePropertyQueryResultARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineIdentifierCreateInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineIdentifierCreateInfoARM")]
 pub struct DataGraphPipelineIdentifierCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) identifier_size: u32,
-    pub(crate) p_identifier: *const u8,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub identifier_size: u32,
+    pub p_identifier: *const u8,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
@@ -69430,8 +69430,8 @@ impl<'a> DataGraphPipelineIdentifierCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineDispatchInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineDispatchInfoARM")]
 pub struct DataGraphPipelineDispatchInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: DataGraphPipelineDispatchFlagsARM,
     phantom: PhantomData<&'a ()>,
 }
@@ -69509,8 +69509,8 @@ impl PhysicalDeviceDataGraphProcessingEngineARM {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueueFamilyDataGraphPropertiesARM.html>"]
 #[doc(alias = "VkQueueFamilyDataGraphPropertiesARM")]
 pub struct QueueFamilyDataGraphPropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub engine: PhysicalDeviceDataGraphProcessingEngineARM,
     pub operation: PhysicalDeviceDataGraphOperationSupportARM,
     phantom: PhantomData<&'a ()>,
@@ -69560,10 +69560,10 @@ impl<'a> QueueFamilyDataGraphPropertiesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphProcessingEngineCreateInfoARM.html>"]
 #[doc(alias = "VkDataGraphProcessingEngineCreateInfoARM")]
 pub struct DataGraphProcessingEngineCreateInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) processing_engine_count: u32,
-    pub(crate) p_processing_engines: *const PhysicalDeviceDataGraphProcessingEngineARM,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub processing_engine_count: u32,
+    pub p_processing_engines: *const PhysicalDeviceDataGraphProcessingEngineARM,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
@@ -69636,8 +69636,8 @@ impl<'a> DataGraphProcessingEngineCreateInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM.html>"]
 #[doc(alias = "VkPhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM")]
 pub struct PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub queue_family_index: u32,
     pub engine_type: PhysicalDeviceDataGraphProcessingEngineTypeARM,
     phantom: PhantomData<&'a ()>,
@@ -69693,8 +69693,8 @@ impl<'a> PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueueFamilyDataGraphProcessingEnginePropertiesARM.html>"]
 #[doc(alias = "VkQueueFamilyDataGraphProcessingEnginePropertiesARM")]
 pub struct QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub foreign_semaphore_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub foreign_memory_handle_types: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -69750,7 +69750,7 @@ impl<'a> QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
 #[doc(alias = "VkPhysicalDeviceDataGraphOperationSupportARM")]
 pub struct PhysicalDeviceDataGraphOperationSupportARM {
     pub operation_type: PhysicalDeviceDataGraphOperationTypeARM,
-    pub(crate) name: [c_char; MAX_PHYSICAL_DEVICE_DATA_GRAPH_OPERATION_SET_NAME_SIZE_ARM as _],
+    pub name: [c_char; MAX_PHYSICAL_DEVICE_DATA_GRAPH_OPERATION_SET_NAME_SIZE_ARM as _],
     pub version: u32,
 }
 #[cfg(feature = "ext_data_graph")]
@@ -69797,8 +69797,8 @@ impl PhysicalDeviceDataGraphOperationSupportARM {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM.html>"]
 #[doc(alias = "VkDataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM")]
 pub struct DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub dimension: u32,
     pub zero_count: u32,
     pub group_size: u32,
@@ -69869,8 +69869,8 @@ impl<'a> DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM")]
 pub struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub multiview_per_view_render_areas: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -69933,10 +69933,10 @@ impl<'a> PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMultiviewPerViewRenderAreasRenderPassBeginInfoQCOM.html>"]
 #[doc(alias = "VkMultiviewPerViewRenderAreasRenderPassBeginInfoQCOM")]
 pub struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) per_view_render_area_count: u32,
-    pub(crate) p_per_view_render_areas: *const Rect2D,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub per_view_render_area_count: u32,
+    pub p_per_view_render_areas: *const Rect2D,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_multiview_per_view_render_areas")]
@@ -70014,8 +70014,8 @@ impl<'a> MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceComputeShaderDerivativesFeaturesKHR")]
 pub struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub compute_derivative_group_quads: Bool32,
     pub compute_derivative_group_linear: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -70077,8 +70077,8 @@ pub type PhysicalDeviceComputeShaderDerivativesFeaturesNV<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceComputeShaderDerivativesPropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceComputeShaderDerivativesPropertiesKHR")]
 pub struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub mesh_and_task_shader_derivatives: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -70129,8 +70129,8 @@ impl<'a> PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePerStageDescriptorSetFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDevicePerStageDescriptorSetFeaturesNV")]
 pub struct PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub per_stage_descriptor_set: Bool32,
     pub dynamic_pipeline_layout: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -70191,8 +70191,8 @@ impl<'a> PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageProcessing2FeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceImageProcessing2FeaturesQCOM")]
 pub struct PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub texture_block_match2: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -70251,8 +70251,8 @@ impl<'a> PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageProcessing2PropertiesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceImageProcessing2PropertiesQCOM")]
 pub struct PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_block_match_window: Extent2D,
     phantom: PhantomData<&'a ()>,
 }
@@ -70307,8 +70307,8 @@ impl<'a> PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerBlockMatchWindowCreateInfoQCOM.html>"]
 #[doc(alias = "VkSamplerBlockMatchWindowCreateInfoQCOM")]
 pub struct SamplerBlockMatchWindowCreateInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub window_extent: Extent2D,
     pub window_compare_mode: BlockMatchWindowCompareModeQCOM,
     phantom: PhantomData<&'a ()>,
@@ -70363,8 +70363,8 @@ impl<'a> SamplerBlockMatchWindowCreateInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCubicWeightsFeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceCubicWeightsFeaturesQCOM")]
 pub struct PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub selectable_cubic_weights: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -70423,8 +70423,8 @@ impl<'a> PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerCubicWeightsCreateInfoQCOM.html>"]
 #[doc(alias = "VkSamplerCubicWeightsCreateInfoQCOM")]
 pub struct SamplerCubicWeightsCreateInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cubic_weights: CubicFilterWeightsQCOM,
     phantom: PhantomData<&'a ()>,
 }
@@ -70472,8 +70472,8 @@ impl<'a> SamplerCubicWeightsCreateInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBlitImageCubicWeightsInfoQCOM.html>"]
 #[doc(alias = "VkBlitImageCubicWeightsInfoQCOM")]
 pub struct BlitImageCubicWeightsInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cubic_weights: CubicFilterWeightsQCOM,
     phantom: PhantomData<&'a ()>,
 }
@@ -70521,8 +70521,8 @@ impl<'a> BlitImageCubicWeightsInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceYcbcrDegammaFeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceYcbcrDegammaFeaturesQCOM")]
 pub struct PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ycbcr_degamma: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -70581,8 +70581,8 @@ impl<'a> PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM.html>"]
 #[doc(alias = "VkSamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM")]
 pub struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub enable_ydegamma: Bool32,
     pub enable_cb_cr_degamma: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -70640,8 +70640,8 @@ impl<'a> SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCubicClampFeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceCubicClampFeaturesQCOM")]
 pub struct PhysicalDeviceCubicClampFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cubic_range_clamp: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -70694,8 +70694,8 @@ impl<'a> PhysicalDeviceCubicClampFeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT")]
 pub struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub attachment_feedback_loop_dynamic_state: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -70760,8 +70760,8 @@ impl<'a> PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceUnifiedImageLayoutsFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceUnifiedImageLayoutsFeaturesKHR")]
 pub struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub unified_image_layouts: Bool32,
     pub unified_image_layouts_video: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -70831,8 +70831,8 @@ impl<'a> PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkAttachmentFeedbackLoopInfoEXT.html>"]
 #[doc(alias = "VkAttachmentFeedbackLoopInfoEXT")]
 pub struct AttachmentFeedbackLoopInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub feedback_loop_enable: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -70904,8 +70904,8 @@ impl<'a> AttachmentFeedbackLoopInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkScreenBufferPropertiesQNX.html>"]
 #[doc(alias = "VkScreenBufferPropertiesQNX")]
 pub struct ScreenBufferPropertiesQNX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub allocation_size: DeviceSize,
     pub memory_type_bits: u32,
     phantom: PhantomData<&'a ()>,
@@ -70955,8 +70955,8 @@ impl<'a> ScreenBufferPropertiesQNX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkScreenBufferFormatPropertiesQNX.html>"]
 #[doc(alias = "VkScreenBufferFormatPropertiesQNX")]
 pub struct ScreenBufferFormatPropertiesQNX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format: Format,
     pub external_format: u64,
     pub screen_usage: u64,
@@ -71063,8 +71063,8 @@ impl<'a> ScreenBufferFormatPropertiesQNX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportScreenBufferInfoQNX.html>"]
 #[doc(alias = "VkImportScreenBufferInfoQNX")]
 pub struct ImportScreenBufferInfoQNX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub buffer: *const VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
@@ -71109,8 +71109,8 @@ impl<'a> ImportScreenBufferInfoQNX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalFormatQNX.html>"]
 #[doc(alias = "VkExternalFormatQNX")]
 pub struct ExternalFormatQNX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub external_format: u64,
     phantom: PhantomData<&'a ()>,
 }
@@ -71163,8 +71163,8 @@ impl<'a> ExternalFormatQNX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalMemoryScreenBufferFeaturesQNX.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalMemoryScreenBufferFeaturesQNX")]
 pub struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub screen_buffer_import: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -71227,8 +71227,8 @@ impl<'a> PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLayeredDriverPropertiesMSFT.html>"]
 #[doc(alias = "VkPhysicalDeviceLayeredDriverPropertiesMSFT")]
 pub struct PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub underlying_api: LayeredDriverUnderlyingApiMSFT,
     phantom: PhantomData<&'a ()>,
 }
@@ -71282,8 +71282,8 @@ impl<'a> PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCalibratedTimestampInfoKHR.html>"]
 #[doc(alias = "VkCalibratedTimestampInfoKHR")]
 pub struct CalibratedTimestampInfoKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub time_domain: TimeDomainKHR,
     phantom: PhantomData<&'a ()>,
 }
@@ -71328,14 +71328,14 @@ pub type CalibratedTimestampInfoEXT<'a> = CalibratedTimestampInfoKHR<'a>;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSetDescriptorBufferOffsetsInfoEXT.html>"]
 #[doc(alias = "VkSetDescriptorBufferOffsetsInfoEXT")]
 pub struct SetDescriptorBufferOffsetsInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stage_flags: ShaderStageFlags,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub first_set: u32,
-    pub(crate) set_count: u32,
-    pub(crate) p_buffer_indices: *const u32,
-    pub(crate) p_offsets: *const DeviceSize,
+    pub set_count: u32,
+    pub p_buffer_indices: *const u32,
+    pub p_offsets: *const DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
@@ -71417,8 +71417,8 @@ impl<'a> SetDescriptorBufferOffsetsInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBindDescriptorBufferEmbeddedSamplersInfoEXT.html>"]
 #[doc(alias = "VkBindDescriptorBufferEmbeddedSamplersInfoEXT")]
 pub struct BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stage_flags: ShaderStageFlags,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
@@ -71475,8 +71475,8 @@ impl<'a> BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDescriptorPoolOverallocationFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceDescriptorPoolOverallocationFeaturesNV")]
 pub struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub descriptor_pool_overallocation: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -71533,8 +71533,8 @@ impl<'a> PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTileMemoryHeapFeaturesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceTileMemoryHeapFeaturesQCOM")]
 pub struct PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub tile_memory_heap: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -71593,8 +71593,8 @@ impl<'a> PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceTileMemoryHeapPropertiesQCOM.html>"]
 #[doc(alias = "VkPhysicalDeviceTileMemoryHeapPropertiesQCOM")]
 pub struct PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub queue_submit_boundary: Bool32,
     pub tile_buffer_transfers: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -71655,8 +71655,8 @@ impl<'a> PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTileMemoryRequirementsQCOM.html>"]
 #[doc(alias = "VkTileMemoryRequirementsQCOM")]
 pub struct TileMemoryRequirementsQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub size: DeviceSize,
     pub alignment: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -71718,8 +71718,8 @@ impl<'a> TileMemoryRequirementsQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTileMemoryBindInfoQCOM.html>"]
 #[doc(alias = "VkTileMemoryBindInfoQCOM")]
 pub struct TileMemoryBindInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -71767,8 +71767,8 @@ impl<'a> TileMemoryBindInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkTileMemorySizeInfoQCOM.html>"]
 #[doc(alias = "VkTileMemorySizeInfoQCOM")]
 pub struct TileMemorySizeInfoQCOM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub size: DeviceSize,
     phantom: PhantomData<&'a ()>,
 }
@@ -71830,8 +71830,8 @@ impl<'a> TileMemorySizeInfoQCOM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplaySurfaceStereoCreateInfoNV.html>"]
 #[doc(alias = "VkDisplaySurfaceStereoCreateInfoNV")]
 pub struct DisplaySurfaceStereoCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub stereo_type: DisplaySurfaceStereoTypeNV,
     phantom: PhantomData<&'a ()>,
 }
@@ -71879,8 +71879,8 @@ impl<'a> DisplaySurfaceStereoCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkDisplayModeStereoPropertiesNV.html>"]
 #[doc(alias = "VkDisplayModeStereoPropertiesNV")]
 pub struct DisplayModeStereoPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub hdmi3_dsupported: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -71930,8 +71930,8 @@ impl<'a> DisplayModeStereoPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRawAccessChainsFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceRawAccessChainsFeaturesNV")]
 pub struct PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_raw_access_chains: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -71984,8 +71984,8 @@ impl<'a> PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalComputeQueueDeviceCreateInfoNV.html>"]
 #[doc(alias = "VkExternalComputeQueueDeviceCreateInfoNV")]
 pub struct ExternalComputeQueueDeviceCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub reserved_external_queues: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -72033,8 +72033,8 @@ impl<'a> ExternalComputeQueueDeviceCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalComputeQueueCreateInfoNV.html>"]
 #[doc(alias = "VkExternalComputeQueueCreateInfoNV")]
 pub struct ExternalComputeQueueCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub preferred_queue: Option<BorrowedHandle<'a, Queue>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -72077,8 +72077,8 @@ impl<'a> ExternalComputeQueueCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkExternalComputeQueueDataParamsNV.html>"]
 #[doc(alias = "VkExternalComputeQueueDataParamsNV")]
 pub struct ExternalComputeQueueDataParamsNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_index: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -72121,8 +72121,8 @@ impl<'a> ExternalComputeQueueDataParamsNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceExternalComputeQueuePropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceExternalComputeQueuePropertiesNV")]
 pub struct PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub external_data_size: u32,
     pub max_external_queues: u32,
     phantom: PhantomData<&'a ()>,
@@ -72183,8 +72183,8 @@ impl<'a> PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR")]
 pub struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_relaxed_extended_instruction: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -72242,8 +72242,8 @@ impl<'a> PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCommandBufferInheritanceFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCommandBufferInheritanceFeaturesNV")]
 pub struct PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub command_buffer_inheritance: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -72297,8 +72297,8 @@ impl<'a> PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance7FeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance7FeaturesKHR")]
 pub struct PhysicalDeviceMaintenance7FeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub maintenance7: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -72357,8 +72357,8 @@ impl<'a> PhysicalDeviceMaintenance7FeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance7PropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance7PropertiesKHR")]
 pub struct PhysicalDeviceMaintenance7PropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub robust_fragment_shading_rate_attachment_access: Bool32,
     pub separate_depth_stencil_attachment_access: Bool32,
     pub max_descriptor_set_total_uniform_buffers_dynamic: u32,
@@ -72473,10 +72473,10 @@ impl<'a> PhysicalDeviceMaintenance7PropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLayeredApiPropertiesListKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceLayeredApiPropertiesListKHR")]
 pub struct PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub layered_api_count: u32,
-    pub(crate) p_layered_apis: *const PhysicalDeviceLayeredApiPropertiesKHR<'a>,
+    pub p_layered_apis: *const PhysicalDeviceLayeredApiPropertiesKHR<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance7")]
@@ -72547,8 +72547,8 @@ impl<'a> PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLayeredApiPropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceLayeredApiPropertiesKHR")]
 pub struct PhysicalDeviceLayeredApiPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vendor_id: u32,
     pub device_id: u32,
     pub layered_api: PhysicalDeviceLayeredApiKHR,
@@ -72612,8 +72612,8 @@ impl<'a> PhysicalDeviceLayeredApiPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceLayeredApiVulkanPropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceLayeredApiVulkanPropertiesKHR")]
 pub struct PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub properties: PhysicalDeviceProperties2<'a>,
     phantom: PhantomData<&'a ()>,
 }
@@ -72661,8 +72661,8 @@ impl<'a> PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderAtomicFloat16VectorFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderAtomicFloat16VectorFeaturesNV")]
 pub struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_float16_vector_atomics: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -72715,8 +72715,8 @@ impl<'a> PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderReplicatedCompositesFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderReplicatedCompositesFeaturesEXT")]
 pub struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_replicated_composites: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -72772,8 +72772,8 @@ impl<'a> PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceShaderFloat8FeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceShaderFloat8FeaturesEXT")]
 pub struct PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_float8: Bool32,
     pub shader_float8_cooperative_matrix: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -72832,8 +72832,8 @@ impl<'a> PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRayTracingValidationFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceRayTracingValidationFeaturesNV")]
 pub struct PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ray_tracing_validation: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -72887,8 +72887,8 @@ impl<'a> PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceClusterAccelerationStructureFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceClusterAccelerationStructureFeaturesNV")]
 pub struct PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cluster_acceleration_structure: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -72951,8 +72951,8 @@ impl<'a> PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceClusterAccelerationStructurePropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceClusterAccelerationStructurePropertiesNV")]
 pub struct PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_vertices_per_cluster: u32,
     pub max_triangles_per_cluster: u32,
     pub cluster_scratch_byte_alignment: u32,
@@ -73059,8 +73059,8 @@ impl<'a> PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkClusterAccelerationStructureClustersBottomLevelInputNV.html>"]
 #[doc(alias = "VkClusterAccelerationStructureClustersBottomLevelInputNV")]
 pub struct ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_total_cluster_count: u32,
     pub max_cluster_count_per_acceleration_structure: u32,
     phantom: PhantomData<&'a ()>,
@@ -73114,8 +73114,8 @@ impl<'a> ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkClusterAccelerationStructureTriangleClusterInputNV.html>"]
 #[doc(alias = "VkClusterAccelerationStructureTriangleClusterInputNV")]
 pub struct ClusterAccelerationStructureTriangleClusterInputNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vertex_format: Format,
     pub max_geometry_index_value: u32,
     pub max_cluster_unique_geometry_count: u32,
@@ -73208,8 +73208,8 @@ impl<'a> ClusterAccelerationStructureTriangleClusterInputNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkClusterAccelerationStructureMoveObjectsInputNV.html>"]
 #[doc(alias = "VkClusterAccelerationStructureMoveObjectsInputNV")]
 pub struct ClusterAccelerationStructureMoveObjectsInputNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: ClusterAccelerationStructureTypeNV,
     pub no_move_overlap: Bool32,
     pub max_moved_bytes: DeviceSize,
@@ -73286,8 +73286,8 @@ impl<'a> Default for ClusterAccelerationStructureOpInputNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkClusterAccelerationStructureInputInfoNV.html>"]
 #[doc(alias = "VkClusterAccelerationStructureInputInfoNV")]
 pub struct ClusterAccelerationStructureInputInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_acceleration_structure_count: u32,
     pub flags: BuildAccelerationStructureFlagsKHR,
     pub op_type: ClusterAccelerationStructureOpTypeNV,
@@ -73358,8 +73358,8 @@ impl<'a> ClusterAccelerationStructureInputInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkClusterAccelerationStructureCommandsInfoNV.html>"]
 #[doc(alias = "VkClusterAccelerationStructureCommandsInfoNV")]
 pub struct ClusterAccelerationStructureCommandsInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub input: ClusterAccelerationStructureInputInfoNV<'a>,
     pub dst_implicit_data: DeviceAddress,
     pub scratch_data: DeviceAddress,
@@ -73987,8 +73987,8 @@ impl ClusterAccelerationStructureGetTemplateIndicesInfoNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV.html>"]
 #[doc(alias = "VkRayTracingPipelineClusterAccelerationStructureCreateInfoNV")]
 pub struct RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub allow_cluster_acceleration_structure: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -74066,8 +74066,8 @@ impl<'a> RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePartitionedAccelerationStructureFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDevicePartitionedAccelerationStructureFeaturesNV")]
 pub struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub partitioned_acceleration_structure: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -74132,8 +74132,8 @@ impl<'a> PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePartitionedAccelerationStructurePropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDevicePartitionedAccelerationStructurePropertiesNV")]
 pub struct PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_partition_count: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -74193,8 +74193,8 @@ impl<'a> PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPartitionedAccelerationStructureFlagsNV.html>"]
 #[doc(alias = "VkPartitionedAccelerationStructureFlagsNV")]
 pub struct PartitionedAccelerationStructureFlagsNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub enable_partition_translation: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -74451,10 +74451,10 @@ impl PartitionedAccelerationStructureWritePartitionTranslationDataNV {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWriteDescriptorSetPartitionedAccelerationStructureNV.html>"]
 #[doc(alias = "VkWriteDescriptorSetPartitionedAccelerationStructureNV")]
 pub struct WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub acceleration_structure_count: u32,
-    pub(crate) p_acceleration_structures: *const DeviceAddress,
+    pub p_acceleration_structures: *const DeviceAddress,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_partitioned_acceleration_structure")]
@@ -74526,8 +74526,8 @@ impl<'a> WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPartitionedAccelerationStructureInstancesInputNV.html>"]
 #[doc(alias = "VkPartitionedAccelerationStructureInstancesInputNV")]
 pub struct PartitionedAccelerationStructureInstancesInputNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: BuildAccelerationStructureFlagsKHR,
     pub instance_count: u32,
     pub max_instance_per_partition_count: u32,
@@ -74599,8 +74599,8 @@ impl<'a> PartitionedAccelerationStructureInstancesInputNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkBuildPartitionedAccelerationStructureInfoNV.html>"]
 #[doc(alias = "VkBuildPartitionedAccelerationStructureInfoNV")]
 pub struct BuildPartitionedAccelerationStructureInfoNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub input: PartitionedAccelerationStructureInstancesInputNV<'a>,
     pub src_acceleration_structure_data: DeviceAddress,
     pub dst_acceleration_structure_data: DeviceAddress,
@@ -74679,8 +74679,8 @@ impl<'a> BuildPartitionedAccelerationStructureInfoNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDeviceGeneratedCommandsFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDeviceGeneratedCommandsFeaturesEXT")]
 pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub device_generated_commands: Bool32,
     pub dynamic_generated_pipeline_layout: Bool32,
     phantom: PhantomData<&'a ()>,
@@ -74747,8 +74747,8 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDeviceGeneratedCommandsPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDeviceGeneratedCommandsPropertiesEXT")]
 pub struct PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_indirect_pipeline_count: u32,
     pub max_indirect_shader_object_count: u32,
     pub max_indirect_sequence_count: u32,
@@ -74895,8 +74895,8 @@ impl<'a> PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGeneratedCommandsMemoryRequirementsInfoEXT.html>"]
 #[doc(alias = "VkGeneratedCommandsMemoryRequirementsInfoEXT")]
 pub struct GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub indirect_execution_set: Option<BorrowedHandle<'a, IndirectExecutionSetEXT>>,
     pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutEXT>>,
     pub max_sequence_count: u32,
@@ -74963,8 +74963,8 @@ impl<'a> GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIndirectExecutionSetCreateInfoEXT.html>"]
 #[doc(alias = "VkIndirectExecutionSetCreateInfoEXT")]
 pub struct IndirectExecutionSetCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: IndirectExecutionSetInfoTypeEXT,
     pub info: IndirectExecutionSetInfoEXT<'a>,
     phantom: PhantomData<&'a ()>,
@@ -75030,8 +75030,8 @@ impl<'a> Default for IndirectExecutionSetInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIndirectExecutionSetPipelineInfoEXT.html>"]
 #[doc(alias = "VkIndirectExecutionSetPipelineInfoEXT")]
 pub struct IndirectExecutionSetPipelineInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub initial_pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub max_pipeline_count: u32,
     phantom: PhantomData<&'a ()>,
@@ -75081,14 +75081,14 @@ impl<'a> IndirectExecutionSetPipelineInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIndirectExecutionSetShaderInfoEXT.html>"]
 #[doc(alias = "VkIndirectExecutionSetShaderInfoEXT")]
 pub struct IndirectExecutionSetShaderInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) shader_count: u32,
-    pub(crate) p_initial_shaders: *const ShaderEXT,
-    pub(crate) p_set_layout_infos: *const IndirectExecutionSetShaderLayoutInfoEXT<'a>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub shader_count: u32,
+    pub p_initial_shaders: *const ShaderEXT,
+    pub p_set_layout_infos: *const IndirectExecutionSetShaderLayoutInfoEXT<'a>,
     pub max_shader_count: u32,
-    pub(crate) push_constant_range_count: u32,
-    pub(crate) p_push_constant_ranges: *const PushConstantRange,
+    pub push_constant_range_count: u32,
+    pub p_push_constant_ranges: *const PushConstantRange,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
@@ -75184,8 +75184,8 @@ impl<'a> IndirectExecutionSetShaderInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGeneratedCommandsInfoEXT.html>"]
 #[doc(alias = "VkGeneratedCommandsInfoEXT")]
 pub struct GeneratedCommandsInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub shader_stages: ShaderStageFlags,
     pub indirect_execution_set: Option<BorrowedHandle<'a, IndirectExecutionSetEXT>>,
     pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutEXT>>,
@@ -75294,8 +75294,8 @@ impl<'a> GeneratedCommandsInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWriteIndirectExecutionSetPipelineEXT.html>"]
 #[doc(alias = "VkWriteIndirectExecutionSetPipelineEXT")]
 pub struct WriteIndirectExecutionSetPipelineEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub index: u32,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
@@ -75345,14 +75345,14 @@ impl<'a> WriteIndirectExecutionSetPipelineEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIndirectCommandsLayoutCreateInfoEXT.html>"]
 #[doc(alias = "VkIndirectCommandsLayoutCreateInfoEXT")]
 pub struct IndirectCommandsLayoutCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: IndirectCommandsLayoutUsageFlagsEXT,
     pub shader_stages: ShaderStageFlags,
     pub indirect_stride: u32,
     pub pipeline_layout: Option<BorrowedHandle<'a, PipelineLayout>>,
-    pub(crate) token_count: u32,
-    pub(crate) p_tokens: *const IndirectCommandsLayoutTokenEXT<'a>,
+    pub token_count: u32,
+    pub p_tokens: *const IndirectCommandsLayoutTokenEXT<'a>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
@@ -75429,8 +75429,8 @@ impl<'a> IndirectCommandsLayoutCreateInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIndirectCommandsLayoutTokenEXT.html>"]
 #[doc(alias = "VkIndirectCommandsLayoutTokenEXT")]
 pub struct IndirectCommandsLayoutTokenEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub ty: IndirectCommandsTokenTypeEXT,
     pub data: IndirectCommandsTokenDataEXT,
     pub offset: u32,
@@ -75751,10 +75751,10 @@ impl Default for IndirectCommandsTokenDataEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkIndirectExecutionSetShaderLayoutInfoEXT.html>"]
 #[doc(alias = "VkIndirectExecutionSetShaderLayoutInfoEXT")]
 pub struct IndirectExecutionSetShaderLayoutInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub set_layout_count: u32,
-    pub(crate) p_set_layouts: *const DescriptorSetLayout,
+    pub p_set_layouts: *const DescriptorSetLayout,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
@@ -75814,8 +75814,8 @@ impl<'a> IndirectExecutionSetShaderLayoutInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGeneratedCommandsPipelineInfoEXT.html>"]
 #[doc(alias = "VkGeneratedCommandsPipelineInfoEXT")]
 pub struct GeneratedCommandsPipelineInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     phantom: PhantomData<&'a ()>,
 }
@@ -75874,10 +75874,10 @@ impl<'a> GeneratedCommandsPipelineInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkGeneratedCommandsShaderInfoEXT.html>"]
 #[doc(alias = "VkGeneratedCommandsShaderInfoEXT")]
 pub struct GeneratedCommandsShaderInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) shader_count: u32,
-    pub(crate) p_shaders: *const ShaderEXT,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub shader_count: u32,
+    pub p_shaders: *const ShaderEXT,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
@@ -75951,8 +75951,8 @@ impl<'a> GeneratedCommandsShaderInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkWriteIndirectExecutionSetShaderEXT.html>"]
 #[doc(alias = "VkWriteIndirectExecutionSetShaderEXT")]
 pub struct WriteIndirectExecutionSetShaderEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub index: u32,
     pub shader: Option<BorrowedHandle<'a, ShaderEXT>>,
     phantom: PhantomData<&'a ()>,
@@ -76020,8 +76020,8 @@ impl<'a> WriteIndirectExecutionSetShaderEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryBarrierAccessFlags3KHR.html>"]
 #[doc(alias = "VkMemoryBarrierAccessFlags3KHR")]
 pub struct MemoryBarrierAccessFlags3KHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub src_access_mask3: AccessFlags3KHR,
     pub dst_access_mask3: AccessFlags3KHR,
     phantom: PhantomData<&'a ()>,
@@ -76095,8 +76095,8 @@ impl<'a> MemoryBarrierAccessFlags3KHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance8FeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance8FeaturesKHR")]
 pub struct PhysicalDeviceMaintenance8FeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub maintenance8: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -76155,8 +76155,8 @@ impl<'a> PhysicalDeviceMaintenance8FeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageAlignmentControlFeaturesMESA.html>"]
 #[doc(alias = "VkPhysicalDeviceImageAlignmentControlFeaturesMESA")]
 pub struct PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image_alignment_control: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -76216,8 +76216,8 @@ impl<'a> PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceImageAlignmentControlPropertiesMESA.html>"]
 #[doc(alias = "VkPhysicalDeviceImageAlignmentControlPropertiesMESA")]
 pub struct PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub supported_image_alignment_mask: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -76272,8 +76272,8 @@ impl<'a> PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImageAlignmentControlCreateInfoMESA.html>"]
 #[doc(alias = "VkImageAlignmentControlCreateInfoMESA")]
 pub struct ImageAlignmentControlCreateInfoMESA<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub maximum_requested_alignment: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -76321,8 +76321,8 @@ impl<'a> ImageAlignmentControlCreateInfoMESA<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDepthClampControlFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceDepthClampControlFeaturesEXT")]
 pub struct PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub depth_clamp_control: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -76381,8 +76381,8 @@ impl<'a> PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineViewportDepthClampControlCreateInfoEXT.html>"]
 #[doc(alias = "VkPipelineViewportDepthClampControlCreateInfoEXT")]
 pub struct PipelineViewportDepthClampControlCreateInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub depth_clamp_mode: DepthClampModeEXT,
     pub p_depth_clamp_range: *const DepthClampRangeEXT,
     phantom: PhantomData<&'a ()>,
@@ -76473,8 +76473,8 @@ impl DepthClampRangeEXT {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance9FeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance9FeaturesKHR")]
 pub struct PhysicalDeviceMaintenance9FeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub maintenance9: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -76533,8 +76533,8 @@ impl<'a> PhysicalDeviceMaintenance9FeaturesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceMaintenance9PropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceMaintenance9PropertiesKHR")]
 pub struct PhysicalDeviceMaintenance9PropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub image2_dview_of3_dsparse: Bool32,
     pub default_vertex_attribute_value: DefaultVertexAttributeValueKHR,
     phantom: PhantomData<&'a ()>,
@@ -76595,8 +76595,8 @@ impl<'a> PhysicalDeviceMaintenance9PropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkQueueFamilyOwnershipTransferPropertiesKHR.html>"]
 #[doc(alias = "VkQueueFamilyOwnershipTransferPropertiesKHR")]
 pub struct QueueFamilyOwnershipTransferPropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub optimal_image_transfer_to_queue_families: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -76650,8 +76650,8 @@ impl<'a> QueueFamilyOwnershipTransferPropertiesKHR<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkOHSurfaceCreateInfoOHOS.html>"]
 #[doc(alias = "VkOHSurfaceCreateInfoOHOS")]
 pub struct OHSurfaceCreateInfoOHOS<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub window: *const OHNativeWindow,
     phantom: PhantomData<&'a ()>,
@@ -76705,8 +76705,8 @@ pub type OHNativeWindow = c_void;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceHdrVividFeaturesHUAWEI.html>"]
 #[doc(alias = "VkPhysicalDeviceHdrVividFeaturesHUAWEI")]
 pub struct PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub hdr_vivid: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -76765,10 +76765,10 @@ impl<'a> PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkHdrVividDynamicMetadataHUAWEI.html>"]
 #[doc(alias = "VkHdrVividDynamicMetadataHUAWEI")]
 pub struct HdrVividDynamicMetadataHUAWEI<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) dynamic_metadata_size: usize,
-    pub(crate) p_dynamic_metadata: VoidPtr,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub dynamic_metadata_size: usize,
+    pub p_dynamic_metadata: VoidPtr,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_hdr_vivid")]
@@ -76825,8 +76825,8 @@ impl<'a> HdrVividDynamicMetadataHUAWEI<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkCooperativeMatrixFlexibleDimensionsPropertiesNV.html>"]
 #[doc(alias = "VkCooperativeMatrixFlexibleDimensionsPropertiesNV")]
 pub struct CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub mgranularity: u32,
     pub ngranularity: u32,
     pub kgranularity: u32,
@@ -76933,8 +76933,8 @@ impl<'a> CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCooperativeMatrix2FeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCooperativeMatrix2FeaturesNV")]
 pub struct PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cooperative_matrix_workgroup_scope: Bool32,
     pub cooperative_matrix_flexible_dimensions: Bool32,
     pub cooperative_matrix_reductions: Bool32,
@@ -77035,8 +77035,8 @@ impl<'a> PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceCooperativeMatrix2PropertiesNV.html>"]
 #[doc(alias = "VkPhysicalDeviceCooperativeMatrix2PropertiesNV")]
 pub struct PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub cooperative_matrix_workgroup_scope_max_workgroup_size: u32,
     pub cooperative_matrix_flexible_dimensions_max_dimension: u32,
     pub cooperative_matrix_workgroup_scope_reserved_shared_memory: u32,
@@ -77104,8 +77104,8 @@ impl<'a> PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineOpacityMicromapFeaturesARM.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineOpacityMicromapFeaturesARM")]
 pub struct PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_opacity_micromap: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77159,8 +77159,8 @@ impl<'a> PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkImportMemoryMetalHandleInfoEXT.html>"]
 #[doc(alias = "VkImportMemoryMetalHandleInfoEXT")]
 pub struct ImportMemoryMetalHandleInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub handle: VoidPtr,
     phantom: PhantomData<&'a ()>,
@@ -77215,8 +77215,8 @@ impl<'a> ImportMemoryMetalHandleInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryMetalHandlePropertiesEXT.html>"]
 #[doc(alias = "VkMemoryMetalHandlePropertiesEXT")]
 pub struct MemoryMetalHandlePropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77259,8 +77259,8 @@ impl<'a> MemoryMetalHandlePropertiesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkMemoryGetMetalHandleInfoEXT.html>"]
 #[doc(alias = "VkMemoryGetMetalHandleInfoEXT")]
 pub struct MemoryGetMetalHandleInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     phantom: PhantomData<&'a ()>,
@@ -77309,8 +77309,8 @@ impl<'a> MemoryGetMetalHandleInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceDepthClampZeroOneFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceDepthClampZeroOneFeaturesKHR")]
 pub struct PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub depth_clamp_zero_one: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77364,8 +77364,8 @@ pub type PhysicalDeviceDepthClampZeroOneFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceVertexAttributeRobustnessFeaturesEXT")]
 pub struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub vertex_attribute_robustness: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77418,8 +77418,8 @@ impl<'a> PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFormatPackFeaturesARM.html>"]
 #[doc(alias = "VkPhysicalDeviceFormatPackFeaturesARM")]
 pub struct PhysicalDeviceFormatPackFeaturesARM<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub format_pack: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77472,8 +77472,8 @@ impl<'a> PhysicalDeviceFormatPackFeaturesARM<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE")]
 pub struct PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_density_map_layered: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77536,8 +77536,8 @@ impl<'a> PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE")]
 pub struct PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_fragment_density_map_layers: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77595,8 +77595,8 @@ impl<'a> PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPipelineFragmentDensityMapLayeredCreateInfoVALVE.html>"]
 #[doc(alias = "VkPipelineFragmentDensityMapLayeredCreateInfoVALVE")]
 pub struct PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub max_fragment_density_map_layers: u32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77644,8 +77644,8 @@ impl<'a> PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRobustness2FeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceRobustness2FeaturesKHR")]
 pub struct PhysicalDeviceRobustness2FeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub robust_buffer_access2: Bool32,
     pub robust_image_access2: Bool32,
     pub null_descriptor: Bool32,
@@ -77712,8 +77712,8 @@ pub type PhysicalDeviceRobustness2FeaturesEXT<'a> = PhysicalDeviceRobustness2Fea
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceRobustness2PropertiesKHR.html>"]
 #[doc(alias = "VkPhysicalDeviceRobustness2PropertiesKHR")]
 pub struct PhysicalDeviceRobustness2PropertiesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub robust_storage_buffer_access_size_alignment: DeviceSize,
     pub robust_uniform_buffer_access_size_alignment: DeviceSize,
     phantom: PhantomData<&'a ()>,
@@ -77769,8 +77769,8 @@ pub type PhysicalDeviceRobustness2PropertiesEXT<'a> = PhysicalDeviceRobustness2P
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkSetPresentConfigNV.html>"]
 #[doc(alias = "VkSetPresentConfigNV")]
 pub struct SetPresentConfigNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub num_frames_per_batch: u32,
     pub present_config_feedback: u32,
     phantom: PhantomData<&'a ()>,
@@ -77822,8 +77822,8 @@ impl<'a> SetPresentConfigNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePresentMeteringFeaturesNV.html>"]
 #[doc(alias = "VkPhysicalDevicePresentMeteringFeaturesNV")]
 pub struct PhysicalDevicePresentMeteringFeaturesNV<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_metering: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77882,8 +77882,8 @@ impl<'a> PhysicalDevicePresentMeteringFeaturesNV<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderingEndInfoEXT.html>"]
 #[doc(alias = "VkRenderingEndInfoEXT")]
 pub struct RenderingEndInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map_offset")]
@@ -77919,8 +77919,8 @@ impl<'a> RenderingEndInfoEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentDensityMapOffsetFeaturesEXT")]
 pub struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_density_map_offset: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -77983,8 +77983,8 @@ pub type PhysicalDeviceFragmentDensityMapOffsetFeaturesQCOM<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceFragmentDensityMapOffsetPropertiesEXT")]
 pub struct PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub fragment_density_offset_granularity: Extent2D,
     phantom: PhantomData<&'a ()>,
 }
@@ -78045,10 +78045,10 @@ pub type PhysicalDeviceFragmentDensityMapOffsetPropertiesQCOM<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkRenderPassFragmentDensityMapOffsetEndInfoEXT.html>"]
 #[doc(alias = "VkRenderPassFragmentDensityMapOffsetEndInfoEXT")]
 pub struct RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
-    pub(crate) fragment_density_offset_count: u32,
-    pub(crate) p_fragment_density_offsets: *const Offset2D,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
+    pub fragment_density_offset_count: u32,
+    pub p_fragment_density_offsets: *const Offset2D,
     phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map_offset")]
@@ -78125,8 +78125,8 @@ pub type SubpassFragmentDensityMapOffsetEndInfoQCOM<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT.html>"]
 #[doc(alias = "VkPhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT")]
 pub struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub zero_initialize_device_memory: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -78182,8 +78182,8 @@ impl<'a> PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePresentModeFifoLatestReadyFeaturesKHR.html>"]
 #[doc(alias = "VkPhysicalDevicePresentModeFifoLatestReadyFeaturesKHR")]
 pub struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub present_mode_fifo_latest_ready: Bool32,
     phantom: PhantomData<&'a ()>,
 }
@@ -78241,8 +78241,8 @@ pub type PhysicalDevicePresentModeFifoLatestReadyFeaturesEXT<'a> =
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/VkPhysicalDevicePipelineCacheIncrementalModeFeaturesSEC.html>"]
 #[doc(alias = "VkPhysicalDevicePipelineCacheIncrementalModeFeaturesSEC")]
 pub struct PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
-    pub(crate) s_type: StructureType,
-    pub(crate) p_next: Cell<*const Header>,
+    pub s_type: StructureType,
+    pub p_next: Cell<*const Header>,
     pub pipeline_cache_incremental_mode: Bool32,
     phantom: PhantomData<&'a ()>,
 }
