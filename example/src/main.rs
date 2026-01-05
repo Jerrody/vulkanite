@@ -4,7 +4,9 @@ use anyhow::{anyhow, bail, Result};
 use raw_window_handle::{HasDisplayHandle, HasWindowHandle, RawDisplayHandle};
 use smallvec::{smallvec, SmallVec};
 use vulkanite::{
-    flagbits, include_spirv, vk, window, DefaultAllocator, Dispatcher, DynamicDispatcher,
+    flagbits, include_spirv,
+    vk::{self, rs::Framebuffer},
+    window, DefaultAllocator, Dispatcher, DynamicDispatcher, Handle,
 };
 use winit::{
     application::ApplicationHandler,
@@ -695,7 +697,7 @@ impl SwapchainObjects {
         // The Vulkan spec guarantees that if the swapchain extension is supported
         // then the FIFO present mode is too
         if !physical_device
-            .get_surface_present_modes_khr::<Vec<_>>(Some(surface))?
+            .get_surface_present_modes_khr::<Vec<_>>(*surface)?
             .contains(&vk::PresentModeKHR::Fifo)
         {
             bail!("FIFO present mode is missing");
@@ -800,12 +802,12 @@ impl Drop for SwapchainObjects {
 
         unsafe {
             for framebuffer in &self.framebuffers {
-                self.device.destroy_framebuffer(Some(framebuffer));
+                self.device.destroy_framebuffer(*framebuffer);
             }
             for view in &self.swapchain_views {
-                self.device.destroy_image_view(Some(view));
+                self.device.destroy_image_view(*view);
             }
-            self.device.destroy_swapchain_khr(Some(&self.swapchain));
+            self.device.destroy_swapchain_khr(*self.swapchain);
         }
         // SwapchainObjects is not the owner of device, do not destroy it
     }
