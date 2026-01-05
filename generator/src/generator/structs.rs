@@ -389,7 +389,7 @@ fn generate_struct<'a>(
     let has_lifetime = my_struct.has_lifetime.get().unwrap();
     let lifetime = has_lifetime.then(|| quote! (<'a>));
     let require_phantom = has_lifetime;
-    let phantom_decl = require_phantom.then(|| quote! (phantom: PhantomData<&'a ()>,));
+    let phantom_decl = require_phantom.then(|| quote! (pub phantom: PhantomData<&'a ()>,));
     let phantom_default = require_phantom.then(|| quote! (phantom: PhantomData,));
     let (s_type_impl, p_next_impl) = if let Some(s_type) = my_struct.s_type {
         let s_type_value: TokenStream = mapping

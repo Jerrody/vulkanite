@@ -188,7 +188,7 @@ impl Rect2D {
 pub struct BaseInStructure<'a> {
     pub s_type: StructureType,
     pub p_next: *const BaseInStructure<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for BaseInStructure<'a> {}
 unsafe impl<'a> Sync for BaseInStructure<'a> {}
@@ -219,7 +219,7 @@ impl<'a> BaseInStructure<'a> {
 pub struct BaseOutStructure<'a> {
     pub s_type: StructureType,
     pub p_next: *const BaseOutStructure<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for BaseOutStructure<'a> {}
 unsafe impl<'a> Sync for BaseOutStructure<'a> {}
@@ -257,7 +257,7 @@ pub struct BufferMemoryBarrier<'a> {
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for BufferMemoryBarrier<'a> {}
 unsafe impl<'a> ExtendableStructure for BufferMemoryBarrier<'a> {
@@ -469,7 +469,7 @@ pub struct ImageMemoryBarrier<'a> {
     pub dst_queue_family_index: u32,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub subresource_range: ImageSubresourceRange,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ImageMemoryBarrier<'a> {}
 unsafe impl<'a> ExtendableStructure for ImageMemoryBarrier<'a> {
@@ -549,7 +549,7 @@ pub struct MemoryBarrier<'a> {
     pub p_next: Cell<*const Header>,
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for MemoryBarrier<'a> {}
 unsafe impl<'a> ExtendableStructure for MemoryBarrier<'a> {
@@ -705,7 +705,7 @@ pub struct ApplicationInfo<'a> {
     pub p_engine_name: *const c_char,
     pub engine_version: u32,
     pub api_version: ApiVersion,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ApplicationInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for ApplicationInfo<'a> {
@@ -859,7 +859,7 @@ pub struct InstanceCreateInfo<'a> {
     pub pp_enabled_layer_names: *const *const c_char,
     pub enabled_extension_count: u32,
     pub pp_enabled_extension_names: *const InstanceExtensionName,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for InstanceCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for InstanceCreateInfo<'a> {
@@ -2391,7 +2391,7 @@ pub struct DeviceCreateInfo<'a> {
     pub enabled_extension_count: u32,
     pub pp_enabled_extension_names: *const DeviceExtensionName,
     pub p_enabled_features: *const PhysicalDeviceFeatures,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DeviceCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for DeviceCreateInfo<'a> {
@@ -2503,7 +2503,7 @@ pub struct DeviceQueueCreateInfo<'a> {
     pub queue_family_index: u32,
     pub queue_count: u32,
     pub p_queue_priorities: *const f32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DeviceQueueCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for DeviceQueueCreateInfo<'a> {
@@ -2650,7 +2650,7 @@ pub struct SubmitInfo<'a> {
     pub p_command_buffers: *const CommandBuffer,
     pub signal_semaphore_count: u32,
     pub p_signal_semaphores: *const Semaphore,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for SubmitInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for SubmitInfo<'a> {
@@ -2765,7 +2765,7 @@ pub struct MappedMemoryRange<'a> {
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for MappedMemoryRange<'a> {}
 unsafe impl<'a> ExtendableStructure for MappedMemoryRange<'a> {
@@ -2815,7 +2815,7 @@ pub struct MemoryAllocateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub allocation_size: DeviceSize,
     pub memory_type_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for MemoryAllocateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for MemoryAllocateInfo<'a> {
@@ -2904,7 +2904,7 @@ pub struct BindSparseInfo<'a> {
     pub p_image_binds: *const SparseImageMemoryBindInfo<'a>,
     pub signal_semaphore_count: u32,
     pub p_signal_semaphores: *const Semaphore,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for BindSparseInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for BindSparseInfo<'a> {
@@ -3076,7 +3076,7 @@ pub struct SparseBufferMemoryBindInfo<'a> {
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub bind_count: u32,
     pub p_binds: *const SparseMemoryBind<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SparseBufferMemoryBindInfo<'a> {}
 unsafe impl<'a> Sync for SparseBufferMemoryBindInfo<'a> {}
@@ -3156,7 +3156,7 @@ pub struct SparseImageMemoryBind<'a> {
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SparseImageMemoryBind<'a> {}
 unsafe impl<'a> Sync for SparseImageMemoryBind<'a> {}
@@ -3212,7 +3212,7 @@ pub struct SparseImageMemoryBindInfo<'a> {
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub bind_count: u32,
     pub p_binds: *const SparseImageMemoryBind<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SparseImageMemoryBindInfo<'a> {}
 unsafe impl<'a> Sync for SparseImageMemoryBindInfo<'a> {}
@@ -3303,7 +3303,7 @@ pub struct SparseImageOpaqueMemoryBindInfo<'a> {
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub bind_count: u32,
     pub p_binds: *const SparseMemoryBind<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SparseImageOpaqueMemoryBindInfo<'a> {}
 unsafe impl<'a> Sync for SparseImageOpaqueMemoryBindInfo<'a> {}
@@ -3345,7 +3345,7 @@ pub struct SparseMemoryBind<'a> {
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SparseMemoryBind<'a> {}
 unsafe impl<'a> Sync for SparseMemoryBind<'a> {}
@@ -3395,7 +3395,7 @@ pub struct FenceCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub flags: FenceCreateFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for FenceCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for FenceCreateInfo<'a> {
@@ -3432,7 +3432,7 @@ pub struct SemaphoreCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub flags: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for SemaphoreCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for SemaphoreCreateInfo<'a> {
@@ -3469,7 +3469,7 @@ pub struct EventCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub flags: EventCreateFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for EventCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for EventCreateInfo<'a> {
@@ -3509,7 +3509,7 @@ pub struct QueryPoolCreateInfo<'a> {
     pub query_type: QueryType,
     pub query_count: u32,
     pub pipeline_statistics: QueryPipelineStatisticFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for QueryPoolCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for QueryPoolCreateInfo<'a> {
@@ -3569,7 +3569,7 @@ pub struct BufferCreateInfo<'a> {
     pub sharing_mode: SharingMode,
     pub queue_family_index_count: u32,
     pub p_queue_family_indices: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for BufferCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for BufferCreateInfo<'a> {
@@ -3652,7 +3652,7 @@ pub struct BufferViewCreateInfo<'a> {
     pub format: Format,
     pub offset: DeviceSize,
     pub range: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for BufferViewCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for BufferViewCreateInfo<'a> {
@@ -3725,7 +3725,7 @@ pub struct ImageCreateInfo<'a> {
     pub queue_family_index_count: u32,
     pub p_queue_family_indices: *const u32,
     pub initial_layout: ImageLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ImageCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for ImageCreateInfo<'a> {
@@ -3997,7 +3997,7 @@ pub struct ImageViewCreateInfo<'a> {
     pub format: Format,
     pub components: ComponentMapping,
     pub subresource_range: ImageSubresourceRange,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ImageViewCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for ImageViewCreateInfo<'a> {
@@ -4066,7 +4066,7 @@ pub struct ShaderModuleCreateInfo<'a> {
     pub flags: u32,
     pub code_size: usize,
     pub p_code: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ShaderModuleCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for ShaderModuleCreateInfo<'a> {
@@ -4123,7 +4123,7 @@ pub struct PipelineCacheCreateInfo<'a> {
     pub flags: PipelineCacheCreateFlags,
     pub initial_data_size: usize,
     pub p_initial_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineCacheCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineCacheCreateInfo<'a> {
@@ -4183,7 +4183,7 @@ pub struct ComputePipelineCreateInfo<'a> {
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for ComputePipelineCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for ComputePipelineCreateInfo<'a> {
@@ -4260,7 +4260,7 @@ pub struct GraphicsPipelineCreateInfo<'a> {
     pub subpass: u32,
     pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for GraphicsPipelineCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for GraphicsPipelineCreateInfo<'a> {
@@ -4501,7 +4501,7 @@ pub struct PipelineColorBlendStateCreateInfo<'a> {
     pub attachment_count: u32,
     pub p_attachments: *const PipelineColorBlendAttachmentState,
     pub blend_constants: [f32; 4u16 as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineColorBlendStateCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineColorBlendStateCreateInfo<'a> {
@@ -4589,7 +4589,7 @@ pub struct PipelineDepthStencilStateCreateInfo<'a> {
     pub back: StencilOpState,
     pub min_depth_bounds: f32,
     pub max_depth_bounds: f32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineDepthStencilStateCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineDepthStencilStateCreateInfo<'a> {
@@ -4682,7 +4682,7 @@ pub struct PipelineDynamicStateCreateInfo<'a> {
     pub flags: u32,
     pub dynamic_state_count: u32,
     pub p_dynamic_states: *const DynamicState,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineDynamicStateCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineDynamicStateCreateInfo<'a> {
@@ -4737,7 +4737,7 @@ pub struct PipelineInputAssemblyStateCreateInfo<'a> {
     pub flags: u32,
     pub topology: PrimitiveTopology,
     pub primitive_restart_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineInputAssemblyStateCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineInputAssemblyStateCreateInfo<'a> {
@@ -4792,7 +4792,7 @@ pub struct PipelineMultisampleStateCreateInfo<'a> {
     pub p_sample_mask: *const SampleMask,
     pub alpha_to_coverage_enable: Bool32,
     pub alpha_to_one_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineMultisampleStateCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineMultisampleStateCreateInfo<'a> {
@@ -4878,7 +4878,7 @@ pub struct PipelineRasterizationStateCreateInfo<'a> {
     pub depth_bias_clamp: f32,
     pub depth_bias_slope_factor: f32,
     pub line_width: f32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineRasterizationStateCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineRasterizationStateCreateInfo<'a> {
@@ -4979,7 +4979,7 @@ pub struct PipelineShaderStageCreateInfo<'a> {
     pub module: Option<BorrowedHandle<'a, ShaderModule>>,
     pub p_name: *const c_char,
     pub p_specialization_info: *const SpecializationInfo<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineShaderStageCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineShaderStageCreateInfo<'a> {
@@ -5041,7 +5041,7 @@ pub struct PipelineTessellationStateCreateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub patch_control_points: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineTessellationStateCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineTessellationStateCreateInfo<'a> {
@@ -5088,7 +5088,7 @@ pub struct PipelineVertexInputStateCreateInfo<'a> {
     pub p_vertex_binding_descriptions: *const VertexInputBindingDescription,
     pub vertex_attribute_description_count: u32,
     pub p_vertex_attribute_descriptions: *const VertexInputAttributeDescription,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineVertexInputStateCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineVertexInputStateCreateInfo<'a> {
@@ -5176,7 +5176,7 @@ pub struct PipelineViewportStateCreateInfo<'a> {
     pub p_viewports: *const Viewport,
     pub scissor_count: u32,
     pub p_scissors: *const Rect2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineViewportStateCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineViewportStateCreateInfo<'a> {
@@ -5259,7 +5259,7 @@ pub struct SpecializationInfo<'a> {
     pub p_map_entries: *const SpecializationMapEntry,
     pub data_size: usize,
     pub p_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SpecializationInfo<'a> {}
 unsafe impl<'a> Sync for SpecializationInfo<'a> {}
@@ -5556,7 +5556,7 @@ pub struct PipelineLayoutCreateInfo<'a> {
     pub p_set_layouts: *const DescriptorSetLayout,
     pub push_constant_range_count: u32,
     pub p_push_constant_ranges: *const PushConstantRange,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PipelineLayoutCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for PipelineLayoutCreateInfo<'a> {
@@ -5738,7 +5738,7 @@ pub struct SamplerCreateInfo<'a> {
     pub max_lod: f32,
     pub border_color: BorderColor,
     pub unnormalized_coordinates: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for SamplerCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for SamplerCreateInfo<'a> {
@@ -5871,7 +5871,7 @@ pub struct CopyDescriptorSet<'a> {
     pub dst_binding: u32,
     pub dst_array_element: u32,
     pub descriptor_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for CopyDescriptorSet<'a> {}
 unsafe impl<'a> ExtendableStructure for CopyDescriptorSet<'a> {
@@ -5944,7 +5944,7 @@ pub struct DescriptorBufferInfo<'a> {
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub range: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for DescriptorBufferInfo<'a> {}
 unsafe impl<'a> Sync for DescriptorBufferInfo<'a> {}
@@ -5982,7 +5982,7 @@ pub struct DescriptorImageInfo<'a> {
     pub sampler: Option<BorrowedHandle<'a, Sampler>>,
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for DescriptorImageInfo<'a> {}
 unsafe impl<'a> Sync for DescriptorImageInfo<'a> {}
@@ -6023,7 +6023,7 @@ pub struct DescriptorPoolCreateInfo<'a> {
     pub max_sets: u32,
     pub pool_size_count: u32,
     pub p_pool_sizes: *const DescriptorPoolSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DescriptorPoolCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for DescriptorPoolCreateInfo<'a> {
@@ -6114,7 +6114,7 @@ pub struct DescriptorSetAllocateInfo<'a> {
     pub descriptor_pool: Option<BorrowedHandle<'a, DescriptorPool>>,
     pub descriptor_set_count: u32,
     pub p_set_layouts: *const DescriptorSetLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetAllocateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for DescriptorSetAllocateInfo<'a> {
@@ -6172,7 +6172,7 @@ pub struct DescriptorSetLayoutBinding<'a> {
     pub descriptor_count: u32,
     pub stage_flags: ShaderStageFlags,
     pub p_immutable_samplers: *const Sampler,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for DescriptorSetLayoutBinding<'a> {}
 unsafe impl<'a> Sync for DescriptorSetLayoutBinding<'a> {}
@@ -6236,7 +6236,7 @@ pub struct DescriptorSetLayoutCreateInfo<'a> {
     pub flags: DescriptorSetLayoutCreateFlags,
     pub binding_count: u32,
     pub p_bindings: *const DescriptorSetLayoutBinding<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetLayoutCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for DescriptorSetLayoutCreateInfo<'a> {
@@ -6299,7 +6299,7 @@ pub struct WriteDescriptorSet<'a> {
     pub p_image_info: *const DescriptorImageInfo<'a>,
     pub p_buffer_info: *const DescriptorBufferInfo<'a>,
     pub p_texel_buffer_view: *const BufferView,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for WriteDescriptorSet<'a> {}
 unsafe impl<'a> ExtendableStructure for WriteDescriptorSet<'a> {
@@ -6521,7 +6521,7 @@ pub struct FramebufferCreateInfo<'a> {
     pub width: u32,
     pub height: u32,
     pub layers: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for FramebufferCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for FramebufferCreateInfo<'a> {
@@ -6612,7 +6612,7 @@ pub struct RenderPassCreateInfo<'a> {
     pub p_subpasses: *const SubpassDescription<'a>,
     pub dependency_count: u32,
     pub p_dependencies: *const SubpassDependency,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for RenderPassCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for RenderPassCreateInfo<'a> {
@@ -6769,7 +6769,7 @@ pub struct SubpassDescription<'a> {
     pub p_depth_stencil_attachment: *const AttachmentReference,
     pub preserve_attachment_count: u32,
     pub p_preserve_attachments: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> Send for SubpassDescription<'a> {}
 unsafe impl<'a> Sync for SubpassDescription<'a> {}
@@ -6887,7 +6887,7 @@ pub struct CommandPoolCreateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: CommandPoolCreateFlags,
     pub queue_family_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for CommandPoolCreateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for CommandPoolCreateInfo<'a> {
@@ -6932,7 +6932,7 @@ pub struct CommandBufferAllocateInfo<'a> {
     pub command_pool: Option<BorrowedHandle<'a, CommandPool>>,
     pub level: CommandBufferLevel,
     pub command_buffer_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for CommandBufferAllocateInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for CommandBufferAllocateInfo<'a> {
@@ -6982,7 +6982,7 @@ pub struct CommandBufferBeginInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: CommandBufferUsageFlags,
     pub p_inheritance_info: *const CommandBufferInheritanceInfo<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for CommandBufferBeginInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for CommandBufferBeginInfo<'a> {
@@ -7030,7 +7030,7 @@ pub struct CommandBufferInheritanceInfo<'a> {
     pub occlusion_query_enable: Bool32,
     pub query_flags: QueryControlFlags,
     pub pipeline_statistics: QueryPipelineStatisticFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for CommandBufferInheritanceInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for CommandBufferInheritanceInfo<'a> {
@@ -7521,7 +7521,7 @@ pub struct RenderPassBeginInfo<'a> {
     pub render_area: Rect2D,
     pub clear_value_count: u32,
     pub p_clear_values: *const ClearValue,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for RenderPassBeginInfo<'a> {}
 unsafe impl<'a> ExtendableStructure for RenderPassBeginInfo<'a> {
@@ -7595,7 +7595,7 @@ pub struct PhysicalDeviceSubgroupProperties<'a> {
     pub supported_stages: ShaderStageFlags,
     pub supported_operations: SubgroupFeatureFlags,
     pub quad_operations_in_all_stages: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_1")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSubgroupProperties<'a> {}
@@ -7670,7 +7670,7 @@ pub struct BindBufferMemoryInfo<'a> {
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_bind_memory2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for BindBufferMemoryInfo<'a> {}
@@ -7730,7 +7730,7 @@ pub struct BindImageMemoryInfo<'a> {
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_bind_memory2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for BindImageMemoryInfo<'a> {}
@@ -7790,7 +7790,7 @@ pub struct PhysicalDevice16BitStorageFeatures<'a> {
     pub uniform_and_storage_buffer16_bit_access: Bool32,
     pub storage_push_constant16: Bool32,
     pub storage_input_output16: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevice16BitStorageFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevice16BitStorageFeatures<'a> {
@@ -7864,7 +7864,7 @@ pub struct MemoryDedicatedRequirements<'a> {
     pub p_next: Cell<*const Header>,
     pub prefers_dedicated_allocation: Bool32,
     pub requires_dedicated_allocation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dedicated_allocation", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for MemoryDedicatedRequirements<'a> {}
@@ -7932,7 +7932,7 @@ pub struct MemoryDedicatedAllocateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dedicated_allocation", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for MemoryDedicatedAllocateInfo<'a> {}
@@ -7987,7 +7987,7 @@ pub struct MemoryAllocateFlagsInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: MemoryAllocateFlags,
     pub device_mask: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for MemoryAllocateFlagsInfo<'a> {}
@@ -8043,7 +8043,7 @@ pub struct DeviceGroupRenderPassBeginInfo<'a> {
     pub device_mask: u32,
     pub device_render_area_count: u32,
     pub p_device_render_areas: *const Rect2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceGroupRenderPassBeginInfo<'a> {}
@@ -8125,7 +8125,7 @@ pub struct DeviceGroupCommandBufferBeginInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub device_mask: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceGroupCommandBufferBeginInfo<'a> {}
@@ -8181,7 +8181,7 @@ pub struct DeviceGroupSubmitInfo<'a> {
     pub p_command_buffer_device_masks: *const u32,
     pub signal_semaphore_count: u32,
     pub p_signal_semaphore_device_indices: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceGroupSubmitInfo<'a> {}
@@ -8293,7 +8293,7 @@ pub struct DeviceGroupBindSparseInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub resource_device_index: u32,
     pub memory_device_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceGroupBindSparseInfo<'a> {}
@@ -8351,7 +8351,7 @@ pub struct BindBufferMemoryDeviceGroupInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub device_index_count: u32,
     pub p_device_indices: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_device_group", feature = "ext_bind_memory2"),
@@ -8445,7 +8445,7 @@ pub struct BindImageMemoryDeviceGroupInfo<'a> {
     pub p_device_indices: *const u32,
     pub split_instance_bind_region_count: u32,
     pub p_split_instance_bind_regions: *const Rect2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_device_group", feature = "ext_bind_memory2"),
@@ -8558,7 +8558,7 @@ pub struct PhysicalDeviceGroupProperties<'a> {
     pub physical_device_count: u32,
     pub physical_devices: [Option<PhysicalDevice>; MAX_DEVICE_GROUP_SIZE as _],
     pub subset_allocation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group_creation", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceGroupProperties<'a> {}
@@ -8612,7 +8612,7 @@ pub struct DeviceGroupDeviceCreateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub physical_device_count: u32,
     pub p_physical_devices: *const PhysicalDevice,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_device_group_creation", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceGroupDeviceCreateInfo<'a> {}
@@ -8676,7 +8676,7 @@ pub struct BufferMemoryRequirementsInfo2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_get_memory_requirements2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for BufferMemoryRequirementsInfo2<'a> {}
@@ -8722,7 +8722,7 @@ pub struct ImageMemoryRequirementsInfo2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_get_memory_requirements2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ImageMemoryRequirementsInfo2<'a> {}
@@ -8768,7 +8768,7 @@ pub struct ImageSparseMemoryRequirementsInfo2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_get_memory_requirements2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ImageSparseMemoryRequirementsInfo2<'a> {}
@@ -8821,7 +8821,7 @@ pub struct MemoryRequirements2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_requirements: MemoryRequirements,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_memory_requirements2",
@@ -8916,7 +8916,7 @@ pub struct SparseImageMemoryRequirements2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_requirements: SparseImageMemoryRequirements,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_get_memory_requirements2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for SparseImageMemoryRequirements2<'a> {}
@@ -8965,7 +8965,7 @@ pub struct PhysicalDeviceFeatures2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub features: PhysicalDeviceFeatures,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_physical_device_properties2",
@@ -9040,7 +9040,7 @@ pub struct PhysicalDeviceProperties2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub properties: PhysicalDeviceProperties,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_physical_device_properties2",
@@ -9110,7 +9110,7 @@ pub struct FormatProperties2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub format_properties: FormatProperties,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_physical_device_properties2",
@@ -9180,7 +9180,7 @@ pub struct ImageFormatProperties2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image_format_properties: ImageFormatProperties,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_physical_device_properties2",
@@ -9254,7 +9254,7 @@ pub struct PhysicalDeviceImageFormatInfo2<'a> {
     pub tiling: ImageTiling,
     pub usage: ImageUsageFlags,
     pub flags: ImageCreateFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_physical_device_properties2",
@@ -9348,7 +9348,7 @@ pub struct QueueFamilyProperties2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub queue_family_properties: QueueFamilyProperties,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_physical_device_properties2",
@@ -9418,7 +9418,7 @@ pub struct PhysicalDeviceMemoryProperties2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_properties: PhysicalDeviceMemoryProperties,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_physical_device_properties2",
@@ -9488,7 +9488,7 @@ pub struct SparseImageFormatProperties2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub properties: SparseImageFormatProperties,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_physical_device_properties2",
@@ -9562,7 +9562,7 @@ pub struct PhysicalDeviceSparseImageFormatInfo2<'a> {
     pub samples: SampleCountFlags,
     pub usage: ImageUsageFlags,
     pub tiling: ImageTiling,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_get_physical_device_properties2",
@@ -9653,7 +9653,7 @@ pub struct PhysicalDevicePointClippingProperties<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub point_clipping_behavior: PointClippingBehavior,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePointClippingProperties<'a> {}
@@ -9711,7 +9711,7 @@ pub struct RenderPassInputAttachmentAspectCreateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub aspect_reference_count: u32,
     pub p_aspect_references: *const InputAttachmentAspectReference,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for RenderPassInputAttachmentAspectCreateInfo<'a> {}
@@ -9823,7 +9823,7 @@ pub struct ImageViewUsageCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub usage: ImageUsageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ImageViewUsageCreateInfo<'a> {}
@@ -9871,7 +9871,7 @@ pub struct PipelineTessellationDomainOriginStateCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub domain_origin: TessellationDomainOrigin,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance2", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PipelineTessellationDomainOriginStateCreateInfo<'a> {}
@@ -9929,7 +9929,7 @@ pub struct RenderPassMultiviewCreateInfo<'a> {
     pub p_view_offsets: *const i32,
     pub correlation_mask_count: u32,
     pub p_correlation_masks: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_multiview", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for RenderPassMultiviewCreateInfo<'a> {}
@@ -10027,7 +10027,7 @@ pub struct PhysicalDeviceMultiviewFeatures<'a> {
     pub multiview: Bool32,
     pub multiview_geometry_shader: Bool32,
     pub multiview_tessellation_shader: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_multiview", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMultiviewFeatures<'a> {}
@@ -10102,7 +10102,7 @@ pub struct PhysicalDeviceMultiviewProperties<'a> {
     pub p_next: Cell<*const Header>,
     pub max_multiview_view_count: u32,
     pub max_multiview_instance_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_multiview", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMultiviewProperties<'a> {}
@@ -10165,7 +10165,7 @@ pub struct PhysicalDeviceVariablePointersFeatures<'a> {
     pub p_next: Cell<*const Header>,
     pub variable_pointers_storage_buffer: Bool32,
     pub variable_pointers: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVariablePointersFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceVariablePointersFeatures<'a> {
@@ -10228,7 +10228,7 @@ pub struct PhysicalDeviceProtectedMemoryFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub protected_memory: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_1")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceProtectedMemoryFeatures<'a> {}
@@ -10288,7 +10288,7 @@ pub struct PhysicalDeviceProtectedMemoryProperties<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub protected_no_fault: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_1")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceProtectedMemoryProperties<'a> {}
@@ -10345,7 +10345,7 @@ pub struct DeviceQueueInfo2<'a> {
     pub flags: DeviceQueueCreateFlags,
     pub queue_family_index: u32,
     pub queue_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_1")]
 unsafe impl<'a> ExtendableStructureBase for DeviceQueueInfo2<'a> {}
@@ -10401,7 +10401,7 @@ pub struct ProtectedSubmitInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub protected_submit: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_1")]
 unsafe impl<'a> ExtendableStructureBase for ProtectedSubmitInfo<'a> {}
@@ -10454,7 +10454,7 @@ pub struct SamplerYcbcrConversionCreateInfo<'a> {
     pub y_chroma_offset: ChromaLocation,
     pub chroma_filter: Filter,
     pub force_explicit_reconstruction: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for SamplerYcbcrConversionCreateInfo<'a> {}
@@ -10542,7 +10542,7 @@ pub struct SamplerYcbcrConversionInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub conversion: Option<BorrowedHandle<'a, SamplerYcbcrConversion>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for SamplerYcbcrConversionInfo<'a> {}
@@ -10592,7 +10592,7 @@ pub struct BindImagePlaneMemoryInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub plane_aspect: ImageAspectFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for BindImagePlaneMemoryInfo<'a> {}
@@ -10643,7 +10643,7 @@ pub struct ImagePlaneMemoryRequirementsInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub plane_aspect: ImageAspectFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ImagePlaneMemoryRequirementsInfo<'a> {}
@@ -10697,7 +10697,7 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub sampler_ycbcr_conversion: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSamplerYcbcrConversionFeatures<'a> {}
@@ -10761,7 +10761,7 @@ pub struct SamplerYcbcrConversionImageFormatProperties<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub combined_image_sampler_descriptor_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for SamplerYcbcrConversionImageFormatProperties<'a> {}
@@ -10892,7 +10892,7 @@ pub struct DescriptorUpdateTemplateCreateInfo<'a> {
     pub pipeline_bind_point: PipelineBindPoint,
     pub pipeline_layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_descriptor_update_template", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for DescriptorUpdateTemplateCreateInfo<'a> {}
@@ -11037,7 +11037,7 @@ pub struct PhysicalDeviceExternalImageFormatInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_memory_capabilities", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalImageFormatInfo<'a> {}
@@ -11094,7 +11094,7 @@ pub struct ExternalImageFormatProperties<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub external_memory_properties: ExternalMemoryProperties,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_memory_capabilities", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ExternalImageFormatProperties<'a> {}
@@ -11153,7 +11153,7 @@ pub struct PhysicalDeviceExternalBufferInfo<'a> {
     pub flags: BufferCreateFlags,
     pub usage: BufferUsageFlags,
     pub handle_type: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_memory_capabilities", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalBufferInfo<'a> {}
@@ -11211,7 +11211,7 @@ pub struct ExternalBufferProperties<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub external_memory_properties: ExternalMemoryProperties,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_memory_capabilities", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ExternalBufferProperties<'a> {}
@@ -11266,7 +11266,7 @@ pub struct PhysicalDeviceIDProperties<'a> {
     pub device_luid: [u8; LUID_SIZE as _],
     pub device_node_mask: u32,
     pub device_luidvalid: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_external_memory_capabilities",
@@ -11387,7 +11387,7 @@ pub struct ExternalMemoryImageCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_memory", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ExternalMemoryImageCreateInfo<'a> {}
@@ -11435,7 +11435,7 @@ pub struct ExternalMemoryBufferCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_memory", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ExternalMemoryBufferCreateInfo<'a> {}
@@ -11486,7 +11486,7 @@ pub struct ExportMemoryAllocateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_memory", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ExportMemoryAllocateInfo<'a> {}
@@ -11534,7 +11534,7 @@ pub struct PhysicalDeviceExternalFenceInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_type: ExternalFenceHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_fence_capabilities", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalFenceInfo<'a> {}
@@ -11582,7 +11582,7 @@ pub struct ExternalFenceProperties<'a> {
     pub export_from_imported_handle_types: ExternalFenceHandleTypeFlags,
     pub compatible_handle_types: ExternalFenceHandleTypeFlags,
     pub external_fence_features: ExternalFenceFeatureFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_fence_capabilities", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ExternalFenceProperties<'a> {}
@@ -11643,7 +11643,7 @@ pub struct ExportFenceCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_types: ExternalFenceHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_fence", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ExportFenceCreateInfo<'a> {}
@@ -11691,7 +11691,7 @@ pub struct ExportSemaphoreCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_types: ExternalSemaphoreHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_external_semaphore", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for ExportSemaphoreCreateInfo<'a> {}
@@ -11742,7 +11742,7 @@ pub struct PhysicalDeviceExternalSemaphoreInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_external_semaphore_capabilities",
@@ -11814,7 +11814,7 @@ pub struct ExternalSemaphoreProperties<'a> {
     pub export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub compatible_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub external_semaphore_features: ExternalSemaphoreFeatureFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_external_semaphore_capabilities",
@@ -11897,7 +11897,7 @@ pub struct PhysicalDeviceMaintenance3Properties<'a> {
     pub p_next: Cell<*const Header>,
     pub max_per_set_descriptors: u32,
     pub max_memory_allocation_size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance3", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance3Properties<'a> {}
@@ -11960,7 +11960,7 @@ pub struct DescriptorSetLayoutSupport<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub supported: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance3", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetLayoutSupport<'a> {}
@@ -12006,7 +12006,7 @@ pub struct PhysicalDeviceShaderDrawParametersFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_draw_parameters: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_1")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderDrawParametersFeatures<'a> {}
@@ -12080,7 +12080,7 @@ pub struct PhysicalDeviceVulkan11Features<'a> {
     pub protected_memory: Bool32,
     pub sampler_ycbcr_conversion: Bool32,
     pub shader_draw_parameters: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVulkan11Features<'a> {}
@@ -12220,7 +12220,7 @@ pub struct PhysicalDeviceVulkan11Properties<'a> {
     pub protected_no_fault: Bool32,
     pub max_per_set_descriptors: u32,
     pub max_memory_allocation_size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVulkan11Properties<'a> {}
@@ -12405,7 +12405,7 @@ pub struct PhysicalDeviceVulkan12Features<'a> {
     pub shader_output_viewport_index: Bool32,
     pub shader_output_layer: Bool32,
     pub subgroup_broadcast_dynamic_id: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVulkan12Features<'a> {}
@@ -12849,7 +12849,7 @@ pub struct PhysicalDeviceVulkan12Properties<'a> {
     pub filter_minmax_image_component_mapping: Bool32,
     pub max_timeline_semaphore_value_difference: u64,
     pub framebuffer_integer_color_sample_counts: SampleCountFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVulkan12Properties<'a> {}
@@ -13245,7 +13245,7 @@ pub struct ImageFormatListCreateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub view_format_count: u32,
     pub p_view_formats: *const Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_image_format_list", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for ImageFormatListCreateInfo<'a> {}
@@ -13330,7 +13330,7 @@ pub struct RenderPassCreateInfo2<'a> {
     pub p_dependencies: *const SubpassDependency2<'a>,
     pub correlated_view_mask_count: u32,
     pub p_correlated_view_masks: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for RenderPassCreateInfo2<'a> {}
@@ -13457,7 +13457,7 @@ pub struct AttachmentDescription2<'a> {
     pub stencil_store_op: AttachmentStoreOp,
     pub initial_layout: ImageLayout,
     pub final_layout: ImageLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for AttachmentDescription2<'a> {}
@@ -13553,7 +13553,7 @@ pub struct AttachmentReference2<'a> {
     pub attachment: u32,
     pub layout: ImageLayout,
     pub aspect_mask: ImageAspectFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for AttachmentReference2<'a> {}
@@ -13621,7 +13621,7 @@ pub struct SubpassDescription2<'a> {
     pub p_depth_stencil_attachment: *const AttachmentReference2<'a>,
     pub preserve_attachment_count: u32,
     pub p_preserve_attachments: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for SubpassDescription2<'a> {}
@@ -13771,7 +13771,7 @@ pub struct SubpassDependency2<'a> {
     pub dst_access_mask: AccessFlags,
     pub dependency_flags: DependencyFlags,
     pub view_offset: i32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for SubpassDependency2<'a> {}
@@ -13859,7 +13859,7 @@ pub struct SubpassBeginInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub contents: SubpassContents,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for SubpassBeginInfo<'a> {}
@@ -13904,7 +13904,7 @@ pub type SubpassBeginInfoKHR<'a> = SubpassBeginInfo<'a>;
 pub struct SubpassEndInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_create_renderpass2", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for SubpassEndInfo<'a> {}
@@ -13945,7 +13945,7 @@ pub struct PhysicalDevice8BitStorageFeatures<'a> {
     pub storage_buffer8_bit_access: Bool32,
     pub uniform_and_storage_buffer8_bit_access: Bool32,
     pub storage_push_constant8: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevice8BitStorageFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevice8BitStorageFeatures<'a> {
@@ -14066,7 +14066,7 @@ pub struct PhysicalDeviceDriverProperties<'a> {
     pub driver_name: [c_char; MAX_DRIVER_NAME_SIZE as _],
     pub driver_info: [c_char; MAX_DRIVER_INFO_SIZE as _],
     pub conformance_version: ConformanceVersion,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_driver_properties", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDriverProperties<'a> {}
@@ -14145,7 +14145,7 @@ pub struct PhysicalDeviceShaderAtomicInt64Features<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_buffer_int64_atomics: Bool32,
     pub shader_shared_int64_atomics: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderAtomicInt64Features<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderAtomicInt64Features<'a> {
@@ -14207,7 +14207,7 @@ pub struct PhysicalDeviceShaderFloat16Int8Features<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_float16: Bool32,
     pub shader_int8: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderFloat16Int8Features<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderFloat16Int8Features<'a> {
@@ -14286,7 +14286,7 @@ pub struct PhysicalDeviceFloatControlsProperties<'a> {
     pub shader_rounding_mode_rtzfloat16: Bool32,
     pub shader_rounding_mode_rtzfloat32: Bool32,
     pub shader_rounding_mode_rtzfloat64: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_shader_float_controls", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFloatControlsProperties<'a> {}
@@ -14440,7 +14440,7 @@ pub struct DescriptorSetLayoutBindingFlagsCreateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub binding_count: u32,
     pub p_binding_flags: *const DescriptorBindingFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_descriptor_indexing", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetLayoutBindingFlagsCreateInfo<'a> {}
@@ -14529,7 +14529,7 @@ pub struct PhysicalDeviceDescriptorIndexingFeatures<'a> {
     pub descriptor_binding_partially_bound: Bool32,
     pub descriptor_binding_variable_descriptor_count: Bool32,
     pub runtime_descriptor_array: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_descriptor_indexing", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDescriptorIndexingFeatures<'a> {}
@@ -14782,7 +14782,7 @@ pub struct PhysicalDeviceDescriptorIndexingProperties<'a> {
     pub max_descriptor_set_update_after_bind_sampled_images: u32,
     pub max_descriptor_set_update_after_bind_storage_images: u32,
     pub max_descriptor_set_update_after_bind_input_attachments: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_descriptor_indexing", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDescriptorIndexingProperties<'a> {}
@@ -15003,7 +15003,7 @@ pub struct DescriptorSetVariableDescriptorCountAllocateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub descriptor_set_count: u32,
     pub p_descriptor_counts: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_descriptor_indexing", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetVariableDescriptorCountAllocateInfo<'a> {}
@@ -15069,7 +15069,7 @@ pub struct DescriptorSetVariableDescriptorCountLayoutSupport<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_variable_descriptor_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_descriptor_indexing", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetVariableDescriptorCountLayoutSupport<'a> {}
@@ -15127,7 +15127,7 @@ pub struct SubpassDescriptionDepthStencilResolve<'a> {
     pub depth_resolve_mode: ResolveModeFlags,
     pub stencil_resolve_mode: ResolveModeFlags,
     pub p_depth_stencil_resolve_attachment: *const AttachmentReference2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_depth_stencil_resolve", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for SubpassDescriptionDepthStencilResolve<'a> {}
@@ -15200,7 +15200,7 @@ pub struct PhysicalDeviceDepthStencilResolveProperties<'a> {
     pub supported_stencil_resolve_modes: ResolveModeFlags,
     pub independent_resolve_none: Bool32,
     pub independent_resolve: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_depth_stencil_resolve", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDepthStencilResolveProperties<'a> {}
@@ -15276,7 +15276,7 @@ pub struct PhysicalDeviceScalarBlockLayoutFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub scalar_block_layout: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceScalarBlockLayoutFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceScalarBlockLayoutFeatures<'a> {
@@ -15332,7 +15332,7 @@ pub struct ImageStencilUsageCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub stencil_usage: ImageUsageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_separate_stencil_usage", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for ImageStencilUsageCreateInfo<'a> {}
@@ -15391,7 +15391,7 @@ pub struct SamplerReductionModeCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub reduction_mode: SamplerReductionMode,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_filter_minmax", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for SamplerReductionModeCreateInfo<'a> {}
@@ -15443,7 +15443,7 @@ pub struct PhysicalDeviceSamplerFilterMinmaxProperties<'a> {
     pub p_next: Cell<*const Header>,
     pub filter_minmax_single_component_formats: Bool32,
     pub filter_minmax_image_component_mapping: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_filter_minmax", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSamplerFilterMinmaxProperties<'a> {}
@@ -15509,7 +15509,7 @@ pub struct PhysicalDeviceVulkanMemoryModelFeatures<'a> {
     pub vulkan_memory_model: Bool32,
     pub vulkan_memory_model_device_scope: Bool32,
     pub vulkan_memory_model_availability_visibility_chains: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVulkanMemoryModelFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceVulkanMemoryModelFeatures<'a> {
@@ -15580,7 +15580,7 @@ pub struct PhysicalDeviceImagelessFramebufferFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub imageless_framebuffer: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_imageless_framebuffer", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImagelessFramebufferFeatures<'a> {}
@@ -15644,7 +15644,7 @@ pub struct FramebufferAttachmentsCreateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub attachment_image_info_count: u32,
     pub p_attachment_image_infos: *const FramebufferAttachmentImageInfo<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_imageless_framebuffer", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for FramebufferAttachmentsCreateInfo<'a> {}
@@ -15717,7 +15717,7 @@ pub struct FramebufferAttachmentImageInfo<'a> {
     pub layer_count: u32,
     pub view_format_count: u32,
     pub p_view_formats: *const Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_imageless_framebuffer", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for FramebufferAttachmentImageInfo<'a> {}
@@ -15804,7 +15804,7 @@ pub struct RenderPassAttachmentBeginInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub attachment_count: u32,
     pub p_attachments: *const ImageView,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_imageless_framebuffer", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for RenderPassAttachmentBeginInfo<'a> {}
@@ -15867,7 +15867,7 @@ pub struct PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub uniform_buffer_standard_layout: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceUniformBufferStandardLayoutFeatures<'a> {
@@ -15923,7 +15923,7 @@ pub struct PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_subgroup_extended_types: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderSubgroupExtendedTypesFeatures<'a> {
@@ -15983,7 +15983,7 @@ pub struct PhysicalDeviceSeparateDepthStencilLayoutsFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub separate_depth_stencil_layouts: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_separate_depth_stencil_layouts",
@@ -16077,7 +16077,7 @@ pub struct AttachmentReferenceStencilLayout<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub stencil_layout: ImageLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_separate_depth_stencil_layouts",
@@ -16159,7 +16159,7 @@ pub struct AttachmentDescriptionStencilLayout<'a> {
     pub p_next: Cell<*const Header>,
     pub stencil_initial_layout: ImageLayout,
     pub stencil_final_layout: ImageLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_separate_depth_stencil_layouts",
@@ -16243,7 +16243,7 @@ pub struct PhysicalDeviceHostQueryResetFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub host_query_reset: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_query_reset", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceHostQueryResetFeatures<'a> {}
@@ -16305,7 +16305,7 @@ pub struct PhysicalDeviceTimelineSemaphoreFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub timeline_semaphore: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_timeline_semaphore", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTimelineSemaphoreFeatures<'a> {}
@@ -16368,7 +16368,7 @@ pub struct PhysicalDeviceTimelineSemaphoreProperties<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_timeline_semaphore_value_difference: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_timeline_semaphore", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTimelineSemaphoreProperties<'a> {}
@@ -16427,7 +16427,7 @@ pub struct SemaphoreTypeCreateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub semaphore_type: SemaphoreType,
     pub initial_value: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_timeline_semaphore", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for SemaphoreTypeCreateInfo<'a> {}
@@ -16495,7 +16495,7 @@ pub struct TimelineSemaphoreSubmitInfo<'a> {
     pub p_wait_semaphore_values: *const u64,
     pub signal_semaphore_value_count: u32,
     pub p_signal_semaphore_values: *const u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_timeline_semaphore", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for TimelineSemaphoreSubmitInfo<'a> {}
@@ -16593,7 +16593,7 @@ pub struct SemaphoreWaitInfo<'a> {
     pub semaphore_count: u32,
     pub p_semaphores: *const Semaphore,
     pub p_values: *const u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_timeline_semaphore", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for SemaphoreWaitInfo<'a> {}
@@ -16670,7 +16670,7 @@ pub struct SemaphoreSignalInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub value: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_timeline_semaphore", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for SemaphoreSignalInfo<'a> {}
@@ -16724,7 +16724,7 @@ pub struct PhysicalDeviceBufferDeviceAddressFeatures<'a> {
     pub buffer_device_address: Bool32,
     pub buffer_device_address_capture_replay: Bool32,
     pub buffer_device_address_multi_device: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_buffer_device_address", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceBufferDeviceAddressFeatures<'a> {}
@@ -16799,7 +16799,7 @@ pub struct BufferDeviceAddressInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_buffer_device_address", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for BufferDeviceAddressInfo<'a> {}
@@ -16847,7 +16847,7 @@ pub struct BufferOpaqueCaptureAddressCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub opaque_capture_address: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_buffer_device_address", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for BufferOpaqueCaptureAddressCreateInfo<'a> {}
@@ -16898,7 +16898,7 @@ pub struct MemoryOpaqueCaptureAddressAllocateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub opaque_capture_address: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_buffer_device_address", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for MemoryOpaqueCaptureAddressAllocateInfo<'a> {}
@@ -16949,7 +16949,7 @@ pub struct DeviceMemoryOpaqueCaptureAddressInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_buffer_device_address", feature = "version_1_2"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceMemoryOpaqueCaptureAddressInfo<'a> {}
@@ -17012,7 +17012,7 @@ pub struct PhysicalDeviceVulkan13Features<'a> {
     pub dynamic_rendering: Bool32,
     pub shader_integer_dot_product: Bool32,
     pub maintenance4: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_3")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVulkan13Features<'a> {}
@@ -17204,7 +17204,7 @@ pub struct PhysicalDeviceVulkan13Properties<'a> {
     pub uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
     pub uniform_texel_buffer_offset_single_texel_alignment: Bool32,
     pub max_buffer_size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_3")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVulkan13Properties<'a> {}
@@ -17581,7 +17581,7 @@ pub struct PipelineCreationFeedbackCreateInfo<'a> {
     pub p_pipeline_creation_feedback: *const PipelineCreationFeedback,
     pub pipeline_stage_creation_feedback_count: u32,
     pub p_pipeline_stage_creation_feedbacks: *const PipelineCreationFeedback,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_pipeline_creation_feedback", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PipelineCreationFeedbackCreateInfo<'a> {}
@@ -17731,7 +17731,7 @@ pub struct PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_terminate_invocation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderTerminateInvocationFeatures<'a> {
@@ -17792,7 +17792,7 @@ pub struct PhysicalDeviceToolProperties<'a> {
     pub purposes: ToolPurposeFlags,
     pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub layer: [c_char; MAX_EXTENSION_NAME_SIZE as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_tooling_info", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceToolProperties<'a> {}
@@ -17869,7 +17869,7 @@ pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_demote_to_helper_invocation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceShaderDemoteToHelperInvocationFeatures<'a>
@@ -17929,7 +17929,7 @@ pub struct PhysicalDevicePrivateDataFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub private_data: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_private_data", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePrivateDataFeatures<'a> {}
@@ -17991,7 +17991,7 @@ pub struct DevicePrivateDataCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub private_data_slot_request_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_private_data", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for DevicePrivateDataCreateInfo<'a> {}
@@ -18039,7 +18039,7 @@ pub struct PrivateDataSlotCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub flags: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_private_data", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PrivateDataSlotCreateInfo<'a> {}
@@ -18088,7 +18088,7 @@ pub struct PhysicalDevicePipelineCreationCacheControlFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_creation_cache_control: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_pipeline_creation_cache_control",
@@ -18182,7 +18182,7 @@ pub struct MemoryBarrier2<'a> {
     pub src_access_mask: AccessFlags2,
     pub dst_stage_mask: PipelineStageFlags2,
     pub dst_access_mask: AccessFlags2,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for MemoryBarrier2<'a> {}
@@ -18259,7 +18259,7 @@ pub struct BufferMemoryBarrier2<'a> {
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for BufferMemoryBarrier2<'a> {}
@@ -18362,7 +18362,7 @@ pub struct ImageMemoryBarrier2<'a> {
     pub dst_queue_family_index: u32,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub subresource_range: ImageSubresourceRange,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for ImageMemoryBarrier2<'a> {}
@@ -18468,7 +18468,7 @@ pub struct DependencyInfo<'a> {
     pub p_buffer_memory_barriers: *const BufferMemoryBarrier2<'a>,
     pub image_memory_barrier_count: u32,
     pub p_image_memory_barriers: *const ImageMemoryBarrier2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for DependencyInfo<'a> {}
@@ -18586,7 +18586,7 @@ pub struct SubmitInfo2<'a> {
     pub p_command_buffer_infos: *const CommandBufferSubmitInfo<'a>,
     pub signal_semaphore_info_count: u32,
     pub p_signal_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for SubmitInfo2<'a> {}
@@ -18701,7 +18701,7 @@ pub struct SemaphoreSubmitInfo<'a> {
     pub value: u64,
     pub stage_mask: PipelineStageFlags2,
     pub device_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for SemaphoreSubmitInfo<'a> {}
@@ -18766,7 +18766,7 @@ pub struct CommandBufferSubmitInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub command_buffer: Option<BorrowedHandle<'a, CommandBuffer>>,
     pub device_mask: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for CommandBufferSubmitInfo<'a> {}
@@ -18818,7 +18818,7 @@ pub struct PhysicalDeviceSynchronization2Features<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub synchronization2: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSynchronization2Features<'a> {}
@@ -18879,7 +18879,7 @@ pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_zero_initialize_workgroup_memory: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceZeroInitializeWorkgroupMemoryFeatures<'a>
@@ -18938,7 +18938,7 @@ pub struct PhysicalDeviceImageRobustnessFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub robust_image_access: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageRobustnessFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceImageRobustnessFeatures<'a> {
@@ -18996,7 +18996,7 @@ pub struct CopyBufferInfo2<'a> {
     pub dst_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub region_count: u32,
     pub p_regions: *const BufferCopy2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for CopyBufferInfo2<'a> {}
@@ -19069,7 +19069,7 @@ pub struct CopyImageInfo2<'a> {
     pub dst_image_layout: ImageLayout,
     pub region_count: u32,
     pub p_regions: *const ImageCopy2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for CopyImageInfo2<'a> {}
@@ -19153,7 +19153,7 @@ pub struct CopyBufferToImageInfo2<'a> {
     pub dst_image_layout: ImageLayout,
     pub region_count: u32,
     pub p_regions: *const BufferImageCopy2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for CopyBufferToImageInfo2<'a> {}
@@ -19231,7 +19231,7 @@ pub struct CopyImageToBufferInfo2<'a> {
     pub dst_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub region_count: u32,
     pub p_regions: *const BufferImageCopy2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for CopyImageToBufferInfo2<'a> {}
@@ -19311,7 +19311,7 @@ pub struct BlitImageInfo2<'a> {
     pub region_count: u32,
     pub p_regions: *const ImageBlit2<'a>,
     pub filter: Filter,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for BlitImageInfo2<'a> {}
@@ -19402,7 +19402,7 @@ pub struct ResolveImageInfo2<'a> {
     pub dst_image_layout: ImageLayout,
     pub region_count: u32,
     pub p_regions: *const ImageResolve2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for ResolveImageInfo2<'a> {}
@@ -19484,7 +19484,7 @@ pub struct BufferCopy2<'a> {
     pub src_offset: DeviceSize,
     pub dst_offset: DeviceSize,
     pub size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for BufferCopy2<'a> {}
@@ -19546,7 +19546,7 @@ pub struct ImageCopy2<'a> {
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for ImageCopy2<'a> {}
@@ -19619,7 +19619,7 @@ pub struct ImageBlit2<'a> {
     pub src_offsets: [Offset3D; 2u16 as _],
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offsets: [Offset3D; 2u16 as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for ImageBlit2<'a> {}
@@ -19688,7 +19688,7 @@ pub struct BufferImageCopy2<'a> {
     pub image_subresource: ImageSubresourceLayers,
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for BufferImageCopy2<'a> {}
@@ -19768,7 +19768,7 @@ pub struct ImageResolve2<'a> {
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_copy_commands2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for ImageResolve2<'a> {}
@@ -19839,7 +19839,7 @@ pub struct PhysicalDeviceSubgroupSizeControlFeatures<'a> {
     pub p_next: Cell<*const Header>,
     pub subgroup_size_control: Bool32,
     pub compute_full_subgroups: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_subgroup_size_control", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSubgroupSizeControlFeatures<'a> {}
@@ -19911,7 +19911,7 @@ pub struct PhysicalDeviceSubgroupSizeControlProperties<'a> {
     pub max_subgroup_size: u32,
     pub max_compute_workgroup_subgroups: u32,
     pub required_subgroup_size_stages: ShaderStageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_subgroup_size_control", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSubgroupSizeControlProperties<'a> {}
@@ -19992,7 +19992,7 @@ pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub required_subgroup_size: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_subgroup_size_control",
@@ -20097,7 +20097,7 @@ pub struct PhysicalDeviceInlineUniformBlockFeatures<'a> {
     pub p_next: Cell<*const Header>,
     pub inline_uniform_block: Bool32,
     pub descriptor_binding_inline_uniform_block_update_after_bind: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_inline_uniform_block", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceInlineUniformBlockFeatures<'a> {}
@@ -20173,7 +20173,7 @@ pub struct PhysicalDeviceInlineUniformBlockProperties<'a> {
     pub max_per_stage_descriptor_update_after_bind_inline_uniform_blocks: u32,
     pub max_descriptor_set_inline_uniform_blocks: u32,
     pub max_descriptor_set_update_after_bind_inline_uniform_blocks: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_inline_uniform_block", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceInlineUniformBlockProperties<'a> {}
@@ -20262,7 +20262,7 @@ pub struct WriteDescriptorSetInlineUniformBlock<'a> {
     pub p_next: Cell<*const Header>,
     pub data_size: u32,
     pub p_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_inline_uniform_block", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for WriteDescriptorSetInlineUniformBlock<'a> {}
@@ -20323,7 +20323,7 @@ pub struct DescriptorPoolInlineUniformBlockCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_inline_uniform_block_bindings: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_inline_uniform_block", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for DescriptorPoolInlineUniformBlockCreateInfo<'a> {}
@@ -20374,7 +20374,7 @@ pub struct PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub texture_compression_astc_hdr: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceTextureCompressionASTCHDRFeatures<'a> {
@@ -20445,7 +20445,7 @@ pub struct RenderingInfo<'a> {
     pub p_color_attachments: *const RenderingAttachmentInfo<'a>,
     pub p_depth_attachment: *const RenderingAttachmentInfo<'a>,
     pub p_stencil_attachment: *const RenderingAttachmentInfo<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_dynamic_rendering",
@@ -20599,7 +20599,7 @@ pub struct RenderingAttachmentInfo<'a> {
     pub load_op: AttachmentLoadOp,
     pub store_op: AttachmentStoreOp,
     pub clear_value: ClearValue,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dynamic_rendering", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for RenderingAttachmentInfo<'a> {}
@@ -20691,7 +20691,7 @@ pub struct PipelineRenderingCreateInfo<'a> {
     pub p_color_attachment_formats: *const Format,
     pub depth_attachment_format: Format,
     pub stencil_attachment_format: Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dynamic_rendering", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PipelineRenderingCreateInfo<'a> {}
@@ -20781,7 +20781,7 @@ pub struct PhysicalDeviceDynamicRenderingFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub dynamic_rendering: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dynamic_rendering", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDynamicRenderingFeatures<'a> {}
@@ -20849,7 +20849,7 @@ pub struct CommandBufferInheritanceRenderingInfo<'a> {
     pub depth_attachment_format: Format,
     pub stencil_attachment_format: Format,
     pub rasterization_samples: SampleCountFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dynamic_rendering", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for CommandBufferInheritanceRenderingInfo<'a> {}
@@ -20945,7 +20945,7 @@ pub struct PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_integer_dot_product: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderIntegerDotProductFeatures<'a> {
@@ -21031,7 +21031,7 @@ pub struct PhysicalDeviceShaderIntegerDotProductProperties<'a> {
     pub integer_dot_product_accumulating_saturating64_bit_unsigned_accelerated: Bool32,
     pub integer_dot_product_accumulating_saturating64_bit_signed_accelerated: Bool32,
     pub integer_dot_product_accumulating_saturating64_bit_mixed_signedness_accelerated: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderIntegerDotProductProperties<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderIntegerDotProductProperties<'a> {
@@ -21318,7 +21318,7 @@ pub struct PhysicalDeviceTexelBufferAlignmentProperties<'a> {
     pub storage_texel_buffer_offset_single_texel_alignment: Bool32,
     pub uniform_texel_buffer_offset_alignment_bytes: DeviceSize,
     pub uniform_texel_buffer_offset_single_texel_alignment: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTexelBufferAlignmentProperties<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceTexelBufferAlignmentProperties<'a> {
@@ -21396,7 +21396,7 @@ pub struct FormatProperties3<'a> {
     pub linear_tiling_features: FormatFeatureFlags2,
     pub optimal_tiling_features: FormatFeatureFlags2,
     pub buffer_features: FormatFeatureFlags2,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_format_feature_flags2", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for FormatProperties3<'a> {}
@@ -21462,7 +21462,7 @@ pub struct PhysicalDeviceMaintenance4Features<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub maintenance4: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance4", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance4Features<'a> {}
@@ -21524,7 +21524,7 @@ pub struct PhysicalDeviceMaintenance4Properties<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_buffer_size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance4", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance4Properties<'a> {}
@@ -21581,7 +21581,7 @@ pub struct DeviceBufferMemoryRequirements<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_create_info: *const BufferCreateInfo<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance4", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceBufferMemoryRequirements<'a> {}
@@ -21628,7 +21628,7 @@ pub struct DeviceImageMemoryRequirements<'a> {
     pub p_next: Cell<*const Header>,
     pub p_create_info: *const ImageCreateInfo<'a>,
     pub plane_aspect: ImageAspectFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance4", feature = "version_1_3"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceImageMemoryRequirements<'a> {}
@@ -21700,7 +21700,7 @@ pub struct PhysicalDeviceVulkan14Features<'a> {
     pub pipeline_robustness: Bool32,
     pub host_image_copy: Bool32,
     pub push_descriptor: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_4")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVulkan14Features<'a> {}
@@ -21904,7 +21904,7 @@ pub struct PhysicalDeviceVulkan14Properties<'a> {
     pub p_copy_dst_layouts: *const ImageLayout,
     pub optimal_tiling_layout_uuid: [u8; UUID_SIZE as _],
     pub identical_memory_type_requirements: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "version_1_4")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVulkan14Properties<'a> {}
@@ -22139,7 +22139,7 @@ pub struct DeviceQueueGlobalPriorityCreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub global_priority: QueueGlobalPriority,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_global_priority", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceQueueGlobalPriorityCreateInfo<'a> {}
@@ -22192,7 +22192,7 @@ pub struct PhysicalDeviceGlobalPriorityQueryFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub global_priority_query: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_global_priority", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceGlobalPriorityQueryFeatures<'a> {}
@@ -22259,7 +22259,7 @@ pub struct QueueFamilyGlobalPriorityProperties<'a> {
     pub p_next: Cell<*const Header>,
     pub priority_count: u32,
     pub priorities: [QueueGlobalPriority; MAX_GLOBAL_PRIORITY_SIZE as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_global_priority", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for QueueFamilyGlobalPriorityProperties<'a> {}
@@ -22318,7 +22318,7 @@ pub struct PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_subgroup_rotate: Bool32,
     pub shader_subgroup_rotate_clustered: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderSubgroupRotateFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderSubgroupRotateFeatures<'a> {
@@ -22379,7 +22379,7 @@ pub struct PhysicalDeviceShaderFloatControls2Features<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_float_controls2: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderFloatControls2Features<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderFloatControls2Features<'a> {
@@ -22434,7 +22434,7 @@ pub struct PhysicalDeviceShaderExpectAssumeFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_expect_assume: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderExpectAssumeFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderExpectAssumeFeatures<'a> {
@@ -22495,7 +22495,7 @@ pub struct PhysicalDeviceLineRasterizationFeatures<'a> {
     pub stippled_rectangular_lines: Bool32,
     pub stippled_bresenham_lines: Bool32,
     pub stippled_smooth_lines: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_line_rasterization", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLineRasterizationFeatures<'a> {}
@@ -22591,7 +22591,7 @@ pub struct PhysicalDeviceLineRasterizationProperties<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub line_sub_pixel_precision_bits: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_line_rasterization", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLineRasterizationProperties<'a> {}
@@ -22655,7 +22655,7 @@ pub struct PipelineRasterizationLineStateCreateInfo<'a> {
     pub stippled_line_enable: Bool32,
     pub line_stipple_factor: u32,
     pub line_stipple_pattern: u16,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_line_rasterization", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PipelineRasterizationLineStateCreateInfo<'a> {}
@@ -22729,7 +22729,7 @@ pub struct PhysicalDeviceVertexAttributeDivisorProperties<'a> {
     pub p_next: Cell<*const Header>,
     pub max_vertex_attrib_divisor: u32,
     pub supports_non_zero_first_instance: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_vertex_attribute_divisor", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVertexAttributeDivisorProperties<'a> {}
@@ -22834,7 +22834,7 @@ pub struct PipelineVertexInputDivisorStateCreateInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub vertex_binding_divisor_count: u32,
     pub p_vertex_binding_divisors: *const VertexInputBindingDivisorDescription,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_vertex_attribute_divisor", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PipelineVertexInputDivisorStateCreateInfo<'a> {}
@@ -22906,7 +22906,7 @@ pub struct PhysicalDeviceVertexAttributeDivisorFeatures<'a> {
     pub p_next: Cell<*const Header>,
     pub vertex_attribute_instance_rate_divisor: Bool32,
     pub vertex_attribute_instance_rate_zero_divisor: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_vertex_attribute_divisor", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVertexAttributeDivisorFeatures<'a> {}
@@ -22978,7 +22978,7 @@ pub struct PhysicalDeviceIndexTypeUint8Features<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub index_type_uint8: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceIndexTypeUint8Features<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceIndexTypeUint8Features<'a> {
@@ -23037,7 +23037,7 @@ pub struct MemoryMapInfo<'a> {
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub offset: DeviceSize,
     pub size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_map_memory2", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for MemoryMapInfo<'a> {}
@@ -23102,7 +23102,7 @@ pub struct MemoryUnmapInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: MemoryUnmapFlags,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_map_memory2", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for MemoryUnmapInfo<'a> {}
@@ -23154,7 +23154,7 @@ pub struct PhysicalDeviceMaintenance5Features<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub maintenance5: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance5", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance5Features<'a> {}
@@ -23221,7 +23221,7 @@ pub struct PhysicalDeviceMaintenance5Properties<'a> {
     pub polygon_mode_point_size: Bool32,
     pub non_strict_single_pixel_wide_lines_use_parallelogram: Bool32,
     pub non_strict_wide_lines_use_parallelogram: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance5", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance5Properties<'a> {}
@@ -23321,7 +23321,7 @@ pub struct RenderingAreaInfo<'a> {
     pub p_color_attachment_formats: *const Format,
     pub depth_attachment_format: Format,
     pub stencil_attachment_format: Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance5", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for RenderingAreaInfo<'a> {}
@@ -23407,7 +23407,7 @@ pub struct DeviceImageSubresourceInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub p_create_info: *const ImageCreateInfo<'a>,
     pub p_subresource: *const ImageSubresource2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance5", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for DeviceImageSubresourceInfo<'a> {}
@@ -23464,7 +23464,7 @@ pub struct ImageSubresource2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image_subresource: ImageSubresource,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_host_image_copy",
@@ -23557,7 +23557,7 @@ pub struct SubresourceLayout2<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub subresource_layout: SubresourceLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_host_image_copy",
@@ -23645,7 +23645,7 @@ pub struct PipelineCreateFlags2CreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub flags: PipelineCreateFlags2,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance5", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PipelineCreateFlags2CreateInfo<'a> {}
@@ -23717,7 +23717,7 @@ pub struct BufferUsageFlags2CreateInfo<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub usage: BufferUsageFlags2,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance5", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for BufferUsageFlags2CreateInfo<'a> {}
@@ -23786,7 +23786,7 @@ pub struct PhysicalDevicePushDescriptorProperties<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_push_descriptors: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_push_descriptor", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePushDescriptorProperties<'a> {}
@@ -23843,7 +23843,7 @@ pub struct PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub dynamic_rendering_local_read: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dynamic_rendering_local_read", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDynamicRenderingLocalReadFeatures<'a> {}
@@ -23908,7 +23908,7 @@ pub struct RenderingAttachmentLocationInfo<'a> {
     pub p_next: Cell<*const Header>,
     pub color_attachment_count: u32,
     pub p_color_attachment_locations: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dynamic_rendering_local_read", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for RenderingAttachmentLocationInfo<'a> {}
@@ -23988,7 +23988,7 @@ pub struct RenderingInputAttachmentIndexInfo<'a> {
     pub p_color_attachment_input_indices: *const u32,
     pub p_depth_input_attachment_index: *const u32,
     pub p_stencil_input_attachment_index: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_dynamic_rendering_local_read", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for RenderingInputAttachmentIndexInfo<'a> {}
@@ -24080,7 +24080,7 @@ pub struct PhysicalDeviceMaintenance6Features<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub maintenance6: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance6Features<'a> {}
@@ -24144,7 +24144,7 @@ pub struct PhysicalDeviceMaintenance6Properties<'a> {
     pub block_texel_view_compatible_multiple_layers: Bool32,
     pub max_combined_image_sampler_descriptor_count: u32,
     pub fragment_shading_rate_clamp_combiner_inputs: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance6Properties<'a> {}
@@ -24213,7 +24213,7 @@ pub struct BindMemoryStatus<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_result: *const Status,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for BindMemoryStatus<'a> {}
@@ -24275,7 +24275,7 @@ pub struct BindDescriptorSetsInfo<'a> {
     pub p_descriptor_sets: *const DescriptorSet,
     pub dynamic_offset_count: u32,
     pub p_dynamic_offsets: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for BindDescriptorSetsInfo<'a> {}
@@ -24383,7 +24383,7 @@ pub struct PushConstantsInfo<'a> {
     pub offset: u32,
     pub size: u32,
     pub p_values: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_maintenance6", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PushConstantsInfo<'a> {}
@@ -24464,7 +24464,7 @@ pub struct PushDescriptorSetInfo<'a> {
     pub set: u32,
     pub descriptor_write_count: u32,
     pub p_descriptor_writes: *const WriteDescriptorSet<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
@@ -24571,7 +24571,7 @@ pub struct PushDescriptorSetWithTemplateInfo<'a> {
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
     pub p_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_maintenance6", feature = "ext_push_descriptor"),
@@ -24655,7 +24655,7 @@ pub struct PhysicalDevicePipelineProtectedAccessFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_protected_access: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePipelineProtectedAccessFeatures<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevicePipelineProtectedAccessFeatures<'a> {
@@ -24712,7 +24712,7 @@ pub struct PhysicalDevicePipelineRobustnessFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_robustness: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_pipeline_robustness", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePipelineRobustnessFeatures<'a> {}
@@ -24778,7 +24778,7 @@ pub struct PhysicalDevicePipelineRobustnessProperties<'a> {
     pub default_robustness_uniform_buffers: PipelineRobustnessBufferBehavior,
     pub default_robustness_vertex_inputs: PipelineRobustnessBufferBehavior,
     pub default_robustness_images: PipelineRobustnessImageBehavior,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_pipeline_robustness", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePipelineRobustnessProperties<'a> {}
@@ -24866,7 +24866,7 @@ pub struct PipelineRobustnessCreateInfo<'a> {
     pub uniform_buffers: PipelineRobustnessBufferBehavior,
     pub vertex_inputs: PipelineRobustnessBufferBehavior,
     pub images: PipelineRobustnessImageBehavior,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_pipeline_robustness", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PipelineRobustnessCreateInfo<'a> {}
@@ -24953,7 +24953,7 @@ pub struct PhysicalDeviceHostImageCopyFeatures<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub host_image_copy: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceHostImageCopyFeatures<'a> {}
@@ -25020,7 +25020,7 @@ pub struct PhysicalDeviceHostImageCopyProperties<'a> {
     pub p_copy_dst_layouts: *const ImageLayout,
     pub optimal_tiling_layout_uuid: [u8; UUID_SIZE as _],
     pub identical_memory_type_requirements: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceHostImageCopyProperties<'a> {}
@@ -25136,7 +25136,7 @@ pub struct MemoryToImageCopy<'a> {
     pub image_subresource: ImageSubresourceLayers,
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for MemoryToImageCopy<'a> {}
@@ -25217,7 +25217,7 @@ pub struct ImageToMemoryCopy<'a> {
     pub image_subresource: ImageSubresourceLayers,
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for ImageToMemoryCopy<'a> {}
@@ -25297,7 +25297,7 @@ pub struct CopyMemoryToImageInfo<'a> {
     pub dst_image_layout: ImageLayout,
     pub region_count: u32,
     pub p_regions: *const MemoryToImageCopy<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for CopyMemoryToImageInfo<'a> {}
@@ -25375,7 +25375,7 @@ pub struct CopyImageToMemoryInfo<'a> {
     pub src_image_layout: ImageLayout,
     pub region_count: u32,
     pub p_regions: *const ImageToMemoryCopy<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for CopyImageToMemoryInfo<'a> {}
@@ -25455,7 +25455,7 @@ pub struct CopyImageToImageInfo<'a> {
     pub dst_image_layout: ImageLayout,
     pub region_count: u32,
     pub p_regions: *const ImageCopy2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for CopyImageToImageInfo<'a> {}
@@ -25544,7 +25544,7 @@ pub struct HostImageLayoutTransitionInfo<'a> {
     pub old_layout: ImageLayout,
     pub new_layout: ImageLayout,
     pub subresource_range: ImageSubresourceRange,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for HostImageLayoutTransitionInfo<'a> {}
@@ -25608,7 +25608,7 @@ pub struct SubresourceHostMemcpySize<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for SubresourceHostMemcpySize<'a> {}
@@ -25665,7 +25665,7 @@ pub struct HostImageCopyDevicePerformanceQuery<'a> {
     pub p_next: Cell<*const Header>,
     pub optimal_device_access: Bool32,
     pub identical_memory_layout: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_host_image_copy", feature = "version_1_4"))]
 unsafe impl<'a> ExtendableStructureBase for HostImageCopyDevicePerformanceQuery<'a> {}
@@ -25869,7 +25869,7 @@ pub struct SwapchainCreateInfoKHR<'a> {
     pub present_mode: PresentModeKHR,
     pub clipped: Bool32,
     pub old_swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain")]
 unsafe impl<'a> ExtendableStructureBase for SwapchainCreateInfoKHR<'a> {}
@@ -26020,7 +26020,7 @@ pub struct PresentInfoKHR<'a> {
     pub p_swapchains: *const SwapchainKHR,
     pub p_image_indices: *const u32,
     pub p_results: *const Status,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain")]
 unsafe impl<'a> ExtendableStructureBase for PresentInfoKHR<'a> {}
@@ -26126,7 +26126,7 @@ pub struct ImageSwapchainCreateInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_swapchain", feature = "version_1_1"),
@@ -26197,7 +26197,7 @@ pub struct BindImageMemorySwapchainInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     pub image_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_swapchain", feature = "version_1_1"),
@@ -26283,7 +26283,7 @@ pub struct AcquireNextImageInfoKHR<'a> {
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub device_mask: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_swapchain", feature = "version_1_1"),
@@ -26373,7 +26373,7 @@ pub struct DeviceGroupPresentCapabilitiesKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub present_mask: [u32; MAX_DEVICE_GROUP_SIZE as _],
     pub modes: DeviceGroupPresentModeFlagsKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_swapchain", feature = "version_1_1"),
@@ -26446,7 +26446,7 @@ pub struct DeviceGroupPresentInfoKHR<'a> {
     pub swapchain_count: u32,
     pub p_device_masks: *const u32,
     pub mode: DeviceGroupPresentModeFlagsKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_swapchain", feature = "version_1_1"),
@@ -26535,7 +26535,7 @@ pub struct DeviceGroupSwapchainCreateInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub modes: DeviceGroupPresentModeFlagsKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(feature = "ext_swapchain", feature = "version_1_1"),
@@ -26609,7 +26609,7 @@ pub struct DisplayModeCreateInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub parameters: DisplayModeParametersKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display")]
 unsafe impl<'a> ExtendableStructureBase for DisplayModeCreateInfoKHR<'a> {}
@@ -26693,7 +26693,7 @@ impl DisplayModeParametersKHR {
 pub struct DisplayModePropertiesKHR<'a> {
     pub display_mode: Option<BorrowedHandle<'a, DisplayModeKHR>>,
     pub parameters: DisplayModeParametersKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display")]
 unsafe impl<'a> Send for DisplayModePropertiesKHR<'a> {}
@@ -26813,7 +26813,7 @@ impl DisplayPlaneCapabilitiesKHR {
 pub struct DisplayPlanePropertiesKHR<'a> {
     pub current_display: Option<BorrowedHandle<'a, DisplayKHR>>,
     pub current_stack_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display")]
 unsafe impl<'a> Send for DisplayPlanePropertiesKHR<'a> {}
@@ -26854,7 +26854,7 @@ pub struct DisplayPropertiesKHR<'a> {
     pub supported_transforms: SurfaceTransformFlagsKHR,
     pub plane_reorder_possible: Bool32,
     pub persistent_content: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display")]
 unsafe impl<'a> Send for DisplayPropertiesKHR<'a> {}
@@ -26928,7 +26928,7 @@ pub struct DisplaySurfaceCreateInfoKHR<'a> {
     pub global_alpha: f32,
     pub alpha_mode: DisplayPlaneAlphaFlagsKHR,
     pub image_extent: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display")]
 unsafe impl<'a> ExtendableStructureBase for DisplaySurfaceCreateInfoKHR<'a> {}
@@ -27016,7 +27016,7 @@ pub struct DisplayPresentInfoKHR<'a> {
     pub src_rect: Rect2D,
     pub dst_rect: Rect2D,
     pub persistent: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_swapchain")]
 unsafe impl<'a> ExtendableStructureBase for DisplayPresentInfoKHR<'a> {}
@@ -27076,7 +27076,7 @@ pub struct XlibSurfaceCreateInfoKHR<'a> {
     pub flags: u32,
     pub dpy: *const VoidPtr,
     pub window: c_ulong,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_xlib_surface")]
 unsafe impl<'a> ExtendableStructureBase for XlibSurfaceCreateInfoKHR<'a> {}
@@ -27134,7 +27134,7 @@ pub struct XcbSurfaceCreateInfoKHR<'a> {
     pub flags: u32,
     pub connection: *const VoidPtr,
     pub window: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_xcb_surface")]
 unsafe impl<'a> ExtendableStructureBase for XcbSurfaceCreateInfoKHR<'a> {}
@@ -27192,7 +27192,7 @@ pub struct WaylandSurfaceCreateInfoKHR<'a> {
     pub flags: u32,
     pub display: *const VoidPtr,
     pub surface: *const VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_wayland_surface")]
 unsafe impl<'a> ExtendableStructureBase for WaylandSurfaceCreateInfoKHR<'a> {}
@@ -27251,7 +27251,7 @@ pub struct AndroidSurfaceCreateInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub window: *const ANativeWindow,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_android_surface")]
 unsafe impl<'a> ExtendableStructureBase for AndroidSurfaceCreateInfoKHR<'a> {}
@@ -27303,7 +27303,7 @@ pub struct Win32SurfaceCreateInfoKHR<'a> {
     pub flags: u32,
     pub hinstance: VoidPtr,
     pub hwnd: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_win32_surface")]
 unsafe impl<'a> ExtendableStructureBase for Win32SurfaceCreateInfoKHR<'a> {}
@@ -27361,7 +27361,7 @@ pub struct DebugReportCallbackCreateInfoEXT<'a> {
     pub flags: DebugReportFlagsEXT,
     pub pfn_callback: FuncPtr,
     pub p_user_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_report")]
 unsafe impl<'a> ExtendableStructureBase for DebugReportCallbackCreateInfoEXT<'a> {}
@@ -27422,7 +27422,7 @@ pub struct PipelineRasterizationStateRasterizationOrderAMD<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub rasterization_order: RasterizationOrderAMD,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_rasterization_order")]
 unsafe impl<'a> ExtendableStructureBase for PipelineRasterizationStateRasterizationOrderAMD<'a> {}
@@ -27474,7 +27474,7 @@ pub struct DebugMarkerObjectNameInfoEXT<'a> {
     pub object_type: DebugReportObjectTypeEXT,
     pub object: u64,
     pub p_object_name: *const c_char,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_marker")]
 unsafe impl<'a> ExtendableStructureBase for DebugMarkerObjectNameInfoEXT<'a> {}
@@ -27534,7 +27534,7 @@ pub struct DebugMarkerObjectTagInfoEXT<'a> {
     pub tag_name: u64,
     pub tag_size: usize,
     pub p_tag: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_marker")]
 unsafe impl<'a> ExtendableStructureBase for DebugMarkerObjectTagInfoEXT<'a> {}
@@ -27607,7 +27607,7 @@ pub struct DebugMarkerMarkerInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub p_marker_name: *const c_char,
     pub color: [f32; 4u16 as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_marker")]
 unsafe impl<'a> ExtendableStructureBase for DebugMarkerMarkerInfoEXT<'a> {}
@@ -27657,7 +27657,7 @@ pub struct DedicatedAllocationImageCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub dedicated_allocation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_dedicated_allocation")]
 unsafe impl<'a> ExtendableStructureBase for DedicatedAllocationImageCreateInfoNV<'a> {}
@@ -27706,7 +27706,7 @@ pub struct DedicatedAllocationBufferCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub dedicated_allocation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_dedicated_allocation")]
 unsafe impl<'a> ExtendableStructureBase for DedicatedAllocationBufferCreateInfoNV<'a> {}
@@ -27756,7 +27756,7 @@ pub struct DedicatedAllocationMemoryAllocateInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_dedicated_allocation")]
 unsafe impl<'a> ExtendableStructureBase for DedicatedAllocationMemoryAllocateInfoNV<'a> {}
@@ -27812,7 +27812,7 @@ pub struct PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub transform_feedback: Bool32,
     pub geometry_streams: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_transform_feedback")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTransformFeedbackFeaturesEXT<'a> {}
@@ -27887,7 +27887,7 @@ pub struct PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {
     pub transform_feedback_streams_lines_triangles: Bool32,
     pub transform_feedback_rasterization_stream_select: Bool32,
     pub transform_feedback_draw: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_transform_feedback")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTransformFeedbackPropertiesEXT<'a> {}
@@ -28001,7 +28001,7 @@ pub struct PipelineRasterizationStateStreamCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub rasterization_stream: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_transform_feedback")]
 unsafe impl<'a> ExtendableStructureBase for PipelineRasterizationStateStreamCreateInfoEXT<'a> {}
@@ -28058,7 +28058,7 @@ pub struct CuModuleCreateInfoNVX<'a> {
     pub p_next: Cell<*const Header>,
     pub data_size: usize,
     pub p_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_binary_import")]
 unsafe impl<'a> ExtendableStructureBase for CuModuleCreateInfoNVX<'a> {}
@@ -28112,7 +28112,7 @@ pub struct CuModuleTexturingModeCreateInfoNVX<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub use64bit_texturing: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_binary_import")]
 unsafe impl<'a> ExtendableStructureBase for CuModuleTexturingModeCreateInfoNVX<'a> {}
@@ -28162,7 +28162,7 @@ pub struct CuFunctionCreateInfoNVX<'a> {
     pub p_next: Cell<*const Header>,
     pub module: Option<BorrowedHandle<'a, CuModuleNVX>>,
     pub p_name: *const c_char,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_binary_import")]
 unsafe impl<'a> ExtendableStructureBase for CuFunctionCreateInfoNVX<'a> {}
@@ -28223,7 +28223,7 @@ pub struct CuLaunchInfoNVX<'a> {
     pub p_params: *const *const c_void,
     pub extra_count: usize,
     pub p_extras: *const *const c_void,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_binary_import")]
 unsafe impl<'a> ExtendableStructureBase for CuLaunchInfoNVX<'a> {}
@@ -28339,7 +28339,7 @@ pub struct ImageViewHandleInfoNVX<'a> {
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub descriptor_type: DescriptorType,
     pub sampler: Option<BorrowedHandle<'a, Sampler>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_view_handle")]
 unsafe impl<'a> ExtendableStructureBase for ImageViewHandleInfoNVX<'a> {}
@@ -28396,7 +28396,7 @@ pub struct ImageViewAddressPropertiesNVX<'a> {
     pub p_next: Cell<*const Header>,
     pub device_address: DeviceAddress,
     pub size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_view_handle")]
 unsafe impl<'a> ExtendableStructureBase for ImageViewAddressPropertiesNVX<'a> {}
@@ -28445,7 +28445,7 @@ pub struct TextureLODGatherFormatPropertiesAMD<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub supports_texture_gather_lodbias_amd: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for TextureLODGatherFormatPropertiesAMD<'a> {}
 unsafe impl<'a> ExtendableStructure for TextureLODGatherFormatPropertiesAMD<'a> {
@@ -28621,7 +28621,7 @@ pub struct StreamDescriptorSurfaceCreateInfoGGP<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub stream_descriptor: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_stream_descriptor_surface")]
 unsafe impl<'a> ExtendableStructureBase for StreamDescriptorSurfaceCreateInfoGGP<'a> {}
@@ -28670,7 +28670,7 @@ pub struct PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub corner_sampled_image: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceCornerSampledImageFeaturesNV<'a> {
@@ -28776,7 +28776,7 @@ pub struct ExternalMemoryImageCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory")]
 unsafe impl<'a> ExtendableStructureBase for ExternalMemoryImageCreateInfoNV<'a> {}
@@ -28825,7 +28825,7 @@ pub struct ExportMemoryAllocateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory")]
 unsafe impl<'a> ExtendableStructureBase for ExportMemoryAllocateInfoNV<'a> {}
@@ -28872,7 +28872,7 @@ pub struct ImportMemoryWin32HandleInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlagsNV,
     pub handle: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_win32")]
 unsafe impl<'a> ExtendableStructureBase for ImportMemoryWin32HandleInfoNV<'a> {}
@@ -28928,7 +28928,7 @@ pub struct ExportMemoryWin32HandleInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub p_attributes: *const VoidPtr,
     pub dw_access: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_win32")]
 unsafe impl<'a> ExtendableStructureBase for ExportMemoryWin32HandleInfoNV<'a> {}
@@ -28989,7 +28989,7 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNV<'a> {
     pub release_count: u32,
     pub p_release_syncs: *const DeviceMemory,
     pub p_release_keys: *const u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_win32_keyed_mutex")]
 unsafe impl<'a> ExtendableStructureBase for Win32KeyedMutexAcquireReleaseInfoNV<'a> {}
@@ -29113,7 +29113,7 @@ pub struct ValidationFlagsEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub disabled_validation_check_count: u32,
     pub p_disabled_validation_checks: *const ValidationCheckEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_validation_flags")]
 unsafe impl<'a> ExtendableStructureBase for ValidationFlagsEXT<'a> {}
@@ -29176,7 +29176,7 @@ pub struct ViSurfaceCreateInfoNN<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub window: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_vi_surface")]
 unsafe impl<'a> ExtendableStructureBase for ViSurfaceCreateInfoNN<'a> {}
@@ -29226,7 +29226,7 @@ pub struct ImageViewASTCDecodeModeEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub decode_mode: Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_astc_decode_mode")]
 unsafe impl<'a> ExtendableStructureBase for ImageViewASTCDecodeModeEXT<'a> {}
@@ -29272,7 +29272,7 @@ pub struct PhysicalDeviceASTCDecodeFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub decode_mode_shared_exponent: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_astc_decode_mode")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceASTCDecodeFeaturesEXT<'a> {}
@@ -29334,7 +29334,7 @@ pub struct ImportMemoryWin32HandleInfoKHR<'a> {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub handle: VoidPtr,
     pub name: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_win32")]
 unsafe impl<'a> ExtendableStructureBase for ImportMemoryWin32HandleInfoKHR<'a> {}
@@ -29397,7 +29397,7 @@ pub struct ExportMemoryWin32HandleInfoKHR<'a> {
     pub p_attributes: *const VoidPtr,
     pub dw_access: VoidPtr,
     pub name: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_win32")]
 unsafe impl<'a> ExtendableStructureBase for ExportMemoryWin32HandleInfoKHR<'a> {}
@@ -29458,7 +29458,7 @@ pub struct MemoryWin32HandlePropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_win32")]
 unsafe impl<'a> ExtendableStructureBase for MemoryWin32HandlePropertiesKHR<'a> {}
@@ -29503,7 +29503,7 @@ pub struct MemoryGetWin32HandleInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_win32")]
 unsafe impl<'a> ExtendableStructureBase for MemoryGetWin32HandleInfoKHR<'a> {}
@@ -29554,7 +29554,7 @@ pub struct ImportMemoryFdInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub fd: c_int,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_fd")]
 unsafe impl<'a> ExtendableStructureBase for ImportMemoryFdInfoKHR<'a> {}
@@ -29606,7 +29606,7 @@ pub struct MemoryFdPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_fd")]
 unsafe impl<'a> ExtendableStructureBase for MemoryFdPropertiesKHR<'a> {}
@@ -29651,7 +29651,7 @@ pub struct MemoryGetFdInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_fd")]
 unsafe impl<'a> ExtendableStructureBase for MemoryGetFdInfoKHR<'a> {}
@@ -29707,7 +29707,7 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHR<'a> {
     pub release_count: u32,
     pub p_release_syncs: *const DeviceMemory,
     pub p_release_keys: *const u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_win32_keyed_mutex")]
 unsafe impl<'a> ExtendableStructureBase for Win32KeyedMutexAcquireReleaseInfoKHR<'a> {}
@@ -29833,7 +29833,7 @@ pub struct ImportSemaphoreWin32HandleInfoKHR<'a> {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub handle: VoidPtr,
     pub name: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_semaphore_win32")]
 unsafe impl<'a> ExtendableStructureBase for ImportSemaphoreWin32HandleInfoKHR<'a> {}
@@ -29903,7 +29903,7 @@ pub struct ExportSemaphoreWin32HandleInfoKHR<'a> {
     pub p_attributes: *const VoidPtr,
     pub dw_access: VoidPtr,
     pub name: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_semaphore_win32")]
 unsafe impl<'a> ExtendableStructureBase for ExportSemaphoreWin32HandleInfoKHR<'a> {}
@@ -29967,7 +29967,7 @@ pub struct D3D12FenceSubmitInfoKHR<'a> {
     pub p_wait_semaphore_values: *const u64,
     pub signal_semaphore_values_count: u32,
     pub p_signal_semaphore_values: *const u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_semaphore_win32")]
 unsafe impl<'a> ExtendableStructureBase for D3D12FenceSubmitInfoKHR<'a> {}
@@ -30059,7 +30059,7 @@ pub struct SemaphoreGetWin32HandleInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_semaphore_win32")]
 unsafe impl<'a> ExtendableStructureBase for SemaphoreGetWin32HandleInfoKHR<'a> {}
@@ -30112,7 +30112,7 @@ pub struct ImportSemaphoreFdInfoKHR<'a> {
     pub flags: SemaphoreImportFlags,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub fd: c_int,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_semaphore_fd")]
 unsafe impl<'a> ExtendableStructureBase for ImportSemaphoreFdInfoKHR<'a> {}
@@ -30175,7 +30175,7 @@ pub struct SemaphoreGetFdInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_semaphore_fd")]
 unsafe impl<'a> ExtendableStructureBase for SemaphoreGetFdInfoKHR<'a> {}
@@ -30227,7 +30227,7 @@ pub struct ConditionalRenderingBeginInfoEXT<'a> {
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
     pub flags: ConditionalRenderingFlagsEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_conditional_rendering")]
 unsafe impl<'a> ExtendableStructureBase for ConditionalRenderingBeginInfoEXT<'a> {}
@@ -30284,7 +30284,7 @@ pub struct PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub conditional_rendering: Bool32,
     pub inherited_conditional_rendering: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_conditional_rendering")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceConditionalRenderingFeaturesEXT<'a> {}
@@ -30351,7 +30351,7 @@ pub struct CommandBufferInheritanceConditionalRenderingInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub conditional_rendering_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_conditional_rendering")]
 unsafe impl<'a> ExtendableStructureBase
@@ -30405,7 +30405,7 @@ pub struct PresentRegionsKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
     pub p_regions: *const PresentRegionKHR<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_incremental_present")]
 unsafe impl<'a> ExtendableStructureBase for PresentRegionsKHR<'a> {}
@@ -30465,7 +30465,7 @@ impl<'a> PresentRegionsKHR<'a> {
 pub struct PresentRegionKHR<'a> {
     pub rectangle_count: u32,
     pub p_rectangles: *const RectLayerKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_incremental_present")]
 unsafe impl<'a> Send for PresentRegionKHR<'a> {}
@@ -30590,7 +30590,7 @@ pub struct PipelineViewportWScalingStateCreateInfoNV<'a> {
     pub viewport_wscaling_enable: Bool32,
     pub viewport_count: u32,
     pub p_viewport_wscalings: *const ViewportWScalingNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_clip_space_w_scaling")]
 unsafe impl<'a> ExtendableStructureBase for PipelineViewportWScalingStateCreateInfoNV<'a> {}
@@ -30673,7 +30673,7 @@ pub struct SurfaceCapabilities2EXT<'a> {
     pub supported_composite_alpha: CompositeAlphaFlagsKHR,
     pub supported_usage_flags: ImageUsageFlags,
     pub supported_surface_counters: SurfaceCounterFlagsEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_surface_counter")]
 unsafe impl<'a> ExtendableStructureBase for SurfaceCapabilities2EXT<'a> {}
@@ -30777,7 +30777,7 @@ pub struct DisplayPowerInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub power_state: DisplayPowerStateEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_control")]
 unsafe impl<'a> ExtendableStructureBase for DisplayPowerInfoEXT<'a> {}
@@ -30821,7 +30821,7 @@ pub struct DeviceEventInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub device_event: DeviceEventTypeEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_control")]
 unsafe impl<'a> ExtendableStructureBase for DeviceEventInfoEXT<'a> {}
@@ -30865,7 +30865,7 @@ pub struct DisplayEventInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub display_event: DisplayEventTypeEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_control")]
 unsafe impl<'a> ExtendableStructureBase for DisplayEventInfoEXT<'a> {}
@@ -30909,7 +30909,7 @@ pub struct SwapchainCounterCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub surface_counters: SurfaceCounterFlagsEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_control")]
 unsafe impl<'a> ExtendableStructureBase for SwapchainCounterCreateInfoEXT<'a> {}
@@ -31043,7 +31043,7 @@ pub struct PresentTimesInfoGOOGLE<'a> {
     pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
     pub p_times: *const PresentTimeGOOGLE,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_timing")]
 unsafe impl<'a> ExtendableStructureBase for PresentTimesInfoGOOGLE<'a> {}
@@ -31139,7 +31139,7 @@ pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub per_view_position_all_components: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_multiview_per_view_attributes")]
 unsafe impl<'a> ExtendableStructureBase
@@ -31202,7 +31202,7 @@ pub struct MultiviewPerViewAttributesInfoNVX<'a> {
     pub p_next: Cell<*const Header>,
     pub per_view_attributes: Bool32,
     pub per_view_attributes_position_xonly: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_multiview_per_view_attributes",
@@ -31355,7 +31355,7 @@ pub struct PipelineViewportSwizzleStateCreateInfoNV<'a> {
     pub flags: u32,
     pub viewport_count: u32,
     pub p_viewport_swizzles: *const ViewportSwizzleNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_viewport_swizzle")]
 unsafe impl<'a> ExtendableStructureBase for PipelineViewportSwizzleStateCreateInfoNV<'a> {}
@@ -31423,7 +31423,7 @@ pub struct PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_discard_rectangles: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_discard_rectangles")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDiscardRectanglePropertiesEXT<'a> {}
@@ -31482,7 +31482,7 @@ pub struct PipelineDiscardRectangleStateCreateInfoEXT<'a> {
     pub discard_rectangle_mode: DiscardRectangleModeEXT,
     pub discard_rectangle_count: u32,
     pub p_discard_rectangles: *const Rect2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_discard_rectangles")]
 unsafe impl<'a> ExtendableStructureBase for PipelineDiscardRectangleStateCreateInfoEXT<'a> {}
@@ -31569,7 +31569,7 @@ pub struct PhysicalDeviceConservativeRasterizationPropertiesEXT<'a> {
     pub degenerate_lines_rasterized: Bool32,
     pub fully_covered_fragment_shader_input_variable: Bool32,
     pub conservative_rasterization_post_depth_coverage: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_conservative_rasterization")]
 unsafe impl<'a> ExtendableStructureBase
@@ -31684,7 +31684,7 @@ pub struct PipelineRasterizationConservativeStateCreateInfoEXT<'a> {
     pub flags: u32,
     pub conservative_rasterization_mode: ConservativeRasterizationModeEXT,
     pub extra_primitive_overestimation_size: f32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_conservative_rasterization")]
 unsafe impl<'a> ExtendableStructureBase
@@ -31752,7 +31752,7 @@ pub struct PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub depth_clip_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_depth_clip_enable")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDepthClipEnableFeaturesEXT<'a> {}
@@ -31813,7 +31813,7 @@ pub struct PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub depth_clip_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_depth_clip_enable")]
 unsafe impl<'a> ExtendableStructureBase for PipelineRasterizationDepthClipStateCreateInfoEXT<'a> {}
@@ -31876,7 +31876,7 @@ pub struct HdrMetadataEXT<'a> {
     pub min_luminance: f32,
     pub max_content_light_level: f32,
     pub max_frame_average_light_level: f32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_hdr_metadata")]
 unsafe impl<'a> ExtendableStructureBase for HdrMetadataEXT<'a> {}
@@ -31996,7 +31996,7 @@ pub struct PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub relaxed_line_rasterization: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceRelaxedLineRasterizationFeaturesIMG<'a> {
@@ -32051,7 +32051,7 @@ pub struct SharedPresentSurfaceCapabilitiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shared_present_supported_usage_flags: ImageUsageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shared_presentable_image")]
 unsafe impl<'a> ExtendableStructureBase for SharedPresentSurfaceCapabilitiesKHR<'a> {}
@@ -32107,7 +32107,7 @@ pub struct ImportFenceWin32HandleInfoKHR<'a> {
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub handle: VoidPtr,
     pub name: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_fence_win32")]
 unsafe impl<'a> ExtendableStructureBase for ImportFenceWin32HandleInfoKHR<'a> {}
@@ -32177,7 +32177,7 @@ pub struct ExportFenceWin32HandleInfoKHR<'a> {
     pub p_attributes: *const VoidPtr,
     pub dw_access: VoidPtr,
     pub name: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_fence_win32")]
 unsafe impl<'a> ExtendableStructureBase for ExportFenceWin32HandleInfoKHR<'a> {}
@@ -32236,7 +32236,7 @@ pub struct FenceGetWin32HandleInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub handle_type: ExternalFenceHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_fence_win32")]
 unsafe impl<'a> ExtendableStructureBase for FenceGetWin32HandleInfoKHR<'a> {}
@@ -32289,7 +32289,7 @@ pub struct ImportFenceFdInfoKHR<'a> {
     pub flags: FenceImportFlags,
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub fd: c_int,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_fence_fd")]
 unsafe impl<'a> ExtendableStructureBase for ImportFenceFdInfoKHR<'a> {}
@@ -32352,7 +32352,7 @@ pub struct FenceGetFdInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub fence: Option<BorrowedHandle<'a, Fence>>,
     pub handle_type: ExternalFenceHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_fence_fd")]
 unsafe impl<'a> ExtendableStructureBase for FenceGetFdInfoKHR<'a> {}
@@ -32403,7 +32403,7 @@ pub struct PhysicalDevicePerformanceQueryFeaturesKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub performance_counter_query_pools: Bool32,
     pub performance_counter_multiple_query_pools: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePerformanceQueryFeaturesKHR<'a> {}
@@ -32469,7 +32469,7 @@ pub struct PhysicalDevicePerformanceQueryPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub allow_command_buffer_query_copies: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePerformanceQueryPropertiesKHR<'a> {}
@@ -32528,7 +32528,7 @@ pub struct PerformanceCounterKHR<'a> {
     pub scope: PerformanceCounterScopeKHR,
     pub storage: PerformanceCounterStorageKHR,
     pub uuid: [u8; UUID_SIZE as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PerformanceCounterKHR<'a> {}
@@ -32593,7 +32593,7 @@ pub struct PerformanceCounterDescriptionKHR<'a> {
     pub name: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub category: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PerformanceCounterDescriptionKHR<'a> {}
@@ -32662,7 +32662,7 @@ pub struct QueryPoolPerformanceCreateInfoKHR<'a> {
     pub queue_family_index: u32,
     pub counter_index_count: u32,
     pub p_counter_indices: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for QueryPoolPerformanceCreateInfoKHR<'a> {}
@@ -32749,7 +32749,7 @@ pub struct AcquireProfilingLockInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: AcquireProfilingLockFlagsKHR,
     pub timeout: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for AcquireProfilingLockInfoKHR<'a> {}
@@ -32799,7 +32799,7 @@ pub struct PerformanceQuerySubmitInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub counter_pass_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PerformanceQuerySubmitInfoKHR<'a> {}
@@ -32850,7 +32850,7 @@ pub struct PerformanceQueryReservationInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_performance_queries_per_pool: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PerformanceQueryReservationInfoKHR<'a> {}
@@ -32899,7 +32899,7 @@ pub struct PhysicalDeviceSurfaceInfo2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub surface: Option<BorrowedHandle<'a, SurfaceKHR>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_get_surface_capabilities2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSurfaceInfo2KHR<'a> {}
@@ -32943,7 +32943,7 @@ pub struct SurfaceCapabilities2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub surface_capabilities: SurfaceCapabilitiesKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_get_surface_capabilities2")]
 unsafe impl<'a> ExtendableStructureBase for SurfaceCapabilities2KHR<'a> {}
@@ -32987,7 +32987,7 @@ pub struct SurfaceFormat2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub surface_format: SurfaceFormatKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_get_surface_capabilities2")]
 unsafe impl<'a> ExtendableStructureBase for SurfaceFormat2KHR<'a> {}
@@ -33031,7 +33031,7 @@ pub struct DisplayProperties2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub display_properties: DisplayPropertiesKHR<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_get_display_properties2")]
 unsafe impl<'a> ExtendableStructureBase for DisplayProperties2KHR<'a> {}
@@ -33075,7 +33075,7 @@ pub struct DisplayPlaneProperties2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub display_plane_properties: DisplayPlanePropertiesKHR<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_get_display_properties2")]
 unsafe impl<'a> ExtendableStructureBase for DisplayPlaneProperties2KHR<'a> {}
@@ -33119,7 +33119,7 @@ pub struct DisplayModeProperties2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub display_mode_properties: DisplayModePropertiesKHR<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_get_display_properties2")]
 unsafe impl<'a> ExtendableStructureBase for DisplayModeProperties2KHR<'a> {}
@@ -33164,7 +33164,7 @@ pub struct DisplayPlaneInfo2KHR<'a> {
     pub p_next: Cell<*const Header>,
     pub mode: Option<BorrowedHandle<'a, DisplayModeKHR>>,
     pub plane_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_get_display_properties2")]
 unsafe impl<'a> ExtendableStructureBase for DisplayPlaneInfo2KHR<'a> {}
@@ -33214,7 +33214,7 @@ pub struct DisplayPlaneCapabilities2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub capabilities: DisplayPlaneCapabilitiesKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_get_display_properties2")]
 unsafe impl<'a> ExtendableStructureBase for DisplayPlaneCapabilities2KHR<'a> {}
@@ -33259,7 +33259,7 @@ pub struct IOSSurfaceCreateInfoMVK<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub p_view: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ios_surface")]
 unsafe impl<'a> ExtendableStructureBase for IOSSurfaceCreateInfoMVK<'a> {}
@@ -33310,7 +33310,7 @@ pub struct MacOSSurfaceCreateInfoMVK<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub p_view: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_macos_surface")]
 unsafe impl<'a> ExtendableStructureBase for MacOSSurfaceCreateInfoMVK<'a> {}
@@ -33361,7 +33361,7 @@ pub struct DebugUtilsLabelEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub p_label_name: *const c_char,
     pub color: [f32; 4u16 as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_utils")]
 unsafe impl<'a> ExtendableStructureBase for DebugUtilsLabelEXT<'a> {}
@@ -33420,7 +33420,7 @@ pub struct DebugUtilsMessengerCallbackDataEXT<'a> {
     pub p_cmd_buf_labels: *const DebugUtilsLabelEXT<'a>,
     pub object_count: u32,
     pub p_objects: *const DebugUtilsObjectNameInfoEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_utils")]
 unsafe impl<'a> ExtendableStructureBase for DebugUtilsMessengerCallbackDataEXT<'a> {}
@@ -33540,7 +33540,7 @@ pub struct DebugUtilsMessengerCreateInfoEXT<'a> {
     pub message_type: DebugUtilsMessageTypeFlagsEXT,
     pub pfn_user_callback: DebugUtilsMessengerCallbackEXT,
     pub p_user_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_utils")]
 unsafe impl<'a> ExtendableStructureBase for DebugUtilsMessengerCreateInfoEXT<'a> {}
@@ -33615,7 +33615,7 @@ pub struct DebugUtilsObjectNameInfoEXT<'a> {
     pub object_type: ObjectType,
     pub object_handle: u64,
     pub p_object_name: *const c_char,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_utils")]
 unsafe impl<'a> ExtendableStructureBase for DebugUtilsObjectNameInfoEXT<'a> {}
@@ -33680,7 +33680,7 @@ pub struct DebugUtilsObjectTagInfoEXT<'a> {
     pub tag_name: u64,
     pub tag_size: usize,
     pub p_tag: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_debug_utils")]
 unsafe impl<'a> ExtendableStructureBase for DebugUtilsObjectTagInfoEXT<'a> {}
@@ -33752,7 +33752,7 @@ pub struct AndroidHardwareBufferUsageANDROID<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub android_hardware_buffer_usage: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_android_hardware_buffer")]
 unsafe impl<'a> ExtendableStructureBase for AndroidHardwareBufferUsageANDROID<'a> {}
@@ -33808,7 +33808,7 @@ pub struct AndroidHardwareBufferPropertiesANDROID<'a> {
     pub p_next: Cell<*const Header>,
     pub allocation_size: DeviceSize,
     pub memory_type_bits: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_android_hardware_buffer")]
 unsafe impl<'a> ExtendableStructureBase for AndroidHardwareBufferPropertiesANDROID<'a> {}
@@ -33865,7 +33865,7 @@ pub struct AndroidHardwareBufferFormatPropertiesANDROID<'a> {
     pub suggested_ycbcr_range: SamplerYcbcrRange,
     pub suggested_xchroma_offset: ChromaLocation,
     pub suggested_ychroma_offset: ChromaLocation,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_android_hardware_buffer")]
 unsafe impl<'a> ExtendableStructureBase for AndroidHardwareBufferFormatPropertiesANDROID<'a> {}
@@ -33960,7 +33960,7 @@ pub struct ImportAndroidHardwareBufferInfoANDROID<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub buffer: *const AHardwareBuffer,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_android_hardware_buffer")]
 unsafe impl<'a> ExtendableStructureBase for ImportAndroidHardwareBufferInfoANDROID<'a> {}
@@ -34009,7 +34009,7 @@ pub struct MemoryGetAndroidHardwareBufferInfoANDROID<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_android_hardware_buffer")]
 unsafe impl<'a> ExtendableStructureBase for MemoryGetAndroidHardwareBufferInfoANDROID<'a> {}
@@ -34053,7 +34053,7 @@ pub struct ExternalFormatANDROID<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub external_format: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_android_hardware_buffer")]
 unsafe impl<'a> ExtendableStructureBase for ExternalFormatANDROID<'a> {}
@@ -34134,7 +34134,7 @@ pub struct AndroidHardwareBufferFormatProperties2ANDROID<'a> {
     pub suggested_ycbcr_range: SamplerYcbcrRange,
     pub suggested_xchroma_offset: ChromaLocation,
     pub suggested_ychroma_offset: ChromaLocation,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_external_memory_android_hardware_buffer",
@@ -34251,7 +34251,7 @@ pub struct PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_enqueue: Bool32,
     pub shader_mesh_enqueue: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_enqueue")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderEnqueueFeaturesAMDX<'a> {}
@@ -34323,7 +34323,7 @@ pub struct PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {
     pub execution_graph_dispatch_address_alignment: u32,
     pub max_execution_graph_workgroup_count: [u32; 3u16 as _],
     pub max_execution_graph_workgroups: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_enqueue")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderEnqueuePropertiesAMDX<'a> {}
@@ -34416,7 +34416,7 @@ pub struct ExecutionGraphPipelineScratchSizeAMDX<'a> {
     pub min_size: DeviceSize,
     pub max_size: DeviceSize,
     pub size_granularity: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_enqueue")]
 unsafe impl<'a> ExtendableStructureBase for ExecutionGraphPipelineScratchSizeAMDX<'a> {}
@@ -34478,7 +34478,7 @@ pub struct ExecutionGraphPipelineCreateInfoAMDX<'a> {
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_enqueue")]
 unsafe impl<'a> ExtendableStructureBase for ExecutionGraphPipelineCreateInfoAMDX<'a> {}
@@ -34657,7 +34657,7 @@ pub struct PipelineShaderStageNodeCreateInfoAMDX<'a> {
     pub p_next: Cell<*const Header>,
     pub p_name: *const c_char,
     pub index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_enqueue")]
 unsafe impl<'a> ExtendableStructureBase for PipelineShaderStageNodeCreateInfoAMDX<'a> {}
@@ -34740,7 +34740,7 @@ pub struct AttachmentSampleCountInfoAMD<'a> {
     pub color_attachment_count: u32,
     pub p_color_attachment_samples: *const SampleCountFlags,
     pub depth_stencil_attachment_samples: SampleCountFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     all(
@@ -34905,7 +34905,7 @@ pub struct PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
     pub shader_bfloat16_type: Bool32,
     pub shader_bfloat16_dot_product: Bool32,
     pub shader_bfloat16_cooperative_matrix: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderBfloat16FeaturesKHR<'a> {
@@ -35009,7 +35009,7 @@ pub struct SampleLocationsInfoEXT<'a> {
     pub sample_location_grid_size: Extent2D,
     pub sample_locations_count: u32,
     pub p_sample_locations: *const SampleLocationEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_sample_locations")]
 unsafe impl<'a> ExtendableStructureBase for SampleLocationsInfoEXT<'a> {}
@@ -35087,7 +35087,7 @@ impl<'a> SampleLocationsInfoEXT<'a> {
 pub struct AttachmentSampleLocationsEXT<'a> {
     pub attachment_index: u32,
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_sample_locations")]
 unsafe impl<'a> Send for AttachmentSampleLocationsEXT<'a> {}
@@ -35123,7 +35123,7 @@ impl<'a> AttachmentSampleLocationsEXT<'a> {
 pub struct SubpassSampleLocationsEXT<'a> {
     pub subpass_index: u32,
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_sample_locations")]
 unsafe impl<'a> Send for SubpassSampleLocationsEXT<'a> {}
@@ -35163,7 +35163,7 @@ pub struct RenderPassSampleLocationsBeginInfoEXT<'a> {
     pub p_attachment_initial_sample_locations: *const AttachmentSampleLocationsEXT<'a>,
     pub post_subpass_sample_locations_count: u32,
     pub p_post_subpass_sample_locations: *const SubpassSampleLocationsEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_sample_locations")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassSampleLocationsBeginInfoEXT<'a> {}
@@ -35259,7 +35259,7 @@ pub struct PipelineSampleLocationsStateCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub sample_locations_enable: Bool32,
     pub sample_locations_info: SampleLocationsInfoEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_sample_locations")]
 unsafe impl<'a> ExtendableStructureBase for PipelineSampleLocationsStateCreateInfoEXT<'a> {}
@@ -35318,7 +35318,7 @@ pub struct PhysicalDeviceSampleLocationsPropertiesEXT<'a> {
     pub sample_location_coordinate_range: [f32; 2u16 as _],
     pub sample_location_sub_pixel_bits: u32,
     pub variable_sample_locations: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_sample_locations")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSampleLocationsPropertiesEXT<'a> {}
@@ -35397,7 +35397,7 @@ pub struct MultisamplePropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_sample_location_grid_size: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_sample_locations")]
 unsafe impl<'a> ExtendableStructureBase for MultisamplePropertiesEXT<'a> {}
@@ -35441,7 +35441,7 @@ pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub advanced_blend_coherent_operations: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_blend_operation_advanced")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceBlendOperationAdvancedFeaturesEXT<'a> {}
@@ -35507,7 +35507,7 @@ pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {
     pub advanced_blend_non_premultiplied_dst_color: Bool32,
     pub advanced_blend_correlated_overlap: Bool32,
     pub advanced_blend_all_operations: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_blend_operation_advanced")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceBlendOperationAdvancedPropertiesEXT<'a> {}
@@ -35595,7 +35595,7 @@ pub struct PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {
     pub src_premultiplied: Bool32,
     pub dst_premultiplied: Bool32,
     pub blend_overlap: BlendOverlapEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_blend_operation_advanced")]
 unsafe impl<'a> ExtendableStructureBase for PipelineColorBlendAdvancedStateCreateInfoEXT<'a> {}
@@ -35659,7 +35659,7 @@ pub struct PipelineCoverageToColorStateCreateInfoNV<'a> {
     pub flags: u32,
     pub coverage_to_color_enable: Bool32,
     pub coverage_to_color_location: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_coverage_to_color")]
 unsafe impl<'a> ExtendableStructureBase for PipelineCoverageToColorStateCreateInfoNV<'a> {}
@@ -35886,7 +35886,7 @@ pub struct AccelerationStructureGeometryTrianglesDataKHR<'a> {
     pub index_type: IndexType,
     pub index_data: DeviceOrHostAddressConstKHR,
     pub transform_data: DeviceOrHostAddressConstKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureGeometryTrianglesDataKHR<'a> {}
@@ -36005,7 +36005,7 @@ pub struct AccelerationStructureBuildGeometryInfoKHR<'a> {
     pub p_geometries: *const AccelerationStructureGeometryKHR<'a>,
     pub pp_geometries: *const *const AccelerationStructureGeometryKHR<'a>,
     pub scratch_data: DeviceOrHostAddressKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureBuildGeometryInfoKHR<'a> {}
@@ -36125,7 +36125,7 @@ pub struct AccelerationStructureGeometryAabbsDataKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub data: DeviceOrHostAddressConstKHR,
     pub stride: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureGeometryAabbsDataKHR<'a> {}
@@ -36242,7 +36242,7 @@ pub struct AccelerationStructureGeometryInstancesDataKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub array_of_pointers: Bool32,
     pub data: DeviceOrHostAddressConstKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureGeometryInstancesDataKHR<'a> {}
@@ -36312,7 +36312,7 @@ pub struct AccelerationStructureGeometryKHR<'a> {
     pub geometry_type: GeometryTypeKHR,
     pub geometry: AccelerationStructureGeometryDataKHR<'a>,
     pub flags: GeometryFlagsKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureGeometryKHR<'a> {}
@@ -36373,7 +36373,7 @@ pub struct AccelerationStructureCreateInfoKHR<'a> {
     pub size: DeviceSize,
     pub ty: AccelerationStructureTypeKHR,
     pub device_address: DeviceAddress,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureCreateInfoKHR<'a> {}
@@ -36448,7 +36448,7 @@ pub struct WriteDescriptorSetAccelerationStructureKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub acceleration_structure_count: u32,
     pub p_acceleration_structures: *const AccelerationStructureKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for WriteDescriptorSetAccelerationStructureKHR<'a> {}
@@ -36524,7 +36524,7 @@ pub struct PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {
     pub acceleration_structure_indirect_build: Bool32,
     pub acceleration_structure_host_commands: Bool32,
     pub descriptor_binding_acceleration_structure_update_after_bind: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceAccelerationStructureFeaturesKHR<'a> {}
@@ -36619,7 +36619,7 @@ pub struct PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {
     pub max_descriptor_set_acceleration_structures: u32,
     pub max_descriptor_set_update_after_bind_acceleration_structures: u32,
     pub min_acceleration_structure_scratch_offset_alignment: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceAccelerationStructurePropertiesKHR<'a> {}
@@ -36723,7 +36723,7 @@ pub struct AccelerationStructureDeviceAddressInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureDeviceAddressInfoKHR<'a> {}
@@ -36767,7 +36767,7 @@ pub struct AccelerationStructureVersionInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_version_data: *const u8,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureVersionInfoKHR<'a> {}
@@ -36813,7 +36813,7 @@ pub struct CopyAccelerationStructureToMemoryInfoKHR<'a> {
     pub src: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub dst: DeviceOrHostAddressKHR,
     pub mode: CopyAccelerationStructureModeKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for CopyAccelerationStructureToMemoryInfoKHR<'a> {}
@@ -36871,7 +36871,7 @@ pub struct CopyMemoryToAccelerationStructureInfoKHR<'a> {
     pub src: DeviceOrHostAddressConstKHR,
     pub dst: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub mode: CopyAccelerationStructureModeKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for CopyMemoryToAccelerationStructureInfoKHR<'a> {}
@@ -36929,7 +36929,7 @@ pub struct CopyAccelerationStructureInfoKHR<'a> {
     pub src: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub dst: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub mode: CopyAccelerationStructureModeKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for CopyAccelerationStructureInfoKHR<'a> {}
@@ -36987,7 +36987,7 @@ pub struct AccelerationStructureBuildSizesInfoKHR<'a> {
     pub acceleration_structure_size: DeviceSize,
     pub update_scratch_size: DeviceSize,
     pub build_scratch_size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureBuildSizesInfoKHR<'a> {}
@@ -37048,7 +37048,7 @@ pub struct RayTracingShaderGroupCreateInfoKHR<'a> {
     pub any_hit_shader: u32,
     pub intersection_shader: u32,
     pub p_shader_group_capture_replay_handle: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_pipeline")]
 unsafe impl<'a> ExtendableStructureBase for RayTracingShaderGroupCreateInfoKHR<'a> {}
@@ -37133,7 +37133,7 @@ pub struct RayTracingPipelineCreateInfoKHR<'a> {
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_pipeline")]
 unsafe impl<'a> ExtendableStructureBase for RayTracingPipelineCreateInfoKHR<'a> {}
@@ -37257,7 +37257,7 @@ pub struct PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {
     pub ray_tracing_pipeline_shader_group_handle_capture_replay_mixed: Bool32,
     pub ray_tracing_pipeline_trace_rays_indirect: Bool32,
     pub ray_traversal_primitive_culling: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_pipeline")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRayTracingPipelineFeaturesKHR<'a> {}
@@ -37355,7 +37355,7 @@ pub struct PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {
     pub max_ray_dispatch_invocation_count: u32,
     pub shader_group_handle_alignment: u32,
     pub max_ray_hit_attribute_size: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_pipeline")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRayTracingPipelinePropertiesKHR<'a> {}
@@ -37538,7 +37538,7 @@ pub struct RayTracingPipelineInterfaceCreateInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub max_pipeline_ray_payload_size: u32,
     pub max_pipeline_ray_hit_attribute_size: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_pipeline")]
 unsafe impl<'a> ExtendableStructureBase for RayTracingPipelineInterfaceCreateInfoKHR<'a> {}
@@ -37587,7 +37587,7 @@ pub struct PhysicalDeviceRayQueryFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub ray_query: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRayQueryFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceRayQueryFeaturesKHR<'a> {
@@ -37645,7 +37645,7 @@ pub struct PipelineCoverageModulationStateCreateInfoNV<'a> {
     pub coverage_modulation_table_enable: Bool32,
     pub coverage_modulation_table_count: u32,
     pub p_coverage_modulation_table: *const f32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_framebuffer_mixed_samples")]
 unsafe impl<'a> ExtendableStructureBase for PipelineCoverageModulationStateCreateInfoNV<'a> {}
@@ -37734,7 +37734,7 @@ pub struct PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_smcount: u32,
     pub shader_warps_per_sm: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderSMBuiltinsPropertiesNV<'a> {
@@ -37788,7 +37788,7 @@ pub struct PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_smbuiltins: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderSMBuiltinsFeaturesNV<'a> {
@@ -37843,7 +37843,7 @@ pub struct DrmFormatModifierPropertiesListEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub drm_format_modifier_count: u32,
     pub p_drm_format_modifier_properties: *const DrmFormatModifierPropertiesEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_drm_format_modifier")]
 unsafe impl<'a> ExtendableStructureBase for DrmFormatModifierPropertiesListEXT<'a> {}
@@ -37955,7 +37955,7 @@ pub struct PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {
     pub sharing_mode: SharingMode,
     pub queue_family_index_count: u32,
     pub p_queue_family_indices: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_drm_format_modifier")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageDrmFormatModifierInfoEXT<'a> {}
@@ -38042,7 +38042,7 @@ pub struct ImageDrmFormatModifierListCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub drm_format_modifier_count: u32,
     pub p_drm_format_modifiers: *const u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_drm_format_modifier")]
 unsafe impl<'a> ExtendableStructureBase for ImageDrmFormatModifierListCreateInfoEXT<'a> {}
@@ -38106,7 +38106,7 @@ pub struct ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {
     pub drm_format_modifier: u64,
     pub drm_format_modifier_plane_count: u32,
     pub p_plane_layouts: *const SubresourceLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_drm_format_modifier")]
 unsafe impl<'a> ExtendableStructureBase for ImageDrmFormatModifierExplicitCreateInfoEXT<'a> {}
@@ -38175,7 +38175,7 @@ pub struct ImageDrmFormatModifierPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub drm_format_modifier: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_drm_format_modifier")]
 unsafe impl<'a> ExtendableStructureBase for ImageDrmFormatModifierPropertiesEXT<'a> {}
@@ -38223,7 +38223,7 @@ pub struct DrmFormatModifierPropertiesList2EXT<'a> {
     pub p_next: Cell<*const Header>,
     pub drm_format_modifier_count: u32,
     pub p_drm_format_modifier_properties: *const DrmFormatModifierProperties2EXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_image_drm_format_modifier",
@@ -38370,7 +38370,7 @@ pub struct ValidationCacheCreateInfoEXT<'a> {
     pub flags: u32,
     pub initial_data_size: usize,
     pub p_initial_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_validation_cache")]
 unsafe impl<'a> ExtendableStructureBase for ValidationCacheCreateInfoEXT<'a> {}
@@ -38433,7 +38433,7 @@ pub struct ShaderModuleValidationCacheCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub validation_cache: Option<BorrowedHandle<'a, ValidationCacheEXT>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_validation_cache")]
 unsafe impl<'a> ExtendableStructureBase for ShaderModuleValidationCacheCreateInfoEXT<'a> {}
@@ -38500,7 +38500,7 @@ pub struct PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
     pub tessellation_point_mode: Bool32,
     pub triangle_fans: Bool32,
     pub vertex_attribute_access_beyond_stride: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevicePortabilitySubsetFeaturesKHR<'a> {
@@ -38637,7 +38637,7 @@ pub struct PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub min_vertex_input_binding_stride_alignment: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
@@ -38686,7 +38686,7 @@ impl<'a> PhysicalDevicePortabilitySubsetPropertiesKHR<'a> {
 pub struct ShadingRatePaletteNV<'a> {
     pub shading_rate_palette_entry_count: u32,
     pub p_shading_rate_palette_entries: *const ShadingRatePaletteEntryNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
 unsafe impl<'a> Send for ShadingRatePaletteNV<'a> {}
@@ -38737,7 +38737,7 @@ pub struct PipelineViewportShadingRateImageStateCreateInfoNV<'a> {
     pub shading_rate_image_enable: Bool32,
     pub viewport_count: u32,
     pub p_shading_rate_palettes: *const ShadingRatePaletteNV<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
 unsafe impl<'a> ExtendableStructureBase for PipelineViewportShadingRateImageStateCreateInfoNV<'a> {}
@@ -38815,7 +38815,7 @@ pub struct PhysicalDeviceShadingRateImageFeaturesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub shading_rate_image: Bool32,
     pub shading_rate_coarse_sample_order: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShadingRateImageFeaturesNV<'a> {}
@@ -38883,7 +38883,7 @@ pub struct PhysicalDeviceShadingRateImagePropertiesNV<'a> {
     pub shading_rate_texel_size: Extent2D,
     pub shading_rate_palette_size: u32,
     pub shading_rate_max_coarse_samples: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShadingRateImagePropertiesNV<'a> {}
@@ -38993,7 +38993,7 @@ pub struct CoarseSampleOrderCustomNV<'a> {
     pub sample_count: u32,
     pub sample_location_count: u32,
     pub p_sample_locations: *const CoarseSampleLocationNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
 unsafe impl<'a> Send for CoarseSampleOrderCustomNV<'a> {}
@@ -39054,7 +39054,7 @@ pub struct PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {
     pub sample_order_type: CoarseSampleOrderTypeNV,
     pub custom_sample_order_count: u32,
     pub p_custom_sample_orders: *const CoarseSampleOrderCustomNV<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shading_rate_image")]
 unsafe impl<'a> ExtendableStructureBase for PipelineViewportCoarseSampleOrderStateCreateInfoNV<'a> {}
@@ -39130,7 +39130,7 @@ pub struct RayTracingShaderGroupCreateInfoNV<'a> {
     pub closest_hit_shader: u32,
     pub any_hit_shader: u32,
     pub intersection_shader: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for RayTracingShaderGroupCreateInfoNV<'a> {}
@@ -39206,7 +39206,7 @@ pub struct RayTracingPipelineCreateInfoNV<'a> {
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub base_pipeline_handle: Option<BorrowedHandle<'a, Pipeline>>,
     pub base_pipeline_index: i32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for RayTracingPipelineCreateInfoNV<'a> {}
@@ -39315,7 +39315,7 @@ pub struct GeometryTrianglesNV<'a> {
     pub index_type: IndexType,
     pub transform_data: Option<BorrowedHandle<'a, Buffer>>,
     pub transform_offset: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for GeometryTrianglesNV<'a> {}
@@ -39422,7 +39422,7 @@ pub struct GeometryAABBNV<'a> {
     pub num_aabbs: u32,
     pub stride: u32,
     pub offset: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for GeometryAABBNV<'a> {}
@@ -39483,7 +39483,7 @@ impl<'a> GeometryAABBNV<'a> {
 pub struct GeometryDataNV<'a> {
     pub triangles: GeometryTrianglesNV<'a>,
     pub aabbs: GeometryAABBNV<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> Send for GeometryDataNV<'a> {}
@@ -39522,7 +39522,7 @@ pub struct GeometryNV<'a> {
     pub geometry_type: GeometryTypeKHR,
     pub geometry: GeometryDataNV<'a>,
     pub flags: GeometryFlagsKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for GeometryNV<'a> {}
@@ -39582,7 +39582,7 @@ pub struct AccelerationStructureInfoNV<'a> {
     pub instance_count: u32,
     pub geometry_count: u32,
     pub p_geometries: *const GeometryNV<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureInfoNV<'a> {}
@@ -39655,7 +39655,7 @@ pub struct AccelerationStructureCreateInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub compacted_size: DeviceSize,
     pub info: AccelerationStructureInfoNV<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureCreateInfoNV<'a> {}
@@ -39709,7 +39709,7 @@ pub struct BindAccelerationStructureMemoryInfoNV<'a> {
     pub memory_offset: DeviceSize,
     pub device_index_count: u32,
     pub p_device_indices: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for BindAccelerationStructureMemoryInfoNV<'a> {}
@@ -39782,7 +39782,7 @@ pub struct WriteDescriptorSetAccelerationStructureNV<'a> {
     pub p_next: Cell<*const Header>,
     pub acceleration_structure_count: u32,
     pub p_acceleration_structures: *const AccelerationStructureNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for WriteDescriptorSetAccelerationStructureNV<'a> {}
@@ -39855,7 +39855,7 @@ pub struct AccelerationStructureMemoryRequirementsInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub ty: AccelerationStructureMemoryRequirementsTypeNV,
     pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureNV>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureMemoryRequirementsInfoNV<'a> {}
@@ -39913,7 +39913,7 @@ pub struct PhysicalDeviceRayTracingPropertiesNV<'a> {
     pub max_instance_count: u64,
     pub max_triangle_count: u64,
     pub max_descriptor_set_acceleration_structures: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRayTracingPropertiesNV<'a> {}
@@ -40010,7 +40010,7 @@ pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub representative_fragment_test: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_representative_fragment_test")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRepresentativeFragmentTestFeaturesNV<'a> {}
@@ -40071,7 +40071,7 @@ pub struct PipelineRepresentativeFragmentTestStateCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub representative_fragment_test_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_representative_fragment_test")]
 unsafe impl<'a> ExtendableStructureBase
@@ -40124,7 +40124,7 @@ pub struct PhysicalDeviceImageViewImageFormatInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image_view_type: ImageViewType,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_filter_cubic")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageViewImageFormatInfoEXT<'a> {}
@@ -40180,7 +40180,7 @@ pub struct FilterCubicImageViewImageFormatPropertiesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub filter_cubic: Bool32,
     pub filter_cubic_minmax: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_filter_cubic")]
 unsafe impl<'a> ExtendableStructureBase for FilterCubicImageViewImageFormatPropertiesEXT<'a> {}
@@ -40243,7 +40243,7 @@ pub struct ImportMemoryHostPointerInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub p_host_pointer: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_host")]
 unsafe impl<'a> ExtendableStructureBase for ImportMemoryHostPointerInfoEXT<'a> {}
@@ -40298,7 +40298,7 @@ pub struct MemoryHostPointerPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_host")]
 unsafe impl<'a> ExtendableStructureBase for MemoryHostPointerPropertiesEXT<'a> {}
@@ -40342,7 +40342,7 @@ pub struct PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub min_imported_host_pointer_alignment: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_host")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalMemoryHostPropertiesEXT<'a> {}
@@ -40398,7 +40398,7 @@ pub struct PhysicalDeviceShaderClockFeaturesKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_subgroup_clock: Bool32,
     pub shader_device_clock: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderClockFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderClockFeaturesKHR<'a> {
@@ -40458,7 +40458,7 @@ pub struct PipelineCompilerControlCreateInfoAMD<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub compiler_control_flags: PipelineCompilerControlFlagsAMD,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_compiler_control")]
 unsafe impl<'a> ExtendableStructureBase for PipelineCompilerControlCreateInfoAMD<'a> {}
@@ -40532,7 +40532,7 @@ pub struct PhysicalDeviceShaderCorePropertiesAMD<'a> {
     pub min_vgpr_allocation: u32,
     pub max_vgpr_allocation: u32,
     pub vgpr_allocation_granularity: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderCorePropertiesAMD<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderCorePropertiesAMD<'a> {
@@ -40659,7 +40659,7 @@ pub struct DeviceMemoryOverallocationCreateInfoAMD<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub overallocation_behavior: MemoryOverallocationBehaviorAMD,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_memory_overallocation_behavior")]
 unsafe impl<'a> ExtendableStructureBase for DeviceMemoryOverallocationCreateInfoAMD<'a> {}
@@ -40708,7 +40708,7 @@ pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_vertex_attrib_divisor: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_vertex_attribute_divisor")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVertexAttributeDivisorPropertiesEXT<'a> {}
@@ -40764,7 +40764,7 @@ pub struct PresentFrameTokenGGP<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub frame_token: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_frame_token")]
 unsafe impl<'a> ExtendableStructureBase for PresentFrameTokenGGP<'a> {}
@@ -40811,7 +40811,7 @@ pub struct PhysicalDeviceMeshShaderFeaturesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub task_shader: Bool32,
     pub mesh_shader: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_mesh_shader")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMeshShaderFeaturesNV<'a> {}
@@ -40889,7 +40889,7 @@ pub struct PhysicalDeviceMeshShaderPropertiesNV<'a> {
     pub max_mesh_multiview_view_count: u32,
     pub mesh_output_per_vertex_granularity: u32,
     pub mesh_output_per_primitive_granularity: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_mesh_shader")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMeshShaderPropertiesNV<'a> {}
@@ -41050,7 +41050,7 @@ pub struct PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image_footprint: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderImageFootprintFeaturesNV<'a> {
@@ -41106,7 +41106,7 @@ pub struct PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub exclusive_scissor_count: u32,
     pub p_exclusive_scissors: *const Rect2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_scissor_exclusive")]
 unsafe impl<'a> ExtendableStructureBase for PipelineViewportExclusiveScissorStateCreateInfoNV<'a> {}
@@ -41174,7 +41174,7 @@ pub struct PhysicalDeviceExclusiveScissorFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub exclusive_scissor: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_scissor_exclusive")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExclusiveScissorFeaturesNV<'a> {}
@@ -41234,7 +41234,7 @@ pub struct QueueFamilyCheckpointPropertiesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub checkpoint_execution_stage_mask: PipelineStageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_diagnostic_checkpoints")]
 unsafe impl<'a> ExtendableStructureBase for QueueFamilyCheckpointPropertiesNV<'a> {}
@@ -41290,7 +41290,7 @@ pub struct CheckpointDataNV<'a> {
     pub p_next: Cell<*const Header>,
     pub stage: PipelineStageFlags,
     pub p_checkpoint_marker: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_diagnostic_checkpoints")]
 unsafe impl<'a> ExtendableStructureBase for CheckpointDataNV<'a> {}
@@ -41343,7 +41343,7 @@ pub struct QueueFamilyCheckpointProperties2NV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub checkpoint_execution_stage_mask: PipelineStageFlags2,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_device_diagnostic_checkpoints",
@@ -41423,7 +41423,7 @@ pub struct CheckpointData2NV<'a> {
     pub p_next: Cell<*const Header>,
     pub stage: PipelineStageFlags2,
     pub p_checkpoint_marker: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_device_diagnostic_checkpoints",
@@ -41490,7 +41490,7 @@ pub struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_integer_functions2: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL<'a> {
@@ -41600,7 +41600,7 @@ pub struct InitializePerformanceApiInfoINTEL<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_user_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for InitializePerformanceApiInfoINTEL<'a> {}
@@ -41644,7 +41644,7 @@ pub struct QueryPoolPerformanceQueryCreateInfoINTEL<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub performance_counters_sampling: QueryPoolSamplingModeINTEL,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for QueryPoolPerformanceQueryCreateInfoINTEL<'a> {}
@@ -41695,7 +41695,7 @@ pub struct PerformanceMarkerInfoINTEL<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub marker: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PerformanceMarkerInfoINTEL<'a> {}
@@ -41739,7 +41739,7 @@ pub struct PerformanceStreamMarkerInfoINTEL<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub marker: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PerformanceStreamMarkerInfoINTEL<'a> {}
@@ -41785,7 +41785,7 @@ pub struct PerformanceOverrideInfoINTEL<'a> {
     pub ty: PerformanceOverrideTypeINTEL,
     pub enable: Bool32,
     pub parameter: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PerformanceOverrideInfoINTEL<'a> {}
@@ -41841,7 +41841,7 @@ pub struct PerformanceConfigurationAcquireInfoINTEL<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub ty: PerformanceConfigurationTypeINTEL,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_performance_query")]
 unsafe impl<'a> ExtendableStructureBase for PerformanceConfigurationAcquireInfoINTEL<'a> {}
@@ -41887,7 +41887,7 @@ pub struct PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
     pub pci_bus: u32,
     pub pci_device: u32,
     pub pci_function: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevicePCIBusInfoPropertiesEXT<'a> {
@@ -41954,7 +41954,7 @@ pub struct DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub local_dimming_support: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_native_hdr")]
 unsafe impl<'a> ExtendableStructureBase for DisplayNativeHdrSurfaceCapabilitiesAMD<'a> {}
@@ -42006,7 +42006,7 @@ pub struct SwapchainDisplayNativeHdrCreateInfoAMD<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub local_dimming_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_native_hdr")]
 unsafe impl<'a> ExtendableStructureBase for SwapchainDisplayNativeHdrCreateInfoAMD<'a> {}
@@ -42056,7 +42056,7 @@ pub struct ImagePipeSurfaceCreateInfoFUCHSIA<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub image_pipe_handle: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_imagepipe_surface")]
 unsafe impl<'a> ExtendableStructureBase for ImagePipeSurfaceCreateInfoFUCHSIA<'a> {}
@@ -42107,7 +42107,7 @@ pub struct MetalSurfaceCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub p_layer: *const CAMetalLayer,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_surface")]
 unsafe impl<'a> ExtendableStructureBase for MetalSurfaceCreateInfoEXT<'a> {}
@@ -42161,7 +42161,7 @@ pub struct PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {
     pub fragment_density_map: Bool32,
     pub fragment_density_map_dynamic: Bool32,
     pub fragment_density_map_non_subsampled_images: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentDensityMapFeaturesEXT<'a> {}
@@ -42236,7 +42236,7 @@ pub struct PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {
     pub min_fragment_density_texel_size: Extent2D,
     pub max_fragment_density_texel_size: Extent2D,
     pub fragment_density_invocations: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentDensityMapPropertiesEXT<'a> {}
@@ -42304,7 +42304,7 @@ pub struct RenderPassFragmentDensityMapCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub fragment_density_map_attachment: AttachmentReference,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassFragmentDensityMapCreateInfoEXT<'a> {}
@@ -42365,7 +42365,7 @@ pub struct RenderingFragmentDensityMapAttachmentInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_fragment_density_map",
@@ -42453,7 +42453,7 @@ pub struct FragmentShadingRateAttachmentInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub p_fragment_shading_rate_attachment: *const AttachmentReference2<'a>,
     pub shading_rate_attachment_texel_size: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_shading_rate")]
 unsafe impl<'a> ExtendableStructureBase for FragmentShadingRateAttachmentInfoKHR<'a> {}
@@ -42516,7 +42516,7 @@ pub struct PipelineFragmentShadingRateStateCreateInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub fragment_size: Extent2D,
     pub combiner_ops: [FragmentShadingRateCombinerOpKHR; 2u16 as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_shading_rate")]
 unsafe impl<'a> ExtendableStructureBase for PipelineFragmentShadingRateStateCreateInfoKHR<'a> {}
@@ -42574,7 +42574,7 @@ pub struct PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {
     pub pipeline_fragment_shading_rate: Bool32,
     pub primitive_fragment_shading_rate: Bool32,
     pub attachment_fragment_shading_rate: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_shading_rate")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentShadingRateFeaturesKHR<'a> {}
@@ -42663,7 +42663,7 @@ pub struct PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {
     pub fragment_shading_rate_with_fragment_shader_interlock: Bool32,
     pub fragment_shading_rate_with_custom_sample_locations: Bool32,
     pub fragment_shading_rate_strict_multiply_combiner: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_shading_rate")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentShadingRatePropertiesKHR<'a> {}
@@ -42846,7 +42846,7 @@ pub struct PhysicalDeviceFragmentShadingRateKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub sample_counts: SampleCountFlags,
     pub fragment_size: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_shading_rate")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentShadingRateKHR<'a> {}
@@ -42901,7 +42901,7 @@ pub struct RenderingFragmentShadingRateAttachmentInfoKHR<'a> {
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
     pub image_layout: ImageLayout,
     pub shading_rate_attachment_texel_size: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_fragment_shading_rate",
@@ -42995,7 +42995,7 @@ pub struct PhysicalDeviceShaderCoreProperties2AMD<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_core_features: ShaderCorePropertiesFlagsAMD,
     pub active_compute_unit_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_core_properties2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderCoreProperties2AMD<'a> {}
@@ -43055,7 +43055,7 @@ pub struct PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub device_coherent_memory: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceCoherentMemoryFeaturesAMD<'a> {
@@ -43109,7 +43109,7 @@ pub struct PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_image_int64_atomics: Bool32,
     pub sparse_image_int64_atomics: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderImageAtomicInt64FeaturesEXT<'a> {
@@ -43169,7 +43169,7 @@ pub struct PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_quad_control: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderQuadControlFeaturesKHR<'a> {
@@ -43223,7 +43223,7 @@ pub struct PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub heap_budget: [DeviceSize; MAX_MEMORY_HEAPS as _],
     pub heap_usage: [DeviceSize; MAX_MEMORY_HEAPS as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceMemoryBudgetPropertiesEXT<'a> {
@@ -43278,7 +43278,7 @@ pub struct PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_priority: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_memory_priority")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMemoryPriorityFeaturesEXT<'a> {}
@@ -43338,7 +43338,7 @@ pub struct MemoryPriorityAllocateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub priority: f32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_memory_priority")]
 unsafe impl<'a> ExtendableStructureBase for MemoryPriorityAllocateInfoEXT<'a> {}
@@ -43387,7 +43387,7 @@ pub struct SurfaceProtectedCapabilitiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub supports_protected: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_surface_protected_capabilities")]
 unsafe impl<'a> ExtendableStructureBase for SurfaceProtectedCapabilitiesKHR<'a> {}
@@ -43438,7 +43438,7 @@ pub struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub dedicated_allocation_image_aliasing: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV<'a>
@@ -43500,7 +43500,7 @@ pub struct PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {
     pub buffer_device_address: Bool32,
     pub buffer_device_address_capture_replay: Bool32,
     pub buffer_device_address_multi_device: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_device_address")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceBufferDeviceAddressFeaturesEXT<'a> {}
@@ -43576,7 +43576,7 @@ pub struct BufferDeviceAddressCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub device_address: DeviceAddress,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_device_address")]
 unsafe impl<'a> ExtendableStructureBase for BufferDeviceAddressCreateInfoEXT<'a> {}
@@ -43628,7 +43628,7 @@ pub struct ValidationFeaturesEXT<'a> {
     pub p_enabled_validation_features: *const ValidationFeatureEnableEXT,
     pub disabled_validation_feature_count: u32,
     pub p_disabled_validation_features: *const ValidationFeatureDisableEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_validation_features")]
 unsafe impl<'a> ExtendableStructureBase for ValidationFeaturesEXT<'a> {}
@@ -43719,7 +43719,7 @@ pub struct PhysicalDevicePresentWaitFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_wait: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_wait")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePresentWaitFeaturesKHR<'a> {}
@@ -43786,7 +43786,7 @@ pub struct CooperativeMatrixPropertiesNV<'a> {
     pub ctype: ComponentTypeNV,
     pub dtype: ComponentTypeNV,
     pub scope: ScopeNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_matrix")]
 unsafe impl<'a> ExtendableStructureBase for CooperativeMatrixPropertiesNV<'a> {}
@@ -43873,7 +43873,7 @@ pub struct PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub cooperative_matrix: Bool32,
     pub cooperative_matrix_robust_buffer_access: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_matrix")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeMatrixFeaturesNV<'a> {}
@@ -43939,7 +43939,7 @@ pub struct PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub cooperative_matrix_supported_stages: ShaderStageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_matrix")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeMatrixPropertiesNV<'a> {}
@@ -43995,7 +43995,7 @@ pub struct PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub coverage_reduction_mode: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_coverage_reduction_mode")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCoverageReductionModeFeaturesNV<'a> {}
@@ -44057,7 +44057,7 @@ pub struct PipelineCoverageReductionStateCreateInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub coverage_reduction_mode: CoverageReductionModeNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_coverage_reduction_mode")]
 unsafe impl<'a> ExtendableStructureBase for PipelineCoverageReductionStateCreateInfoNV<'a> {}
@@ -44115,7 +44115,7 @@ pub struct FramebufferMixedSamplesCombinationNV<'a> {
     pub rasterization_samples: SampleCountFlags,
     pub depth_stencil_samples: SampleCountFlags,
     pub color_samples: SampleCountFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_coverage_reduction_mode")]
 unsafe impl<'a> ExtendableStructureBase for FramebufferMixedSamplesCombinationNV<'a> {}
@@ -44178,7 +44178,7 @@ pub struct PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
     pub fragment_shader_sample_interlock: Bool32,
     pub fragment_shader_pixel_interlock: Bool32,
     pub fragment_shader_shading_rate_interlock: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentShaderInterlockFeaturesEXT<'a> {
@@ -44244,7 +44244,7 @@ pub struct PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub ycbcr_image_arrays: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceYcbcrImageArraysFeaturesEXT<'a> {
@@ -44299,7 +44299,7 @@ pub struct PhysicalDeviceProvokingVertexFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub provoking_vertex_last: Bool32,
     pub transform_feedback_preserves_provoking_vertex: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_provoking_vertex")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceProvokingVertexFeaturesEXT<'a> {}
@@ -44369,7 +44369,7 @@ pub struct PhysicalDeviceProvokingVertexPropertiesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub provoking_vertex_mode_per_pipeline: Bool32,
     pub transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_provoking_vertex")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceProvokingVertexPropertiesEXT<'a> {}
@@ -44433,7 +44433,7 @@ pub struct PipelineRasterizationProvokingVertexStateCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub provoking_vertex_mode: ProvokingVertexModeEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_provoking_vertex")]
 unsafe impl<'a> ExtendableStructureBase
@@ -44486,7 +44486,7 @@ pub struct SurfaceFullScreenExclusiveInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub full_screen_exclusive: FullScreenExclusiveEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_full_screen_exclusive")]
 unsafe impl<'a> ExtendableStructureBase for SurfaceFullScreenExclusiveInfoEXT<'a> {}
@@ -44543,7 +44543,7 @@ pub struct SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub full_screen_exclusive_supported: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_full_screen_exclusive")]
 unsafe impl<'a> ExtendableStructureBase for SurfaceCapabilitiesFullScreenExclusiveEXT<'a> {}
@@ -44595,7 +44595,7 @@ pub struct SurfaceFullScreenExclusiveWin32InfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub hmonitor: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_full_screen_exclusive", feature = "ext_win32_surface"))]
 unsafe impl<'a> ExtendableStructureBase for SurfaceFullScreenExclusiveWin32InfoEXT<'a> {}
@@ -44655,7 +44655,7 @@ pub struct HeadlessSurfaceCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub flags: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_headless_surface")]
 unsafe impl<'a> ExtendableStructureBase for HeadlessSurfaceCreateInfoEXT<'a> {}
@@ -44709,7 +44709,7 @@ pub struct PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
     pub shader_image_float32_atomic_add: Bool32,
     pub sparse_image_float32_atomics: Bool32,
     pub sparse_image_float32_atomic_add: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderAtomicFloatFeaturesEXT<'a> {
@@ -44829,7 +44829,7 @@ pub struct PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub extended_dynamic_state: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_extended_dynamic_state")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExtendedDynamicStateFeaturesEXT<'a> {}
@@ -44890,7 +44890,7 @@ pub struct PhysicalDevicePipelineExecutablePropertiesFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_executable_info: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_executable_properties")]
 unsafe impl<'a> ExtendableStructureBase
@@ -44957,7 +44957,7 @@ pub struct PipelineInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_pipeline_executable_properties",
@@ -45027,7 +45027,7 @@ pub struct PipelineExecutablePropertiesKHR<'a> {
     pub name: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub subgroup_size: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_executable_properties")]
 unsafe impl<'a> ExtendableStructureBase for PipelineExecutablePropertiesKHR<'a> {}
@@ -45093,7 +45093,7 @@ pub struct PipelineExecutableInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub executable_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_executable_properties")]
 unsafe impl<'a> ExtendableStructureBase for PipelineExecutableInfoKHR<'a> {}
@@ -45165,7 +45165,7 @@ pub struct PipelineExecutableStatisticKHR<'a> {
     pub description: [c_char; MAX_DESCRIPTION_SIZE as _],
     pub format: PipelineExecutableStatisticFormatKHR,
     pub value: PipelineExecutableStatisticValueKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_executable_properties")]
 unsafe impl<'a> ExtendableStructureBase for PipelineExecutableStatisticKHR<'a> {}
@@ -45234,7 +45234,7 @@ pub struct PipelineExecutableInternalRepresentationKHR<'a> {
     pub is_text: Bool32,
     pub data_size: usize,
     pub p_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_executable_properties")]
 unsafe impl<'a> ExtendableStructureBase for PipelineExecutableInternalRepresentationKHR<'a> {}
@@ -45311,7 +45311,7 @@ pub struct PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {
     pub memory_map_placed: Bool32,
     pub memory_map_range_placed: Bool32,
     pub memory_unmap_reserve: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_map_memory_placed")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMapMemoryPlacedFeaturesEXT<'a> {}
@@ -45383,7 +45383,7 @@ pub struct PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub min_placed_memory_map_alignment: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_map_memory_placed")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMapMemoryPlacedPropertiesEXT<'a> {}
@@ -45438,7 +45438,7 @@ pub struct MemoryMapPlacedInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_placed_address: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_map_memory_placed")]
 unsafe impl<'a> ExtendableStructureBase for MemoryMapPlacedInfoEXT<'a> {}
@@ -45497,7 +45497,7 @@ pub struct PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
     pub shader_shared_float64_atomic_min_max: Bool32,
     pub shader_image_float32_atomic_min_max: Bool32,
     pub sparse_image_float32_atomic_min_max: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderAtomicFloat2FeaturesEXT<'a> {
@@ -45626,7 +45626,7 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {
     pub min_sequences_count_buffer_offset_alignment: u32,
     pub min_sequences_index_buffer_offset_alignment: u32,
     pub min_indirect_commands_buffer_offset_alignment: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDeviceGeneratedCommandsPropertiesNV<'a> {}
@@ -45730,7 +45730,7 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub device_generated_commands: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDeviceGeneratedCommandsFeaturesNV<'a> {}
@@ -45794,7 +45794,7 @@ pub struct GraphicsShaderGroupCreateInfoNV<'a> {
     pub p_stages: *const PipelineShaderStageCreateInfo<'a>,
     pub p_vertex_input_state: *const PipelineVertexInputStateCreateInfo<'a>,
     pub p_tessellation_state: *const PipelineTessellationStateCreateInfo<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for GraphicsShaderGroupCreateInfoNV<'a> {}
@@ -45867,7 +45867,7 @@ pub struct GraphicsPipelineShaderGroupsCreateInfoNV<'a> {
     pub p_groups: *const GraphicsShaderGroupCreateInfoNV<'a>,
     pub pipeline_count: u32,
     pub p_pipelines: *const Pipeline,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for GraphicsPipelineShaderGroupsCreateInfoNV<'a> {}
@@ -46085,7 +46085,7 @@ impl SetStateFlagsIndirectCommandNV {
 pub struct IndirectCommandsStreamNV<'a> {
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub offset: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> Send for IndirectCommandsStreamNV<'a> {}
@@ -46134,7 +46134,7 @@ pub struct IndirectCommandsLayoutTokenNV<'a> {
     pub index_type_count: u32,
     pub p_index_types: *const IndexType,
     pub p_index_type_values: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for IndirectCommandsLayoutTokenNV<'a> {}
@@ -46267,7 +46267,7 @@ pub struct IndirectCommandsLayoutCreateInfoNV<'a> {
     pub p_tokens: *const IndirectCommandsLayoutTokenNV<'a>,
     pub stream_count: u32,
     pub p_stream_strides: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for IndirectCommandsLayoutCreateInfoNV<'a> {}
@@ -46359,7 +46359,7 @@ pub struct GeneratedCommandsInfoNV<'a> {
     pub sequences_count_offset: DeviceSize,
     pub sequences_index_buffer: Option<BorrowedHandle<'a, Buffer>>,
     pub sequences_index_offset: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for GeneratedCommandsInfoNV<'a> {}
@@ -46482,7 +46482,7 @@ pub struct GeneratedCommandsMemoryRequirementsInfoNV<'a> {
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutNV>>,
     pub max_sequences_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for GeneratedCommandsMemoryRequirementsInfoNV<'a> {}
@@ -46544,7 +46544,7 @@ pub struct PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub inherited_viewport_scissor2_d: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_inherited_viewport_scissor")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceInheritedViewportScissorFeaturesNV<'a> {}
@@ -46607,7 +46607,7 @@ pub struct CommandBufferInheritanceViewportScissorInfoNV<'a> {
     pub viewport_scissor2_d: Bool32,
     pub viewport_depth_count: u32,
     pub p_viewport_depths: *const Viewport,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_inherited_viewport_scissor")]
 unsafe impl<'a> ExtendableStructureBase for CommandBufferInheritanceViewportScissorInfoNV<'a> {}
@@ -46668,7 +46668,7 @@ pub struct PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub texel_buffer_alignment: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceTexelBufferAlignmentFeaturesEXT<'a> {
@@ -46723,7 +46723,7 @@ pub struct RenderPassTransformBeginInfoQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub transform: SurfaceTransformFlagsKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_render_pass_transform")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassTransformBeginInfoQCOM<'a> {}
@@ -46773,7 +46773,7 @@ pub struct CommandBufferInheritanceRenderPassTransformInfoQCOM<'a> {
     pub p_next: Cell<*const Header>,
     pub transform: SurfaceTransformFlagsKHR,
     pub render_area: Rect2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_render_pass_transform")]
 unsafe impl<'a> ExtendableStructureBase
@@ -46835,7 +46835,7 @@ pub struct PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {
     pub least_representable_value_force_unorm_representation: Bool32,
     pub float_representation: Bool32,
     pub depth_bias_exact: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_depth_bias_control")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDepthBiasControlFeaturesEXT<'a> {}
@@ -46918,7 +46918,7 @@ pub struct DepthBiasInfoEXT<'a> {
     pub depth_bias_constant_factor: f32,
     pub depth_bias_clamp: f32,
     pub depth_bias_slope_factor: f32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_depth_bias_control")]
 unsafe impl<'a> ExtendableStructureBase for DepthBiasInfoEXT<'a> {}
@@ -46975,7 +46975,7 @@ pub struct DepthBiasRepresentationInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub depth_bias_representation: DepthBiasRepresentationEXT,
     pub depth_bias_exact: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_depth_bias_control")]
 unsafe impl<'a> ExtendableStructureBase for DepthBiasRepresentationInfoEXT<'a> {}
@@ -47035,7 +47035,7 @@ pub struct PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub device_memory_report: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_memory_report")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDeviceMemoryReportFeaturesEXT<'a> {}
@@ -47098,7 +47098,7 @@ pub struct DeviceDeviceMemoryReportCreateInfoEXT<'a> {
     pub flags: u32,
     pub pfn_user_callback: FuncPtr,
     pub p_user_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_memory_report")]
 unsafe impl<'a> ExtendableStructureBase for DeviceDeviceMemoryReportCreateInfoEXT<'a> {}
@@ -47165,7 +47165,7 @@ pub struct DeviceMemoryReportCallbackDataEXT<'a> {
     pub object_type: ObjectType,
     pub object_handle: u64,
     pub heap_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_memory_report")]
 unsafe impl<'a> ExtendableStructureBase for DeviceMemoryReportCallbackDataEXT<'a> {}
@@ -47246,7 +47246,7 @@ pub struct SamplerCustomBorderColorCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub custom_border_color: ClearColorValue,
     pub format: Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_custom_border_color")]
 unsafe impl<'a> ExtendableStructureBase for SamplerCustomBorderColorCreateInfoEXT<'a> {}
@@ -47301,7 +47301,7 @@ pub struct PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_custom_border_color_samplers: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_custom_border_color")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCustomBorderColorPropertiesEXT<'a> {}
@@ -47358,7 +47358,7 @@ pub struct PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub custom_border_colors: Bool32,
     pub custom_border_color_without_format: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_custom_border_color")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCustomBorderColorFeaturesEXT<'a> {}
@@ -47425,7 +47425,7 @@ pub struct PipelineLibraryCreateInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub library_count: u32,
     pub p_libraries: *const Pipeline,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_library")]
 unsafe impl<'a> ExtendableStructureBase for PipelineLibraryCreateInfoKHR<'a> {}
@@ -47487,7 +47487,7 @@ pub struct PhysicalDevicePresentBarrierFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_barrier: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_barrier")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePresentBarrierFeaturesNV<'a> {}
@@ -47547,7 +47547,7 @@ pub struct SurfaceCapabilitiesPresentBarrierNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_barrier_supported: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_barrier")]
 unsafe impl<'a> ExtendableStructureBase for SurfaceCapabilitiesPresentBarrierNV<'a> {}
@@ -47599,7 +47599,7 @@ pub struct SwapchainPresentBarrierCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_barrier_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_barrier")]
 unsafe impl<'a> ExtendableStructureBase for SwapchainPresentBarrierCreateInfoNV<'a> {}
@@ -47649,7 +47649,7 @@ pub struct PresentIdKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
     pub p_present_ids: *const u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_id")]
 unsafe impl<'a> ExtendableStructureBase for PresentIdKHR<'a> {}
@@ -47710,7 +47710,7 @@ pub struct PhysicalDevicePresentIdFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_id: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_id")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePresentIdFeaturesKHR<'a> {}
@@ -47770,7 +47770,7 @@ pub struct PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub diagnostics_config: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_diagnostics_config")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDiagnosticsConfigFeaturesNV<'a> {}
@@ -47830,7 +47830,7 @@ pub struct DeviceDiagnosticsConfigCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub flags: DeviceDiagnosticsConfigFlagsNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_diagnostics_config")]
 unsafe impl<'a> ExtendableStructureBase for DeviceDiagnosticsConfigCreateInfoNV<'a> {}
@@ -47880,7 +47880,7 @@ pub struct CudaModuleCreateInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub data_size: usize,
     pub p_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cuda_kernel_launch")]
 unsafe impl<'a> ExtendableStructureBase for CudaModuleCreateInfoNV<'a> {}
@@ -47935,7 +47935,7 @@ pub struct CudaFunctionCreateInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub module: Option<BorrowedHandle<'a, CudaModuleNV>>,
     pub p_name: *const c_char,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cuda_kernel_launch")]
 unsafe impl<'a> ExtendableStructureBase for CudaFunctionCreateInfoNV<'a> {}
@@ -47996,7 +47996,7 @@ pub struct CudaLaunchInfoNV<'a> {
     pub p_params: *const *const c_void,
     pub extra_count: usize,
     pub p_extras: *const *const c_void,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cuda_kernel_launch")]
 unsafe impl<'a> ExtendableStructureBase for CudaLaunchInfoNV<'a> {}
@@ -48120,7 +48120,7 @@ pub struct PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub cuda_kernel_launch_features: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cuda_kernel_launch")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCudaKernelLaunchFeaturesNV<'a> {}
@@ -48181,7 +48181,7 @@ pub struct PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub compute_capability_minor: u32,
     pub compute_capability_major: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cuda_kernel_launch")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCudaKernelLaunchPropertiesNV<'a> {}
@@ -48255,7 +48255,7 @@ pub struct PhysicalDeviceTileShadingFeaturesQCOM<'a> {
     pub tile_shading_anisotropic_apron: Bool32,
     pub tile_shading_atomic_ops: Bool32,
     pub tile_shading_image_processing: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_shading")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTileShadingFeaturesQCOM<'a> {}
@@ -48396,7 +48396,7 @@ pub struct PhysicalDeviceTileShadingPropertiesQCOM<'a> {
     pub prefer_non_coherent: Bool32,
     pub tile_granularity: Extent2D,
     pub max_tile_shading_rate: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_shading")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTileShadingPropertiesQCOM<'a> {}
@@ -48470,7 +48470,7 @@ pub struct RenderPassTileShadingCreateInfoQCOM<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: TileShadingRenderPassFlagsQCOM,
     pub tile_apron_size: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_shading")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassTileShadingCreateInfoQCOM<'a> {}
@@ -48552,7 +48552,7 @@ impl<'a> RenderPassTileShadingCreateInfoQCOM<'a> {
 pub struct PerTileBeginInfoQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_shading")]
 unsafe impl<'a> ExtendableStructureBase for PerTileBeginInfoQCOM<'a> {}
@@ -48589,7 +48589,7 @@ impl<'a> PerTileBeginInfoQCOM<'a> {
 pub struct PerTileEndInfoQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_shading")]
 unsafe impl<'a> ExtendableStructureBase for PerTileEndInfoQCOM<'a> {}
@@ -48626,7 +48626,7 @@ impl<'a> PerTileEndInfoQCOM<'a> {
 pub struct DispatchTileInfoQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_shading")]
 unsafe impl<'a> ExtendableStructureBase for DispatchTileInfoQCOM<'a> {}
@@ -48664,7 +48664,7 @@ pub struct QueryLowLatencySupportNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_queried_low_latency_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency")]
 unsafe impl<'a> ExtendableStructureBase for QueryLowLatencySupportNV<'a> {}
@@ -48710,7 +48710,7 @@ pub struct ExportMetalObjectCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub export_object_type: ExportMetalObjectTypeFlagsEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ExportMetalObjectCreateInfoEXT<'a> {}
@@ -48782,7 +48782,7 @@ impl<'a> ExportMetalObjectCreateInfoEXT<'a> {
 pub struct ExportMetalObjectsInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ExportMetalObjectsInfoEXT<'a> {}
@@ -48820,7 +48820,7 @@ pub struct ExportMetalDeviceInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub mtl_device: MTLDeviceId,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ExportMetalDeviceInfoEXT<'a> {}
@@ -48870,7 +48870,7 @@ pub struct ExportMetalCommandQueueInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub queue: Option<BorrowedHandle<'a, Queue>>,
     pub mtl_command_queue: MTLCommandQueueId,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ExportMetalCommandQueueInfoEXT<'a> {}
@@ -48926,7 +48926,7 @@ pub struct ExportMetalBufferInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub mtl_buffer: MTLBufferId,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ExportMetalBufferInfoEXT<'a> {}
@@ -48981,7 +48981,7 @@ pub struct ImportMetalBufferInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub mtl_buffer: MTLBufferId,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ImportMetalBufferInfoEXT<'a> {}
@@ -49031,7 +49031,7 @@ pub struct ExportMetalTextureInfoEXT<'a> {
     pub buffer_view: Option<BorrowedHandle<'a, BufferView>>,
     pub plane: ImageAspectFlags,
     pub mtl_texture: MTLTextureId,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ExportMetalTextureInfoEXT<'a> {}
@@ -49105,7 +49105,7 @@ pub struct ImportMetalTextureInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub plane: ImageAspectFlags,
     pub mtl_texture: MTLTextureId,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ImportMetalTextureInfoEXT<'a> {}
@@ -49158,7 +49158,7 @@ pub struct ExportMetalIOSurfaceInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
     pub io_surface: IOSurfaceRef,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ExportMetalIOSurfaceInfoEXT<'a> {}
@@ -49213,7 +49213,7 @@ pub struct ImportMetalIOSurfaceInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub io_surface: IOSurfaceRef,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ImportMetalIOSurfaceInfoEXT<'a> {}
@@ -49261,7 +49261,7 @@ pub struct ExportMetalSharedEventInfoEXT<'a> {
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub event: Option<BorrowedHandle<'a, Event>>,
     pub mtl_shared_event: MTLSharedEventId,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ExportMetalSharedEventInfoEXT<'a> {}
@@ -49322,7 +49322,7 @@ pub struct ImportMetalSharedEventInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub mtl_shared_event: MTLSharedEventId,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_metal_objects")]
 unsafe impl<'a> ExtendableStructureBase for ImportMetalSharedEventInfoEXT<'a> {}
@@ -49417,7 +49417,7 @@ pub struct PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {
     pub sampler_descriptor_buffer_address_space_size: DeviceSize,
     pub resource_descriptor_buffer_address_space_size: DeviceSize,
     pub descriptor_buffer_address_space_size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDescriptorBufferPropertiesEXT<'a> {}
@@ -49674,7 +49674,7 @@ pub struct PhysicalDeviceDescriptorBufferDensityMapPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub combined_image_sampler_density_map_descriptor_size: usize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase
@@ -49736,7 +49736,7 @@ pub struct PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {
     pub descriptor_buffer_capture_replay: Bool32,
     pub descriptor_buffer_image_layout_ignored: Bool32,
     pub descriptor_buffer_push_descriptors: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDescriptorBufferFeaturesEXT<'a> {}
@@ -49816,7 +49816,7 @@ pub struct DescriptorAddressInfoEXT<'a> {
     pub address: DeviceAddress,
     pub range: DeviceSize,
     pub format: Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for DescriptorAddressInfoEXT<'a> {}
@@ -49873,7 +49873,7 @@ pub struct DescriptorBufferBindingInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub address: DeviceAddress,
     pub usage: BufferUsageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for DescriptorBufferBindingInfoEXT<'a> {}
@@ -49923,7 +49923,7 @@ pub struct DescriptorBufferBindingPushDescriptorBufferHandleEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase
@@ -50001,7 +50001,7 @@ pub struct DescriptorGetInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub ty: DescriptorType,
     pub data: DescriptorDataEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for DescriptorGetInfoEXT<'a> {}
@@ -50051,7 +50051,7 @@ pub struct BufferCaptureDescriptorDataInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub buffer: Option<BorrowedHandle<'a, Buffer>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for BufferCaptureDescriptorDataInfoEXT<'a> {}
@@ -50095,7 +50095,7 @@ pub struct ImageCaptureDescriptorDataInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image: Option<BorrowedHandle<'a, Image>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for ImageCaptureDescriptorDataInfoEXT<'a> {}
@@ -50139,7 +50139,7 @@ pub struct ImageViewCaptureDescriptorDataInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image_view: Option<BorrowedHandle<'a, ImageView>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for ImageViewCaptureDescriptorDataInfoEXT<'a> {}
@@ -50183,7 +50183,7 @@ pub struct SamplerCaptureDescriptorDataInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub sampler: Option<BorrowedHandle<'a, Sampler>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for SamplerCaptureDescriptorDataInfoEXT<'a> {}
@@ -50227,7 +50227,7 @@ pub struct OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub opaque_capture_descriptor_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_buffer")]
 unsafe impl<'a> ExtendableStructureBase for OpaqueCaptureDescriptorDataCreateInfoEXT<'a> {}
@@ -50318,7 +50318,7 @@ pub struct AccelerationStructureCaptureDescriptorDataInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub acceleration_structure: Option<BorrowedHandle<'a, AccelerationStructureKHR>>,
     pub acceleration_structure_nv: Option<BorrowedHandle<'a, AccelerationStructureNV>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_descriptor_buffer",
@@ -50393,7 +50393,7 @@ pub struct PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub graphics_pipeline_library: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_graphics_pipeline_library")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceGraphicsPipelineLibraryFeaturesEXT<'a> {}
@@ -50455,7 +50455,7 @@ pub struct PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub graphics_pipeline_library_fast_linking: Bool32,
     pub graphics_pipeline_library_independent_interpolation_decoration: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_graphics_pipeline_library")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceGraphicsPipelineLibraryPropertiesEXT<'a> {}
@@ -50520,7 +50520,7 @@ pub struct GraphicsPipelineLibraryCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub flags: GraphicsPipelineLibraryFlagsEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_graphics_pipeline_library")]
 unsafe impl<'a> ExtendableStructureBase for GraphicsPipelineLibraryCreateInfoEXT<'a> {}
@@ -50568,7 +50568,7 @@ pub struct PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_early_and_late_fragment_tests: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceShaderEarlyAndLateFragmentTestsFeaturesAMD<'a>
@@ -50627,7 +50627,7 @@ pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub fragment_shader_barycentric: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentShaderBarycentricFeaturesKHR<'a> {
@@ -50683,7 +50683,7 @@ pub struct PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub tri_strip_vertex_order_independent_of_provoking_vertex: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceFragmentShaderBarycentricPropertiesKHR<'a>
@@ -50738,7 +50738,7 @@ pub struct PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_subgroup_uniform_control_flow: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceShaderSubgroupUniformControlFlowFeaturesKHR<'a>
@@ -50800,7 +50800,7 @@ pub struct PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {
     pub fragment_shading_rate_enums: Bool32,
     pub supersample_fragment_shading_rates: Bool32,
     pub no_invocation_fragment_shading_rates: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_shading_rate_enums")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentShadingRateEnumsFeaturesNV<'a> {}
@@ -50873,7 +50873,7 @@ pub struct PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_fragment_shading_rate_invocation_count: SampleCountFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_shading_rate_enums")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentShadingRateEnumsPropertiesNV<'a> {}
@@ -50931,7 +50931,7 @@ pub struct PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {
     pub shading_rate_type: FragmentShadingRateTypeNV,
     pub shading_rate: FragmentShadingRateNV,
     pub combiner_ops: [FragmentShadingRateCombinerOpKHR; 2u16 as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_shading_rate_enums")]
 unsafe impl<'a> ExtendableStructureBase for PipelineFragmentShadingRateEnumStateCreateInfoNV<'a> {}
@@ -50993,7 +50993,7 @@ pub struct AccelerationStructureGeometryMotionTrianglesDataNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub vertex_data: DeviceOrHostAddressConstKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_motion_blur")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureGeometryMotionTrianglesDataNV<'a> {}
@@ -51047,7 +51047,7 @@ pub struct AccelerationStructureMotionInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub max_instances: u32,
     pub flags: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_motion_blur")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureMotionInfoNV<'a> {}
@@ -51441,7 +51441,7 @@ pub struct PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub ray_tracing_motion_blur: Bool32,
     pub ray_tracing_motion_blur_pipeline_trace_rays_indirect: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_motion_blur")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRayTracingMotionBlurFeaturesNV<'a> {}
@@ -51515,7 +51515,7 @@ pub struct PhysicalDeviceMeshShaderFeaturesEXT<'a> {
     pub multiview_mesh_shader: Bool32,
     pub primitive_fragment_shading_rate_mesh_shader: Bool32,
     pub mesh_shader_queries: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_mesh_shader")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMeshShaderFeaturesEXT<'a> {}
@@ -51626,7 +51626,7 @@ pub struct PhysicalDeviceMeshShaderPropertiesEXT<'a> {
     pub prefers_local_invocation_primitive_output: Bool32,
     pub prefers_compact_vertex_output: Bool32,
     pub prefers_compact_primitive_output: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_mesh_shader")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMeshShaderPropertiesEXT<'a> {}
@@ -51884,7 +51884,7 @@ pub struct PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub ycbcr2plane444_formats: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT<'a> {
@@ -51938,7 +51938,7 @@ pub struct PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub fragment_density_map_deferred: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentDensityMap2FeaturesEXT<'a> {
@@ -51995,7 +51995,7 @@ pub struct PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
     pub subsampled_coarse_reconstruction_early_access: Bool32,
     pub max_subsampled_array_layers: u32,
     pub max_descriptor_set_subsampled_samplers: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceFragmentDensityMap2PropertiesEXT<'a> {
@@ -52066,7 +52066,7 @@ pub struct CopyCommandTransformInfoQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub transform: SurfaceTransformFlagsKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_rotated_copy_commands")]
 unsafe impl<'a> ExtendableStructureBase for CopyCommandTransformInfoQCOM<'a> {}
@@ -52122,7 +52122,7 @@ pub struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a> {
     pub workgroup_memory_explicit_layout_scalar_block_layout: Bool32,
     pub workgroup_memory_explicit_layout8_bit_access: Bool32,
     pub workgroup_memory_explicit_layout16_bit_access: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR<'a>
@@ -52207,7 +52207,7 @@ pub struct PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image_compression_control: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_compression_control")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageCompressionControlFeaturesEXT<'a> {}
@@ -52270,7 +52270,7 @@ pub struct ImageCompressionControlEXT<'a> {
     pub flags: ImageCompressionFlagsEXT,
     pub compression_control_plane_count: u32,
     pub p_fixed_rate_flags: *const ImageCompressionFixedRateFlagsEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_compression_control")]
 unsafe impl<'a> ExtendableStructureBase for ImageCompressionControlEXT<'a> {}
@@ -52360,7 +52360,7 @@ pub struct ImageCompressionPropertiesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub image_compression_flags: ImageCompressionFlagsEXT,
     pub image_compression_fixed_rate_flags: ImageCompressionFixedRateFlagsEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_compression_control")]
 unsafe impl<'a> ExtendableStructureBase for ImageCompressionPropertiesEXT<'a> {}
@@ -52444,7 +52444,7 @@ pub struct PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub attachment_feedback_loop_layout: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceAttachmentFeedbackLoopLayoutFeaturesEXT<'a>
@@ -52502,7 +52502,7 @@ pub struct PhysicalDevice4444FormatsFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub format_a4_r4_g4_b4: Bool32,
     pub format_a4_b4_g4_r4: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevice4444FormatsFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevice4444FormatsFeaturesEXT<'a> {
@@ -52563,7 +52563,7 @@ pub struct PhysicalDeviceFaultFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub device_fault: Bool32,
     pub device_fault_vendor_binary: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_fault")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFaultFeaturesEXT<'a> {}
@@ -52631,7 +52631,7 @@ pub struct DeviceFaultCountsEXT<'a> {
     pub address_info_count: u32,
     pub vendor_info_count: u32,
     pub vendor_binary_size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_fault")]
 unsafe impl<'a> ExtendableStructureBase for DeviceFaultCountsEXT<'a> {}
@@ -52690,7 +52690,7 @@ pub struct DeviceFaultInfoEXT<'a> {
     pub p_address_infos: *const DeviceFaultAddressInfoEXT,
     pub p_vendor_infos: *const DeviceFaultVendorInfoEXT,
     pub p_vendor_binary_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_fault")]
 unsafe impl<'a> ExtendableStructureBase for DeviceFaultInfoEXT<'a> {}
@@ -52937,7 +52937,7 @@ pub struct PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub format_rgba10x6_without_ycb_cr_sampler: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceRGBA10X6FormatsFeaturesEXT<'a> {
@@ -52993,7 +52993,7 @@ pub struct DirectFBSurfaceCreateInfoEXT<'a> {
     pub flags: u32,
     pub dfb: *const VoidPtr,
     pub surface: *const VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_directfb_surface")]
 unsafe impl<'a> ExtendableStructureBase for DirectFBSurfaceCreateInfoEXT<'a> {}
@@ -53049,7 +53049,7 @@ pub struct PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub vertex_input_dynamic_state: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_vertex_input_dynamic_state")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVertexInputDynamicStateFeaturesEXT<'a> {}
@@ -53116,7 +53116,7 @@ pub struct VertexInputBindingDescription2EXT<'a> {
     pub stride: u32,
     pub input_rate: VertexInputRate,
     pub divisor: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_vertex_input_dynamic_state",
@@ -53202,7 +53202,7 @@ pub struct VertexInputAttributeDescription2EXT<'a> {
     pub binding: u32,
     pub format: Format,
     pub offset: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(
     feature = "ext_vertex_input_dynamic_state",
@@ -53286,7 +53286,7 @@ pub struct PhysicalDeviceDrmPropertiesEXT<'a> {
     pub primary_minor: i64,
     pub render_major: i64,
     pub render_minor: i64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDrmPropertiesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceDrmPropertiesEXT<'a> {
@@ -53365,7 +53365,7 @@ pub struct PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub report_address_binding: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_address_binding_report")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceAddressBindingReportFeaturesEXT<'a> {}
@@ -53429,7 +53429,7 @@ pub struct DeviceAddressBindingCallbackDataEXT<'a> {
     pub base_address: DeviceAddress,
     pub size: DeviceSize,
     pub binding_type: DeviceAddressBindingTypeEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_address_binding_report")]
 unsafe impl<'a> ExtendableStructureBase for DeviceAddressBindingCallbackDataEXT<'a> {}
@@ -53499,7 +53499,7 @@ pub struct PhysicalDeviceDepthClipControlFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub depth_clip_control: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_depth_clip_control")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDepthClipControlFeaturesEXT<'a> {}
@@ -53559,7 +53559,7 @@ pub struct PipelineViewportDepthClipControlCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub negative_one_to_one: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_depth_clip_control")]
 unsafe impl<'a> ExtendableStructureBase for PipelineViewportDepthClipControlCreateInfoEXT<'a> {}
@@ -53609,7 +53609,7 @@ pub struct PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub primitive_topology_list_restart: Bool32,
     pub primitive_topology_patch_list_restart: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDevicePrimitiveTopologyListRestartFeaturesEXT<'a>
@@ -53674,7 +53674,7 @@ pub struct ImportMemoryZirconHandleInfoFUCHSIA<'a> {
     pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub handle: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> ExtendableStructureBase for ImportMemoryZirconHandleInfoFUCHSIA<'a> {}
@@ -53729,7 +53729,7 @@ pub struct MemoryZirconHandlePropertiesFUCHSIA<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> ExtendableStructureBase for MemoryZirconHandlePropertiesFUCHSIA<'a> {}
@@ -53774,7 +53774,7 @@ pub struct MemoryGetZirconHandleInfoFUCHSIA<'a> {
     pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fuchsia_external_memory")]
 unsafe impl<'a> ExtendableStructureBase for MemoryGetZirconHandleInfoFUCHSIA<'a> {}
@@ -53827,7 +53827,7 @@ pub struct ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {
     pub flags: SemaphoreImportFlags,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub zircon_handle: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> ExtendableStructureBase for ImportSemaphoreZirconHandleInfoFUCHSIA<'a> {}
@@ -53890,7 +53890,7 @@ pub struct SemaphoreGetZirconHandleInfoFUCHSIA<'a> {
     pub p_next: Cell<*const Header>,
     pub semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fuchsia_external_semaphore")]
 unsafe impl<'a> ExtendableStructureBase for SemaphoreGetZirconHandleInfoFUCHSIA<'a> {}
@@ -53940,7 +53940,7 @@ pub struct BufferCollectionCreateInfoFUCHSIA<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub collection_token: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for BufferCollectionCreateInfoFUCHSIA<'a> {}
@@ -53985,7 +53985,7 @@ pub struct ImportMemoryBufferCollectionFUCHSIA<'a> {
     pub p_next: Cell<*const Header>,
     pub collection: Option<BorrowedHandle<'a, BufferCollectionFUCHSIA>>,
     pub index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for ImportMemoryBufferCollectionFUCHSIA<'a> {}
@@ -54041,7 +54041,7 @@ pub struct BufferCollectionImageCreateInfoFUCHSIA<'a> {
     pub p_next: Cell<*const Header>,
     pub collection: Option<BorrowedHandle<'a, BufferCollectionFUCHSIA>>,
     pub index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for BufferCollectionImageCreateInfoFUCHSIA<'a> {}
@@ -54098,7 +54098,7 @@ pub struct BufferConstraintsInfoFUCHSIA<'a> {
     pub create_info: BufferCreateInfo<'a>,
     pub required_format_features: FormatFeatureFlags,
     pub buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for BufferConstraintsInfoFUCHSIA<'a> {}
@@ -54158,7 +54158,7 @@ pub struct BufferCollectionBufferCreateInfoFUCHSIA<'a> {
     pub p_next: Cell<*const Header>,
     pub collection: Option<BorrowedHandle<'a, BufferCollectionFUCHSIA>>,
     pub index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for BufferCollectionBufferCreateInfoFUCHSIA<'a> {}
@@ -54223,7 +54223,7 @@ pub struct BufferCollectionPropertiesFUCHSIA<'a> {
     pub suggested_ycbcr_range: SamplerYcbcrRange,
     pub suggested_xchroma_offset: ChromaLocation,
     pub suggested_ychroma_offset: ChromaLocation,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for BufferCollectionPropertiesFUCHSIA<'a> {}
@@ -54327,7 +54327,7 @@ pub struct SysmemColorSpaceFUCHSIA<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub color_space: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for SysmemColorSpaceFUCHSIA<'a> {}
@@ -54374,7 +54374,7 @@ pub struct ImageConstraintsInfoFUCHSIA<'a> {
     pub p_format_constraints: *const ImageFormatConstraintsInfoFUCHSIA<'a>,
     pub buffer_collection_constraints: BufferCollectionConstraintsInfoFUCHSIA<'a>,
     pub flags: ImageConstraintsInfoFlagsFUCHSIA,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for ImageConstraintsInfoFUCHSIA<'a> {}
@@ -54454,7 +54454,7 @@ pub struct ImageFormatConstraintsInfoFUCHSIA<'a> {
     pub sysmem_pixel_format: u64,
     pub color_space_count: u32,
     pub p_color_spaces: *const SysmemColorSpaceFUCHSIA<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for ImageFormatConstraintsInfoFUCHSIA<'a> {}
@@ -54539,7 +54539,7 @@ pub struct BufferCollectionConstraintsInfoFUCHSIA<'a> {
     pub min_buffer_count_for_camping: u32,
     pub min_buffer_count_for_dedicated_slack: u32,
     pub min_buffer_count_for_shared_slack: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_buffer_collection")]
 unsafe impl<'a> ExtendableStructureBase for BufferCollectionConstraintsInfoFUCHSIA<'a> {}
@@ -54608,7 +54608,7 @@ pub struct SubpassShadingPipelineCreateInfoHUAWEI<'a> {
     pub p_next: Cell<*const Header>,
     pub render_pass: Option<BorrowedHandle<'a, RenderPass>>,
     pub subpass: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_subpass_shading")]
 unsafe impl<'a> ExtendableStructureBase for SubpassShadingPipelineCreateInfoHUAWEI<'a> {}
@@ -54663,7 +54663,7 @@ pub struct PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub subpass_shading: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_subpass_shading")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSubpassShadingFeaturesHUAWEI<'a> {}
@@ -54723,7 +54723,7 @@ pub struct PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_subpass_shading_workgroup_size_aspect_ratio: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_subpass_shading")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSubpassShadingPropertiesHUAWEI<'a> {}
@@ -54779,7 +54779,7 @@ pub struct PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub invocation_mask: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_invocation_mask")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceInvocationMaskFeaturesHUAWEI<'a> {}
@@ -54843,7 +54843,7 @@ pub struct MemoryGetRemoteAddressInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_rdma")]
 unsafe impl<'a> ExtendableStructureBase for MemoryGetRemoteAddressInfoNV<'a> {}
@@ -54893,7 +54893,7 @@ pub struct PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub external_memory_rdma: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_rdma")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalMemoryRDMAFeaturesNV<'a> {}
@@ -54953,7 +54953,7 @@ pub struct PipelinePropertiesIdentifierEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_identifier: [u8; UUID_SIZE as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_properties")]
 unsafe impl<'a> ExtendableStructureBase for PipelinePropertiesIdentifierEXT<'a> {}
@@ -54997,7 +54997,7 @@ pub struct PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_properties_identifier: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_properties")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePipelinePropertiesFeaturesEXT<'a> {}
@@ -55058,7 +55058,7 @@ pub struct PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub frame_boundary: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_frame_boundary")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFrameBoundaryFeaturesEXT<'a> {}
@@ -55126,7 +55126,7 @@ pub struct FrameBoundaryEXT<'a> {
     pub tag_name: u64,
     pub tag_size: usize,
     pub p_tag: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_frame_boundary")]
 unsafe impl<'a> ExtendableStructureBase for FrameBoundaryEXT<'a> {}
@@ -55254,7 +55254,7 @@ pub struct PhysicalDeviceMultisampledRenderToSingleSampledFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub multisampled_render_to_single_sampled: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_multisampled_render_to_single_sampled")]
 unsafe impl<'a> ExtendableStructureBase
@@ -55320,7 +55320,7 @@ pub struct SubpassResolvePerformanceQueryEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub optimal: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_multisampled_render_to_single_sampled")]
 unsafe impl<'a> ExtendableStructureBase for SubpassResolvePerformanceQueryEXT<'a> {}
@@ -55376,7 +55376,7 @@ pub struct MultisampledRenderToSingleSampledInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub multisampled_render_to_single_sampled_enable: Bool32,
     pub rasterization_samples: SampleCountFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_multisampled_render_to_single_sampled")]
 unsafe impl<'a> ExtendableStructureBase for MultisampledRenderToSingleSampledInfoEXT<'a> {}
@@ -55454,7 +55454,7 @@ pub struct PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {
     pub extended_dynamic_state2: Bool32,
     pub extended_dynamic_state2_logic_op: Bool32,
     pub extended_dynamic_state2_patch_control_points: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_extended_dynamic_state2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExtendedDynamicState2FeaturesEXT<'a> {}
@@ -55532,7 +55532,7 @@ pub struct ScreenSurfaceCreateInfoQNX<'a> {
     pub flags: u32,
     pub context: *const VoidPtr,
     pub window: *const VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_screen_surface")]
 unsafe impl<'a> ExtendableStructureBase for ScreenSurfaceCreateInfoQNX<'a> {}
@@ -55588,7 +55588,7 @@ pub struct PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub color_write_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_color_write_enable")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceColorWriteEnableFeaturesEXT<'a> {}
@@ -55649,7 +55649,7 @@ pub struct PipelineColorWriteCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub attachment_count: u32,
     pub p_color_write_enables: *const Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_color_write_enable")]
 unsafe impl<'a> ExtendableStructureBase for PipelineColorWriteCreateInfoEXT<'a> {}
@@ -55712,7 +55712,7 @@ pub struct PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
     pub primitives_generated_query: Bool32,
     pub primitives_generated_query_with_rasterizer_discard: Bool32,
     pub primitives_generated_query_with_non_zero_streams: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevicePrimitivesGeneratedQueryFeaturesEXT<'a> {
@@ -55786,7 +55786,7 @@ pub struct PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub ray_tracing_maintenance1: Bool32,
     pub ray_tracing_pipeline_trace_rays_indirect2: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRayTracingMaintenance1FeaturesKHR<'a> {}
@@ -55987,7 +55987,7 @@ pub struct PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub min_lod: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_view_min_lod")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageViewMinLodFeaturesEXT<'a> {}
@@ -56047,7 +56047,7 @@ pub struct ImageViewMinLodCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub min_lod: f32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_view_min_lod")]
 unsafe impl<'a> ExtendableStructureBase for ImageViewMinLodCreateInfoEXT<'a> {}
@@ -56096,7 +56096,7 @@ pub struct PhysicalDeviceMultiDrawFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub multi_draw: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_multi_draw")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMultiDrawFeaturesEXT<'a> {}
@@ -56156,7 +56156,7 @@ pub struct PhysicalDeviceMultiDrawPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_multi_draw_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_multi_draw")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMultiDrawPropertiesEXT<'a> {}
@@ -56288,7 +56288,7 @@ pub struct PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub image2_dview_of3_d: Bool32,
     pub sampler2_dview_of3_d: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceImage2DViewOf3DFeaturesEXT<'a> {
@@ -56349,7 +56349,7 @@ pub struct PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
     pub shader_tile_image_color_read_access: Bool32,
     pub shader_tile_image_depth_read_access: Bool32,
     pub shader_tile_image_stencil_read_access: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderTileImageFeaturesEXT<'a> {
@@ -56416,7 +56416,7 @@ pub struct PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
     pub shader_tile_image_coherent_read_accelerated: Bool32,
     pub shader_tile_image_read_sample_from_pixel_rate_invocation: Bool32,
     pub shader_tile_image_read_from_helper_invocation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderTileImagePropertiesEXT<'a> {
@@ -56493,7 +56493,7 @@ pub struct MicromapBuildInfoEXT<'a> {
     pub scratch_data: DeviceOrHostAddressKHR,
     pub triangle_array: DeviceOrHostAddressConstKHR,
     pub triangle_array_stride: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for MicromapBuildInfoEXT<'a> {}
@@ -56667,7 +56667,7 @@ pub struct MicromapCreateInfoEXT<'a> {
     pub size: DeviceSize,
     pub ty: MicromapTypeEXT,
     pub device_address: DeviceAddress,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for MicromapCreateInfoEXT<'a> {}
@@ -56743,7 +56743,7 @@ pub struct PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {
     pub micromap: Bool32,
     pub micromap_capture_replay: Bool32,
     pub micromap_host_commands: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceOpacityMicromapFeaturesEXT<'a> {}
@@ -56816,7 +56816,7 @@ pub struct PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub max_opacity2_state_subdivision_level: u32,
     pub max_opacity4_state_subdivision_level: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceOpacityMicromapPropertiesEXT<'a> {}
@@ -56877,7 +56877,7 @@ pub struct MicromapVersionInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_version_data: *const u8,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for MicromapVersionInfoEXT<'a> {}
@@ -56923,7 +56923,7 @@ pub struct CopyMicromapToMemoryInfoEXT<'a> {
     pub src: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub dst: DeviceOrHostAddressKHR,
     pub mode: CopyMicromapModeEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for CopyMicromapToMemoryInfoEXT<'a> {}
@@ -56981,7 +56981,7 @@ pub struct CopyMemoryToMicromapInfoEXT<'a> {
     pub src: DeviceOrHostAddressConstKHR,
     pub dst: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub mode: CopyMicromapModeEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for CopyMemoryToMicromapInfoEXT<'a> {}
@@ -57039,7 +57039,7 @@ pub struct CopyMicromapInfoEXT<'a> {
     pub src: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub dst: Option<BorrowedHandle<'a, MicromapEXT>>,
     pub mode: CopyMicromapModeEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for CopyMicromapInfoEXT<'a> {}
@@ -57097,7 +57097,7 @@ pub struct MicromapBuildSizesInfoEXT<'a> {
     pub micromap_size: DeviceSize,
     pub build_scratch_size: DeviceSize,
     pub discardable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for MicromapBuildSizesInfoEXT<'a> {}
@@ -57160,7 +57160,7 @@ pub struct AccelerationStructureTrianglesOpacityMicromapEXT<'a> {
     pub p_usage_counts: *const MicromapUsageEXT,
     pub pp_usage_counts: *const *const MicromapUsageEXT,
     pub micromap: Option<BorrowedHandle<'a, MicromapEXT>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_opacity_micromap")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureTrianglesOpacityMicromapEXT<'a> {}
@@ -57329,7 +57329,7 @@ pub struct PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub displacement_micromap: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_displacement_micromap")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDisplacementMicromapFeaturesNV<'a> {}
@@ -57390,7 +57390,7 @@ pub struct PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_displacement_micromap_subdivision_level: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_displacement_micromap")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDisplacementMicromapPropertiesNV<'a> {}
@@ -57461,7 +57461,7 @@ pub struct AccelerationStructureTrianglesDisplacementMicromapNV<'a> {
     pub p_usage_counts: *const MicromapUsageEXT,
     pub pp_usage_counts: *const *const MicromapUsageEXT,
     pub micromap: Option<BorrowedHandle<'a, MicromapEXT>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_displacement_micromap")]
 unsafe impl<'a> ExtendableStructureBase
@@ -57637,7 +57637,7 @@ pub struct PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {
     pub p_next: Cell<*const Header>,
     pub clusterculling_shader: Bool32,
     pub multiview_cluster_culling_shader: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_culling_shader")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceClusterCullingShaderFeaturesHUAWEI<'a> {}
@@ -57707,7 +57707,7 @@ pub struct PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {
     pub max_work_group_size: [u32; 3u16 as _],
     pub max_output_cluster_count: u32,
     pub indirect_buffer_offset_alignment: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_culling_shader")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceClusterCullingShaderPropertiesHUAWEI<'a> {}
@@ -57781,7 +57781,7 @@ pub struct PhysicalDeviceClusterCullingShaderVrsFeaturesHUAWEI<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub cluster_shading_rate: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_culling_shader")]
 unsafe impl<'a> ExtendableStructureBase
@@ -57838,7 +57838,7 @@ pub struct PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub border_color_swizzle: Bool32,
     pub border_color_swizzle_from_image: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_border_color_swizzle")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceBorderColorSwizzleFeaturesEXT<'a> {}
@@ -57906,7 +57906,7 @@ pub struct SamplerBorderColorComponentMappingCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub components: ComponentMapping,
     pub srgb: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_border_color_swizzle")]
 unsafe impl<'a> ExtendableStructureBase for SamplerBorderColorComponentMappingCreateInfoEXT<'a> {}
@@ -57962,7 +57962,7 @@ pub struct PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pageable_device_local_memory: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pageable_device_local_memory")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePageableDeviceLocalMemoryFeaturesEXT<'a> {}
@@ -58024,7 +58024,7 @@ pub struct PhysicalDeviceShaderCorePropertiesARM<'a> {
     pub pixel_rate: u32,
     pub texel_rate: u32,
     pub fma_rate: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderCorePropertiesARM<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderCorePropertiesARM<'a> {
@@ -58085,7 +58085,7 @@ pub struct DeviceQueueShaderCoreControlCreateInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_core_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_scheduling_controls")]
 unsafe impl<'a> ExtendableStructureBase for DeviceQueueShaderCoreControlCreateInfoARM<'a> {}
@@ -58139,7 +58139,7 @@ pub struct PhysicalDeviceSchedulingControlsFeaturesARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub scheduling_controls: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_scheduling_controls")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSchedulingControlsFeaturesARM<'a> {}
@@ -58200,7 +58200,7 @@ pub struct PhysicalDeviceSchedulingControlsPropertiesARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub scheduling_controls_flags: PhysicalDeviceSchedulingControlsFlagsARM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_scheduling_controls")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSchedulingControlsPropertiesARM<'a> {}
@@ -58259,7 +58259,7 @@ pub struct PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image_sliced_view_of3_d: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_sliced_view_of_3d")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageSlicedViewOf3DFeaturesEXT<'a> {}
@@ -58321,7 +58321,7 @@ pub struct ImageViewSlicedCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub slice_offset: u32,
     pub slice_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_sliced_view_of_3d")]
 unsafe impl<'a> ExtendableStructureBase for ImageViewSlicedCreateInfoEXT<'a> {}
@@ -58376,7 +58376,7 @@ pub struct PhysicalDeviceDescriptorSetHostMappingFeaturesVALVE<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub descriptor_set_host_mapping: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_set_host_mapping")]
 unsafe impl<'a> ExtendableStructureBase
@@ -58441,7 +58441,7 @@ pub struct DescriptorSetBindingReferenceVALVE<'a> {
     pub p_next: Cell<*const Header>,
     pub descriptor_set_layout: Option<BorrowedHandle<'a, DescriptorSetLayout>>,
     pub binding: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_set_host_mapping")]
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetBindingReferenceVALVE<'a> {}
@@ -58492,7 +58492,7 @@ pub struct DescriptorSetLayoutHostMappingInfoVALVE<'a> {
     pub p_next: Cell<*const Header>,
     pub descriptor_offset: usize,
     pub descriptor_size: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_descriptor_set_host_mapping")]
 unsafe impl<'a> ExtendableStructureBase for DescriptorSetLayoutHostMappingInfoVALVE<'a> {}
@@ -58541,7 +58541,7 @@ pub struct PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub non_seamless_cube_map: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceNonSeamlessCubeMapFeaturesEXT<'a> {
@@ -58596,7 +58596,7 @@ pub struct PhysicalDeviceRenderPassStripedFeaturesARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub render_pass_striped: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_render_pass_striped")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRenderPassStripedFeaturesARM<'a> {}
@@ -58657,7 +58657,7 @@ pub struct PhysicalDeviceRenderPassStripedPropertiesARM<'a> {
     pub p_next: Cell<*const Header>,
     pub render_pass_stripe_granularity: Extent2D,
     pub max_render_pass_stripes: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_render_pass_striped")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRenderPassStripedPropertiesARM<'a> {}
@@ -58720,7 +58720,7 @@ pub struct RenderPassStripeBeginInfoARM<'a> {
     pub p_next: Cell<*const Header>,
     pub stripe_info_count: u32,
     pub p_stripe_infos: *const RenderPassStripeInfoARM<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_render_pass_striped")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassStripeBeginInfoARM<'a> {}
@@ -58794,7 +58794,7 @@ pub struct RenderPassStripeInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub stripe_area: Rect2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_render_pass_striped")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassStripeInfoARM<'a> {}
@@ -58839,7 +58839,7 @@ pub struct RenderPassStripeSubmitInfoARM<'a> {
     pub p_next: Cell<*const Header>,
     pub stripe_semaphore_info_count: u32,
     pub p_stripe_semaphore_infos: *const SemaphoreSubmitInfo<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_render_pass_striped")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassStripeSubmitInfoARM<'a> {}
@@ -59012,7 +59012,7 @@ pub struct PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub indirect_copy: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_copy_memory_indirect")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCopyMemoryIndirectFeaturesNV<'a> {}
@@ -59072,7 +59072,7 @@ pub struct PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub supported_queues: QueueFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_copy_memory_indirect")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCopyMemoryIndirectPropertiesNV<'a> {}
@@ -59184,7 +59184,7 @@ pub struct PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_decompression: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_memory_decompression")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMemoryDecompressionFeaturesNV<'a> {}
@@ -59246,7 +59246,7 @@ pub struct PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub decompression_methods: MemoryDecompressionMethodFlagsNV,
     pub max_decompression_indirect_count: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_memory_decompression")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMemoryDecompressionPropertiesNV<'a> {}
@@ -59310,7 +59310,7 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsComputeFeaturesNV<'a> {
     pub device_generated_compute: Bool32,
     pub device_generated_compute_pipelines: Bool32,
     pub device_generated_compute_capture_replay: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands_compute")]
 unsafe impl<'a> ExtendableStructureBase
@@ -59388,7 +59388,7 @@ pub struct ComputePipelineIndirectBufferInfoNV<'a> {
     pub device_address: DeviceAddress,
     pub size: DeviceSize,
     pub pipeline_device_address_capture_replay: DeviceAddress,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands_compute")]
 unsafe impl<'a> ExtendableStructureBase for ComputePipelineIndirectBufferInfoNV<'a> {}
@@ -59450,7 +59450,7 @@ pub struct PipelineIndirectDeviceAddressInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub pipeline_bind_point: PipelineBindPoint,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands_compute")]
 unsafe impl<'a> ExtendableStructureBase for PipelineIndirectDeviceAddressInfoNV<'a> {}
@@ -59529,7 +59529,7 @@ pub struct PhysicalDeviceRayTracingLinearSweptSpheresFeaturesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub spheres: Bool32,
     pub linear_swept_spheres: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_linear_swept_spheres")]
 unsafe impl<'a> ExtendableStructureBase
@@ -59609,7 +59609,7 @@ pub struct AccelerationStructureGeometryLinearSweptSpheresDataNV<'a> {
     pub index_stride: DeviceSize,
     pub indexing_mode: RayTracingLssIndexingModeNV,
     pub end_caps_mode: RayTracingLssPrimitiveEndCapsModeNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_linear_swept_spheres")]
 unsafe impl<'a> ExtendableStructureBase
@@ -59733,7 +59733,7 @@ pub struct AccelerationStructureGeometrySpheresDataNV<'a> {
     pub index_type: IndexType,
     pub index_data: DeviceOrHostAddressConstKHR,
     pub index_stride: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_linear_swept_spheres")]
 unsafe impl<'a> ExtendableStructureBase for AccelerationStructureGeometrySpheresDataNV<'a> {}
@@ -59832,7 +59832,7 @@ pub struct PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub linear_color_attachment: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceLinearColorAttachmentFeaturesNV<'a> {
@@ -59886,7 +59886,7 @@ pub struct PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_maximal_reconvergence: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceShaderMaximalReconvergenceFeaturesKHR<'a>
@@ -59943,7 +59943,7 @@ pub struct PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image_compression_control_swapchain: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceImageCompressionControlSwapchainFeaturesEXT<'a>
@@ -60005,7 +60005,7 @@ pub struct ImageViewSampleWeightCreateInfoQCOM<'a> {
     pub filter_center: Offset2D,
     pub filter_size: Extent2D,
     pub num_phases: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_processing")]
 unsafe impl<'a> ExtendableStructureBase for ImageViewSampleWeightCreateInfoQCOM<'a> {}
@@ -60068,7 +60068,7 @@ pub struct PhysicalDeviceImageProcessingFeaturesQCOM<'a> {
     pub texture_sample_weighted: Bool32,
     pub texture_box_filter: Bool32,
     pub texture_block_match: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_processing")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageProcessingFeaturesQCOM<'a> {}
@@ -60143,7 +60143,7 @@ pub struct PhysicalDeviceImageProcessingPropertiesQCOM<'a> {
     pub max_weight_filter_dimension: Extent2D,
     pub max_block_match_region: Extent2D,
     pub max_box_filter_block_size: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_processing")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageProcessingPropertiesQCOM<'a> {}
@@ -60218,7 +60218,7 @@ pub struct PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
     pub nested_command_buffer: Bool32,
     pub nested_command_buffer_rendering: Bool32,
     pub nested_command_buffer_simultaneous_use: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceNestedCommandBufferFeaturesEXT<'a> {
@@ -60284,7 +60284,7 @@ pub struct PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_command_buffer_nesting_level: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceNestedCommandBufferPropertiesEXT<'a> {
@@ -60334,7 +60334,7 @@ pub struct ExternalMemoryAcquireUnmodifiedEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub acquire_unmodified_memory: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_acquire_unmodified")]
 unsafe impl<'a> ExtendableStructureBase for ExternalMemoryAcquireUnmodifiedEXT<'a> {}
@@ -60434,7 +60434,7 @@ pub struct PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {
     pub extended_dynamic_state3_coverage_reduction_mode: Bool32,
     pub extended_dynamic_state3_representative_fragment_test_enable: Bool32,
     pub extended_dynamic_state3_shading_rate_image_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_extended_dynamic_state3")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExtendedDynamicState3FeaturesEXT<'a> {}
@@ -60738,7 +60738,7 @@ pub struct PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub dynamic_primitive_topology_unrestricted: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_extended_dynamic_state3")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExtendedDynamicState3PropertiesEXT<'a> {}
@@ -60913,7 +60913,7 @@ pub struct PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub subpass_merge_feedback: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_subpass_merge_feedback")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSubpassMergeFeedbackFeaturesEXT<'a> {}
@@ -60974,7 +60974,7 @@ pub struct RenderPassCreationControlEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub disallow_merging: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_subpass_merge_feedback")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassCreationControlEXT<'a> {}
@@ -61062,7 +61062,7 @@ pub struct RenderPassCreationFeedbackCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_render_pass_feedback: *const RenderPassCreationFeedbackInfoEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_subpass_merge_feedback")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassCreationFeedbackCreateInfoEXT<'a> {}
@@ -61158,7 +61158,7 @@ pub struct RenderPassSubpassFeedbackCreateInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_subpass_feedback: *const RenderPassSubpassFeedbackInfoEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_subpass_merge_feedback")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassSubpassFeedbackCreateInfoEXT<'a> {}
@@ -61211,7 +61211,7 @@ pub struct DirectDriverLoadingInfoLUNARG<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub pfn_get_instance_proc_addr: FuncPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_direct_driver_loading")]
 unsafe impl<'a> ExtendableStructureBase for DirectDriverLoadingInfoLUNARG<'a> {}
@@ -61263,7 +61263,7 @@ pub struct DirectDriverLoadingListLUNARG<'a> {
     pub mode: DirectDriverLoadingModeLUNARG,
     pub driver_count: u32,
     pub p_drivers: *const DirectDriverLoadingInfoLUNARG<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_direct_driver_loading")]
 unsafe impl<'a> ExtendableStructureBase for DirectDriverLoadingListLUNARG<'a> {}
@@ -61336,7 +61336,7 @@ pub struct TensorDescriptionARM<'a> {
     pub p_dimensions: *const i64,
     pub p_strides: *const i64,
     pub usage: TensorUsageFlagsARM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for TensorDescriptionARM<'a> {}
@@ -61438,7 +61438,7 @@ pub struct TensorCreateInfoARM<'a> {
     pub sharing_mode: SharingMode,
     pub queue_family_index_count: u32,
     pub p_queue_family_indices: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for TensorCreateInfoARM<'a> {}
@@ -61520,7 +61520,7 @@ pub struct TensorViewCreateInfoARM<'a> {
     pub flags: TensorViewCreateFlagsARM,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
     pub format: Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for TensorViewCreateInfoARM<'a> {}
@@ -61576,7 +61576,7 @@ pub struct TensorMemoryRequirementsInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for TensorMemoryRequirementsInfoARM<'a> {}
@@ -61622,7 +61622,7 @@ pub struct BindTensorMemoryInfoARM<'a> {
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for BindTensorMemoryInfoARM<'a> {}
@@ -61679,7 +61679,7 @@ pub struct WriteDescriptorSetTensorARM<'a> {
     pub p_next: Cell<*const Header>,
     pub tensor_view_count: u32,
     pub p_tensor_views: *const TensorViewARM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for WriteDescriptorSetTensorARM<'a> {}
@@ -61739,7 +61739,7 @@ pub struct TensorFormatPropertiesARM<'a> {
     pub p_next: Cell<*const Header>,
     pub optimal_tiling_tensor_features: FormatFeatureFlags2,
     pub linear_tiling_tensor_features: FormatFeatureFlags2,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for TensorFormatPropertiesARM<'a> {}
@@ -61809,7 +61809,7 @@ pub struct PhysicalDeviceTensorPropertiesARM<'a> {
     pub max_per_stage_descriptor_update_after_bind_storage_tensors: u32,
     pub shader_storage_tensor_array_non_uniform_indexing_native: Bool32,
     pub shader_tensor_supported_stages: ShaderStageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTensorPropertiesARM<'a> {}
@@ -61948,7 +61948,7 @@ pub struct TensorMemoryBarrierARM<'a> {
     pub src_queue_family_index: u32,
     pub dst_queue_family_index: u32,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for TensorMemoryBarrierARM<'a> {}
@@ -62034,7 +62034,7 @@ pub struct TensorDependencyInfoARM<'a> {
     pub p_next: Cell<*const Header>,
     pub tensor_memory_barrier_count: u32,
     pub p_tensor_memory_barriers: *const TensorMemoryBarrierARM<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for TensorDependencyInfoARM<'a> {}
@@ -62094,7 +62094,7 @@ pub struct PhysicalDeviceTensorFeaturesARM<'a> {
     pub shader_storage_tensor_array_non_uniform_indexing: Bool32,
     pub descriptor_binding_storage_tensor_update_after_bind: Bool32,
     pub tensors: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTensorFeaturesARM<'a> {}
@@ -62193,7 +62193,7 @@ pub struct DeviceTensorMemoryRequirementsARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_create_info: *const TensorCreateInfoARM<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for DeviceTensorMemoryRequirementsARM<'a> {}
@@ -62240,7 +62240,7 @@ pub struct CopyTensorInfoARM<'a> {
     pub dst_tensor: Option<BorrowedHandle<'a, TensorARM>>,
     pub region_count: u32,
     pub p_regions: *const TensorCopyARM<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for CopyTensorInfoARM<'a> {}
@@ -62309,7 +62309,7 @@ pub struct TensorCopyARM<'a> {
     pub p_src_offset: *const u64,
     pub p_dst_offset: *const u64,
     pub p_extent: *const u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for TensorCopyARM<'a> {}
@@ -62399,7 +62399,7 @@ pub struct MemoryDedicatedAllocateInfoTensorARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for MemoryDedicatedAllocateInfoTensorARM<'a> {}
@@ -62450,7 +62450,7 @@ pub struct PhysicalDeviceExternalTensorInfoARM<'a> {
     pub flags: TensorCreateFlagsARM,
     pub p_description: *const TensorDescriptionARM<'a>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalTensorInfoARM<'a> {}
@@ -62506,7 +62506,7 @@ pub struct ExternalTensorPropertiesARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub external_memory_properties: ExternalMemoryProperties,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for ExternalTensorPropertiesARM<'a> {}
@@ -62550,7 +62550,7 @@ pub struct ExternalMemoryTensorCreateInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub handle_types: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tensors")]
 unsafe impl<'a> ExtendableStructureBase for ExternalMemoryTensorCreateInfoARM<'a> {}
@@ -62599,7 +62599,7 @@ pub struct PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub descriptor_buffer_tensor_descriptors: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDescriptorBufferTensorFeaturesARM<'a> {}
@@ -62662,7 +62662,7 @@ pub struct PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {
     pub tensor_capture_replay_descriptor_data_size: usize,
     pub tensor_view_capture_replay_descriptor_data_size: usize,
     pub tensor_descriptor_size: usize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDescriptorBufferTensorPropertiesARM<'a> {}
@@ -62730,7 +62730,7 @@ pub struct DescriptorGetTensorInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub tensor_view: Option<BorrowedHandle<'a, TensorViewARM>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for DescriptorGetTensorInfoARM<'a> {}
@@ -62782,7 +62782,7 @@ pub struct TensorCaptureDescriptorDataInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub tensor: Option<BorrowedHandle<'a, TensorARM>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for TensorCaptureDescriptorDataInfoARM<'a> {}
@@ -62826,7 +62826,7 @@ pub struct TensorViewCaptureDescriptorDataInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub tensor_view: Option<BorrowedHandle<'a, TensorViewARM>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_tensors", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for TensorViewCaptureDescriptorDataInfoARM<'a> {}
@@ -62871,7 +62871,7 @@ pub struct FrameBoundaryTensorsARM<'a> {
     pub p_next: Cell<*const Header>,
     pub tensor_count: u32,
     pub p_tensors: *const TensorARM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_tensors", feature = "ext_frame_boundary"))]
 unsafe impl<'a> ExtendableStructureBase for FrameBoundaryTensorsARM<'a> {}
@@ -62942,7 +62942,7 @@ pub struct PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_module_identifier: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_module_identifier")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderModuleIdentifierFeaturesEXT<'a> {}
@@ -63003,7 +63003,7 @@ pub struct PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_module_identifier_algorithm_uuid: [u8; UUID_SIZE as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_module_identifier")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderModuleIdentifierPropertiesEXT<'a> {}
@@ -63060,7 +63060,7 @@ pub struct PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub identifier_size: u32,
     pub p_identifier: *const u8,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_module_identifier")]
 unsafe impl<'a> ExtendableStructureBase for PipelineShaderStageModuleIdentifierCreateInfoEXT<'a> {}
@@ -63121,7 +63121,7 @@ pub struct ShaderModuleIdentifierEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub identifier_size: u32,
     pub identifier: [u8; MAX_SHADER_MODULE_IDENTIFIER_SIZE_EXT as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_module_identifier")]
 unsafe impl<'a> ExtendableStructureBase for ShaderModuleIdentifierEXT<'a> {}
@@ -63167,7 +63167,7 @@ pub struct PhysicalDeviceRasterizationOrderAttachmentAccessFeaturesEXT<'a> {
     pub rasterization_order_color_attachment_access: Bool32,
     pub rasterization_order_depth_attachment_access: Bool32,
     pub rasterization_order_stencil_attachment_access: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_rasterization_order_attachment_access")]
 unsafe impl<'a> ExtendableStructureBase
@@ -63251,7 +63251,7 @@ pub struct PhysicalDeviceOpticalFlowFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub optical_flow: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_optical_flow")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceOpticalFlowFeaturesNV<'a> {}
@@ -63321,7 +63321,7 @@ pub struct PhysicalDeviceOpticalFlowPropertiesNV<'a> {
     pub max_width: u32,
     pub max_height: u32,
     pub max_num_regions_of_interest: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_optical_flow")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceOpticalFlowPropertiesNV<'a> {}
@@ -63436,7 +63436,7 @@ pub struct OpticalFlowImageFormatInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub usage: OpticalFlowUsageFlagsNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_optical_flow")]
 unsafe impl<'a> ExtendableStructureBase for OpticalFlowImageFormatInfoNV<'a> {}
@@ -63493,7 +63493,7 @@ pub struct OpticalFlowImageFormatPropertiesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub format: Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_optical_flow")]
 unsafe impl<'a> ExtendableStructureBase for OpticalFlowImageFormatPropertiesNV<'a> {}
@@ -63545,7 +63545,7 @@ pub struct OpticalFlowSessionCreateInfoNV<'a> {
     pub hint_grid_size: OpticalFlowGridSizeFlagsNV,
     pub performance_level: OpticalFlowPerformanceLevelNV,
     pub flags: OpticalFlowSessionCreateFlagsNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_optical_flow")]
 unsafe impl<'a> ExtendableStructureBase for OpticalFlowSessionCreateInfoNV<'a> {}
@@ -63639,7 +63639,7 @@ pub struct OpticalFlowSessionCreatePrivateDataInfoNV<'a> {
     pub id: u32,
     pub size: u32,
     pub p_private_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_optical_flow")]
 unsafe impl<'a> ExtendableStructureBase for OpticalFlowSessionCreatePrivateDataInfoNV<'a> {}
@@ -63702,7 +63702,7 @@ pub struct OpticalFlowExecuteInfoNV<'a> {
     pub flags: OpticalFlowExecuteFlagsNV,
     pub region_count: u32,
     pub p_regions: *const Rect2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_optical_flow")]
 unsafe impl<'a> ExtendableStructureBase for OpticalFlowExecuteInfoNV<'a> {}
@@ -63761,7 +63761,7 @@ pub struct PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub legacy_dithering: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceLegacyDitheringFeaturesEXT<'a> {
@@ -63815,7 +63815,7 @@ pub struct PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub external_format_resolve: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalFormatResolveFeaturesANDROID<'a> {}
@@ -63878,7 +63878,7 @@ pub struct PhysicalDeviceExternalFormatResolvePropertiesANDROID<'a> {
     pub null_color_attachment_with_external_format_resolve: Bool32,
     pub external_format_resolve_chroma_offset_x: ChromaLocation,
     pub external_format_resolve_chroma_offset_y: ChromaLocation,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(any(feature = "ext_sampler_ycbcr_conversion", feature = "version_1_1"))]
 unsafe impl<'a> ExtendableStructureBase
@@ -63951,7 +63951,7 @@ pub struct AndroidHardwareBufferFormatResolvePropertiesANDROID<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub color_attachment_format: Format,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for AndroidHardwareBufferFormatResolvePropertiesANDROID<'a>
@@ -63998,7 +63998,7 @@ pub struct PhysicalDeviceAntiLagFeaturesAMD<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub anti_lag: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_anti_lag")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceAntiLagFeaturesAMD<'a> {}
@@ -64060,7 +64060,7 @@ pub struct AntiLagDataAMD<'a> {
     pub mode: AntiLagModeAMD,
     pub max_fps: u32,
     pub p_presentation_info: *const AntiLagPresentationInfoAMD<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_anti_lag")]
 unsafe impl<'a> ExtendableStructureBase for AntiLagDataAMD<'a> {}
@@ -64117,7 +64117,7 @@ pub struct AntiLagPresentationInfoAMD<'a> {
     pub p_next: Cell<*const Header>,
     pub stage: AntiLagStageAMD,
     pub frame_index: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_anti_lag")]
 unsafe impl<'a> ExtendableStructureBase for AntiLagPresentationInfoAMD<'a> {}
@@ -64167,7 +64167,7 @@ pub struct PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub dense_geometry_format: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_dense_geometry_format")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDenseGeometryFormatFeaturesAMDX<'a> {}
@@ -64234,7 +64234,7 @@ pub struct AccelerationStructureDenseGeometryFormatTrianglesDataAMDX<'a> {
     pub max_primitive_index: u32,
     pub max_geometry_index: u32,
     pub format: CompressedTriangleFormatAMDX,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_dense_geometry_format")]
 unsafe impl<'a> ExtendableStructureBase
@@ -64328,7 +64328,7 @@ pub struct SurfaceCapabilitiesPresentId2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_id2_supported: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_id2")]
 unsafe impl<'a> ExtendableStructureBase for SurfaceCapabilitiesPresentId2KHR<'a> {}
@@ -64378,7 +64378,7 @@ pub struct PresentId2KHR<'a> {
     pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
     pub p_present_ids: *const u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_id2")]
 unsafe impl<'a> ExtendableStructureBase for PresentId2KHR<'a> {}
@@ -64439,7 +64439,7 @@ pub struct PhysicalDevicePresentId2FeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_id2: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_id2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePresentId2FeaturesKHR<'a> {}
@@ -64499,7 +64499,7 @@ pub struct SurfaceCapabilitiesPresentWait2KHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_wait2_supported: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_wait2")]
 unsafe impl<'a> ExtendableStructureBase for SurfaceCapabilitiesPresentWait2KHR<'a> {}
@@ -64551,7 +64551,7 @@ pub struct PhysicalDevicePresentWait2FeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_wait2: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_wait2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePresentWait2FeaturesKHR<'a> {}
@@ -64612,7 +64612,7 @@ pub struct PresentWait2InfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub present_id: u64,
     pub timeout: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_wait2")]
 unsafe impl<'a> ExtendableStructureBase for PresentWait2InfoKHR<'a> {}
@@ -64661,7 +64661,7 @@ pub struct PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub ray_tracing_position_fetch: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceRayTracingPositionFetchFeaturesKHR<'a> {
@@ -64716,7 +64716,7 @@ pub struct PhysicalDeviceShaderObjectFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_object: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_object")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderObjectFeaturesEXT<'a> {}
@@ -64777,7 +64777,7 @@ pub struct PhysicalDeviceShaderObjectPropertiesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_binary_uuid: [u8; UUID_SIZE as _],
     pub shader_binary_version: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_object")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderObjectPropertiesEXT<'a> {}
@@ -64849,7 +64849,7 @@ pub struct ShaderCreateInfoEXT<'a> {
     pub push_constant_range_count: u32,
     pub p_push_constant_ranges: *const PushConstantRange,
     pub p_specialization_info: *const SpecializationInfo<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_shader_object")]
 unsafe impl<'a> ExtendableStructureBase for ShaderCreateInfoEXT<'a> {}
@@ -64990,7 +64990,7 @@ pub struct PhysicalDevicePipelineBinaryFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_binaries: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePipelineBinaryFeaturesKHR<'a> {}
@@ -65054,7 +65054,7 @@ pub struct PhysicalDevicePipelineBinaryPropertiesKHR<'a> {
     pub pipeline_binary_prefers_internal_cache: Bool32,
     pub pipeline_binary_precompiled_internal_cache: Bool32,
     pub pipeline_binary_compressed_data: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePipelineBinaryPropertiesKHR<'a> {}
@@ -65133,7 +65133,7 @@ pub struct DevicePipelineBinaryInternalCacheControlKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub disable_internal_cache: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for DevicePipelineBinaryInternalCacheControlKHR<'a> {}
@@ -65184,7 +65184,7 @@ pub struct PipelineBinaryKeyKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub key_size: u32,
     pub key: [u8; MAX_PIPELINE_BINARY_KEY_SIZE_KHR as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for PipelineBinaryKeyKHR<'a> {}
@@ -65233,7 +65233,7 @@ impl<'a> PipelineBinaryKeyKHR<'a> {
 pub struct PipelineBinaryDataKHR<'a> {
     pub data_size: usize,
     pub p_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> Send for PipelineBinaryDataKHR<'a> {}
@@ -65274,7 +65274,7 @@ pub struct PipelineBinaryKeysAndDataKHR<'a> {
     pub binary_count: u32,
     pub p_pipeline_binary_keys: *const PipelineBinaryKeyKHR<'a>,
     pub p_pipeline_binary_data: *const PipelineBinaryDataKHR<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> Send for PipelineBinaryKeysAndDataKHR<'a> {}
@@ -65331,7 +65331,7 @@ pub struct PipelineBinaryCreateInfoKHR<'a> {
     pub p_keys_and_data_info: *const PipelineBinaryKeysAndDataKHR<'a>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub p_pipeline_create_info: *const PipelineCreateInfoKHR<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for PipelineBinaryCreateInfoKHR<'a> {}
@@ -65391,7 +65391,7 @@ pub struct PipelineBinaryInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub binary_count: u32,
     pub p_pipeline_binaries: *const PipelineBinaryKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for PipelineBinaryInfoKHR<'a> {}
@@ -65463,7 +65463,7 @@ pub struct ReleaseCapturedPipelineDataInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for ReleaseCapturedPipelineDataInfoKHR<'a> {}
@@ -65507,7 +65507,7 @@ pub struct PipelineBinaryDataInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_binary: Option<BorrowedHandle<'a, PipelineBinaryKHR>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for PipelineBinaryDataInfoKHR<'a> {}
@@ -65550,7 +65550,7 @@ impl<'a> PipelineBinaryDataInfoKHR<'a> {
 pub struct PipelineCreateInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for PipelineCreateInfoKHR<'a> {}
@@ -65589,7 +65589,7 @@ pub struct PipelineBinaryHandlesInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub pipeline_binary_count: u32,
     pub p_pipeline_binaries: *const PipelineBinaryKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_pipeline_binary")]
 unsafe impl<'a> ExtendableStructureBase for PipelineBinaryHandlesInfoKHR<'a> {}
@@ -65654,7 +65654,7 @@ pub struct PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub tile_properties: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_properties")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTilePropertiesFeaturesQCOM<'a> {}
@@ -65716,7 +65716,7 @@ pub struct TilePropertiesQCOM<'a> {
     pub tile_size: Extent3D,
     pub apron_size: Extent2D,
     pub origin: Offset2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_properties")]
 unsafe impl<'a> ExtendableStructureBase for TilePropertiesQCOM<'a> {}
@@ -65772,7 +65772,7 @@ pub struct PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub amigo_profiling: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_amigo_profiling")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceAmigoProfilingFeaturesSEC<'a> {}
@@ -65833,7 +65833,7 @@ pub struct AmigoProfilingSubmitInfoSEC<'a> {
     pub p_next: Cell<*const Header>,
     pub first_draw_timestamp: u64,
     pub swap_buffer_timestamp: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_amigo_profiling")]
 unsafe impl<'a> ExtendableStructureBase for AmigoProfilingSubmitInfoSEC<'a> {}
@@ -65885,7 +65885,7 @@ pub struct SurfacePresentModeKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_mode: PresentModeKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_surface_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for SurfacePresentModeKHR<'a> {}
@@ -65943,7 +65943,7 @@ pub struct SurfacePresentScalingCapabilitiesKHR<'a> {
     pub supported_present_gravity_y: PresentGravityFlagsKHR,
     pub min_scaled_image_extent: Extent2D,
     pub max_scaled_image_extent: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_surface_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for SurfacePresentScalingCapabilitiesKHR<'a> {}
@@ -66022,7 +66022,7 @@ pub struct SurfacePresentModeCompatibilityKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub present_mode_count: u32,
     pub p_present_modes: *const PresentModeKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_surface_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for SurfacePresentModeCompatibilityKHR<'a> {}
@@ -66091,7 +66091,7 @@ pub struct PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub swapchain_maintenance1: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceSwapchainMaintenance1FeaturesKHR<'a> {}
@@ -66156,7 +66156,7 @@ pub struct SwapchainPresentFenceInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
     pub p_fences: *const Fence,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for SwapchainPresentFenceInfoKHR<'a> {}
@@ -66220,7 +66220,7 @@ pub struct SwapchainPresentModesCreateInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub present_mode_count: u32,
     pub p_present_modes: *const PresentModeKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for SwapchainPresentModesCreateInfoKHR<'a> {}
@@ -66282,7 +66282,7 @@ pub struct SwapchainPresentModeInfoKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub swapchain_count: u32,
     pub p_present_modes: *const PresentModeKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for SwapchainPresentModeInfoKHR<'a> {}
@@ -66342,7 +66342,7 @@ pub struct SwapchainPresentScalingCreateInfoKHR<'a> {
     pub scaling_behavior: PresentScalingFlagsKHR,
     pub present_gravity_x: PresentGravityFlagsKHR,
     pub present_gravity_y: PresentGravityFlagsKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for SwapchainPresentScalingCreateInfoKHR<'a> {}
@@ -66407,7 +66407,7 @@ pub struct ReleaseSwapchainImagesInfoKHR<'a> {
     pub swapchain: Option<BorrowedHandle<'a, SwapchainKHR>>,
     pub image_index_count: u32,
     pub p_image_indices: *const u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_swapchain_maintenance1")]
 unsafe impl<'a> ExtendableStructureBase for ReleaseSwapchainImagesInfoKHR<'a> {}
@@ -66468,7 +66468,7 @@ pub struct PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub multiview_per_view_viewports: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceMultiviewPerViewViewportsFeaturesQCOM<'a>
@@ -66526,7 +66526,7 @@ pub struct PhysicalDeviceRayTracingInvocationReorderPropertiesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub ray_tracing_invocation_reorder_reordering_hint: RayTracingInvocationReorderModeNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_invocation_reorder")]
 unsafe impl<'a> ExtendableStructureBase
@@ -66588,7 +66588,7 @@ pub struct PhysicalDeviceRayTracingInvocationReorderFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub ray_tracing_invocation_reorder: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ray_tracing_invocation_reorder")]
 unsafe impl<'a> ExtendableStructureBase
@@ -66655,7 +66655,7 @@ pub struct PhysicalDeviceCooperativeVectorPropertiesNV<'a> {
     pub cooperative_vector_training_float16_accumulation: Bool32,
     pub cooperative_vector_training_float32_accumulation: Bool32,
     pub max_cooperative_vector_components: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_vector")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeVectorPropertiesNV<'a> {}
@@ -66736,7 +66736,7 @@ pub struct PhysicalDeviceCooperativeVectorFeaturesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub cooperative_vector: Bool32,
     pub cooperative_vector_training: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_vector")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeVectorFeaturesNV<'a> {}
@@ -66807,7 +66807,7 @@ pub struct CooperativeVectorPropertiesNV<'a> {
     pub bias_interpretation: ComponentTypeKHR,
     pub result_type: ComponentTypeKHR,
     pub transpose: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_vector")]
 unsafe impl<'a> ExtendableStructureBase for CooperativeVectorPropertiesNV<'a> {}
@@ -66892,7 +66892,7 @@ pub struct ConvertCooperativeVectorMatrixInfoNV<'a> {
     pub src_stride: usize,
     pub dst_layout: CooperativeVectorMatrixLayoutNV,
     pub dst_stride: usize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_vector")]
 unsafe impl<'a> ExtendableStructureBase for ConvertCooperativeVectorMatrixInfoNV<'a> {}
@@ -67001,7 +67001,7 @@ pub struct PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub extended_sparse_address_space: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceExtendedSparseAddressSpaceFeaturesNV<'a> {
@@ -67057,7 +67057,7 @@ pub struct PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a> {
     pub extended_sparse_address_space_size: DeviceSize,
     pub extended_sparse_image_usage_flags: ImageUsageFlags,
     pub extended_sparse_buffer_usage_flags: BufferUsageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceExtendedSparseAddressSpacePropertiesNV<'a>
@@ -67122,7 +67122,7 @@ pub struct PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub mutable_descriptor_type: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_mutable_descriptor_type")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMutableDescriptorTypeFeaturesEXT<'a> {}
@@ -67185,7 +67185,7 @@ pub type PhysicalDeviceMutableDescriptorTypeFeaturesVALVE<'a> =
 pub struct MutableDescriptorTypeListEXT<'a> {
     pub descriptor_type_count: u32,
     pub p_descriptor_types: *const DescriptorType,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_mutable_descriptor_type")]
 unsafe impl<'a> Send for MutableDescriptorTypeListEXT<'a> {}
@@ -67235,7 +67235,7 @@ pub struct MutableDescriptorTypeCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub mutable_descriptor_type_list_count: u32,
     pub p_mutable_descriptor_type_lists: *const MutableDescriptorTypeListEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_mutable_descriptor_type")]
 unsafe impl<'a> ExtendableStructureBase for MutableDescriptorTypeCreateInfoEXT<'a> {}
@@ -67308,7 +67308,7 @@ pub struct PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub legacy_vertex_attributes: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceLegacyVertexAttributesFeaturesEXT<'a> {
@@ -67362,7 +67362,7 @@ pub struct PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub native_unaligned_performance: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceLegacyVertexAttributesPropertiesEXT<'a> {
@@ -67413,7 +67413,7 @@ pub struct LayerSettingsCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub setting_count: u32,
     pub p_settings: *const LayerSettingEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_layer_settings")]
 unsafe impl<'a> ExtendableStructureBase for LayerSettingsCreateInfoEXT<'a> {}
@@ -67471,7 +67471,7 @@ pub struct LayerSettingEXT<'a> {
     pub ty: LayerSettingTypeEXT,
     pub value_count: u32,
     pub p_values: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_layer_settings")]
 unsafe impl<'a> Send for LayerSettingEXT<'a> {}
@@ -67534,7 +67534,7 @@ pub struct PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_core_builtins: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderCoreBuiltinsFeaturesARM<'a> {
@@ -67590,7 +67590,7 @@ pub struct PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
     pub shader_core_mask: u64,
     pub shader_core_count: u32,
     pub shader_warps_per_core: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderCoreBuiltinsPropertiesARM<'a> {
@@ -67651,7 +67651,7 @@ pub struct PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_library_group_handles: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDevicePipelineLibraryGroupHandlesFeaturesEXT<'a>
@@ -67708,7 +67708,7 @@ pub struct PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub dynamic_rendering_unused_attachments: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceDynamicRenderingUnusedAttachmentsFeaturesEXT<'a>
@@ -67770,7 +67770,7 @@ pub struct LatencySleepModeInfoNV<'a> {
     pub low_latency_mode: Bool32,
     pub low_latency_boost: Bool32,
     pub minimum_interval_us: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
 unsafe impl<'a> ExtendableStructureBase for LatencySleepModeInfoNV<'a> {}
@@ -67827,7 +67827,7 @@ pub struct LatencySleepInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub signal_semaphore: Option<BorrowedHandle<'a, Semaphore>>,
     pub value: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
 unsafe impl<'a> ExtendableStructureBase for LatencySleepInfoNV<'a> {}
@@ -67878,7 +67878,7 @@ pub struct SetLatencyMarkerInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub present_id: u64,
     pub marker: LatencyMarkerNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
 unsafe impl<'a> ExtendableStructureBase for SetLatencyMarkerInfoNV<'a> {}
@@ -67929,7 +67929,7 @@ pub struct GetLatencyMarkerInfoNV<'a> {
     pub p_next: Cell<*const Header>,
     pub timing_count: u32,
     pub p_timings: *const LatencyTimingsFrameReportNV<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
 unsafe impl<'a> ExtendableStructureBase for GetLatencyMarkerInfoNV<'a> {}
@@ -68001,7 +68001,7 @@ pub struct LatencyTimingsFrameReportNV<'a> {
     pub os_render_queue_end_time_us: u64,
     pub gpu_render_start_time_us: u64,
     pub gpu_render_end_time_us: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
 unsafe impl<'a> ExtendableStructureBase for LatencyTimingsFrameReportNV<'a> {}
@@ -68123,7 +68123,7 @@ pub struct LatencySubmissionPresentIdNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_id: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
 unsafe impl<'a> ExtendableStructureBase for LatencySubmissionPresentIdNV<'a> {}
@@ -68174,7 +68174,7 @@ pub struct SwapchainLatencyCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub latency_mode_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
 unsafe impl<'a> ExtendableStructureBase for SwapchainLatencyCreateInfoNV<'a> {}
@@ -68223,7 +68223,7 @@ pub struct OutOfBandQueueTypeInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub queue_type: OutOfBandQueueTypeNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
 unsafe impl<'a> ExtendableStructureBase for OutOfBandQueueTypeInfoNV<'a> {}
@@ -68268,7 +68268,7 @@ pub struct LatencySurfaceCapabilitiesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub present_mode_count: u32,
     pub p_present_modes: *const PresentModeKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_low_latency2")]
 unsafe impl<'a> ExtendableStructureBase for LatencySurfaceCapabilitiesNV<'a> {}
@@ -68343,7 +68343,7 @@ pub struct CooperativeMatrixPropertiesKHR<'a> {
     pub result_type: ComponentTypeKHR,
     pub saturating_accumulation: Bool32,
     pub scope: ScopeKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_matrix")]
 unsafe impl<'a> ExtendableStructureBase for CooperativeMatrixPropertiesKHR<'a> {}
@@ -68436,7 +68436,7 @@ pub struct PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub cooperative_matrix: Bool32,
     pub cooperative_matrix_robust_buffer_access: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_matrix")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeMatrixFeaturesKHR<'a> {}
@@ -68502,7 +68502,7 @@ pub struct PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub cooperative_matrix_supported_stages: ShaderStageFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_matrix")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeMatrixPropertiesKHR<'a> {}
@@ -68562,7 +68562,7 @@ pub struct PhysicalDeviceDataGraphFeaturesARM<'a> {
     pub data_graph_specialization_constants: Bool32,
     pub data_graph_descriptor_buffer: Bool32,
     pub data_graph_shader_module: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDataGraphFeaturesARM<'a> {}
@@ -68647,7 +68647,7 @@ pub struct DataGraphPipelineConstantARM<'a> {
     pub p_next: Cell<*const Header>,
     pub id: u32,
     pub p_constant_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineConstantARM<'a> {}
@@ -68699,7 +68699,7 @@ pub struct DataGraphPipelineResourceInfoARM<'a> {
     pub descriptor_set: u32,
     pub binding: u32,
     pub array_element: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineResourceInfoARM<'a> {}
@@ -68755,7 +68755,7 @@ pub struct DataGraphPipelineCompilerControlCreateInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub p_vendor_options: *const c_char,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineCompilerControlCreateInfoARM<'a> {}
@@ -68808,7 +68808,7 @@ pub struct DataGraphPipelineCreateInfoARM<'a> {
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub resource_info_count: u32,
     pub p_resource_infos: *const DataGraphPipelineResourceInfoARM<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineCreateInfoARM<'a> {}
@@ -68881,7 +68881,7 @@ pub struct DataGraphPipelineShaderModuleCreateInfoARM<'a> {
     pub p_specialization_info: *const SpecializationInfo<'a>,
     pub constant_count: u32,
     pub p_constants: *const DataGraphPipelineConstantARM<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineShaderModuleCreateInfoARM<'a> {}
@@ -68967,7 +68967,7 @@ pub struct DataGraphPipelineSessionCreateInfoARM<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: DataGraphPipelineSessionCreateFlagsARM,
     pub data_graph_pipeline: Option<BorrowedHandle<'a, Pipeline>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineSessionCreateInfoARM<'a> {}
@@ -69017,7 +69017,7 @@ pub struct DataGraphPipelineSessionBindPointRequirementsInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub session: Option<BorrowedHandle<'a, DataGraphPipelineSessionARM>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase
@@ -69067,7 +69067,7 @@ pub struct DataGraphPipelineSessionBindPointRequirementARM<'a> {
     pub bind_point: DataGraphPipelineSessionBindPointARM,
     pub bind_point_type: DataGraphPipelineSessionBindPointTypeARM,
     pub num_objects: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineSessionBindPointRequirementARM<'a> {}
@@ -69126,7 +69126,7 @@ pub struct DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {
     pub session: Option<BorrowedHandle<'a, DataGraphPipelineSessionARM>>,
     pub bind_point: DataGraphPipelineSessionBindPointARM,
     pub object_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineSessionMemoryRequirementsInfoARM<'a> {}
@@ -69187,7 +69187,7 @@ pub struct BindDataGraphPipelineSessionMemoryInfoARM<'a> {
     pub object_index: u32,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub memory_offset: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for BindDataGraphPipelineSessionMemoryInfoARM<'a> {}
@@ -69255,7 +69255,7 @@ pub struct DataGraphPipelineInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub data_graph_pipeline: Option<BorrowedHandle<'a, Pipeline>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineInfoARM<'a> {}
@@ -69302,7 +69302,7 @@ pub struct DataGraphPipelinePropertyQueryResultARM<'a> {
     pub is_text: Bool32,
     pub data_size: usize,
     pub p_data: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelinePropertyQueryResultARM<'a> {}
@@ -69374,7 +69374,7 @@ pub struct DataGraphPipelineIdentifierCreateInfoARM<'a> {
     pub p_next: Cell<*const Header>,
     pub identifier_size: u32,
     pub p_identifier: *const u8,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineIdentifierCreateInfoARM<'a> {}
@@ -69433,7 +69433,7 @@ pub struct DataGraphPipelineDispatchInfoARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub flags: DataGraphPipelineDispatchFlagsARM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphPipelineDispatchInfoARM<'a> {}
@@ -69513,7 +69513,7 @@ pub struct QueueFamilyDataGraphPropertiesARM<'a> {
     pub p_next: Cell<*const Header>,
     pub engine: PhysicalDeviceDataGraphProcessingEngineARM,
     pub operation: PhysicalDeviceDataGraphOperationSupportARM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for QueueFamilyDataGraphPropertiesARM<'a> {}
@@ -69564,7 +69564,7 @@ pub struct DataGraphProcessingEngineCreateInfoARM<'a> {
     pub p_next: Cell<*const Header>,
     pub processing_engine_count: u32,
     pub p_processing_engines: *const PhysicalDeviceDataGraphProcessingEngineARM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for DataGraphProcessingEngineCreateInfoARM<'a> {}
@@ -69640,7 +69640,7 @@ pub struct PhysicalDeviceQueueFamilyDataGraphProcessingEngineInfoARM<'a> {
     pub p_next: Cell<*const Header>,
     pub queue_family_index: u32,
     pub engine_type: PhysicalDeviceDataGraphProcessingEngineTypeARM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase
@@ -69697,7 +69697,7 @@ pub struct QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {
     pub p_next: Cell<*const Header>,
     pub foreign_semaphore_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub foreign_memory_handle_types: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_data_graph")]
 unsafe impl<'a> ExtendableStructureBase for QueueFamilyDataGraphProcessingEnginePropertiesARM<'a> {}
@@ -69802,7 +69802,7 @@ pub struct DataGraphPipelineConstantTensorSemiStructuredSparsityInfoARM<'a> {
     pub dimension: u32,
     pub zero_count: u32,
     pub group_size: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_data_graph", feature = "ext_tensors"))]
 unsafe impl<'a> ExtendableStructureBase
@@ -69872,7 +69872,7 @@ pub struct PhysicalDeviceMultiviewPerViewRenderAreasFeaturesQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub multiview_per_view_render_areas: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_multiview_per_view_render_areas")]
 unsafe impl<'a> ExtendableStructureBase
@@ -69937,7 +69937,7 @@ pub struct MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {
     pub p_next: Cell<*const Header>,
     pub per_view_render_area_count: u32,
     pub p_per_view_render_areas: *const Rect2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_multiview_per_view_render_areas")]
 unsafe impl<'a> ExtendableStructureBase for MultiviewPerViewRenderAreasRenderPassBeginInfoQCOM<'a> {}
@@ -70018,7 +70018,7 @@ pub struct PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub compute_derivative_group_quads: Bool32,
     pub compute_derivative_group_linear: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceComputeShaderDerivativesFeaturesKHR<'a> {
@@ -70080,7 +70080,7 @@ pub struct PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub mesh_and_task_shader_derivatives: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceComputeShaderDerivativesPropertiesKHR<'a>
@@ -70133,7 +70133,7 @@ pub struct PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub per_stage_descriptor_set: Bool32,
     pub dynamic_pipeline_layout: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevicePerStageDescriptorSetFeaturesNV<'a> {
@@ -70194,7 +70194,7 @@ pub struct PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub texture_block_match2: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_processing2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageProcessing2FeaturesQCOM<'a> {}
@@ -70254,7 +70254,7 @@ pub struct PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_block_match_window: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_processing2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageProcessing2PropertiesQCOM<'a> {}
@@ -70311,7 +70311,7 @@ pub struct SamplerBlockMatchWindowCreateInfoQCOM<'a> {
     pub p_next: Cell<*const Header>,
     pub window_extent: Extent2D,
     pub window_compare_mode: BlockMatchWindowCompareModeQCOM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_processing2")]
 unsafe impl<'a> ExtendableStructureBase for SamplerBlockMatchWindowCreateInfoQCOM<'a> {}
@@ -70366,7 +70366,7 @@ pub struct PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub selectable_cubic_weights: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_filter_cubic_weights")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCubicWeightsFeaturesQCOM<'a> {}
@@ -70426,7 +70426,7 @@ pub struct SamplerCubicWeightsCreateInfoQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub cubic_weights: CubicFilterWeightsQCOM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_filter_cubic_weights")]
 unsafe impl<'a> ExtendableStructureBase for SamplerCubicWeightsCreateInfoQCOM<'a> {}
@@ -70475,7 +70475,7 @@ pub struct BlitImageCubicWeightsInfoQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub cubic_weights: CubicFilterWeightsQCOM,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_filter_cubic_weights")]
 unsafe impl<'a> ExtendableStructureBase for BlitImageCubicWeightsInfoQCOM<'a> {}
@@ -70524,7 +70524,7 @@ pub struct PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub ycbcr_degamma: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ycbcr_degamma")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceYcbcrDegammaFeaturesQCOM<'a> {}
@@ -70585,7 +70585,7 @@ pub struct SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {
     pub p_next: Cell<*const Header>,
     pub enable_ydegamma: Bool32,
     pub enable_cb_cr_degamma: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ycbcr_degamma")]
 unsafe impl<'a> ExtendableStructureBase for SamplerYcbcrConversionYcbcrDegammaCreateInfoQCOM<'a> {}
@@ -70643,7 +70643,7 @@ pub struct PhysicalDeviceCubicClampFeaturesQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub cubic_range_clamp: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCubicClampFeaturesQCOM<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceCubicClampFeaturesQCOM<'a> {
@@ -70697,7 +70697,7 @@ pub struct PhysicalDeviceAttachmentFeedbackLoopDynamicStateFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub attachment_feedback_loop_dynamic_state: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_attachment_feedback_loop_dynamic_state")]
 unsafe impl<'a> ExtendableStructureBase
@@ -70764,7 +70764,7 @@ pub struct PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub unified_image_layouts: Bool32,
     pub unified_image_layouts_video: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_unified_image_layouts")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceUnifiedImageLayoutsFeaturesKHR<'a> {}
@@ -70834,7 +70834,7 @@ pub struct AttachmentFeedbackLoopInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub feedback_loop_enable: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_unified_image_layouts",
@@ -70908,7 +70908,7 @@ pub struct ScreenBufferPropertiesQNX<'a> {
     pub p_next: Cell<*const Header>,
     pub allocation_size: DeviceSize,
     pub memory_type_bits: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_screen_buffer")]
 unsafe impl<'a> ExtendableStructureBase for ScreenBufferPropertiesQNX<'a> {}
@@ -70966,7 +70966,7 @@ pub struct ScreenBufferFormatPropertiesQNX<'a> {
     pub suggested_ycbcr_range: SamplerYcbcrRange,
     pub suggested_xchroma_offset: ChromaLocation,
     pub suggested_ychroma_offset: ChromaLocation,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_screen_buffer")]
 unsafe impl<'a> ExtendableStructureBase for ScreenBufferFormatPropertiesQNX<'a> {}
@@ -71066,7 +71066,7 @@ pub struct ImportScreenBufferInfoQNX<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub buffer: *const VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_screen_buffer")]
 unsafe impl<'a> ExtendableStructureBase for ImportScreenBufferInfoQNX<'a> {}
@@ -71112,7 +71112,7 @@ pub struct ExternalFormatQNX<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub external_format: u64,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_screen_buffer")]
 unsafe impl<'a> ExtendableStructureBase for ExternalFormatQNX<'a> {}
@@ -71166,7 +71166,7 @@ pub struct PhysicalDeviceExternalMemoryScreenBufferFeaturesQNX<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub screen_buffer_import: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_screen_buffer")]
 unsafe impl<'a> ExtendableStructureBase
@@ -71230,7 +71230,7 @@ pub struct PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub underlying_api: LayeredDriverUnderlyingApiMSFT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_layered_driver")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLayeredDriverPropertiesMSFT<'a> {}
@@ -71285,7 +71285,7 @@ pub struct CalibratedTimestampInfoKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub time_domain: TimeDomainKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_calibrated_timestamps")]
 unsafe impl<'a> ExtendableStructureBase for CalibratedTimestampInfoKHR<'a> {}
@@ -71336,7 +71336,7 @@ pub struct SetDescriptorBufferOffsetsInfoEXT<'a> {
     pub set_count: u32,
     pub p_buffer_indices: *const u32,
     pub p_offsets: *const DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for SetDescriptorBufferOffsetsInfoEXT<'a> {}
@@ -71422,7 +71422,7 @@ pub struct BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {
     pub stage_flags: ShaderStageFlags,
     pub layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub set: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_maintenance6", feature = "ext_descriptor_buffer"))]
 unsafe impl<'a> ExtendableStructureBase for BindDescriptorBufferEmbeddedSamplersInfoEXT<'a> {}
@@ -71478,7 +71478,7 @@ pub struct PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub descriptor_pool_overallocation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceDescriptorPoolOverallocationFeaturesNV<'a>
@@ -71536,7 +71536,7 @@ pub struct PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub tile_memory_heap: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_memory_heap")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTileMemoryHeapFeaturesQCOM<'a> {}
@@ -71597,7 +71597,7 @@ pub struct PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {
     pub p_next: Cell<*const Header>,
     pub queue_submit_boundary: Bool32,
     pub tile_buffer_transfers: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_memory_heap")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceTileMemoryHeapPropertiesQCOM<'a> {}
@@ -71659,7 +71659,7 @@ pub struct TileMemoryRequirementsQCOM<'a> {
     pub p_next: Cell<*const Header>,
     pub size: DeviceSize,
     pub alignment: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_memory_heap")]
 unsafe impl<'a> ExtendableStructureBase for TileMemoryRequirementsQCOM<'a> {}
@@ -71721,7 +71721,7 @@ pub struct TileMemoryBindInfoQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_tile_memory_heap")]
 unsafe impl<'a> ExtendableStructureBase for TileMemoryBindInfoQCOM<'a> {}
@@ -71770,7 +71770,7 @@ pub struct TileMemorySizeInfoQCOM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub size: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(feature = "ext_tile_memory_heap", feature = "ext_tile_properties"))]
 unsafe impl<'a> ExtendableStructureBase for TileMemorySizeInfoQCOM<'a> {}
@@ -71833,7 +71833,7 @@ pub struct DisplaySurfaceStereoCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub stereo_type: DisplaySurfaceStereoTypeNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_stereo")]
 unsafe impl<'a> ExtendableStructureBase for DisplaySurfaceStereoCreateInfoNV<'a> {}
@@ -71882,7 +71882,7 @@ pub struct DisplayModeStereoPropertiesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub hdmi3_dsupported: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_display_stereo")]
 unsafe impl<'a> ExtendableStructureBase for DisplayModeStereoPropertiesNV<'a> {}
@@ -71933,7 +71933,7 @@ pub struct PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_raw_access_chains: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceRawAccessChainsFeaturesNV<'a> {
@@ -71987,7 +71987,7 @@ pub struct ExternalComputeQueueDeviceCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub reserved_external_queues: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_compute_queue")]
 unsafe impl<'a> ExtendableStructureBase for ExternalComputeQueueDeviceCreateInfoNV<'a> {}
@@ -72036,7 +72036,7 @@ pub struct ExternalComputeQueueCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub preferred_queue: Option<BorrowedHandle<'a, Queue>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_compute_queue")]
 unsafe impl<'a> ExtendableStructureBase for ExternalComputeQueueCreateInfoNV<'a> {}
@@ -72080,7 +72080,7 @@ pub struct ExternalComputeQueueDataParamsNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub device_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_compute_queue")]
 unsafe impl<'a> ExtendableStructureBase for ExternalComputeQueueDataParamsNV<'a> {}
@@ -72125,7 +72125,7 @@ pub struct PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {
     pub p_next: Cell<*const Header>,
     pub external_data_size: u32,
     pub max_external_queues: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_compute_queue")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceExternalComputeQueuePropertiesNV<'a> {}
@@ -72186,7 +72186,7 @@ pub struct PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_relaxed_extended_instruction: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceShaderRelaxedExtendedInstructionFeaturesKHR<'a>
@@ -72245,7 +72245,7 @@ pub struct PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub command_buffer_inheritance: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceCommandBufferInheritanceFeaturesNV<'a> {
@@ -72300,7 +72300,7 @@ pub struct PhysicalDeviceMaintenance7FeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub maintenance7: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance7")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance7FeaturesKHR<'a> {}
@@ -72367,7 +72367,7 @@ pub struct PhysicalDeviceMaintenance7PropertiesKHR<'a> {
     pub max_descriptor_set_update_after_bind_total_uniform_buffers_dynamic: u32,
     pub max_descriptor_set_update_after_bind_total_storage_buffers_dynamic: u32,
     pub max_descriptor_set_update_after_bind_total_buffers_dynamic: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance7")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance7PropertiesKHR<'a> {}
@@ -72477,7 +72477,7 @@ pub struct PhysicalDeviceLayeredApiPropertiesListKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub layered_api_count: u32,
     pub p_layered_apis: *const PhysicalDeviceLayeredApiPropertiesKHR<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance7")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLayeredApiPropertiesListKHR<'a> {}
@@ -72553,7 +72553,7 @@ pub struct PhysicalDeviceLayeredApiPropertiesKHR<'a> {
     pub device_id: u32,
     pub layered_api: PhysicalDeviceLayeredApiKHR,
     pub device_name: [c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE as _],
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance7")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLayeredApiPropertiesKHR<'a> {}
@@ -72615,7 +72615,7 @@ pub struct PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub properties: PhysicalDeviceProperties2<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance7")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceLayeredApiVulkanPropertiesKHR<'a> {}
@@ -72664,7 +72664,7 @@ pub struct PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_float16_vector_atomics: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderAtomicFloat16VectorFeaturesNV<'a> {
@@ -72718,7 +72718,7 @@ pub struct PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub shader_replicated_composites: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceShaderReplicatedCompositesFeaturesEXT<'a>
@@ -72776,7 +72776,7 @@ pub struct PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_float8: Bool32,
     pub shader_float8_cooperative_matrix: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceShaderFloat8FeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceShaderFloat8FeaturesEXT<'a> {
@@ -72835,7 +72835,7 @@ pub struct PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub ray_tracing_validation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceRayTracingValidationFeaturesNV<'a> {
@@ -72890,7 +72890,7 @@ pub struct PhysicalDeviceClusterAccelerationStructureFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub cluster_acceleration_structure: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase
@@ -72961,7 +72961,7 @@ pub struct PhysicalDeviceClusterAccelerationStructurePropertiesNV<'a> {
     pub cluster_bottom_level_byte_alignment: u32,
     pub cluster_template_bounds_byte_alignment: u32,
     pub max_cluster_geometry_index: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase
@@ -73063,7 +73063,7 @@ pub struct ClusterAccelerationStructureClustersBottomLevelInputNV<'a> {
     pub p_next: Cell<*const Header>,
     pub max_total_cluster_count: u32,
     pub max_cluster_count_per_acceleration_structure: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase
@@ -73124,7 +73124,7 @@ pub struct ClusterAccelerationStructureTriangleClusterInputNV<'a> {
     pub max_total_triangle_count: u32,
     pub max_total_vertex_count: u32,
     pub min_position_truncate_bit_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for ClusterAccelerationStructureTriangleClusterInputNV<'a> {}
@@ -73213,7 +73213,7 @@ pub struct ClusterAccelerationStructureMoveObjectsInputNV<'a> {
     pub ty: ClusterAccelerationStructureTypeNV,
     pub no_move_overlap: Bool32,
     pub max_moved_bytes: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for ClusterAccelerationStructureMoveObjectsInputNV<'a> {}
@@ -73293,7 +73293,7 @@ pub struct ClusterAccelerationStructureInputInfoNV<'a> {
     pub op_type: ClusterAccelerationStructureOpTypeNV,
     pub op_mode: ClusterAccelerationStructureOpModeNV,
     pub op_input: ClusterAccelerationStructureOpInputNV<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for ClusterAccelerationStructureInputInfoNV<'a> {}
@@ -73368,7 +73368,7 @@ pub struct ClusterAccelerationStructureCommandsInfoNV<'a> {
     pub src_infos_array: StridedDeviceAddressRegionKHR,
     pub src_infos_count: DeviceAddress,
     pub address_resolution_flags: ClusterAccelerationStructureAddressResolutionFlagsNV,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cluster_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for ClusterAccelerationStructureCommandsInfoNV<'a> {}
@@ -73990,7 +73990,7 @@ pub struct RayTracingPipelineClusterAccelerationStructureCreateInfoNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub allow_cluster_acceleration_structure: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_cluster_acceleration_structure",
@@ -74069,7 +74069,7 @@ pub struct PhysicalDevicePartitionedAccelerationStructureFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub partitioned_acceleration_structure: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_partitioned_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase
@@ -74135,7 +74135,7 @@ pub struct PhysicalDevicePartitionedAccelerationStructurePropertiesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_partition_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_partitioned_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase
@@ -74196,7 +74196,7 @@ pub struct PartitionedAccelerationStructureFlagsNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub enable_partition_translation: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_partitioned_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for PartitionedAccelerationStructureFlagsNV<'a> {}
@@ -74455,7 +74455,7 @@ pub struct WriteDescriptorSetPartitionedAccelerationStructureNV<'a> {
     pub p_next: Cell<*const Header>,
     pub acceleration_structure_count: u32,
     pub p_acceleration_structures: *const DeviceAddress,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_partitioned_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase
@@ -74533,7 +74533,7 @@ pub struct PartitionedAccelerationStructureInstancesInputNV<'a> {
     pub max_instance_per_partition_count: u32,
     pub partition_count: u32,
     pub max_instance_in_global_partition_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_partitioned_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for PartitionedAccelerationStructureInstancesInputNV<'a> {}
@@ -74607,7 +74607,7 @@ pub struct BuildPartitionedAccelerationStructureInfoNV<'a> {
     pub scratch_data: DeviceAddress,
     pub src_infos: DeviceAddress,
     pub src_infos_count: DeviceAddress,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_partitioned_acceleration_structure")]
 unsafe impl<'a> ExtendableStructureBase for BuildPartitionedAccelerationStructureInfoNV<'a> {}
@@ -74683,7 +74683,7 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub device_generated_commands: Bool32,
     pub dynamic_generated_pipeline_layout: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDeviceGeneratedCommandsFeaturesEXT<'a> {}
@@ -74761,7 +74761,7 @@ pub struct PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {
     pub supported_indirect_commands_shader_stages_shader_binding: ShaderStageFlags,
     pub device_generated_commands_transform_feedback: Bool32,
     pub device_generated_commands_multi_draw_indirect_count: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDeviceGeneratedCommandsPropertiesEXT<'a> {}
@@ -74901,7 +74901,7 @@ pub struct GeneratedCommandsMemoryRequirementsInfoEXT<'a> {
     pub indirect_commands_layout: Option<BorrowedHandle<'a, IndirectCommandsLayoutEXT>>,
     pub max_sequence_count: u32,
     pub max_draw_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for GeneratedCommandsMemoryRequirementsInfoEXT<'a> {}
@@ -74967,7 +74967,7 @@ pub struct IndirectExecutionSetCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub ty: IndirectExecutionSetInfoTypeEXT,
     pub info: IndirectExecutionSetInfoEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for IndirectExecutionSetCreateInfoEXT<'a> {}
@@ -75034,7 +75034,7 @@ pub struct IndirectExecutionSetPipelineInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub initial_pipeline: Option<BorrowedHandle<'a, Pipeline>>,
     pub max_pipeline_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for IndirectExecutionSetPipelineInfoEXT<'a> {}
@@ -75089,7 +75089,7 @@ pub struct IndirectExecutionSetShaderInfoEXT<'a> {
     pub max_shader_count: u32,
     pub push_constant_range_count: u32,
     pub p_push_constant_ranges: *const PushConstantRange,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for IndirectExecutionSetShaderInfoEXT<'a> {}
@@ -75196,7 +75196,7 @@ pub struct GeneratedCommandsInfoEXT<'a> {
     pub max_sequence_count: u32,
     pub sequence_count_address: DeviceAddress,
     pub max_draw_count: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for GeneratedCommandsInfoEXT<'a> {}
@@ -75298,7 +75298,7 @@ pub struct WriteIndirectExecutionSetPipelineEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub index: u32,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for WriteIndirectExecutionSetPipelineEXT<'a> {}
@@ -75353,7 +75353,7 @@ pub struct IndirectCommandsLayoutCreateInfoEXT<'a> {
     pub pipeline_layout: Option<BorrowedHandle<'a, PipelineLayout>>,
     pub token_count: u32,
     pub p_tokens: *const IndirectCommandsLayoutTokenEXT<'a>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for IndirectCommandsLayoutCreateInfoEXT<'a> {}
@@ -75434,7 +75434,7 @@ pub struct IndirectCommandsLayoutTokenEXT<'a> {
     pub ty: IndirectCommandsTokenTypeEXT,
     pub data: IndirectCommandsTokenDataEXT,
     pub offset: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for IndirectCommandsLayoutTokenEXT<'a> {}
@@ -75755,7 +75755,7 @@ pub struct IndirectExecutionSetShaderLayoutInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub set_layout_count: u32,
     pub p_set_layouts: *const DescriptorSetLayout,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for IndirectExecutionSetShaderLayoutInfoEXT<'a> {}
@@ -75817,7 +75817,7 @@ pub struct GeneratedCommandsPipelineInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline: Option<BorrowedHandle<'a, Pipeline>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for GeneratedCommandsPipelineInfoEXT<'a> {}
@@ -75878,7 +75878,7 @@ pub struct GeneratedCommandsShaderInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub shader_count: u32,
     pub p_shaders: *const ShaderEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_device_generated_commands")]
 unsafe impl<'a> ExtendableStructureBase for GeneratedCommandsShaderInfoEXT<'a> {}
@@ -75955,7 +75955,7 @@ pub struct WriteIndirectExecutionSetShaderEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub index: u32,
     pub shader: Option<BorrowedHandle<'a, ShaderEXT>>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(all(
     feature = "ext_device_generated_commands",
@@ -76024,7 +76024,7 @@ pub struct MemoryBarrierAccessFlags3KHR<'a> {
     pub p_next: Cell<*const Header>,
     pub src_access_mask3: AccessFlags3KHR,
     pub dst_access_mask3: AccessFlags3KHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance8")]
 unsafe impl<'a> ExtendableStructureBase for MemoryBarrierAccessFlags3KHR<'a> {}
@@ -76098,7 +76098,7 @@ pub struct PhysicalDeviceMaintenance8FeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub maintenance8: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance8")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance8FeaturesKHR<'a> {}
@@ -76158,7 +76158,7 @@ pub struct PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub image_alignment_control: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_alignment_control")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageAlignmentControlFeaturesMESA<'a> {}
@@ -76219,7 +76219,7 @@ pub struct PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub supported_image_alignment_mask: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_alignment_control")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceImageAlignmentControlPropertiesMESA<'a> {}
@@ -76275,7 +76275,7 @@ pub struct ImageAlignmentControlCreateInfoMESA<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub maximum_requested_alignment: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_image_alignment_control")]
 unsafe impl<'a> ExtendableStructureBase for ImageAlignmentControlCreateInfoMESA<'a> {}
@@ -76324,7 +76324,7 @@ pub struct PhysicalDeviceDepthClampControlFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub depth_clamp_control: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_depth_clamp_control")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDepthClampControlFeaturesEXT<'a> {}
@@ -76385,7 +76385,7 @@ pub struct PipelineViewportDepthClampControlCreateInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub depth_clamp_mode: DepthClampModeEXT,
     pub p_depth_clamp_range: *const DepthClampRangeEXT,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_depth_clamp_control")]
 unsafe impl<'a> ExtendableStructureBase for PipelineViewportDepthClampControlCreateInfoEXT<'a> {}
@@ -76476,7 +76476,7 @@ pub struct PhysicalDeviceMaintenance9FeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub maintenance9: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance9")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance9FeaturesKHR<'a> {}
@@ -76537,7 +76537,7 @@ pub struct PhysicalDeviceMaintenance9PropertiesKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub image2_dview_of3_dsparse: Bool32,
     pub default_vertex_attribute_value: DefaultVertexAttributeValueKHR,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance9")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceMaintenance9PropertiesKHR<'a> {}
@@ -76598,7 +76598,7 @@ pub struct QueueFamilyOwnershipTransferPropertiesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub optimal_image_transfer_to_queue_families: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_maintenance9")]
 unsafe impl<'a> ExtendableStructureBase for QueueFamilyOwnershipTransferPropertiesKHR<'a> {}
@@ -76654,7 +76654,7 @@ pub struct OHSurfaceCreateInfoOHOS<'a> {
     pub p_next: Cell<*const Header>,
     pub flags: u32,
     pub window: *const OHNativeWindow,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_ohos_surface")]
 unsafe impl<'a> ExtendableStructureBase for OHSurfaceCreateInfoOHOS<'a> {}
@@ -76708,7 +76708,7 @@ pub struct PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub hdr_vivid: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_hdr_vivid")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceHdrVividFeaturesHUAWEI<'a> {}
@@ -76769,7 +76769,7 @@ pub struct HdrVividDynamicMetadataHUAWEI<'a> {
     pub p_next: Cell<*const Header>,
     pub dynamic_metadata_size: usize,
     pub p_dynamic_metadata: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_hdr_vivid")]
 unsafe impl<'a> ExtendableStructureBase for HdrVividDynamicMetadataHUAWEI<'a> {}
@@ -76837,7 +76837,7 @@ pub struct CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {
     pub saturating_accumulation: Bool32,
     pub scope: ScopeKHR,
     pub workgroup_invocations: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_matrix2")]
 unsafe impl<'a> ExtendableStructureBase for CooperativeMatrixFlexibleDimensionsPropertiesNV<'a> {}
@@ -76942,7 +76942,7 @@ pub struct PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {
     pub cooperative_matrix_per_element_operations: Bool32,
     pub cooperative_matrix_tensor_addressing: Bool32,
     pub cooperative_matrix_block_loads: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_matrix2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeMatrix2FeaturesNV<'a> {}
@@ -77040,7 +77040,7 @@ pub struct PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {
     pub cooperative_matrix_workgroup_scope_max_workgroup_size: u32,
     pub cooperative_matrix_flexible_dimensions_max_dimension: u32,
     pub cooperative_matrix_workgroup_scope_reserved_shared_memory: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_cooperative_matrix2")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceCooperativeMatrix2PropertiesNV<'a> {}
@@ -77107,7 +77107,7 @@ pub struct PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_opacity_micromap: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDevicePipelineOpacityMicromapFeaturesARM<'a> {
@@ -77163,7 +77163,7 @@ pub struct ImportMemoryMetalHandleInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub handle: VoidPtr,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_metal")]
 unsafe impl<'a> ExtendableStructureBase for ImportMemoryMetalHandleInfoEXT<'a> {}
@@ -77218,7 +77218,7 @@ pub struct MemoryMetalHandlePropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub memory_type_bits: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_metal")]
 unsafe impl<'a> ExtendableStructureBase for MemoryMetalHandlePropertiesEXT<'a> {}
@@ -77263,7 +77263,7 @@ pub struct MemoryGetMetalHandleInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub memory: Option<BorrowedHandle<'a, DeviceMemory>>,
     pub handle_type: ExternalMemoryHandleTypeFlags,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_external_memory_metal")]
 unsafe impl<'a> ExtendableStructureBase for MemoryGetMetalHandleInfoEXT<'a> {}
@@ -77312,7 +77312,7 @@ pub struct PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub depth_clamp_zero_one: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceDepthClampZeroOneFeaturesKHR<'a> {
@@ -77367,7 +77367,7 @@ pub struct PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub vertex_attribute_robustness: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceVertexAttributeRobustnessFeaturesEXT<'a> {
@@ -77421,7 +77421,7 @@ pub struct PhysicalDeviceFormatPackFeaturesARM<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub format_pack: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFormatPackFeaturesARM<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceFormatPackFeaturesARM<'a> {
@@ -77475,7 +77475,7 @@ pub struct PhysicalDeviceFragmentDensityMapLayeredFeaturesVALVE<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub fragment_density_map_layered: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map_layered")]
 unsafe impl<'a> ExtendableStructureBase
@@ -77539,7 +77539,7 @@ pub struct PhysicalDeviceFragmentDensityMapLayeredPropertiesVALVE<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_fragment_density_map_layers: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map_layered")]
 unsafe impl<'a> ExtendableStructureBase
@@ -77598,7 +77598,7 @@ pub struct PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub max_fragment_density_map_layers: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map_layered")]
 unsafe impl<'a> ExtendableStructureBase for PipelineFragmentDensityMapLayeredCreateInfoVALVE<'a> {}
@@ -77649,7 +77649,7 @@ pub struct PhysicalDeviceRobustness2FeaturesKHR<'a> {
     pub robust_buffer_access2: Bool32,
     pub robust_image_access2: Bool32,
     pub null_descriptor: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRobustness2FeaturesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceRobustness2FeaturesKHR<'a> {
@@ -77716,7 +77716,7 @@ pub struct PhysicalDeviceRobustness2PropertiesKHR<'a> {
     pub p_next: Cell<*const Header>,
     pub robust_storage_buffer_access_size_alignment: DeviceSize,
     pub robust_uniform_buffer_access_size_alignment: DeviceSize,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceRobustness2PropertiesKHR<'a> {}
 unsafe impl<'a> ExtendableStructure for PhysicalDeviceRobustness2PropertiesKHR<'a> {
@@ -77773,7 +77773,7 @@ pub struct SetPresentConfigNV<'a> {
     pub p_next: Cell<*const Header>,
     pub num_frames_per_batch: u32,
     pub present_config_feedback: u32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_metering")]
 unsafe impl<'a> ExtendableStructureBase for SetPresentConfigNV<'a> {}
@@ -77825,7 +77825,7 @@ pub struct PhysicalDevicePresentMeteringFeaturesNV<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_metering: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_present_metering")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDevicePresentMeteringFeaturesNV<'a> {}
@@ -77884,7 +77884,7 @@ impl<'a> PhysicalDevicePresentMeteringFeaturesNV<'a> {
 pub struct RenderingEndInfoEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map_offset")]
 unsafe impl<'a> ExtendableStructureBase for RenderingEndInfoEXT<'a> {}
@@ -77922,7 +77922,7 @@ pub struct PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub fragment_density_map_offset: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map_offset")]
 unsafe impl<'a> ExtendableStructureBase for PhysicalDeviceFragmentDensityMapOffsetFeaturesEXT<'a> {}
@@ -77986,7 +77986,7 @@ pub struct PhysicalDeviceFragmentDensityMapOffsetPropertiesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub fragment_density_offset_granularity: Extent2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map_offset")]
 unsafe impl<'a> ExtendableStructureBase
@@ -78049,7 +78049,7 @@ pub struct RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {
     pub p_next: Cell<*const Header>,
     pub fragment_density_offset_count: u32,
     pub p_fragment_density_offsets: *const Offset2D,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 #[cfg(feature = "ext_fragment_density_map_offset")]
 unsafe impl<'a> ExtendableStructureBase for RenderPassFragmentDensityMapOffsetEndInfoEXT<'a> {}
@@ -78128,7 +78128,7 @@ pub struct PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub zero_initialize_device_memory: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDeviceZeroInitializeDeviceMemoryFeaturesEXT<'a>
@@ -78185,7 +78185,7 @@ pub struct PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub present_mode_fifo_latest_ready: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDevicePresentModeFifoLatestReadyFeaturesKHR<'a>
@@ -78244,7 +78244,7 @@ pub struct PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a> {
     pub s_type: StructureType,
     pub p_next: Cell<*const Header>,
     pub pipeline_cache_incremental_mode: Bool32,
-    phantom: PhantomData<&'a ()>,
+    pub phantom: PhantomData<&'a ()>,
 }
 unsafe impl<'a> ExtendableStructureBase
     for PhysicalDevicePipelineCacheIncrementalModeFeaturesSEC<'a>
