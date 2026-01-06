@@ -12,17 +12,17 @@ macro_rules! vk_handle {
 
             const TYPE: ObjectType = ObjectType::$obj_type;
 
-            #[inline]
+            #[inline(always)]
             fn as_raw(&self) -> $ty {
                 self.0
             }
 
-            #[inline]
+            #[inline(always)]
             unsafe fn from_raw(x: $ty) -> Self {
                 Self(x)
             }
 
-            #[inline]
+            #[inline(always)]
             unsafe fn clone(&self) -> Self {
                 Self(self.0)
             }

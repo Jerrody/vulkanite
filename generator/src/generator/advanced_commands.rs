@@ -338,28 +338,34 @@ where
         .take(nb_to_take)
         .map(|(name, ty)| {
             let ty_str = quote!(#ty).to_string();
-            if ty_str.contains(r"Option < & raw ::") {
-                internal_rebinds.push(quote! {
-                    let value = match #name {
-                        Some(#name) => {
-                            Some(*#name)
-                        },
-                        None => None,
-                    };
 
-                    let #name = value.as_ref();
+            // Check for Option<&raw::Handle>
+            if ty_str.contains("Option < & raw ::") {
+                // Optimization: Use .as_ref().map(|h| **h) to get Option<&raw::Handle>
+                internal_rebinds.push(quote! {
+                    let #name = #name.as_ref().map(|h| **h);
+                    let #name = #name.as_ref();
                 });
-                // Extract the inner type (e.g., raw::PipelineLayout)
-                // This assumes the standard formatting of the Type tokens
+
                 let inner_ty = ty_str.replace("&", "").replace("raw", "rs");
                 let inner_ident: TokenStream = inner_ty.parse().unwrap();
-                return quote!(#inner_ident);
+                quote!(#inner_ident)
+            }
+            // Handle the raw::Handle -> rs::Handle conversion for non-optional types
+            else if ty_str.contains("raw ::") {
+                let rs_ty_str = ty_str.replace("raw ::", "").replace("&", "");
+                let rs_ty_token: TokenStream = rs_ty_str.parse().unwrap();
+                let raw_ty_token: TokenStream = ty_str.parse().unwrap();
+
+                internal_rebinds.push(quote! {
+                    let #name = unsafe { #raw_ty_token::from_raw(#name.as_raw()) };
+                });
+                quote!(#rs_ty_token)
             } else {
-                return quote!(#ty);
+                quote!(#ty)
             }
         })
         .collect();
-
     let raw_fn_name = format_ident!("{name}");
 
     let (ret_type, ret_template, pre_call, post_call) = match cmd.return_ty {

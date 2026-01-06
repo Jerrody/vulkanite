@@ -5,8 +5,8 @@ use raw_window_handle::{HasDisplayHandle, HasWindowHandle, RawDisplayHandle};
 use smallvec::{smallvec, SmallVec};
 use vulkanite::{
     flagbits, include_spirv,
-    vk::{self, rs::Framebuffer},
-    window, DefaultAllocator, Dispatcher, DynamicDispatcher, Handle,
+    vk::{self},
+    window, DefaultAllocator, Dispatcher, DynamicDispatcher,
 };
 use winit::{
     application::ApplicationHandler,
@@ -243,7 +243,7 @@ impl VulkanApplication {
             .find(|(queue, props)| {
                 props.queue_flags.contains(vk::QueueFlags::Graphics)
                     && physical_device
-                        .get_surface_support_khr(*queue as u32, surface)
+                        .get_surface_support_khr(*queue as u32, *surface)
                         .is_ok_and(|supported| supported)
             })
             .ok_or_else(|| anyhow!("Failed to find a suitable GPU queue"))?;
@@ -514,7 +514,7 @@ impl VulkanApplication {
             vk::SubpassContents::Inline,
         );
 
-        cmd_buffer.bind_pipeline(vk::PipelineBindPoint::Graphics, &self.pipeline);
+        cmd_buffer.bind_pipeline(vk::PipelineBindPoint::Graphics, self.pipeline);
         cmd_buffer.set_viewport(
             0,
             &[vk::Viewport {
@@ -566,7 +566,7 @@ impl VulkanApplication {
         let image_idx = loop {
             let swapchain_objects = self.swapchain_objects.get_or_insert_with(make_swapchain);
             match self.device.acquire_next_image_khr(
-                &swapchain_objects.swapchain,
+                swapchain_objects.swapchain,
                 u64::MAX,
                 Some(*image_available),
                 None,
@@ -678,7 +678,7 @@ impl SwapchainObjects {
         window_size: PhysicalSize<u32>,
         render_pass: Option<&vk::rs::RenderPass>,
     ) -> Result<Self> {
-        let capabilities = physical_device.get_surface_capabilities_khr(surface)?;
+        let capabilities = physical_device.get_surface_capabilities_khr(*surface)?;
 
         let format = physical_device
             .get_surface_formats_khr::<Vec<_>>(Some(*surface))?
@@ -736,7 +736,7 @@ impl SwapchainObjects {
             .clipped(true);
 
         let swapchain = device.create_swapchain_khr(&swapchain_info)?;
-        let swapchain_images: SmallVec<[_; 3]> = device.get_swapchain_images_khr(&swapchain)?;
+        let swapchain_images: SmallVec<[_; 3]> = device.get_swapchain_images_khr(swapchain)?;
         let swapchain_views: SmallVec<[_; 3]> = swapchain_images
             .iter()
             .map(|img| {
