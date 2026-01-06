@@ -180,8 +180,12 @@ impl<D: Dispatcher, A: Allocator> Instance<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySurfaceKHR.html>"]
     #[doc(alias = "vkDestroySurfaceKHR")]
     #[inline]
-    pub unsafe fn destroy_surface_khr(&self, surface: rs::SurfaceKHR) {
-        let surface = Some(raw::surface::from_raw(surface.as_raw()));
+    pub unsafe fn destroy_surface_khr(&self, surface: Option<rs::SurfaceKHR>) {
+        let value = match surface {
+            Some(surface) => Some(*surface),
+            None => None,
+        };
+        let surface = value.as_ref();
         unsafe {
             raw::destroy_surface_khr(
                 self,
@@ -321,8 +325,15 @@ impl<D: Dispatcher, A: Allocator> Instance<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDebugReportCallbackEXT.html>"]
     #[doc(alias = "vkDestroyDebugReportCallbackEXT")]
     #[inline]
-    pub unsafe fn destroy_debug_report_callback_ext(&self, callback: rs::DebugReportCallbackEXT) {
-        let callback = Some(raw::callback::from_raw(callback.as_raw()));
+    pub unsafe fn destroy_debug_report_callback_ext(
+        &self,
+        callback: Option<rs::DebugReportCallbackEXT>,
+    ) {
+        let value = match callback {
+            Some(callback) => Some(*callback),
+            None => None,
+        };
+        let callback = value.as_ref();
         unsafe {
             raw::destroy_debug_report_callback_ext(
                 self,
@@ -454,8 +465,15 @@ impl<D: Dispatcher, A: Allocator> Instance<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDebugUtilsMessengerEXT.html>"]
     #[doc(alias = "vkDestroyDebugUtilsMessengerEXT")]
     #[inline]
-    pub unsafe fn destroy_debug_utils_messenger_ext(&self, messenger: rs::DebugUtilsMessengerEXT) {
-        let messenger = Some(raw::messenger::from_raw(messenger.as_raw()));
+    pub unsafe fn destroy_debug_utils_messenger_ext(
+        &self,
+        messenger: Option<rs::DebugUtilsMessengerEXT>,
+    ) {
+        let value = match messenger {
+            Some(messenger) => Some(*messenger),
+            None => None,
+        };
+        let messenger = value.as_ref();
         unsafe {
             raw::destroy_debug_utils_messenger_ext(
                 self,
@@ -1137,9 +1155,13 @@ impl<D: Dispatcher, A: Allocator> PhysicalDevice<D, A> {
     #[doc(alias = "vkGetPhysicalDeviceSurfaceFormatsKHR")]
     pub fn get_surface_formats_khr<R: DynamicArray<SurfaceFormatKHR>>(
         &self,
-        surface: rs::SurfaceKHR,
+        surface: Option<rs::SurfaceKHR>,
     ) -> Result<R> {
-        let surface = Some(raw::surface::from_raw(surface.as_raw()));
+        let value = match surface {
+            Some(surface) => Some(*surface),
+            None => None,
+        };
+        let surface = value.as_ref();
         unsafe {
             raw::get_physical_device_surface_formats_khr(
                 self,
@@ -1153,9 +1175,13 @@ impl<D: Dispatcher, A: Allocator> PhysicalDevice<D, A> {
     #[doc(alias = "vkGetPhysicalDeviceSurfacePresentModesKHR")]
     pub fn get_surface_present_modes_khr<R: DynamicArray<PresentModeKHR>>(
         &self,
-        surface: rs::SurfaceKHR,
+        surface: Option<rs::SurfaceKHR>,
     ) -> Result<R> {
-        let surface = Some(raw::surface::from_raw(surface.as_raw()));
+        let value = match surface {
+            Some(surface) => Some(*surface),
+            None => None,
+        };
+        let surface = value.as_ref();
         unsafe {
             raw::get_physical_device_surface_present_modes_khr(
                 self,
@@ -1913,8 +1939,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkFreeMemory.html>"]
     #[doc(alias = "vkFreeMemory")]
     #[inline]
-    pub fn free_memory(&self, memory: rs::DeviceMemory) {
-        let memory = Some(raw::memory::from_raw(memory.as_raw()));
+    pub fn free_memory(&self, memory: Option<rs::DeviceMemory>) {
+        let value = match memory {
+            Some(memory) => Some(*memory),
+            None => None,
+        };
+        let memory = value.as_ref();
         unsafe {
             raw::free_memory(
                 self,
@@ -2074,8 +2104,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyFence.html>"]
     #[doc(alias = "vkDestroyFence")]
     #[inline]
-    pub unsafe fn destroy_fence(&self, fence: rs::Fence) {
-        let fence = Some(raw::fence::from_raw(fence.as_raw()));
+    pub unsafe fn destroy_fence(&self, fence: Option<rs::Fence>) {
+        let value = match fence {
+            Some(fence) => Some(*fence),
+            None => None,
+        };
+        let fence = value.as_ref();
         unsafe {
             raw::destroy_fence(
                 self,
@@ -2136,8 +2170,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySemaphore.html>"]
     #[doc(alias = "vkDestroySemaphore")]
     #[inline]
-    pub unsafe fn destroy_semaphore(&self, semaphore: rs::Semaphore) {
-        let semaphore = Some(raw::semaphore::from_raw(semaphore.as_raw()));
+    pub unsafe fn destroy_semaphore(&self, semaphore: Option<rs::Semaphore>) {
+        let value = match semaphore {
+            Some(semaphore) => Some(*semaphore),
+            None => None,
+        };
+        let semaphore = value.as_ref();
         unsafe {
             raw::destroy_semaphore(
                 self,
@@ -2164,8 +2202,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyEvent.html>"]
     #[doc(alias = "vkDestroyEvent")]
     #[inline]
-    pub unsafe fn destroy_event(&self, event: rs::Event) {
-        let event = Some(raw::event::from_raw(event.as_raw()));
+    pub unsafe fn destroy_event(&self, event: Option<rs::Event>) {
+        let value = match event {
+            Some(event) => Some(*event),
+            None => None,
+        };
+        let event = value.as_ref();
         unsafe {
             raw::destroy_event(
                 self,
@@ -2210,8 +2252,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyQueryPool.html>"]
     #[doc(alias = "vkDestroyQueryPool")]
     #[inline]
-    pub unsafe fn destroy_query_pool(&self, query_pool: rs::QueryPool) {
-        let query_pool = Some(raw::query_pool::from_raw(query_pool.as_raw()));
+    pub unsafe fn destroy_query_pool(&self, query_pool: Option<rs::QueryPool>) {
+        let value = match query_pool {
+            Some(query_pool) => Some(*query_pool),
+            None => None,
+        };
+        let query_pool = value.as_ref();
         unsafe {
             raw::destroy_query_pool(
                 self,
@@ -2265,8 +2311,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyBuffer.html>"]
     #[doc(alias = "vkDestroyBuffer")]
     #[inline]
-    pub unsafe fn destroy_buffer(&self, buffer: rs::Buffer) {
-        let buffer = Some(raw::buffer::from_raw(buffer.as_raw()));
+    pub unsafe fn destroy_buffer(&self, buffer: Option<rs::Buffer>) {
+        let value = match buffer {
+            Some(buffer) => Some(*buffer),
+            None => None,
+        };
+        let buffer = value.as_ref();
         unsafe {
             raw::destroy_buffer(
                 self,
@@ -2293,8 +2343,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyBufferView.html>"]
     #[doc(alias = "vkDestroyBufferView")]
     #[inline]
-    pub unsafe fn destroy_buffer_view(&self, buffer_view: rs::BufferView) {
-        let buffer_view = Some(raw::buffer_view::from_raw(buffer_view.as_raw()));
+    pub unsafe fn destroy_buffer_view(&self, buffer_view: Option<rs::BufferView>) {
+        let value = match buffer_view {
+            Some(buffer_view) => Some(*buffer_view),
+            None => None,
+        };
+        let buffer_view = value.as_ref();
         unsafe {
             raw::destroy_buffer_view(
                 self,
@@ -2321,8 +2375,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyImage.html>"]
     #[doc(alias = "vkDestroyImage")]
     #[inline]
-    pub unsafe fn destroy_image(&self, image: rs::Image) {
-        let image = Some(raw::image::from_raw(image.as_raw()));
+    pub unsafe fn destroy_image(&self, image: Option<rs::Image>) {
+        let value = match image {
+            Some(image) => Some(*image),
+            None => None,
+        };
+        let image = value.as_ref();
         unsafe {
             raw::destroy_image(
                 self,
@@ -2366,8 +2424,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyImageView.html>"]
     #[doc(alias = "vkDestroyImageView")]
     #[inline]
-    pub unsafe fn destroy_image_view(&self, image_view: rs::ImageView) {
-        let image_view = Some(raw::image_view::from_raw(image_view.as_raw()));
+    pub unsafe fn destroy_image_view(&self, image_view: Option<rs::ImageView>) {
+        let value = match image_view {
+            Some(image_view) => Some(*image_view),
+            None => None,
+        };
+        let image_view = value.as_ref();
         unsafe {
             raw::destroy_image_view(
                 self,
@@ -2397,8 +2459,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyShaderModule.html>"]
     #[doc(alias = "vkDestroyShaderModule")]
     #[inline]
-    pub unsafe fn destroy_shader_module(&self, shader_module: rs::ShaderModule) {
-        let shader_module = Some(raw::shader_module::from_raw(shader_module.as_raw()));
+    pub unsafe fn destroy_shader_module(&self, shader_module: Option<rs::ShaderModule>) {
+        let value = match shader_module {
+            Some(shader_module) => Some(*shader_module),
+            None => None,
+        };
+        let shader_module = value.as_ref();
         unsafe {
             raw::destroy_shader_module(
                 self,
@@ -2428,8 +2494,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPipelineCache.html>"]
     #[doc(alias = "vkDestroyPipelineCache")]
     #[inline]
-    pub unsafe fn destroy_pipeline_cache(&self, pipeline_cache: rs::PipelineCache) {
-        let pipeline_cache = Some(raw::pipeline_cache::from_raw(pipeline_cache.as_raw()));
+    pub unsafe fn destroy_pipeline_cache(&self, pipeline_cache: Option<rs::PipelineCache>) {
+        let value = match pipeline_cache {
+            Some(pipeline_cache) => Some(*pipeline_cache),
+            None => None,
+        };
+        let pipeline_cache = value.as_ref();
         unsafe {
             raw::destroy_pipeline_cache(
                 self,
@@ -2477,10 +2547,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc(alias = "vkCreateGraphicsPipelines")]
     pub fn create_graphics_pipelines<'a, R: AdvancedDynamicArray<Pipeline, raw::Pipeline>>(
         &self,
-        pipeline_cache: rs::PipelineCache,
+        pipeline_cache: Option<rs::PipelineCache>,
         p_create_infos: impl AsSlice<'a, GraphicsPipelineCreateInfo<'a>>,
     ) -> Result<(Status, R)> {
-        let pipeline_cache = Some(raw::pipeline_cache::from_raw(pipeline_cache.as_raw()));
+        let value = match pipeline_cache {
+            Some(pipeline_cache) => Some(*pipeline_cache),
+            None => None,
+        };
+        let pipeline_cache = value.as_ref();
         let vk_result: Result<(Status, R::InnerArrayType)> = unsafe {
             raw::create_graphics_pipelines(
                 self,
@@ -2504,10 +2578,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc(alias = "vkCreateComputePipelines")]
     pub fn create_compute_pipelines<'a, R: AdvancedDynamicArray<Pipeline, raw::Pipeline>>(
         &self,
-        pipeline_cache: rs::PipelineCache,
+        pipeline_cache: Option<rs::PipelineCache>,
         p_create_infos: impl AsSlice<'a, ComputePipelineCreateInfo<'a>>,
     ) -> Result<(Status, R)> {
-        let pipeline_cache = Some(raw::pipeline_cache::from_raw(pipeline_cache.as_raw()));
+        let value = match pipeline_cache {
+            Some(pipeline_cache) => Some(*pipeline_cache),
+            None => None,
+        };
+        let pipeline_cache = value.as_ref();
         let vk_result: Result<(Status, R::InnerArrayType)> = unsafe {
             raw::create_compute_pipelines(
                 self,
@@ -2530,8 +2608,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPipeline.html>"]
     #[doc(alias = "vkDestroyPipeline")]
     #[inline]
-    pub unsafe fn destroy_pipeline(&self, pipeline: rs::Pipeline) {
-        let pipeline = Some(raw::pipeline::from_raw(pipeline.as_raw()));
+    pub unsafe fn destroy_pipeline(&self, pipeline: Option<rs::Pipeline>) {
+        let value = match pipeline {
+            Some(pipeline) => Some(*pipeline),
+            None => None,
+        };
+        let pipeline = value.as_ref();
         unsafe {
             raw::destroy_pipeline(
                 self,
@@ -2561,8 +2643,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPipelineLayout.html>"]
     #[doc(alias = "vkDestroyPipelineLayout")]
     #[inline]
-    pub unsafe fn destroy_pipeline_layout(&self, pipeline_layout: rs::PipelineLayout) {
-        let pipeline_layout = Some(raw::pipeline_layout::from_raw(pipeline_layout.as_raw()));
+    pub unsafe fn destroy_pipeline_layout(&self, pipeline_layout: Option<rs::PipelineLayout>) {
+        let value = match pipeline_layout {
+            Some(pipeline_layout) => Some(*pipeline_layout),
+            None => None,
+        };
+        let pipeline_layout = value.as_ref();
         unsafe {
             raw::destroy_pipeline_layout(
                 self,
@@ -2589,8 +2675,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySampler.html>"]
     #[doc(alias = "vkDestroySampler")]
     #[inline]
-    pub unsafe fn destroy_sampler(&self, sampler: rs::Sampler) {
-        let sampler = Some(raw::sampler::from_raw(sampler.as_raw()));
+    pub unsafe fn destroy_sampler(&self, sampler: Option<rs::Sampler>) {
+        let value = match sampler {
+            Some(sampler) => Some(*sampler),
+            None => None,
+        };
+        let sampler = value.as_ref();
         unsafe {
             raw::destroy_sampler(
                 self,
@@ -2622,11 +2712,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_descriptor_set_layout(
         &self,
-        descriptor_set_layout: rs::DescriptorSetLayout,
+        descriptor_set_layout: Option<rs::DescriptorSetLayout>,
     ) {
-        let descriptor_set_layout = Some(raw::descriptor_set_layout::from_raw(
-            descriptor_set_layout.as_raw(),
-        ));
+        let value = match descriptor_set_layout {
+            Some(descriptor_set_layout) => Some(*descriptor_set_layout),
+            None => None,
+        };
+        let descriptor_set_layout = value.as_ref();
         unsafe {
             raw::destroy_descriptor_set_layout(
                 self,
@@ -2656,8 +2748,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDescriptorPool.html>"]
     #[doc(alias = "vkDestroyDescriptorPool")]
     #[inline]
-    pub unsafe fn destroy_descriptor_pool(&self, descriptor_pool: rs::DescriptorPool) {
-        let descriptor_pool = Some(raw::descriptor_pool::from_raw(descriptor_pool.as_raw()));
+    pub unsafe fn destroy_descriptor_pool(&self, descriptor_pool: Option<rs::DescriptorPool>) {
+        let value = match descriptor_pool {
+            Some(descriptor_pool) => Some(*descriptor_pool),
+            None => None,
+        };
+        let descriptor_pool = value.as_ref();
         unsafe {
             raw::destroy_descriptor_pool(
                 self,
@@ -2751,8 +2847,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyFramebuffer.html>"]
     #[doc(alias = "vkDestroyFramebuffer")]
     #[inline]
-    pub unsafe fn destroy_framebuffer(&self, framebuffer: rs::Framebuffer) {
-        let framebuffer = Some(raw::framebuffer::from_raw(framebuffer.as_raw()));
+    pub unsafe fn destroy_framebuffer(&self, framebuffer: Option<rs::Framebuffer>) {
+        let value = match framebuffer {
+            Some(framebuffer) => Some(*framebuffer),
+            None => None,
+        };
+        let framebuffer = value.as_ref();
         unsafe {
             raw::destroy_framebuffer(
                 self,
@@ -2779,8 +2879,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyRenderPass.html>"]
     #[doc(alias = "vkDestroyRenderPass")]
     #[inline]
-    pub unsafe fn destroy_render_pass(&self, render_pass: rs::RenderPass) {
-        let render_pass = Some(raw::render_pass::from_raw(render_pass.as_raw()));
+    pub unsafe fn destroy_render_pass(&self, render_pass: Option<rs::RenderPass>) {
+        let value = match render_pass {
+            Some(render_pass) => Some(*render_pass),
+            None => None,
+        };
+        let render_pass = value.as_ref();
         unsafe {
             raw::destroy_render_pass(
                 self,
@@ -2818,8 +2922,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyCommandPool.html>"]
     #[doc(alias = "vkDestroyCommandPool")]
     #[inline]
-    pub unsafe fn destroy_command_pool(&self, command_pool: rs::CommandPool) {
-        let command_pool = Some(raw::command_pool::from_raw(command_pool.as_raw()));
+    pub unsafe fn destroy_command_pool(&self, command_pool: Option<rs::CommandPool>) {
+        let value = match command_pool {
+            Some(command_pool) => Some(*command_pool),
+            None => None,
+        };
+        let command_pool = value.as_ref();
         unsafe {
             raw::destroy_command_pool(
                 self,
@@ -3137,9 +3245,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_sampler_ycbcr_conversion(
         &self,
-        ycbcr_conversion: rs::SamplerYcbcrConversion,
+        ycbcr_conversion: Option<rs::SamplerYcbcrConversion>,
     ) {
-        let ycbcr_conversion = Some(raw::ycbcr_conversion::from_raw(ycbcr_conversion.as_raw()));
+        let value = match ycbcr_conversion {
+            Some(ycbcr_conversion) => Some(*ycbcr_conversion),
+            None => None,
+        };
+        let ycbcr_conversion = value.as_ref();
         unsafe {
             raw::destroy_sampler_ycbcr_conversion(
                 self,
@@ -3155,9 +3267,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_sampler_ycbcr_conversion_khr(
         &self,
-        ycbcr_conversion: rs::SamplerYcbcrConversion,
+        ycbcr_conversion: Option<rs::SamplerYcbcrConversion>,
     ) {
-        let ycbcr_conversion = Some(raw::ycbcr_conversion::from_raw(ycbcr_conversion.as_raw()));
+        let value = match ycbcr_conversion {
+            Some(ycbcr_conversion) => Some(*ycbcr_conversion),
+            None => None,
+        };
+        let ycbcr_conversion = value.as_ref();
         unsafe {
             raw::destroy_sampler_ycbcr_conversion_khr(
                 self,
@@ -3209,11 +3325,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_descriptor_update_template(
         &self,
-        descriptor_update_template: rs::DescriptorUpdateTemplate,
+        descriptor_update_template: Option<rs::DescriptorUpdateTemplate>,
     ) {
-        let descriptor_update_template = Some(raw::descriptor_update_template::from_raw(
-            descriptor_update_template.as_raw(),
-        ));
+        let value = match descriptor_update_template {
+            Some(descriptor_update_template) => Some(*descriptor_update_template),
+            None => None,
+        };
+        let descriptor_update_template = value.as_ref();
         unsafe {
             raw::destroy_descriptor_update_template(
                 self,
@@ -3229,11 +3347,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_descriptor_update_template_khr(
         &self,
-        descriptor_update_template: rs::DescriptorUpdateTemplate,
+        descriptor_update_template: Option<rs::DescriptorUpdateTemplate>,
     ) {
-        let descriptor_update_template = Some(raw::descriptor_update_template::from_raw(
-            descriptor_update_template.as_raw(),
-        ));
+        let value = match descriptor_update_template {
+            Some(descriptor_update_template) => Some(*descriptor_update_template),
+            None => None,
+        };
+        let descriptor_update_template = value.as_ref();
         unsafe {
             raw::destroy_descriptor_update_template_khr(
                 self,
@@ -3579,8 +3699,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPrivateDataSlot.html>"]
     #[doc(alias = "vkDestroyPrivateDataSlot")]
     #[inline]
-    pub unsafe fn destroy_private_data_slot(&self, private_data_slot: rs::PrivateDataSlot) {
-        let private_data_slot = Some(raw::private_data_slot::from_raw(private_data_slot.as_raw()));
+    pub unsafe fn destroy_private_data_slot(&self, private_data_slot: Option<rs::PrivateDataSlot>) {
+        let value = match private_data_slot {
+            Some(private_data_slot) => Some(*private_data_slot),
+            None => None,
+        };
+        let private_data_slot = value.as_ref();
         unsafe {
             raw::destroy_private_data_slot(
                 self,
@@ -3594,8 +3718,15 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPrivateDataSlotEXT.html>"]
     #[doc(alias = "vkDestroyPrivateDataSlotEXT")]
     #[inline]
-    pub unsafe fn destroy_private_data_slot_ext(&self, private_data_slot: rs::PrivateDataSlot) {
-        let private_data_slot = Some(raw::private_data_slot::from_raw(private_data_slot.as_raw()));
+    pub unsafe fn destroy_private_data_slot_ext(
+        &self,
+        private_data_slot: Option<rs::PrivateDataSlot>,
+    ) {
+        let value = match private_data_slot {
+            Some(private_data_slot) => Some(*private_data_slot),
+            None => None,
+        };
+        let private_data_slot = value.as_ref();
         unsafe {
             raw::destroy_private_data_slot_ext(
                 self,
@@ -4105,8 +4236,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroySwapchainKHR.html>"]
     #[doc(alias = "vkDestroySwapchainKHR")]
     #[inline]
-    pub unsafe fn destroy_swapchain_khr(&self, swapchain: rs::SwapchainKHR) {
-        let swapchain = Some(raw::swapchain::from_raw(swapchain.as_raw()));
+    pub unsafe fn destroy_swapchain_khr(&self, swapchain: Option<rs::SwapchainKHR>) {
+        let value = match swapchain {
+            Some(swapchain) => Some(*swapchain),
+            None => None,
+        };
+        let swapchain = value.as_ref();
         unsafe {
             raw::destroy_swapchain_khr(
                 self,
@@ -4141,11 +4276,19 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
         &self,
         swapchain: &raw::SwapchainKHR,
         timeout: u64,
-        semaphore: rs::Semaphore,
-        fence: rs::Fence,
+        semaphore: Option<rs::Semaphore>,
+        fence: Option<rs::Fence>,
     ) -> Result<(Status, u32)> {
-        let semaphore = Some(raw::semaphore::from_raw(semaphore.as_raw()));
-        let fence = Some(raw::fence::from_raw(fence.as_raw()));
+        let value = match semaphore {
+            Some(semaphore) => Some(*semaphore),
+            None => None,
+        };
+        let semaphore = value.as_ref();
+        let value = match fence {
+            Some(fence) => Some(*fence),
+            None => None,
+        };
+        let fence = value.as_ref();
         unsafe {
             raw::acquire_next_image_khr(
                 self,
@@ -4782,10 +4925,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
         R: AdvancedDynamicArray<Pipeline, raw::Pipeline>,
     >(
         &self,
-        pipeline_cache: rs::PipelineCache,
+        pipeline_cache: Option<rs::PipelineCache>,
         p_create_infos: impl AsSlice<'a, ExecutionGraphPipelineCreateInfoAMDX<'a>>,
     ) -> Result<(Status, R)> {
-        let pipeline_cache = Some(raw::pipeline_cache::from_raw(pipeline_cache.as_raw()));
+        let value = match pipeline_cache {
+            Some(pipeline_cache) => Some(*pipeline_cache),
+            None => None,
+        };
+        let pipeline_cache = value.as_ref();
         let vk_result: Result<(Status, R::InnerArrayType)> = unsafe {
             raw::create_execution_graph_pipelines_amdx(
                 self,
@@ -4864,11 +5011,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_acceleration_structure_khr(
         &self,
-        acceleration_structure: rs::AccelerationStructureKHR,
+        acceleration_structure: Option<rs::AccelerationStructureKHR>,
     ) {
-        let acceleration_structure = Some(raw::acceleration_structure::from_raw(
-            acceleration_structure.as_raw(),
-        ));
+        let value = match acceleration_structure {
+            Some(acceleration_structure) => Some(*acceleration_structure),
+            None => None,
+        };
+        let acceleration_structure = value.as_ref();
         unsafe {
             raw::destroy_acceleration_structure_khr(
                 self,
@@ -4884,13 +5033,15 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn build_acceleration_structures_khr<'a>(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
         p_infos: impl AsSlice<'a, AccelerationStructureBuildGeometryInfoKHR<'a>>,
         pp_build_range_infos: &&AccelerationStructureBuildRangeInfoKHR,
     ) -> Result<Status> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
         unsafe {
             raw::build_acceleration_structures_khr(
                 self,
@@ -4907,12 +5058,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn copy_acceleration_structure_khr(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
         p_info: &CopyAccelerationStructureInfoKHR,
     ) -> Result<Status> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
         unsafe {
             raw::copy_acceleration_structure_khr(
                 self,
@@ -4928,12 +5081,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn copy_acceleration_structure_to_memory_khr(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
         p_info: &CopyAccelerationStructureToMemoryInfoKHR,
     ) -> Result<Status> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
         unsafe {
             raw::copy_acceleration_structure_to_memory_khr(
                 self,
@@ -4949,12 +5104,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn copy_memory_to_acceleration_structure_khr(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
         p_info: &CopyMemoryToAccelerationStructureInfoKHR,
     ) -> Result<Status> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
         unsafe {
             raw::copy_memory_to_acceleration_structure_khr(
                 self,
@@ -5053,14 +5210,20 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
         R: AdvancedDynamicArray<Pipeline, raw::Pipeline>,
     >(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
-        pipeline_cache: rs::PipelineCache,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
+        pipeline_cache: Option<rs::PipelineCache>,
         p_create_infos: impl AsSlice<'a, RayTracingPipelineCreateInfoKHR<'a>>,
     ) -> Result<(Status, R)> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
-        let pipeline_cache = Some(raw::pipeline_cache::from_raw(pipeline_cache.as_raw()));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
+        let value = match pipeline_cache {
+            Some(pipeline_cache) => Some(*pipeline_cache),
+            None => None,
+        };
+        let pipeline_cache = value.as_ref();
         let vk_result: Result<(Status, R::InnerArrayType)> = unsafe {
             raw::create_ray_tracing_pipelines_khr(
                 self,
@@ -5212,8 +5375,15 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyValidationCacheEXT.html>"]
     #[doc(alias = "vkDestroyValidationCacheEXT")]
     #[inline]
-    pub unsafe fn destroy_validation_cache_ext(&self, validation_cache: rs::ValidationCacheEXT) {
-        let validation_cache = Some(raw::validation_cache::from_raw(validation_cache.as_raw()));
+    pub unsafe fn destroy_validation_cache_ext(
+        &self,
+        validation_cache: Option<rs::ValidationCacheEXT>,
+    ) {
+        let value = match validation_cache {
+            Some(validation_cache) => Some(*validation_cache),
+            None => None,
+        };
+        let validation_cache = value.as_ref();
         unsafe {
             raw::destroy_validation_cache_ext(
                 self,
@@ -5283,11 +5453,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_acceleration_structure_nv(
         &self,
-        acceleration_structure: rs::AccelerationStructureNV,
+        acceleration_structure: Option<rs::AccelerationStructureNV>,
     ) {
-        let acceleration_structure = Some(raw::acceleration_structure::from_raw(
-            acceleration_structure.as_raw(),
-        ));
+        let value = match acceleration_structure {
+            Some(acceleration_structure) => Some(*acceleration_structure),
+            None => None,
+        };
+        let acceleration_structure = value.as_ref();
         unsafe {
             raw::destroy_acceleration_structure_nv(
                 self,
@@ -5335,10 +5507,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc(alias = "vkCreateRayTracingPipelinesNV")]
     pub fn create_ray_tracing_pipelines_nv<'a, R: AdvancedDynamicArray<Pipeline, raw::Pipeline>>(
         &self,
-        pipeline_cache: rs::PipelineCache,
+        pipeline_cache: Option<rs::PipelineCache>,
         p_create_infos: impl AsSlice<'a, RayTracingPipelineCreateInfoNV<'a>>,
     ) -> Result<(Status, R)> {
-        let pipeline_cache = Some(raw::pipeline_cache::from_raw(pipeline_cache.as_raw()));
+        let value = match pipeline_cache {
+            Some(pipeline_cache) => Some(*pipeline_cache),
+            None => None,
+        };
+        let pipeline_cache = value.as_ref();
         let vk_result: Result<(Status, R::InnerArrayType)> = unsafe {
             raw::create_ray_tracing_pipelines_nv(
                 self,
@@ -5452,9 +5628,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn release_performance_configuration_intel(
         &self,
-        configuration: rs::PerformanceConfigurationINTEL,
+        configuration: Option<rs::PerformanceConfigurationINTEL>,
     ) -> Result<()> {
-        let configuration = Some(raw::configuration::from_raw(configuration.as_raw()));
+        let value = match configuration {
+            Some(configuration) => Some(*configuration),
+            None => None,
+        };
+        let configuration = value.as_ref();
         unsafe {
             raw::release_performance_configuration_intel(
                 self,
@@ -5586,8 +5766,15 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyDeferredOperationKHR.html>"]
     #[doc(alias = "vkDestroyDeferredOperationKHR")]
     #[inline]
-    pub unsafe fn destroy_deferred_operation_khr(&self, operation: rs::DeferredOperationKHR) {
-        let operation = Some(raw::operation::from_raw(operation.as_raw()));
+    pub unsafe fn destroy_deferred_operation_khr(
+        &self,
+        operation: Option<rs::DeferredOperationKHR>,
+    ) {
+        let value = match operation {
+            Some(operation) => Some(*operation),
+            None => None,
+        };
+        let operation = value.as_ref();
         unsafe {
             raw::destroy_deferred_operation_khr(
                 self,
@@ -5733,11 +5920,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_indirect_commands_layout_nv(
         &self,
-        indirect_commands_layout: rs::IndirectCommandsLayoutNV,
+        indirect_commands_layout: Option<rs::IndirectCommandsLayoutNV>,
     ) {
-        let indirect_commands_layout = Some(raw::indirect_commands_layout::from_raw(
-            indirect_commands_layout.as_raw(),
-        ));
+        let value = match indirect_commands_layout {
+            Some(indirect_commands_layout) => Some(*indirect_commands_layout),
+            None => None,
+        };
+        let indirect_commands_layout = value.as_ref();
         unsafe {
             raw::destroy_indirect_commands_layout_nv(
                 self,
@@ -6208,8 +6397,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyMicromapEXT.html>"]
     #[doc(alias = "vkDestroyMicromapEXT")]
     #[inline]
-    pub unsafe fn destroy_micromap_ext(&self, micromap: rs::MicromapEXT) {
-        let micromap = Some(raw::micromap::from_raw(micromap.as_raw()));
+    pub unsafe fn destroy_micromap_ext(&self, micromap: Option<rs::MicromapEXT>) {
+        let value = match micromap {
+            Some(micromap) => Some(*micromap),
+            None => None,
+        };
+        let micromap = value.as_ref();
         unsafe {
             raw::destroy_micromap_ext(
                 self,
@@ -6225,12 +6418,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn build_micromaps_ext<'a>(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
         p_infos: impl AsSlice<'a, MicromapBuildInfoEXT<'a>>,
     ) -> Result<Status> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
         unsafe {
             raw::build_micromaps_ext(
                 self,
@@ -6246,12 +6441,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn copy_micromap_ext(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
         p_info: &CopyMicromapInfoEXT,
     ) -> Result<Status> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
         unsafe {
             raw::copy_micromap_ext(
                 self,
@@ -6267,12 +6464,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn copy_micromap_to_memory_ext(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
         p_info: &CopyMicromapToMemoryInfoEXT,
     ) -> Result<Status> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
         unsafe {
             raw::copy_micromap_to_memory_ext(
                 self,
@@ -6288,12 +6487,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub fn copy_memory_to_micromap_ext(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
         p_info: &CopyMemoryToMicromapInfoEXT,
     ) -> Result<Status> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
         unsafe {
             raw::copy_memory_to_micromap_ext(
                 self,
@@ -6461,8 +6662,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyTensorARM.html>"]
     #[doc(alias = "vkDestroyTensorARM")]
     #[inline]
-    pub unsafe fn destroy_tensor_arm(&self, tensor: rs::TensorARM) {
-        let tensor = Some(raw::tensor::from_raw(tensor.as_raw()));
+    pub unsafe fn destroy_tensor_arm(&self, tensor: Option<rs::TensorARM>) {
+        let value = match tensor {
+            Some(tensor) => Some(*tensor),
+            None => None,
+        };
+        let tensor = value.as_ref();
         unsafe {
             raw::destroy_tensor_arm(
                 self,
@@ -6494,8 +6699,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyTensorViewARM.html>"]
     #[doc(alias = "vkDestroyTensorViewARM")]
     #[inline]
-    pub unsafe fn destroy_tensor_view_arm(&self, tensor_view: rs::TensorViewARM) {
-        let tensor_view = Some(raw::tensor_view::from_raw(tensor_view.as_raw()));
+    pub unsafe fn destroy_tensor_view_arm(&self, tensor_view: Option<rs::TensorViewARM>) {
+        let value = match tensor_view {
+            Some(tensor_view) => Some(*tensor_view),
+            None => None,
+        };
+        let tensor_view = value.as_ref();
         unsafe {
             raw::destroy_tensor_view_arm(
                 self,
@@ -6661,10 +6870,14 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
         &self,
         session: &raw::OpticalFlowSessionNV,
         binding_point: OpticalFlowSessionBindingPointNV,
-        view: rs::ImageView,
+        view: Option<rs::ImageView>,
         layout: ImageLayout,
     ) -> Result<()> {
-        let view = Some(raw::view::from_raw(view.as_raw()));
+        let value = match view {
+            Some(view) => Some(*view),
+            None => None,
+        };
+        let view = value.as_ref();
         unsafe {
             raw::bind_optical_flow_session_image_nv(
                 self,
@@ -6730,8 +6943,12 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyShaderEXT.html>"]
     #[doc(alias = "vkDestroyShaderEXT")]
     #[inline]
-    pub unsafe fn destroy_shader_ext(&self, shader: rs::ShaderEXT) {
-        let shader = Some(raw::shader::from_raw(shader.as_raw()));
+    pub unsafe fn destroy_shader_ext(&self, shader: Option<rs::ShaderEXT>) {
+        let value = match shader {
+            Some(shader) => Some(*shader),
+            None => None,
+        };
+        let shader = value.as_ref();
         unsafe {
             raw::destroy_shader_ext(
                 self,
@@ -6781,8 +6998,15 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkDestroyPipelineBinaryKHR.html>"]
     #[doc(alias = "vkDestroyPipelineBinaryKHR")]
     #[inline]
-    pub unsafe fn destroy_pipeline_binary_khr(&self, pipeline_binary: rs::PipelineBinaryKHR) {
-        let pipeline_binary = Some(raw::pipeline_binary::from_raw(pipeline_binary.as_raw()));
+    pub unsafe fn destroy_pipeline_binary_khr(
+        &self,
+        pipeline_binary: Option<rs::PipelineBinaryKHR>,
+    ) {
+        let value = match pipeline_binary {
+            Some(pipeline_binary) => Some(*pipeline_binary),
+            None => None,
+        };
+        let pipeline_binary = value.as_ref();
         unsafe {
             raw::destroy_pipeline_binary_khr(
                 self,
@@ -6972,14 +7196,20 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[doc(alias = "vkCreateDataGraphPipelinesARM")]
     pub fn create_data_graph_pipelines_arm<'a, R: AdvancedDynamicArray<Pipeline, raw::Pipeline>>(
         &self,
-        deferred_operation: rs::DeferredOperationKHR,
-        pipeline_cache: rs::PipelineCache,
+        deferred_operation: Option<rs::DeferredOperationKHR>,
+        pipeline_cache: Option<rs::PipelineCache>,
         p_create_infos: impl AsSlice<'a, DataGraphPipelineCreateInfoARM<'a>>,
     ) -> Result<(Status, R)> {
-        let deferred_operation = Some(raw::deferred_operation::from_raw(
-            deferred_operation.as_raw(),
-        ));
-        let pipeline_cache = Some(raw::pipeline_cache::from_raw(pipeline_cache.as_raw()));
+        let value = match deferred_operation {
+            Some(deferred_operation) => Some(*deferred_operation),
+            None => None,
+        };
+        let deferred_operation = value.as_ref();
+        let value = match pipeline_cache {
+            Some(pipeline_cache) => Some(*pipeline_cache),
+            None => None,
+        };
+        let pipeline_cache = value.as_ref();
         let vk_result: Result<(Status, R::InnerArrayType)> = unsafe {
             raw::create_data_graph_pipelines_arm(
                 self,
@@ -7246,11 +7476,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_indirect_commands_layout_ext(
         &self,
-        indirect_commands_layout: rs::IndirectCommandsLayoutEXT,
+        indirect_commands_layout: Option<rs::IndirectCommandsLayoutEXT>,
     ) {
-        let indirect_commands_layout = Some(raw::indirect_commands_layout::from_raw(
-            indirect_commands_layout.as_raw(),
-        ));
+        let value = match indirect_commands_layout {
+            Some(indirect_commands_layout) => Some(*indirect_commands_layout),
+            None => None,
+        };
+        let indirect_commands_layout = value.as_ref();
         unsafe {
             raw::destroy_indirect_commands_layout_ext(
                 self,
@@ -7284,11 +7516,13 @@ impl<D: Dispatcher, A: Allocator> Device<D, A> {
     #[inline]
     pub unsafe fn destroy_indirect_execution_set_ext(
         &self,
-        indirect_execution_set: rs::IndirectExecutionSetEXT,
+        indirect_execution_set: Option<rs::IndirectExecutionSetEXT>,
     ) {
-        let indirect_execution_set = Some(raw::indirect_execution_set::from_raw(
-            indirect_execution_set.as_raw(),
-        ));
+        let value = match indirect_execution_set {
+            Some(indirect_execution_set) => Some(*indirect_execution_set),
+            None => None,
+        };
+        let indirect_execution_set = value.as_ref();
         unsafe {
             raw::destroy_indirect_execution_set_ext(
                 self,
@@ -7415,9 +7649,13 @@ impl<D: Dispatcher, A: Allocator> Queue<D, A> {
     pub fn submit<'a>(
         &self,
         p_submits: impl AsSlice<'a, SubmitInfo<'a>>,
-        fence: rs::Fence,
+        fence: Option<rs::Fence>,
     ) -> Result<()> {
-        let fence = Some(raw::fence::from_raw(fence.as_raw()));
+        let value = match fence {
+            Some(fence) => Some(*fence),
+            None => None,
+        };
+        let fence = value.as_ref();
         unsafe { raw::queue_submit(self, p_submits, fence, self.disp.get_command_dispatcher()) }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkQueueWaitIdle.html>"]
@@ -7432,9 +7670,13 @@ impl<D: Dispatcher, A: Allocator> Queue<D, A> {
     pub fn bind_sparse<'a>(
         &self,
         p_bind_info: impl AsSlice<'a, BindSparseInfo<'a>>,
-        fence: rs::Fence,
+        fence: Option<rs::Fence>,
     ) -> Result<()> {
-        let fence = Some(raw::fence::from_raw(fence.as_raw()));
+        let value = match fence {
+            Some(fence) => Some(*fence),
+            None => None,
+        };
+        let fence = value.as_ref();
         unsafe {
             raw::queue_bind_sparse(self, p_bind_info, fence, self.disp.get_command_dispatcher())
         }
@@ -7446,9 +7688,13 @@ impl<D: Dispatcher, A: Allocator> Queue<D, A> {
     pub fn submit2<'a>(
         &self,
         p_submits: impl AsSlice<'a, SubmitInfo2<'a>>,
-        fence: rs::Fence,
+        fence: Option<rs::Fence>,
     ) -> Result<()> {
-        let fence = Some(raw::fence::from_raw(fence.as_raw()));
+        let value = match fence {
+            Some(fence) => Some(*fence),
+            None => None,
+        };
+        let fence = value.as_ref();
         unsafe { raw::queue_submit2(self, p_submits, fence, self.disp.get_command_dispatcher()) }
     }
     #[cfg(any(feature = "ext_synchronization2", feature = "version_1_3"))]
@@ -7458,9 +7704,13 @@ impl<D: Dispatcher, A: Allocator> Queue<D, A> {
     pub fn submit2_khr<'a>(
         &self,
         p_submits: impl AsSlice<'a, SubmitInfo2<'a>>,
-        fence: rs::Fence,
+        fence: Option<rs::Fence>,
     ) -> Result<()> {
-        let fence = Some(raw::fence::from_raw(fence.as_raw()));
+        let value = match fence {
+            Some(fence) => Some(*fence),
+            None => None,
+        };
+        let fence = value.as_ref();
         unsafe {
             raw::queue_submit2_khr(self, p_submits, fence, self.disp.get_command_dispatcher())
         }
@@ -8177,8 +8427,17 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindIndexBuffer.html>"]
     #[doc(alias = "vkCmdBindIndexBuffer")]
     #[inline]
-    pub fn bind_index_buffer(&self, buffer: rs::Buffer, offset: DeviceSize, index_type: IndexType) {
-        let buffer = Some(raw::buffer::from_raw(buffer.as_raw()));
+    pub fn bind_index_buffer(
+        &self,
+        buffer: Option<rs::Buffer>,
+        offset: DeviceSize,
+        index_type: IndexType,
+    ) {
+        let value = match buffer {
+            Some(buffer) => Some(*buffer),
+            None => None,
+        };
+        let buffer = value.as_ref();
         unsafe {
             raw::cmd_bind_index_buffer(
                 self,
@@ -9951,12 +10210,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     #[inline]
     pub fn bind_index_buffer2(
         &self,
-        buffer: rs::Buffer,
+        buffer: Option<rs::Buffer>,
         offset: DeviceSize,
         size: DeviceSize,
         index_type: IndexType,
     ) {
-        let buffer = Some(raw::buffer::from_raw(buffer.as_raw()));
+        let value = match buffer {
+            Some(buffer) => Some(*buffer),
+            None => None,
+        };
+        let buffer = value.as_ref();
         unsafe {
             raw::cmd_bind_index_buffer2(
                 self,
@@ -9974,12 +10237,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     #[inline]
     pub fn bind_index_buffer2_khr(
         &self,
-        buffer: rs::Buffer,
+        buffer: Option<rs::Buffer>,
         offset: DeviceSize,
         size: DeviceSize,
         index_type: IndexType,
     ) {
-        let buffer = Some(raw::buffer::from_raw(buffer.as_raw()));
+        let value = match buffer {
+            Some(buffer) => Some(*buffer),
+            None => None,
+        };
+        let buffer = value.as_ref();
         unsafe {
             raw::cmd_bind_index_buffer2_khr(
                 self,
@@ -10838,8 +11105,16 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/latest/man/html/vkCmdBindShadingRateImageNV.html>"]
     #[doc(alias = "vkCmdBindShadingRateImageNV")]
     #[inline]
-    pub fn bind_shading_rate_image_nv(&self, image_view: rs::ImageView, image_layout: ImageLayout) {
-        let image_view = Some(raw::image_view::from_raw(image_view.as_raw()));
+    pub fn bind_shading_rate_image_nv(
+        &self,
+        image_view: Option<rs::ImageView>,
+        image_layout: ImageLayout,
+    ) {
+        let value = match image_view {
+            Some(image_view) => Some(*image_view),
+            None => None,
+        };
+        let image_view = value.as_ref();
         unsafe {
             raw::cmd_bind_shading_rate_image_nv(
                 self,
@@ -10892,16 +11167,24 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     pub fn build_acceleration_structure_nv(
         &self,
         p_info: &AccelerationStructureInfoNV,
-        instance_data: rs::Buffer,
+        instance_data: Option<rs::Buffer>,
         instance_offset: DeviceSize,
         update: impl Into<Bool32>,
         dst: &raw::AccelerationStructureNV,
-        src: rs::AccelerationStructureNV,
+        src: Option<rs::AccelerationStructureNV>,
         scratch: &raw::Buffer,
         scratch_offset: DeviceSize,
     ) {
-        let instance_data = Some(raw::instance_data::from_raw(instance_data.as_raw()));
-        let src = Some(raw::src::from_raw(src.as_raw()));
+        let value = match instance_data {
+            Some(instance_data) => Some(*instance_data),
+            None => None,
+        };
+        let instance_data = value.as_ref();
+        let value = match src {
+            Some(src) => Some(*src),
+            None => None,
+        };
+        let src = value.as_ref();
         unsafe {
             raw::cmd_build_acceleration_structure_nv(
                 self,
@@ -10945,30 +11228,36 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
         &self,
         raygen_shader_binding_table_buffer: &raw::Buffer,
         raygen_shader_binding_offset: DeviceSize,
-        miss_shader_binding_table_buffer: rs::Buffer,
+        miss_shader_binding_table_buffer: Option<rs::Buffer>,
         miss_shader_binding_offset: DeviceSize,
         miss_shader_binding_stride: DeviceSize,
-        hit_shader_binding_table_buffer: rs::Buffer,
+        hit_shader_binding_table_buffer: Option<rs::Buffer>,
         hit_shader_binding_offset: DeviceSize,
         hit_shader_binding_stride: DeviceSize,
-        callable_shader_binding_table_buffer: rs::Buffer,
+        callable_shader_binding_table_buffer: Option<rs::Buffer>,
         callable_shader_binding_offset: DeviceSize,
         callable_shader_binding_stride: DeviceSize,
         width: u32,
         height: u32,
         depth: u32,
     ) {
-        let miss_shader_binding_table_buffer =
-            Some(raw::miss_shader_binding_table_buffer::from_raw(
-                miss_shader_binding_table_buffer.as_raw(),
-            ));
-        let hit_shader_binding_table_buffer = Some(raw::hit_shader_binding_table_buffer::from_raw(
-            hit_shader_binding_table_buffer.as_raw(),
-        ));
-        let callable_shader_binding_table_buffer =
-            Some(raw::callable_shader_binding_table_buffer::from_raw(
-                callable_shader_binding_table_buffer.as_raw(),
-            ));
+        let value = match miss_shader_binding_table_buffer {
+            Some(miss_shader_binding_table_buffer) => Some(*miss_shader_binding_table_buffer),
+            None => None,
+        };
+        let miss_shader_binding_table_buffer = value.as_ref();
+        let value = match hit_shader_binding_table_buffer {
+            Some(hit_shader_binding_table_buffer) => Some(*hit_shader_binding_table_buffer),
+            None => None,
+        };
+        let hit_shader_binding_table_buffer = value.as_ref();
+        let value = match callable_shader_binding_table_buffer {
+            Some(callable_shader_binding_table_buffer) => {
+                Some(*callable_shader_binding_table_buffer)
+            }
+            None => None,
+        };
+        let callable_shader_binding_table_buffer = value.as_ref();
         unsafe {
             raw::cmd_trace_rays_nv(
                 self,
@@ -11535,10 +11824,14 @@ impl<D: Dispatcher, A: Allocator> CommandBuffer<D, A> {
     #[inline]
     pub fn bind_invocation_mask_huawei(
         &self,
-        image_view: rs::ImageView,
+        image_view: Option<rs::ImageView>,
         image_layout: ImageLayout,
     ) {
-        let image_view = Some(raw::image_view::from_raw(image_view.as_raw()));
+        let value = match image_view {
+            Some(image_view) => Some(*image_view),
+            None => None,
+        };
+        let image_view = value.as_ref();
         unsafe {
             raw::cmd_bind_invocation_mask_huawei(
                 self,

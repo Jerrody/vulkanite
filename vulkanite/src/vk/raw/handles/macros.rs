@@ -3,7 +3,7 @@ macro_rules! vk_handle {
         #[repr(transparent)]
         #[$doc_tag]
         #[doc(alias = $vk_name)]
-        #[derive(Eq, PartialEq, PartialOrd, Ord, Hash)]
+        #[derive(Eq, PartialEq, PartialOrd, Ord, Hash, Clone, Copy)]
         pub struct $name($ty);
 
         impl private::Sealed for $name {}

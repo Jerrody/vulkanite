@@ -301,31 +301,6 @@ where
         .take(nb_to_take)
         .map(|(x, _)| x)
         .collect();
-    let mut internal_rebinds = Vec::new();
-    let arg_outer_type: Vec<_> = cmd_parsed
-        .parsed_args_in
-        .iter()
-        .skip(nb_to_skip)
-        .take(nb_to_take)
-        .map(|(name, ty)| {
-            let ty_str = quote!(#ty).to_string();
-            if ty_str.contains(r"Option < & raw ::") {
-                internal_rebinds.push(quote! {
-                    let #name = Some(raw::#name::from_raw(#name.as_raw()));
-                });
-                // Extract the inner type (e.g., raw::PipelineLayout)
-                // This assumes the standard formatting of the Type tokens
-                let inner_ty = ty_str
-                    .replace(r"Option < &", "")
-                    .replace(r">", "")
-                    .replace("raw", "rs");
-                let inner_ident: TokenStream = inner_ty.parse().unwrap();
-                return quote!(#inner_ident);
-            } else {
-                return quote!(#ty);
-            }
-        })
-        .collect();
 
     // remove the handle name from the function name
     let mut new_name = name.to_string();
@@ -354,6 +329,37 @@ where
     }
 
     let fn_name = format_ident!("{new_name}");
+
+    let mut internal_rebinds = Vec::new();
+    let arg_outer_type: Vec<_> = cmd_parsed
+        .parsed_args_in
+        .iter()
+        .skip(nb_to_skip)
+        .take(nb_to_take)
+        .map(|(name, ty)| {
+            let ty_str = quote!(#ty).to_string();
+            if ty_str.contains(r"Option < & raw ::") {
+                internal_rebinds.push(quote! {
+                    let value = match #name {
+                        Some(#name) => {
+                            Some(*#name)
+                        },
+                        None => None,
+                    };
+
+                    let #name = value.as_ref();
+                });
+                // Extract the inner type (e.g., raw::PipelineLayout)
+                // This assumes the standard formatting of the Type tokens
+                let inner_ty = ty_str.replace("&", "").replace("raw", "rs");
+                let inner_ident: TokenStream = inner_ty.parse().unwrap();
+                return quote!(#inner_ident);
+            } else {
+                return quote!(#ty);
+            }
+        })
+        .collect();
+
     let raw_fn_name = format_ident!("{name}");
 
     let (ret_type, ret_template, pre_call, post_call) = match cmd.return_ty {

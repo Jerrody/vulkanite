@@ -568,7 +568,7 @@ impl VulkanApplication {
             match self.device.acquire_next_image_khr(
                 &swapchain_objects.swapchain,
                 u64::MAX,
-                Some(image_available),
+                Some(*image_available),
                 None,
             ) {
                 Ok((_, image_idx)) => break image_idx as usize,
@@ -596,7 +596,7 @@ impl VulkanApplication {
                 )
                 .command_buffers(cmd_buffer)
                 .signal_semaphores(render_finished)],
-            Some(fence),
+            Some(*fence),
         )?;
 
         self.queue
@@ -626,33 +626,33 @@ impl Drop for VulkanApplication {
         self.swapchain_objects.take();
 
         unsafe {
-            self.device.destroy_pipeline(Some(&self.pipeline));
+            self.device.destroy_pipeline(Some(self.pipeline));
             self.device
-                .destroy_pipeline_layout(Some(&self.pipeline_layout));
+                .destroy_pipeline_layout(Some(self.pipeline_layout));
             for module in &self.shader_modules {
-                self.device.destroy_shader_module(Some(module));
+                self.device.destroy_shader_module(Some(*module));
             }
-            self.device.destroy_render_pass(Some(&self.render_pass));
-            self.device.destroy_command_pool(Some(&self.command_pool));
+            self.device.destroy_render_pass(Some(self.render_pass));
+            self.device.destroy_command_pool(Some(self.command_pool));
 
             for fence in &self.fences {
-                self.device.destroy_fence(Some(fence));
+                self.device.destroy_fence(Some(*fence));
             }
             for semaphore in self
                 .image_available
                 .iter()
                 .chain(self.render_finished.iter())
             {
-                self.device.destroy_semaphore(Some(&semaphore));
+                self.device.destroy_semaphore(Some(*semaphore));
             }
 
             self.device.destroy();
 
             if let Some(debug_messenger) = &self.debug_messenger {
                 self.instance
-                    .destroy_debug_utils_messenger_ext(Some(debug_messenger));
+                    .destroy_debug_utils_messenger_ext(Some(*debug_messenger));
             }
-            self.instance.destroy_surface_khr(Some(&self.surface));
+            self.instance.destroy_surface_khr(Some(self.surface));
 
             self.instance.destroy();
             DynamicDispatcher::unload();
@@ -681,7 +681,7 @@ impl SwapchainObjects {
         let capabilities = physical_device.get_surface_capabilities_khr(surface)?;
 
         let format = physical_device
-            .get_surface_formats_khr::<Vec<_>>(Some(surface))?
+            .get_surface_formats_khr::<Vec<_>>(Some(*surface))?
             .into_iter()
             .max_by_key(|fmt| match fmt {
                 // we have one pair of format/color_space that we prefer
@@ -697,7 +697,7 @@ impl SwapchainObjects {
         // The Vulkan spec guarantees that if the swapchain extension is supported
         // then the FIFO present mode is too
         if !physical_device
-            .get_surface_present_modes_khr::<Vec<_>>(*surface)?
+            .get_surface_present_modes_khr::<Vec<_>>(Some(*surface))?
             .contains(&vk::PresentModeKHR::Fifo)
         {
             bail!("FIFO present mode is missing");
@@ -802,12 +802,12 @@ impl Drop for SwapchainObjects {
 
         unsafe {
             for framebuffer in &self.framebuffers {
-                self.device.destroy_framebuffer(*framebuffer);
+                self.device.destroy_framebuffer(Some(*framebuffer));
             }
             for view in &self.swapchain_views {
-                self.device.destroy_image_view(*view);
+                self.device.destroy_image_view(Some(*view));
             }
-            self.device.destroy_swapchain_khr(*self.swapchain);
+            self.device.destroy_swapchain_khr(Some(self.swapchain));
         }
         // SwapchainObjects is not the owner of device, do not destroy it
     }
