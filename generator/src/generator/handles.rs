@@ -63,7 +63,9 @@ fn generate_handle<'a>(
     vk_name: &str,
 ) -> Result<TokenStream> {
     let name = format_ident!("{}", handle.name);
-    let dispatch_macro = if handle.is_dispatchable {
+    let dispatch_macro = if handle.name == "ShaderEXT" {
+        "handle_nondispatchable_u64"
+    } else if handle.is_dispatchable {
         "handle_dispatchable"
     } else {
         "handle_nondispatchable"

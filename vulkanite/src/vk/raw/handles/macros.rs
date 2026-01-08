@@ -55,3 +55,39 @@ macro_rules! handle_nondispatchable {
         vk_handle! {$name, $obj_type, $doc_tag, $vk_name, NonZeroU64}
     };
 }
+
+#[cfg(all(feature = "ext_mesh_shader", feature = "ext_shader_object"))]
+macro_rules! handle_nondispatchable_u64 {
+    ($name:ident, $obj_type:expr, $doc:expr, $vk_name:expr) => {
+        #[repr(transparent)]
+        #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
+        $doc
+        pub struct $name(u64);
+
+        impl Handle for $name {
+            const TYPE: ObjectType = $obj_type;
+
+            #[inline]
+            fn as_raw(self) -> u64 {
+                self.0
+            }
+
+            #[inline]
+            fn from_raw(x: u64) -> Self {
+                Self(x)
+            }
+        }
+
+        impl Default for $name {
+            fn default() -> Self {
+                Self(0)
+            }
+        }
+
+        impl fmt::Debug for $name {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                write!(f, "0x{:x}", self.0)
+            }
+        }
+    };
+}
